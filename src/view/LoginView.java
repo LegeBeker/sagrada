@@ -7,19 +7,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 public class LoginView extends VBox {
-	
+
 	private ViewController view;
-	
+
 	private TextField fieldUsername;
 	private TextField fieldPassword;
-	
+
 	private Button buttonSubmit;
-	
+
 	public LoginView(ViewController view) {
 		this.view = view;
-		
+
 		this.setAlignment(Pos.CENTER);
-		
+
 		this.fieldUsername = new TextField();
 
 		this.fieldPassword = new TextField();
@@ -29,12 +29,12 @@ public class LoginView extends VBox {
 
 		this.getChildren().addAll(this.fieldUsername, this.fieldPassword, this.buttonSubmit);
 	}
-	
+
 	public void submit() {
-		if (view.accountController.login(this.fieldUsername.getText(), this.fieldPassword.getText())) {
-			view.OpenMenuView();
-		} else {
-			// throw exception
+		if (!view.accountController.loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
+			throw new RuntimeException("Login failed");
 		}
+
+		view.OpenMenuView();
 	}
 }
