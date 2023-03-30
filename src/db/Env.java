@@ -13,7 +13,7 @@ public final class Env {
         this.envFile = new File(fileName);
 
         if (!this.envFile.exists()) {
-            this.envFile.mkdirs();
+            throw new RuntimeException("Environment file not found: " + fileName);
         }
 
         this.values = new Properties();
