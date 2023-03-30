@@ -18,6 +18,9 @@ public class MainController extends Application {
 
 		stage.setScene(view);
 
+		stage.setMinHeight(500);
+		stage.setMinWidth(800);
+
 		stage.show();
 	}
 }
