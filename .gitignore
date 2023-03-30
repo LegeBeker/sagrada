@@ -18,6 +18,8 @@
 *.tar.gz
 *.rar
 
+/*.jar
+
 .env
 
 bin/
