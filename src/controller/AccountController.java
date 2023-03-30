@@ -3,7 +3,7 @@ package controller;
 import model.Account;
 
 public class AccountController {
-	public Account curAccount;
+	private Account curAccount;
 
 	public Boolean loginAccount(String username, String password) {
 		Account curAccount = new Account();
@@ -16,5 +16,9 @@ public class AccountController {
 		}
 		this.curAccount = curAccount;
 		return true;
+	}
+
+	public Account getAccount() {
+		return this.curAccount;
 	}
 }
