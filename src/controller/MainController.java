@@ -22,8 +22,7 @@ public class MainController extends Application {
 		
 		stage.setScene(view);
 		
-		stage.centerOnScreen();
-		stage.setResizable(false);
+		stage.centerOnScreen();		
 		
 		stage.show();
 	}
