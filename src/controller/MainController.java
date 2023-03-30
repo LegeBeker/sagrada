@@ -12,18 +12,12 @@ public class MainController extends Application {
 	public void start(Stage stage) {
 		ViewController view = new ViewController();
 
-
-		//Set the stage icon
-		stage.getIcons().add(new Image("file:resources/images/icon.jpeg"));
-
-		
-
 		stage.setTitle("Sagrada Groep J");
-		
+		stage.getIcons().add(new Image("file:resources/img/app-icon.png"));
+		stage.centerOnScreen();
+
 		stage.setScene(view);
-		
-		stage.centerOnScreen();		
-		
+
 		stage.show();
 	}
 }
