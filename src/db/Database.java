@@ -31,18 +31,30 @@ public final class Database {
         this.password = env.get("DB_PASSWORD");
     }
 
-    public ArrayList<ArrayList<String>> exec(String query, String[] params) {
-        ArrayList<ArrayList<String>> result = new ArrayList<>();
+    private void connect() {
         try {
             this.conn = DriverManager.getConnection("jdbc:mysql://" + this.host + "/" + this.name + "?user="
                     + this.username + "&password=" + this.password);
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        }
+    }
+
+    public ArrayList<ArrayList<String>> exec(String query, String[] params) {
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        try {
+            if (this.conn == null || this.conn.isClosed()) {
+                this.connect();
+            }
 
             PreparedStatement stmt = conn.prepareStatement(query);
             for (int i = 0; i < params.length; i++) {
                 stmt.setString(i + 1, params[i]);
             }
-            stmt.execute(); 
-            ResultSet rs = stmt.getResultSet(); 
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
 
             if (rs != null) {
                 while (rs.next()) {
@@ -54,7 +66,7 @@ public final class Database {
                 }
                 rs.close();
             }
-            
+
             stmt.close();
             conn.close();
         } catch (SQLException e) {
