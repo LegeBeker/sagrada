@@ -31,7 +31,7 @@ public class LoginView extends VBox {
 	}
 
 	public void submit() {
-		if (!view.accountController.loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
+		if (!view.getAccountController().loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
 			throw new RuntimeException("Login failed");
 		}
 
