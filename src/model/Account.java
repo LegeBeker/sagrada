@@ -21,4 +21,8 @@ public class Account {
 	public Boolean login() {
 		return AccountDB.checkLogin(username, password);
 	}
+
+	public Boolean createAccount() {
+		return AccountDB.createAccount(username, password);
+	}
 }

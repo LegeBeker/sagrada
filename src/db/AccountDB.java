@@ -13,4 +13,16 @@ public class AccountDB {
             return true;
         }
     }
+
+
+    public static boolean createAccount(String username, String password) {
+        Database db = Database.getInstance();
+
+        String sql = "INSERT INTO account VALUES (?, ?)";
+        String[] params = { username, password };
+        
+        db.exec(sql, params);
+
+        return true;
+    }
 }

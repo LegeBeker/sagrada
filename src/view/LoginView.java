@@ -14,6 +14,7 @@ public class LoginView extends VBox {
 	private TextField fieldPassword;
 
 	private Button buttonSubmit;
+	private Button buttonRegister;
 
 	public LoginView(ViewController view) {
 		this.view = view;
@@ -27,7 +28,10 @@ public class LoginView extends VBox {
 		this.buttonSubmit = new Button("Inloggen");
 		this.buttonSubmit.setOnAction(e -> this.submit());
 
-		this.getChildren().addAll(this.fieldUsername, this.fieldPassword, this.buttonSubmit);
+		this.buttonRegister = new Button("Registreren");
+		this.buttonRegister.setOnAction(e -> this.register());
+
+		this.getChildren().addAll(this.fieldUsername, this.fieldPassword, this.buttonSubmit, this.buttonRegister);
 	}
 
 	public void submit() {
@@ -36,5 +40,9 @@ public class LoginView extends VBox {
 		}
 
 		view.OpenMenuView();
+	}
+
+	public void register() {
+		view.OpenRegisterView();
 	}
 }

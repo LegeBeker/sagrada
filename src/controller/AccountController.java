@@ -18,6 +18,19 @@ public class AccountController {
 		return true;
 	}
 
+	public boolean createAccount(String username, String password) {
+		Account curAccount = new Account();
+
+		curAccount.setUsername(username);
+		curAccount.setPassword(password);
+
+		if (!curAccount.createAccount()) {
+			return false;
+		}
+		this.curAccount = curAccount;
+		return true;
+	}
+
 	public Account getAccount() {
 		return this.curAccount;
 	}

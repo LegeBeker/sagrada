@@ -41,15 +41,20 @@ public final class Database {
             for (int i = 0; i < params.length; i++) {
                 stmt.setString(i + 1, params[i]);
             }
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                ArrayList<String> row = new ArrayList<>();
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    row.add(rs.getString(i));
+            stmt.execute(); 
+            ResultSet rs = stmt.getResultSet(); 
+
+            if (rs != null) {
+                while (rs.next()) {
+                    ArrayList<String> row = new ArrayList<>();
+                    for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                        row.add(rs.getString(i));
+                    }
+                    result.add(row);
                 }
-                result.add(row);
+                rs.close();
             }
-            rs.close();
+            
             stmt.close();
             conn.close();
         } catch (SQLException e) {
