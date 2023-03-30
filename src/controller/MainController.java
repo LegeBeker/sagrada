@@ -14,12 +14,14 @@ public class MainController extends Application {
 
 		stage.setTitle("Sagrada Groep J");
 		stage.getIcons().add(new Image("file:resources/img/app-icon.png"));
-		stage.centerOnScreen();
 
 		stage.setScene(view);
 
 		stage.setMinHeight(500);
 		stage.setMinWidth(800);
+
+		stage.centerOnScreen();
+		stage.isAlwaysOnTop();
 
 		stage.show();
 	}
