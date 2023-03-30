@@ -5,6 +5,10 @@ import model.Account;
 public class AccountController {
 	private Account curAccount;
 
+	public Account getAccount() {
+		return this.curAccount;
+	}
+
 	public Boolean loginAccount(String username, String password) {
 		Account curAccount = new Account();
 
@@ -31,7 +35,8 @@ public class AccountController {
 		return true;
 	}
 
-	public Account getAccount() {
-		return this.curAccount;
+	public boolean logoutAccount() {
+		this.curAccount = null;
+		return true;
 	}
 }
