@@ -11,12 +11,14 @@ import javafx.scene.text.Font;
 import view.LoginView;
 import view.RegisterView;
 import view.MenuView;
+import view.NewGameView;
 import view.GamesView;
 import view.StatsView;
 
 public class ViewController extends Scene {
 
     private AccountController accountController;
+    private GameController gameController;
 
     private final Font font = new Font("Arial", 20);
     private final Background background = new Background(new BackgroundFill(Color.web("#4483c2"), null, null));
@@ -28,6 +30,7 @@ public class ViewController extends Scene {
         super(new Pane());
 
         this.accountController = new AccountController();
+        this.gameController = new GameController();
 
         this.openLoginView();
     }
@@ -71,7 +74,16 @@ public class ViewController extends Scene {
         setRoot(statsView);
     }
 
+    public void openNewGameView() {
+        NewGameView newGameView = new NewGameView(this);
+        setRoot(newGameView);
+    }
+
     public AccountController getAccountController() {
         return accountController;
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 }
