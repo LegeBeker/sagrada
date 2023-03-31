@@ -10,7 +10,7 @@ public final class AccountDB {
         String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
         String[] params = {username, password};
 
-        return db.exec(sql, params).isEmpty();
+        return !db.exec(sql, params).isEmpty();
     }
 
     public static boolean createAccount(final String username, final String password) {
