@@ -8,10 +8,12 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import model.Game;
 import view.LoginView;
 import view.RegisterView;
 import view.MenuView;
 import view.NewGameView;
+import view.GameView;
 import view.GamesView;
 import view.StatsView;
 
@@ -77,6 +79,11 @@ public class ViewController extends Scene {
     public void openNewGameView() {
         NewGameView newGameView = new NewGameView(this);
         setRoot(newGameView);
+    }
+
+    public void openGameView(final Game game) {
+        GameView gameView = new GameView(this, game);
+        setRoot(gameView);
     }
 
     public AccountController getAccountController() {

@@ -41,5 +41,15 @@ public class GameListView extends FlowPane {
 
         this.getChildren().addAll(this.textId, this.textTurnPlayer, this.textRoundNumber, this.textDate);
 
+        this.setOnMouseClicked(e -> this.openGameView());
+    }
+
+    public void update() {
+        this.textTurnPlayer.setText("Beurtspeler: " + this.game.getTurnPlayer());
+        this.textRoundNumber.setText("Ronde: " + this.game.getCurrentRound());
+    }
+
+    public void openGameView() {
+            this.view.openGameView(this.game);
     }
 }
