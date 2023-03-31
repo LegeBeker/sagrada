@@ -9,5 +9,6 @@ public class StatsView extends VBox {
 
     public StatsView(final ViewController view) {
         this.view = view;
+        this.setBackground(view.getBackground());
     }
 }
