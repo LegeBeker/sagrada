@@ -5,11 +5,15 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainController extends Application {
-    public void startup(String[] args) {
+
+    private final int minHeight = 500;
+    private final int minWidth = 800;
+
+    public void startup(final String[] args) {
         launch(args);
     }
 
-    public void start(Stage stage) {
+    public void start(final Stage stage) {
         ViewController view = new ViewController();
 
         stage.setTitle("Sagrada Groep J");
@@ -17,8 +21,8 @@ public class MainController extends Application {
 
         stage.setScene(view);
 
-        stage.setMinHeight(500);
-        stage.setMinWidth(800);
+        stage.setMinHeight(minHeight);
+        stage.setMinWidth(minWidth);
 
         stage.centerOnScreen();
         stage.isAlwaysOnTop();

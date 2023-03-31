@@ -20,13 +20,13 @@ public class RegisterView extends VBox {
     private Button buttonSubmit;
     private Button buttonLoginPage;
 
-    private int buttonHeight = 25;
-    private int buttonWidth = 200;
+    private final int buttonHeight = 25;
+    private final int buttonWidth = 200;
 
-    private int padding = 200;
-    private int spacing = 15;
+    private final int padding = 200;
+    private final int spacing = 15;
 
-    public RegisterView(ViewController view) {
+    public RegisterView(final ViewController view) {
         this.view = view;
         this.setBackground(view.getBackground());
 
@@ -58,7 +58,6 @@ public class RegisterView extends VBox {
         this.getChildren().addAll(view.getLogo(), this.fieldUsername, this.fieldPassword, this.boxButtons);
     }
 
-
     public void submit() {
         if (!view.getAccountController().createAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
             throw new RuntimeException("Register failed");
@@ -67,7 +66,7 @@ public class RegisterView extends VBox {
         view.openMenuView();
     }
 
-    public void openLoginView(){
+    public void openLoginView() {
         view.openLoginView();
     }
 }

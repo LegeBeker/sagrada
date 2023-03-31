@@ -7,7 +7,7 @@ public class StatsView extends VBox {
 
     private ViewController view;
 
-    public StatsView(ViewController view) {
+    public StatsView(final ViewController view) {
         this.view = view;
     }
 }

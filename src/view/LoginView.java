@@ -20,13 +20,13 @@ public class LoginView extends VBox {
     private Button buttonSubmit;
     private Button buttonRegisterPage;
 
-    private int buttonHeight = 25;
-    private int buttonWidth = 200;
+    private final int buttonHeight = 25;
+    private final int buttonWidth = 200;
 
-    private int padding = 200;
-    private int spacing = 15;
+    private final int padding = 200;
+    private final int spacing = 15;
 
-    public LoginView(ViewController view) {
+    public LoginView(final ViewController view) {
         this.view = view;
         this.setBackground(view.getBackground());
 

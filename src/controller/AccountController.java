@@ -9,7 +9,7 @@ public class AccountController {
         return this.curAccount;
     }
 
-    public Boolean loginAccount(String username, String password) {
+    public Boolean loginAccount(final String username, final String password) {
         Account curAccount = new Account();
 
         curAccount.setUsername(username);
@@ -22,7 +22,7 @@ public class AccountController {
         return true;
     }
 
-    public boolean createAccount(String username, String password) {
+    public boolean createAccount(final String username, final String password) {
         Account curAccount = new Account();
 
         curAccount.setUsername(username);
