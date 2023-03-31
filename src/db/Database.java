@@ -50,8 +50,10 @@ public final class Database {
             }
 
             PreparedStatement stmt = conn.prepareStatement(query);
-            for (int i = 0; i < params.length; i++) {
-                stmt.setString(i + 1, params[i]);
+            if (params != null) {
+                for (int i = 0; i < params.length; i++) {
+                    stmt.setString(i + 1, params[i]);
+                }
             }
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
