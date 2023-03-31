@@ -16,60 +16,62 @@ import view.StatsView;
 
 public class ViewController extends Scene {
 
-	private AccountController accountController;
+    private AccountController accountController;
 
-	private ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
-	private Background background = new Background(new BackgroundFill(Color.web("#4483c2"), null, null));
-	private Font font = new Font("Arial", 20);
+    private final Font font = new Font("Arial", 20);
+    private final Background background = new Background(new BackgroundFill(Color.web("#4483c2"), null, null));
+    private final ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
 
-	public ViewController() {
-		super(new Pane());
+    private final int logoWidth = 300;
 
-		this.accountController = new AccountController();
+    public ViewController() {
+        super(new Pane());
 
-		this.openLoginView();
-	}
+        this.accountController = new AccountController();
 
-	public ImageView getLogo() {
-		this.logo.setFitWidth(300);
-		this.logo.setPreserveRatio(true);
-		return this.logo;
-	}
+        this.openLoginView();
+    }
 
-	public Background getBackground() {
-		return this.background;
-	}
+    public Font getFont() {
+        return this.font;
+    }
 
-	public Font getFont() {
-		return this.font;
-	}
+    public Background getBackground() {
+        return this.background;
+    }
 
-	public void openLoginView() {
-		LoginView loginView = new LoginView(this);
-		setRoot(loginView);
-	}
+    public ImageView getLogo() {
+        this.logo.setFitWidth(logoWidth);
+        this.logo.setPreserveRatio(true);
+        return this.logo;
+    }
 
-	public void openRegisterView() {
-		RegisterView registerView = new RegisterView(this);
-		setRoot(registerView);
-	}
+    public void openLoginView() {
+        LoginView loginView = new LoginView(this);
+        setRoot(loginView);
+    }
 
-	public void openMenuView() {
-		MenuView menuView = new MenuView(this);
-		setRoot(menuView);
-	}
+    public void openRegisterView() {
+        RegisterView registerView = new RegisterView(this);
+        setRoot(registerView);
+    }
 
-	public void openGamesView() {
-		GamesView gamesView = new GamesView(this);
-		setRoot(gamesView);
-	}
+    public void openMenuView() {
+        MenuView menuView = new MenuView(this);
+        setRoot(menuView);
+    }
 
-	public void openStatsView() {
-		StatsView statsView = new StatsView(this);
-		setRoot(statsView);
-	}
+    public void openGamesView() {
+        GamesView gamesView = new GamesView(this);
+        setRoot(gamesView);
+    }
 
-	public AccountController getAccountController() {
-		return accountController;
-	}
+    public void openStatsView() {
+        StatsView statsView = new StatsView(this);
+        setRoot(statsView);
+    }
+
+    public AccountController getAccountController() {
+        return accountController;
+    }
 }

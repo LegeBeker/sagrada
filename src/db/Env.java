@@ -9,7 +9,7 @@ public final class Env {
     private File envFile;
     private Properties values;
 
-    public Env(String fileName) {
+    public Env(final String fileName) {
         this.envFile = new File(fileName);
 
         if (!this.envFile.exists()) {
@@ -24,7 +24,7 @@ public final class Env {
         }
     }
 
-    public String get(String key) {
+    public String get(final String key) {
         return this.values.getProperty(key);
     }
 }

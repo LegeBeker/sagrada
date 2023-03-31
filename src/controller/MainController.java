@@ -5,24 +5,28 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainController extends Application {
-	public void startup(String[] args) {
-		launch(args);
-	}
 
-	public void start(Stage stage) {
-		ViewController view = new ViewController();
+    private final int minHeight = 500;
+    private final int minWidth = 800;
 
-		stage.setTitle("Sagrada Groep J");
-		stage.getIcons().add(new Image("file:resources/img/app-icon.png"));
+    public void startup(final String[] args) {
+        launch(args);
+    }
 
-		stage.setScene(view);
+    public void start(final Stage stage) {
+        ViewController view = new ViewController();
 
-		stage.setMinHeight(500);
-		stage.setMinWidth(800);
+        stage.setTitle("Sagrada Groep J");
+        stage.getIcons().add(new Image("file:resources/img/app-icon.png"));
 
-		stage.centerOnScreen();
-		stage.isAlwaysOnTop();
+        stage.setScene(view);
 
-		stage.show();
-	}
+        stage.setMinHeight(minHeight);
+        stage.setMinWidth(minWidth);
+
+        stage.centerOnScreen();
+        stage.isAlwaysOnTop();
+
+        stage.show();
+    }
 }

@@ -42,7 +42,7 @@ public final class Database {
         }
     }
 
-    public ArrayList<ArrayList<String>> exec(String query, String[] params) {
+    public ArrayList<ArrayList<String>> exec(final String query, final String[] params) {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
         try {
             if (this.conn == null || this.conn.isClosed()) {

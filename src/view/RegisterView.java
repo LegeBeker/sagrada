@@ -13,51 +13,50 @@ public class RegisterView extends VBox {
     private ViewController view;
 
     private TextField fieldUsername;
-	private TextField fieldPassword;
+    private TextField fieldPassword;
 
-	private HBox boxButtons;
+    private HBox boxButtons;
 
-	private Button buttonSubmit;
-	private Button buttonLoginPage;
+    private Button buttonSubmit;
+    private Button buttonLoginPage;
 
-	private int buttonHeight = 25;
-	private int buttonWidth = 200;
+    private final int buttonHeight = 25;
+    private final int buttonWidth = 200;
 
-	private int padding = 200;
-	private int spacing = 15;
+    private final int padding = 200;
+    private final int spacing = 15;
 
-    public RegisterView(ViewController view) {
+    public RegisterView(final ViewController view) {
         this.view = view;
-		this.setBackground(view.getBackground());
+        this.setBackground(view.getBackground());
 
-		this.setAlignment(Pos.CENTER);
+        this.setAlignment(Pos.CENTER);
 
-		this.fieldUsername = new TextField();
-		this.fieldUsername.setPromptText("Gebruikersnaam");
+        this.fieldUsername = new TextField();
+        this.fieldUsername.setPromptText("Gebruikersnaam");
 
-		this.fieldPassword = new TextField();
-		this.fieldPassword.setPromptText("Wachtwoord");
+        this.fieldPassword = new TextField();
+        this.fieldPassword.setPromptText("Wachtwoord");
 
-		this.buttonSubmit = new Button("Registeren");
-		this.buttonSubmit.setPrefSize(this.buttonWidth, this.buttonHeight);
-		this.buttonSubmit.setOnAction(e -> this.submit());
+        this.buttonSubmit = new Button("Registeren");
+        this.buttonSubmit.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonSubmit.setOnAction(e -> this.submit());
 
-		this.buttonLoginPage = new Button("Login pagina");
-		this.buttonLoginPage.setPrefSize(this.buttonWidth, this.buttonHeight);
-		this.buttonLoginPage.setOnAction(e -> this.openLoginView());
+        this.buttonLoginPage = new Button("Login pagina");
+        this.buttonLoginPage.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonLoginPage.setOnAction(e -> this.openLoginView());
 
-		this.boxButtons = new HBox();
-		this.boxButtons.getChildren().addAll(this.buttonSubmit, this.buttonLoginPage);
+        this.boxButtons = new HBox();
+        this.boxButtons.getChildren().addAll(this.buttonSubmit, this.buttonLoginPage);
 
-		this.boxButtons.setAlignment(Pos.CENTER);
-		this.boxButtons.setSpacing(this.spacing);
+        this.boxButtons.setAlignment(Pos.CENTER);
+        this.boxButtons.setSpacing(this.spacing);
 
-		this.setSpacing(this.spacing);
-		this.setPadding(new Insets(0, this.padding, 0, this.padding));
+        this.setSpacing(this.spacing);
+        this.setPadding(new Insets(0, this.padding, 0, this.padding));
 
-		this.getChildren().addAll(view.getLogo(), this.fieldUsername, this.fieldPassword, this.boxButtons);
+        this.getChildren().addAll(view.getLogo(), this.fieldUsername, this.fieldPassword, this.boxButtons);
     }
-
 
     public void submit() {
         if (!view.getAccountController().createAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
@@ -67,7 +66,7 @@ public class RegisterView extends VBox {
         view.openMenuView();
     }
 
-    public void openLoginView(){
+    public void openLoginView() {
         view.openLoginView();
     }
 }
