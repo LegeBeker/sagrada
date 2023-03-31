@@ -21,6 +21,8 @@ public class GamesView extends VBox {
 
     private ScrollPane scrollBox;
 
+    private VBox boxGames;
+
     private final int scrollBoxHeight = 300;
     private final int scrollBoxWidth = 600;
 
@@ -52,9 +54,13 @@ public class GamesView extends VBox {
 
         this.games = view.getGameController().getGames();
 
+        this.boxGames = new VBox();
+
         for (Game game : this.games) {
-            this.scrollBox.setContent(new GameListView(this.view, game));
+            this.boxGames.getChildren().add(new GameListView(this.view, game));
         }
+
+        this.scrollBox.setContent(this.boxGames);
 
         this.scrollBox.setPrefSize(scrollBoxWidth, scrollBoxHeight);
 
