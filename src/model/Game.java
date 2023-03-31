@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import db.GameDB;
 
@@ -14,18 +16,18 @@ public class Game {
     private String creationDate;
 
     public static ArrayList<Game> getAll() {
-        ArrayList<ArrayList<String>> gamesDB = GameDB.getAll();
+        List<Map<String, String>> gamesDB = GameDB.getAll();
 
         ArrayList<Game> games = new ArrayList<Game>();
 
-        for (ArrayList<String> arrayList : gamesDB) {
+        for (Map<String, String> gameMap : gamesDB) {
             Game game = new Game();
 
-            game.idGame = Integer.parseInt(arrayList.get(0));
-            // game.turnPlayer = new Player.get(Integer.parseInt(arrayList.get(1)));
-            game.turnPlayer = Integer.parseInt(arrayList.get(1));
-            game.currentRound = Integer.parseInt(arrayList.get(2));
-            game.creationDate = arrayList.get(3);
+            game.idGame = Integer.parseInt(gameMap.get("idgame"));
+            // game.turnPlayer = new Player.get(Integer.parseInt(gameMap.get("turn_idplayer")));
+            game.turnPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
+            game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+            game.creationDate = gameMap.get("creationdate");
 
             games.add(game);
         }
