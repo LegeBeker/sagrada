@@ -9,11 +9,39 @@ import db.GameDB;
 public class Game {
     private int idGame;
 
-    // private Player turnPlayer;
-    private int turnPlayer;
+    private int turnIdPlayer;
     private int currentRound;
 
     private String creationDate;
+
+    public int getId() {
+        return this.idGame;
+    }
+
+    public Player getTurnPlayer() {
+        return Player.get(this.turnIdPlayer);
+    }
+
+    public int getCurrentRound() {
+        return this.currentRound;
+    }
+
+    public String getCreationDate() {
+        return this.creationDate;
+    }
+
+    public static Game get(final int idGame) {
+        Game game = new Game();
+
+        Map<String, String> gameMap = GameDB.get(idGame);
+
+        game.idGame = Integer.parseInt(gameMap.get("idgame"));
+        game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
+        game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+        game.creationDate = gameMap.get("creationdate");
+
+        return game;
+    }
 
     public static ArrayList<Game> getAll() {
         List<Map<String, String>> gamesDB = GameDB.getAll();
@@ -24,8 +52,7 @@ public class Game {
             Game game = new Game();
 
             game.idGame = Integer.parseInt(gameMap.get("idgame"));
-            // game.turnPlayer = new Player.get(Integer.parseInt(gameMap.get("turn_idplayer")));
-            game.turnPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
+            game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
             game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
             game.creationDate = gameMap.get("creationdate");
 
@@ -33,22 +60,5 @@ public class Game {
         }
 
         return games;
-    }
-
-    public int getId() {
-        return this.idGame;
-    }
-
-    // public Player getTurnPlayer() {
-    public int getTurnPlayer() {
-        return this.turnPlayer;
-    }
-
-    public int getCurrentRound() {
-        return this.currentRound;
-    }
-
-    public String getCreationDate() {
-        return this.creationDate;
     }
 }
