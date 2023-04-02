@@ -41,25 +41,25 @@ public class GameListView extends HBox {
         this.textId = new Text(Integer.toString(this.game.getId()));
         this.textId.setFill(Color.WHITE);
         StackPane textIdBox = new StackPane(this.textId);
-        textIdBox.prefWidthProperty().bind(this.widthProperty().multiply(widthFraction));
+        textIdBox.prefWidthProperty().bind(this.widthProperty().multiply(widthFraction).subtract(100));
         textIdBox.setStyle("-fx-border-color: white; -fx-border-width: 1px;");
 
         this.textTurnPlayer = new Text(this.game.getTurnPlayer().getUsername());
         this.textTurnPlayer.setFill(Color.WHITE);
         StackPane textTurnPlayerBox = new StackPane(this.textTurnPlayer);
-        textTurnPlayerBox.prefWidthProperty().bind(this.widthProperty().multiply(2 * widthFraction));
+        textTurnPlayerBox.prefWidthProperty().bind(this.widthProperty().multiply(2 * widthFraction).subtract(100));
         textTurnPlayerBox.setStyle("-fx-border-color: white; -fx-border-width: 1px;");
 
         this.textRoundNumber = new Text(Integer.toString(this.game.getCurrentRound()));
         this.textRoundNumber.setFill(Color.WHITE);
         StackPane textRoundNumberBox = new StackPane(this.textRoundNumber);
-        textRoundNumberBox.prefWidthProperty().bind(this.widthProperty().multiply(widthFraction));
+        textRoundNumberBox.prefWidthProperty().bind(this.widthProperty().multiply(widthFraction).subtract(100));
         textRoundNumberBox.setStyle("-fx-border-color: white; -fx-border-width: 1px;");
 
         this.textDate = new Text(this.game.getCreationDate());
         this.textDate.setFill(Color.WHITE);
         StackPane textDateBox = new StackPane(this.textDate);
-        textDateBox.prefWidthProperty().bind(this.widthProperty().multiply(2 * widthFraction));
+        textDateBox.prefWidthProperty().bind(this.widthProperty().multiply(2 * widthFraction).subtract(100));
         textDateBox.setStyle("-fx-border-color: white; -fx-border-width: 1px;");
 
         this.getChildren().addAll(textIdBox, textTurnPlayerBox, textRoundNumberBox, textDateBox);
