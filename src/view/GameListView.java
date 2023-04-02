@@ -32,8 +32,7 @@ public class GameListView extends FlowPane {
 
         this.textId = new Text("Id: " + this.game.getId());
 
-        // this.textTurnPlayer = new Text("Beurtspeler: " + this.game.getTurnPlayer().getUsername());
-        this.textTurnPlayer = new Text("Beurtspeler: " + this.game.getTurnPlayer());
+        this.textTurnPlayer = new Text("Beurtspeler: " + this.game.getTurnPlayer().getUsername());
 
         this.textRoundNumber = new Text("Ronde: " + this.game.getCurrentRound());
 
