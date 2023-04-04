@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import db.GameDB;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Game {
     private int idGame;
@@ -60,5 +62,14 @@ public class Game {
         }
 
         return games;
+    }
+
+    public StringProperty turnPlayerUsernameProperty() {
+        return new SimpleStringProperty(getTurnPlayer().getUsername());
+    }
+
+    public StringProperty creationDateShowProperty() {
+        final int year = 5;
+        return new SimpleStringProperty(getCreationDate().substring(year));
     }
 }
