@@ -30,8 +30,6 @@ public class GamesView extends VBox {
     private final int scrollBoxHeight = 300;
     private final int scrollBoxWidth = 400;
 
-    private ArrayList<Game> games;
-
     private TableView<Game> table;
 
     private HBox boxButtons;
@@ -75,9 +73,7 @@ public class GamesView extends VBox {
 
         Collections.addAll(this.table.getColumns(), idCol, turnPlayerCol, roundCol, dateCol);
 
-        this.games = view.getGameController().getGames();
-
-        for (Game game : this.games) {
+        for (Game game : view.getGameController().getGames()) {
             this.table.getItems().add(game);
         }
 
