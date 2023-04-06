@@ -1,4 +1,4 @@
-package controller;
+package main.java.controller;
 
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -21,8 +21,8 @@ public class MainController extends Application {
 
         stage.setScene(view);
 
-        stage.setMinHeight(minHeight);
-        stage.setMinWidth(minWidth);
+        stage.setMinHeight(this.minHeight);
+        stage.setMinWidth(this.minWidth);
 
         stage.centerOnScreen();
         stage.isAlwaysOnTop();

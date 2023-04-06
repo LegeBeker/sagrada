@@ -1,19 +1,20 @@
-package view;
+package main.java.view;
 
-import controller.ViewController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import main.java.controller.ViewController;
 
 public class LoginView extends VBox {
 
     private ViewController view;
 
     private TextField fieldUsername;
-    private TextField fieldPassword;
+    private PasswordField fieldPassword;
 
     private HBox boxButtons;
 
@@ -35,7 +36,7 @@ public class LoginView extends VBox {
         this.fieldUsername = new TextField();
         this.fieldUsername.setPromptText("Gebruikersnaam");
 
-        this.fieldPassword = new TextField();
+        this.fieldPassword = new PasswordField();
         this.fieldPassword.setPromptText("Wachtwoord");
 
         this.buttonSubmit = new Button("Inloggen");
@@ -59,9 +60,24 @@ public class LoginView extends VBox {
     }
 
     public void submit() {
-        if (!view.getAccountController().loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
-            throw new RuntimeException("Login failed");
+        try {
+            if (this.fieldUsername.getText().isEmpty() || this.fieldPassword.getText().isEmpty()) {
+                throw new RuntimeException("Vul alle velden in");
+            }
+
+            if (!this.fieldUsername.getText().matches("^[a-zA-Z0-9]{3,25}$")) {
+                throw new RuntimeException("Gebruikersnaam is ongeldig");
+            } else if (!this.fieldPassword.getText().matches("^[a-zA-Z0-9]{3,25}$")) {
+                throw new RuntimeException("Wachtwoord is ongeldig");
+            }
+
+            if (!view.getAccountController().loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
+                throw new RuntimeException("Gebruikersnaam of wachtwoord is onjuist");
+            }
+        } catch (RuntimeException e) {
+            view.displayError(e.getMessage());
         }
+
         view.openMenuView();
     }
 
