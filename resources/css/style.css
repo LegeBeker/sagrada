@@ -1,0 +1,7 @@
+.error-box {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-color: #ff0000;
+    -fx-padding: 5px;
+    -fx-alignment: center;
+}
