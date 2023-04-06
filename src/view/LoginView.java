@@ -4,6 +4,7 @@ import controller.ViewController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -13,7 +14,7 @@ public class LoginView extends VBox {
     private ViewController view;
 
     private TextField fieldUsername;
-    private TextField fieldPassword;
+    private PasswordField fieldPassword;
 
     private HBox boxButtons;
 
@@ -35,7 +36,7 @@ public class LoginView extends VBox {
         this.fieldUsername = new TextField();
         this.fieldUsername.setPromptText("Gebruikersnaam");
 
-        this.fieldPassword = new TextField();
+        this.fieldPassword = new PasswordField();
         this.fieldPassword.setPromptText("Wachtwoord");
 
         this.buttonSubmit = new Button("Inloggen");
