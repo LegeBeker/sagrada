@@ -14,18 +14,6 @@ public class MainController extends Application {
     }
 
     public void start(final Stage stage) {
-        ViewController view = new ViewController();
-
-        stage.setTitle("Sagrada Groep J");
-        stage.getIcons().add(new Image("file:resources/img/app-icon.png"));
-
-        stage.setScene(view);
-
-        stage.setMinHeight(minHeight);
-        stage.setMinWidth(minWidth);
-
-        stage.centerOnScreen();
-        stage.isAlwaysOnTop();
 
         stage.show();
     }
