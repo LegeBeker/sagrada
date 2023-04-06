@@ -69,7 +69,6 @@ public class RegisterView extends VBox {
             if (this.fieldUsername.getText().isEmpty() || this.fieldPassword.getText().isEmpty()
                     || this.fieldPasswordRepeat.getText().isEmpty()) {
                 throw new RuntimeException("Vul alle velden in");
-
             }
 
             if (!this.fieldPassword.getText().equals(this.fieldPasswordRepeat.getText())) {
