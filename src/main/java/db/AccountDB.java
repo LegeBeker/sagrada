@@ -1,4 +1,4 @@
-package db;
+package main.java.db;
 
 public final class AccountDB {
     private AccountDB() {

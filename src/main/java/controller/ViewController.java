@@ -1,4 +1,4 @@
-package controller;
+package main.java.controller;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -14,15 +14,15 @@ import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
-import model.Game;
-import view.LoginView;
-import view.RegisterView;
-import view.MenuView;
-import view.NewGameView;
-import view.GameView;
-import view.GamesView;
-import view.StatsView;
 import javafx.util.Duration;
+import main.java.model.Game;
+import main.java.view.GameView;
+import main.java.view.GamesView;
+import main.java.view.LoginView;
+import main.java.view.MenuView;
+import main.java.view.NewGameView;
+import main.java.view.RegisterView;
+import main.java.view.StatsView;
 
 public class ViewController extends Scene {
 

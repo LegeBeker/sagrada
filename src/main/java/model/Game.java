@@ -1,12 +1,12 @@
-package model;
+package main.java.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import db.GameDB;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import main.java.db.GameDB;
 
 public class Game {
     private int idGame;

@@ -1,10 +1,10 @@
-package model;
+package main.java.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import db.PlayerDB;
+import main.java.db.PlayerDB;
 
 public class Player {
     private int idPlayer;

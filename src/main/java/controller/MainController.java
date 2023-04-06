@@ -1,4 +1,4 @@
-package controller;
+package main.java.controller;
 
 import javafx.application.Application;
 import javafx.scene.image.Image;

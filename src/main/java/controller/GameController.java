@@ -1,8 +1,8 @@
-package controller;
+package main.java.controller;
 
 import java.util.ArrayList;
 
-import model.Game;
+import main.java.model.Game;
 
 public class GameController {
     public ArrayList<Game> getGames() {

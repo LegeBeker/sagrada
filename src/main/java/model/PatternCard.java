@@ -1,8 +1,8 @@
-package model;
+package main.java.model;
 
 import java.util.Map;
 
-import db.PatternCardDB;
+import main.java.db.PatternCardDB;
 
 public class PatternCard {
     private int idPatternCard;

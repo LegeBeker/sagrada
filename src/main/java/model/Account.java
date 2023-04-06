@@ -1,6 +1,6 @@
-package model;
+package main.java.model;
 
-import db.AccountDB;
+import main.java.db.AccountDB;
 
 public class Account {
     private String username;
