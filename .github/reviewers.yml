@@ -1,18 +1,12 @@
-reviewers:
-  default:
-    - MikeWhileCoding
-    - Eren073
-    - Euphratesdb
-    - larsvanherwijnen
-    - LegeBeker
-    - Mourad787
-    - Neverless90
-    - TimBogersGitHub
-
-options:
-  ignore_draft: true
-  ignored_keywords:
-    - DO NOT REVIEW
-  enable_group_assignment: false
-  number_of_reviewers: 3
-  last_files_match_only: false
+groups:
+  - name: devs # name of the group
+    reviewers: 3 # amount of reviewers
+    usernames: # github usernames of the reviewers
+      - MikeWhileCoding
+      - Eren073
+      - Euphratesdb
+      - larsvanherwijnen
+      - LegeBeker
+      - Mourad787
+      - Neverless90
+      - TimBogersGitHub
