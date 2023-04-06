@@ -21,6 +21,7 @@
 /*.jar
 
 .env
+.env.test
 
 bin/
 .idea

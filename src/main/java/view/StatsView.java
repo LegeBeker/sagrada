@@ -1,7 +1,7 @@
-package view;
+package main.java.view;
 
-import controller.ViewController;
 import javafx.scene.layout.VBox;
+import main.java.controller.ViewController;
 
 public class StatsView extends VBox {
 

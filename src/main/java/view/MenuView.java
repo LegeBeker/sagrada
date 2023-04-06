@@ -1,6 +1,5 @@
-package view;
+package main.java.view;
 
-import controller.ViewController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -8,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import main.java.controller.ViewController;
 
 public class MenuView extends VBox {
 
@@ -52,7 +52,8 @@ public class MenuView extends VBox {
         this.setSpacing(this.spacing);
         this.setPadding(new Insets(0, this.padding, 0, this.padding));
 
-        this.getChildren().addAll(view.getLogo(), this.textGreet, this.buttonGames, this.buttonStats, this.buttonLogout);
+        this.getChildren().addAll(view.getLogo(), this.textGreet, this.buttonGames, this.buttonStats,
+                this.buttonLogout);
     }
 
     private void logout() {

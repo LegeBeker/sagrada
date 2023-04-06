@@ -1,4 +1,4 @@
-package controller;
+package main.java.controller;
 
 public final class Main {
     private Main() {
