@@ -60,9 +60,24 @@ public class LoginView extends VBox {
     }
 
     public void submit() {
-        if (!view.getAccountController().loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
-            throw new RuntimeException("Login failed");
+        try {
+            if (this.fieldUsername.getText().isEmpty() || this.fieldPassword.getText().isEmpty()) {
+                throw new RuntimeException("Vul alle velden in");
+            }
+
+            if (!this.fieldUsername.getText().matches("^[a-zA-Z0-9]{3,25}$")) {
+                throw new RuntimeException("Gebruikersnaam is ongeldig");
+            } else if (!this.fieldPassword.getText().matches("^[a-zA-Z0-9]{3,25}$")) {
+                throw new RuntimeException("Wachtwoord is ongeldig");
+            }
+
+            if (!view.getAccountController().loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
+                throw new RuntimeException("Gebruikersnaam of wachtwoord is onjuist");
+            }
+        } catch (RuntimeException e) {
+            view.displayError(e.getMessage());
         }
+
         view.openMenuView();
     }
 
