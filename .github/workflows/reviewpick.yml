@@ -11,3 +11,4 @@ jobs:
     - uses: uesteibar/reviewer-lottery@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+        config: .github/reviewer-lottery.yml
