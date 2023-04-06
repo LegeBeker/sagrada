@@ -21,8 +21,8 @@ public class MainController extends Application {
 
         stage.setScene(view);
 
-        stage.setMinHeight(minHeight);
-        stage.setMinWidth(minWidth);
+        stage.setMinHeight(this.minHeight);
+        stage.setMinWidth(this.minWidth);
 
         stage.centerOnScreen();
         stage.isAlwaysOnTop();
