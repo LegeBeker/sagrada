@@ -1,6 +1,6 @@
-package controller;
+package main.java.controller;
 
-import model.Account;
+import main.java.model.Account;
 
 public class AccountController {
     private Account curAccount;

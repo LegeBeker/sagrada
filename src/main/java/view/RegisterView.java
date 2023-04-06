@@ -1,6 +1,5 @@
-package view;
+package main.java.view;
 
-import controller.ViewController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -8,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import main.java.controller.ViewController;
 
 public class RegisterView extends VBox {
 

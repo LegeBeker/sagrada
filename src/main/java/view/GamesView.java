@@ -1,8 +1,7 @@
-package view;
+package main.java.view;
 
 import java.util.Collections;
 
-import controller.ViewController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -16,7 +15,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import model.Game;
+import main.java.controller.ViewController;
+import main.java.model.Game;
 
 public class GamesView extends VBox {
 

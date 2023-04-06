@@ -1,8 +1,8 @@
-package view;
+package main.java.view;
 
-import controller.ViewController;
 import javafx.scene.layout.VBox;
-import model.Game;
+import main.java.controller.ViewController;
+import main.java.model.Game;
 
 public class GameView extends VBox {
 
