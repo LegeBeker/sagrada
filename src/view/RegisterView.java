@@ -61,29 +61,33 @@ public class RegisterView extends VBox {
         this.setPadding(new Insets(0, this.padding, 0, this.padding));
 
         this.getChildren().addAll(view.getLogo(), this.fieldUsername, this.fieldPassword,
-                this.fieldPasswordRepeat,
-                this.boxButtons);
+                this.fieldPasswordRepeat, this.boxButtons);
     }
 
     public void submit() {
-        if (this.fieldUsername.getText().isEmpty() || this.fieldPassword.getText().isEmpty()
-                || this.fieldPasswordRepeat.getText().isEmpty()) {
-            throw new RuntimeException("Please fill in all fields");
+        try {
+            if (this.fieldUsername.getText().isEmpty() || this.fieldPassword.getText().isEmpty()
+                    || this.fieldPasswordRepeat.getText().isEmpty()) {
+                throw new RuntimeException("Vul alle velden in");
 
-        }
+            }
 
-        if (!this.fieldPassword.getText().equals(this.fieldPasswordRepeat.getText())) {
-            throw new RuntimeException("Passwords do not match");
-        }
+            if (!this.fieldPassword.getText().equals(this.fieldPasswordRepeat.getText())) {
+                throw new RuntimeException("Wachtwoorden komen niet overeen");
+            }
 
-        if (!this.fieldUsername.getText().matches("^[a-zA-Z0-9]{3,}$")) {
-            throw new RuntimeException("Username is invalid");
-        } else if (!this.fieldPassword.getText().matches("^[a-zA-Z0-9]{3,}$")) {
-            throw new RuntimeException("Password is invalid");
-        }
+            if (!this.fieldUsername.getText().matches("^[a-zA-Z0-9]{3,25}$")) {
+                throw new RuntimeException("Gebruikersnaam is ongeldig");
+            } else if (!this.fieldPassword.getText().matches("^[a-zA-Z0-9]{3,25}$")) {
+                throw new RuntimeException("Wachtwoord is ongeldig");
+            }
 
-        if (!view.getAccountController().createAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
-            throw new RuntimeException("Register failed");
+            if (!view.getAccountController().createAccount(this.fieldUsername.getText(),
+                    this.fieldPassword.getText())) {
+                throw new RuntimeException("Aanmaken account is mislukt");
+            }
+        } catch (RuntimeException e) {
+            view.displayError(e.getMessage());
         }
 
         view.openMenuView();
