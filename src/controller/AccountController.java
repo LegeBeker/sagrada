@@ -10,6 +10,7 @@ public class AccountController {
     }
 
     public Boolean loginAccount(final String username, final String password) {
+    	// hallo
         Account curAccount = new Account();
 
         curAccount.setUsername(username);
