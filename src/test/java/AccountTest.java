@@ -22,7 +22,7 @@ public class AccountTest {
 
     @Test
     public void testLogin() {
-        assertTrue(accountController.loginAccount("JohnDoe", "Doe123"));
+        assertTrue(accountController.loginAccount("test", "test"));
         assertNotNull(accountController.getAccount());
     }
 
