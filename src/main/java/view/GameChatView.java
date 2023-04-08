@@ -13,12 +13,9 @@ public class GameChatView extends HBox {
     private final Background background = new Background(new BackgroundFill(Color.web("#B00322"), null, null));
     private final Text text = new Text("Chat");
 
-    
-    public GameChatView(ViewController view, Game game) {
+    public GameChatView(final ViewController view, final Game game) {
         this.setBackground(background);
 
         this.getChildren().add(text);
-
     }
-
 }

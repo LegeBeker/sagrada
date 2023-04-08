@@ -14,12 +14,9 @@ public class GameScoreView extends HBox {
 
     private final Text text = new Text("Huidige score per speler");
 
-
-
-    public GameScoreView(ViewController view, Game game) {
+    public GameScoreView(final ViewController view, final Game game) {
         this.setBackground(background);
-        
+
         this.getChildren().add(text);
     }
-    
 }
