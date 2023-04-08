@@ -12,11 +12,9 @@ public class GameScoreView extends HBox {
 
     private final Background background = new Background(new BackgroundFill(Color.web("#666666"), null, null));
 
-    private final Text text = new Text("Huidige score per speler");
-
     public GameScoreView(final ViewController view, final Game game) {
         this.setBackground(background);
 
-        this.getChildren().add(text);
+        this.getChildren().add(new Text("Huidige score per speler"));
     }
 }
