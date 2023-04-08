@@ -1,4 +1,4 @@
-package main.java.view.GameViews;
+package main.java.view;
 
 
 import javafx.scene.layout.Background;

@@ -16,7 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import main.java.model.Game;
-import main.java.view.GameViews.GameView;
+import main.java.view.GameView;
 import main.java.view.GamesView;
 import main.java.view.LoginView;
 import main.java.view.MenuView;

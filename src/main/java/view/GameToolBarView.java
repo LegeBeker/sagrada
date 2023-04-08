@@ -1,4 +1,4 @@
-package main.java.view.GameViews;
+package main.java.view;
 
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -8,17 +8,16 @@ import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
 
-public class GameChatView extends HBox {
+public class GameToolBarView extends HBox {
+    private final Background background = new Background(new BackgroundFill(Color.web("#777564"), null, null));
 
-    private final Background background = new Background(new BackgroundFill(Color.web("#B00322"), null, null));
-    private final Text text = new Text("Chat");
+    private final Text text = new Text("Dobbelstenen en gereedschapkaarten");
 
-    
-    public GameChatView(ViewController view, Game game) {
+    public GameToolBarView(ViewController view, Game game) {
         this.setBackground(background);
-
         this.getChildren().add(text);
 
     }
+
 
 }

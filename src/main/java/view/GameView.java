@@ -1,4 +1,4 @@
-package main.java.view.GameViews;
+package main.java.view;
 
 import javafx.scene.layout.BorderPane;
 import main.java.controller.ViewController;
@@ -15,7 +15,7 @@ public class GameView extends BorderPane {
 
         this.setLeft(new GameScoreView(view, game));
         this.setCenter(new GameBoardView(view, game));
-        this.setBottom(new GameInfoView(view, game));
+        this.setBottom(new GameToolBarView(view, game));
         this.setRight(new GameChatView(view, game));
         
         this.setBackground(view.getBackground());
