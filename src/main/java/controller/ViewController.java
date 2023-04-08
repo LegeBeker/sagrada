@@ -32,6 +32,8 @@ public class ViewController extends Scene {
 
     private AccountController accountController;
     private GameController gameController;
+    private PatternCardController patternCardController;
+
 
     private final Font font = new Font("Arial", 20);
     private final Background background = new Background(new BackgroundFill(Color.web("#4483c2"), null, null));
@@ -60,7 +62,8 @@ public class ViewController extends Scene {
 
         this.accountController = new AccountController();
         this.gameController = new GameController();
-
+        this.patternCardController = new PatternCardController();
+        
         this.openLoginView();
     }
 
@@ -148,5 +151,9 @@ public class ViewController extends Scene {
 
     public GameController getGameController() {
         return gameController;
+    }
+
+    public PatternCardController getPatternCardController() {
+        return patternCardController;
     }
 }
