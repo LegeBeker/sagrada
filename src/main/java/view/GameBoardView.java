@@ -8,21 +8,29 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
+import main.java.model.Player;
 
 public class GameBoardView extends BorderPane {
 
     private static final int GRIDGAP = 20;
+    private final int maxRows = 2;
+    private final int maxCols = 2;
+
+    private int cardCount = 0;
 
     private final Background background = new Background(new BackgroundFill(Color.web("#334564"), null, null));
     private final GridPane boards = new GridPane();
 
     public GameBoardView(final ViewController view, final Game game) {
         this.setBackground(background);
-
-        boards.add(new PatternCardView(view), 1, 1);
-        boards.add(new PatternCardView(view), 1, 2);
-        boards.add(new PatternCardView(view), 2, 1);
-        boards.add(new PatternCardView(view), 2, 2);
+    
+        for (Player player : game.getPlayers()) {
+            if (cardCount >= maxRows * maxCols) {
+                break; // exit the loop once max grid size is reached
+            }
+            boards.add(new PatternCardView(view, player.getPatternCard()), cardCount % maxCols, cardCount / maxCols);
+            cardCount++;
+        }
 
         boards.setHgap(GRIDGAP);
         boards.setVgap(GRIDGAP);

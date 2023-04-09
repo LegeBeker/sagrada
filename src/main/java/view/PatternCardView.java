@@ -1,11 +1,7 @@
 package main.java.view;
 
-import java.util.Random;
-
 import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -26,25 +22,20 @@ public class PatternCardView extends BorderPane {
     private static final int PADDING = 10;
     private static final int DOTRADIUS = 3;
 
-    private final int width = 300;
-    private final int height = 300;
     private static final int POSITIONLOW = 15;
     private static final int POSITIONMEDIUM = 25;
     private static final int POSITIONHIGH = 35;
 
-    private final int totalCards = 24;
+    private final int width = 300;
+    private final int height = 300;
 
     private final GridPane grid = new GridPane();
     private final Text cardName = new Text();
     private final Text cardDifficulty = new Text();
 
-    public PatternCardView(final ViewController view) {
+    public PatternCardView(final ViewController view, final PatternCard patternCard) {
         this.setPrefSize(width, height);
         this.getStyleClass().add("background");
-
-        Random random = new Random();
-        int randomNumber = random.nextInt(totalCards) + 1;
-        PatternCard patternCard = view.getPatternCardController().getPatternCard(randomNumber);
 
         cardName.setText(patternCard.getName());
         TextFlow cardNameFlow = new TextFlow(cardName);

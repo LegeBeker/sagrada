@@ -16,7 +16,7 @@ public class Player {
     private int seqnr;
 
     private String privateObjCardColor;
-    private int idPatternCard;
+    private Integer idPatternCard;
 
     private int score;
 
@@ -50,6 +50,38 @@ public class Player {
 
     public int getScore() {
         return this.score;
+    }
+
+    public void setId(final int idPlayer) {
+        this.idPlayer = idPlayer;
+    }
+
+    public void setUsername(final String username) {
+        this.username = username;
+    }
+
+    public void setIdGame(final int idGame) {
+        this.idGame = idGame;
+    }
+
+    public void setPlayStatus(final String playStatus) {
+        this.playStatus = playStatus;
+    }
+
+    public void setSeqnr(final int seqnr) {
+        this.seqnr = seqnr;
+    }
+
+    public void setPrivateObjCardColor(final String privateObjCardColor) {
+        this.privateObjCardColor = privateObjCardColor;
+    }
+
+    public void setIdPatternCard(final int idPatternCard) {
+        this.idPatternCard = idPatternCard;
+    }
+
+    public void setScore(final int score) {
+        this.score = score;
     }
 
     public static Player get(final int idPlayer) {
