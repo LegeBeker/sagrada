@@ -45,6 +45,9 @@ public class Player {
     }
 
     public PatternCard getPatternCard() {
+        if (this.idPatternCard == null) {
+            return null;
+        }
         return PatternCard.get(this.idPatternCard);
     }
 
@@ -95,7 +98,9 @@ public class Player {
         player.playStatus = playerMap.get("playstatus");
         player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
         player.privateObjCardColor = playerMap.get("private_objectivecard_color");
-        player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
+        if (playerMap.get("idpatterncard") != null) {
+            player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
+        }
         player.score = Integer.parseInt(playerMap.get("score"));
 
         return player;
@@ -115,7 +120,9 @@ public class Player {
             player.playStatus = playerMap.get("playstatus");
             player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
             player.privateObjCardColor = playerMap.get("private_objectivecard_color");
-            player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
+            if (playerMap.get("idpatterncard") != null) {
+                player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
+            }
             player.score = Integer.parseInt(playerMap.get("score"));
 
             players.add(player);
