@@ -2,6 +2,7 @@ package main.java.view;
 
 import java.util.Random;
 
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -11,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.PatternCard;
 
@@ -37,23 +39,29 @@ public class PatternCardView extends BorderPane {
     public PatternCardView(final ViewController view) {
         this.setPrefSize(width, height);
         this.setBackground(backgroundCard);
+        this.getStyleClass().add("background");
 
         Random random = new Random();
         int randomNumber = random.nextInt(24) + 1;
         PatternCard patternCard = view.getPatternCardController().getPatternCard(randomNumber);
 
         cardName.setText(patternCard.getName());
+        TextFlow cardNameFlow = new TextFlow(cardName);
+        cardNameFlow.setPadding(new Insets(10, 10, 0, 10));
         cardName.setFill(Color.WHITE);
-        this.setTop(cardName);
+
+        this.setTop(cardNameFlow);
 
         drawPatternCard(patternCard);
+        grid.setPadding(new Insets(10));
         this.setCenter(grid);
 
         cardDifficulty.setText("Difficulty: " + patternCard.getDifficulty());
+        TextFlow cardDifficultyFlow = new TextFlow(cardDifficulty);
+        cardDifficultyFlow.setPadding(new Insets(0, 10, 10, 10));
         cardDifficulty.setFill(Color.WHITE);
 
-        this.setBottom(cardDifficulty);
-
+        this.setBottom(cardDifficultyFlow);
     }
 
     private void drawPatternCard(final PatternCard patternCard) {
