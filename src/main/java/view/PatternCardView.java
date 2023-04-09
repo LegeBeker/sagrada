@@ -22,6 +22,7 @@ public class PatternCardView extends BorderPane {
     private static final int COLUMNS = 4;
     private static final int RECTANGLE = 50;
     private static final int GRIDGAP = 10;
+    private static final int PADDING = 10;
     private static final int DOTRADIUS = 3;
     private static final Color BLACK = Color.BLACK;
 
@@ -30,6 +31,9 @@ public class PatternCardView extends BorderPane {
     private static final int POSITIONLOW = 15;
     private static final int POSITIONMEDIUM = 25;
     private static final int POSITIONHIGH = 35;
+
+
+    private final int totalCards = 24;
 
     private final Background backgroundCard = new Background(new BackgroundFill(Color.BLACK, null, null));
     private final GridPane grid = new GridPane();
@@ -42,23 +46,23 @@ public class PatternCardView extends BorderPane {
         this.getStyleClass().add("background");
 
         Random random = new Random();
-        int randomNumber = random.nextInt(24) + 1;
+        int randomNumber = random.nextInt(totalCards) + 1;
         PatternCard patternCard = view.getPatternCardController().getPatternCard(randomNumber);
 
         cardName.setText(patternCard.getName());
         TextFlow cardNameFlow = new TextFlow(cardName);
-        cardNameFlow.setPadding(new Insets(10, 10, 0, 10));
+        cardNameFlow.setPadding(new Insets(PADDING, PADDING, 0, PADDING));
         cardName.setFill(Color.WHITE);
 
         this.setTop(cardNameFlow);
 
         drawPatternCard(patternCard);
-        grid.setPadding(new Insets(10));
+        grid.setPadding(new Insets(PADDING));
         this.setCenter(grid);
 
         cardDifficulty.setText("Difficulty: " + patternCard.getDifficulty());
         TextFlow cardDifficultyFlow = new TextFlow(cardDifficulty);
-        cardDifficultyFlow.setPadding(new Insets(0, 10, 10, 10));
+        cardDifficultyFlow.setPadding(new Insets(0, PADDING, PADDING, PADDING));
         cardDifficulty.setFill(Color.WHITE);
 
         this.setBottom(cardDifficultyFlow);
