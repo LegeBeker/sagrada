@@ -62,6 +62,6 @@ public class PatternCard {
     }
 
     public PatternCardField getField(final int row, final int column) {
-        return fields[row][column];
+        return fields[row - 1][column - 1];
     }
 }

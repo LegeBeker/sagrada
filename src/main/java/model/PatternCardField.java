@@ -5,13 +5,13 @@ import javafx.scene.paint.Color;
 public class PatternCardField {
 
     private Color color;
-    private int value;
+    private Integer value;
 
     public Color getColor() {
         return this.color;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return this.value;
     }
 
@@ -42,9 +42,6 @@ public class PatternCardField {
     }
 
     public void setValue(final String value) {
-        this.value = 0;
-        if (value != null) {
-            this.value = Integer.parseInt(value);
-        }
+        this.value = value != null ? Integer.parseInt(value) : null;
     }
 }
