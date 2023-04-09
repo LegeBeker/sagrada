@@ -16,6 +16,10 @@ public class PatternCardField {
     }
 
     public void setColor(final String color) {
+        if (color == null) {
+            this.color = Color.web("#F8F8F8");
+            return;
+        }
         switch (color) {
             case "red":
                 this.color = Color.web("#F44336");
