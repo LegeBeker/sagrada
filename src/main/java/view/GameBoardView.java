@@ -23,11 +23,16 @@ public class GameBoardView extends BorderPane {
 
     public GameBoardView(final ViewController view, final Game game) {
         this.setBackground(background);
-    
+
         for (Player player : game.getPlayers()) {
+            if (player.getPatternCard() == null) {
+                continue; // skip players without a pattern card
+            }
+
             if (cardCount >= maxRows * maxCols) {
                 break; // exit the loop once max grid size is reached
             }
+
             boards.add(new PatternCardView(view, player.getPatternCard()), cardCount % maxCols, cardCount / maxCols);
             cardCount++;
         }
