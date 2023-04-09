@@ -1,5 +1,7 @@
 package main.java.view;
 
+import java.util.ArrayList;
+
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
@@ -78,41 +80,41 @@ public class PatternCardView extends BorderPane {
     }
 
     private Group addDotsToRectangle(final Rectangle rectangle, final int value) {
-        Circle[] dots = new Circle[value];
+        ArrayList<Circle> dots = new ArrayList<Circle>();
 
-        switch (value) {
-            case 1:
-                dots[0] = new Circle(POSITIONMEDIUM, POSITIONMEDIUM, DOTRADIUS, Color.BLACK);
+        switch (Integer.toString(value)) {
+            case "1":
+                dots.add(createDot(POSITIONMEDIUM, POSITIONMEDIUM));
                 break;
-            case 2:
-                dots[0] = new Circle(POSITIONLOW, POSITIONLOW, DOTRADIUS, Color.BLACK);
-                dots[1] = new Circle(POSITIONHIGH, POSITIONHIGH, DOTRADIUS, Color.BLACK);
+            case "2":
+                dots.add(createDot(POSITIONLOW, POSITIONLOW));
+                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
                 break;
-            case 3:
-                dots[0] = new Circle(POSITIONLOW, POSITIONLOW, DOTRADIUS, Color.BLACK);
-                dots[1] = new Circle(POSITIONMEDIUM, POSITIONMEDIUM, DOTRADIUS, Color.BLACK);
-                dots[2] = new Circle(POSITIONHIGH, POSITIONHIGH, DOTRADIUS, Color.BLACK);
+            case "3":
+                dots.add(createDot(POSITIONLOW, POSITIONLOW));
+                dots.add(createDot(POSITIONMEDIUM, POSITIONMEDIUM));
+                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
                 break;
-            case 4:
-                dots[0] = new Circle(POSITIONLOW, POSITIONLOW, DOTRADIUS, Color.BLACK);
-                dots[1] = new Circle(POSITIONHIGH, POSITIONLOW, DOTRADIUS, Color.BLACK);
-                dots[2] = new Circle(POSITIONLOW, POSITIONHIGH, DOTRADIUS, Color.BLACK);
-                dots[3] = new Circle(POSITIONHIGH, POSITIONHIGH, DOTRADIUS, Color.BLACK);
+            case "4":
+                dots.add(createDot(POSITIONLOW, POSITIONLOW));
+                dots.add(createDot(POSITIONHIGH, POSITIONLOW));
+                dots.add(createDot(POSITIONLOW, POSITIONHIGH));
+                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
                 break;
-            case 5:
-                dots[0] = new Circle(POSITIONLOW, POSITIONLOW, DOTRADIUS, Color.BLACK);
-                dots[1] = new Circle(POSITIONHIGH, POSITIONLOW, DOTRADIUS, Color.BLACK);
-                dots[2] = new Circle(POSITIONMEDIUM, POSITIONMEDIUM, DOTRADIUS, Color.BLACK);
-                dots[3] = new Circle(POSITIONLOW, POSITIONHIGH, DOTRADIUS, Color.BLACK);
-                dots[4] = new Circle(POSITIONHIGH, POSITIONHIGH, DOTRADIUS, Color.BLACK);
+            case "5":
+                dots.add(createDot(POSITIONLOW, POSITIONLOW));
+                dots.add(createDot(POSITIONHIGH, POSITIONLOW));
+                dots.add(createDot(POSITIONMEDIUM, POSITIONMEDIUM));
+                dots.add(createDot(POSITIONLOW, POSITIONHIGH));
+                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
                 break;
-            case 6:
-                dots[0] = new Circle(POSITIONLOW, POSITIONLOW, DOTRADIUS, Color.BLACK);
-                dots[1] = new Circle(POSITIONHIGH, POSITIONLOW, DOTRADIUS, Color.BLACK);
-                dots[2] = new Circle(POSITIONLOW, POSITIONMEDIUM, DOTRADIUS, Color.BLACK);
-                dots[3] = new Circle(POSITIONHIGH, POSITIONMEDIUM, DOTRADIUS, Color.BLACK);
-                dots[4] = new Circle(POSITIONLOW, POSITIONHIGH, DOTRADIUS, Color.BLACK);
-                dots[5] = new Circle(POSITIONHIGH, POSITIONHIGH, DOTRADIUS, Color.BLACK);
+            case "6":
+                dots.add(createDot(POSITIONLOW, POSITIONLOW));
+                dots.add(createDot(POSITIONHIGH, POSITIONLOW));
+                dots.add(createDot(POSITIONLOW, POSITIONMEDIUM));
+                dots.add(createDot(POSITIONHIGH, POSITIONMEDIUM));
+                dots.add(createDot(POSITIONLOW, POSITIONHIGH));
+                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
                 break;
             default:
                 break;
@@ -126,4 +128,7 @@ public class PatternCardView extends BorderPane {
         return rectangleWithDots;
     }
 
+    private Circle createDot(final double x, final double y) {
+        return new Circle(x, y, DOTRADIUS, Color.BLACK);
+    }
 }
