@@ -96,7 +96,7 @@ public class Game {
                     player.setIdPatternCard(Integer.parseInt(map.get("idpatterncard")));
                 }
                 player.setScore(Integer.parseInt(map.get("score")));
-                System.out.println(player.getId());
+
                 game.players.add(player);
             }
 
