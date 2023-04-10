@@ -5,3 +5,10 @@
     -fx-padding: 5px;
     -fx-alignment: center;
 }
+
+.background {
+    -fx-background-radius: 10;
+    -fx-background-color: black;
+    -fx-border-radius: 10;
+    -fx-border-width: 5;
+}
