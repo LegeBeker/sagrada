@@ -1,9 +1,7 @@
 package main.java.model;
 
-import java.util.List;
 import java.util.Map;
 import main.java.db.PatternCardDB;
-import main.java.db.PatternCardFieldDB;
 
 public class PatternCard {
     private int idPatternCard;
@@ -19,27 +17,22 @@ public class PatternCard {
     private PatternCardField[][] fields = new PatternCardField[ROWS][COLUMNS];
 
     public static PatternCard get(final int idPatternCard) {
-        PatternCard patternCard = new PatternCard();
+        return mapToPatternCard(PatternCardDB.get(idPatternCard));
+    }
 
-        Map<String, String> patternCardMap = PatternCardDB.get(idPatternCard);
+    public static PatternCard mapToPatternCard(final Map<String, String> patternCardMap) {
+        PatternCard patternCard = new PatternCard();
 
         patternCard.idPatternCard = Integer.parseInt(patternCardMap.get("idpatterncard"));
         patternCard.name = patternCardMap.get("name");
         patternCard.difficulty = Integer.parseInt(patternCardMap.get("difficulty"));
         patternCard.standard = Boolean.parseBoolean(patternCardMap.get("standard"));
 
-        List<Map<String, String>> patternCardFieldMap = PatternCardFieldDB.getAllFieldsForCard(idPatternCard);
-
-        for (Map<String, String> map : patternCardFieldMap) {
-            PatternCardField field = new PatternCardField();
-
-            field.setColor(map.get("color"));
-            field.setValue(map.get("value"));
-
+        for (Map<String, String> map : PatternCardDB.getAllFieldsForCard(patternCard.idPatternCard)) {
             int row = Integer.parseInt(map.get("position_x"));
             int col = Integer.parseInt(map.get("position_y"));
 
-            patternCard.fields[row - 1][col - 1] = field;
+            patternCard.fields[row - 1][col - 1] = PatternCardField.mapToPatternCardField(patternCardMap);
         }
 
         return patternCard;
