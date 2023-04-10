@@ -32,7 +32,7 @@ public class PatternCard {
             int row = Integer.parseInt(map.get("position_x"));
             int col = Integer.parseInt(map.get("position_y"));
 
-            patternCard.fields[row - 1][col - 1] = PatternCardField.mapToPatternCardField(patternCardMap);
+            patternCard.fields[row - 1][col - 1] = PatternCardField.mapToPatternCardField(map);
         }
 
         return patternCard;
