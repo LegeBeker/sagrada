@@ -15,6 +15,6 @@ public class GameToolBarView extends HBox {
     public GameToolBarView(final ViewController view, final Game game) {
         this.setBackground(background);
 
-        this.getChildren().add(new Text("Dobbelstenen en gereedschapkaarten"));
+        this.getChildren().add(new Text("Gereedschapkaarten en knoppen"));
     }
 }

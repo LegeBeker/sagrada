@@ -1,13 +1,9 @@
 package main.java.view;
 
-import java.util.ArrayList;
-
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -19,14 +15,9 @@ public class PatternCardView extends BorderPane {
 
     private static final int ROWS = 5;
     private static final int COLUMNS = 4;
-    private static final int RECTANGLE = 50;
-    private static final int GRIDGAP = 10;
-    private static final int PADDING = 10;
-    private static final int DOTRADIUS = 3;
 
-    private static final int POSITIONLOW = 15;
-    private static final int POSITIONMEDIUM = 25;
-    private static final int POSITIONHIGH = 35;
+    private static final int RECTANGLE = 50;
+    private static final int PADDING = 10;
 
     private final int width = 300;
     private final int height = 300;
@@ -57,8 +48,8 @@ public class PatternCardView extends BorderPane {
 
         this.setBottom(cardDifficultyFlow);
 
-        grid.setHgap(GRIDGAP);
-        grid.setVgap(GRIDGAP);
+        grid.setHgap(PADDING);
+        grid.setVgap(PADDING);
     }
 
     private void drawPatternCard(final PatternCard patternCard) {
@@ -66,69 +57,15 @@ public class PatternCardView extends BorderPane {
             for (int row = 1; row <= ROWS; row++) {
                 PatternCardField field = patternCard.getField(row, col);
 
-                Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
-                rectangle.setFill(field.getColor());
-
                 if (field.getValue() != null) {
-                    Group rectangleWithDots = addDotsToRectangle(rectangle, field.getValue());
-                    grid.add(rectangleWithDots, row, col);
+                    grid.add(new DieView(field.getValue(), Color.WHITE), row, col);
                 } else {
+                    Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
+                    rectangle.setFill(field.getColor());
+
                     grid.add(rectangle, row, col);
                 }
             }
         }
-    }
-
-    private Group addDotsToRectangle(final Rectangle rectangle, final int value) {
-        ArrayList<Circle> dots = new ArrayList<Circle>();
-
-        switch (Integer.toString(value)) {
-            case "1":
-                dots.add(createDot(POSITIONMEDIUM, POSITIONMEDIUM));
-                break;
-            case "2":
-                dots.add(createDot(POSITIONLOW, POSITIONLOW));
-                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
-                break;
-            case "3":
-                dots.add(createDot(POSITIONLOW, POSITIONLOW));
-                dots.add(createDot(POSITIONMEDIUM, POSITIONMEDIUM));
-                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
-                break;
-            case "4":
-                dots.add(createDot(POSITIONLOW, POSITIONLOW));
-                dots.add(createDot(POSITIONHIGH, POSITIONLOW));
-                dots.add(createDot(POSITIONLOW, POSITIONHIGH));
-                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
-                break;
-            case "5":
-                dots.add(createDot(POSITIONLOW, POSITIONLOW));
-                dots.add(createDot(POSITIONHIGH, POSITIONLOW));
-                dots.add(createDot(POSITIONMEDIUM, POSITIONMEDIUM));
-                dots.add(createDot(POSITIONLOW, POSITIONHIGH));
-                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
-                break;
-            case "6":
-                dots.add(createDot(POSITIONLOW, POSITIONLOW));
-                dots.add(createDot(POSITIONHIGH, POSITIONLOW));
-                dots.add(createDot(POSITIONLOW, POSITIONMEDIUM));
-                dots.add(createDot(POSITIONHIGH, POSITIONMEDIUM));
-                dots.add(createDot(POSITIONLOW, POSITIONHIGH));
-                dots.add(createDot(POSITIONHIGH, POSITIONHIGH));
-                break;
-            default:
-                break;
-        }
-
-        Group dotsGroup = new Group();
-        dotsGroup.getChildren().addAll(dots);
-
-        Group rectangleWithDots = new Group(rectangle, dotsGroup);
-
-        return rectangleWithDots;
-    }
-
-    private Circle createDot(final double x, final double y) {
-        return new Circle(x, y, DOTRADIUS, Color.BLACK);
     }
 }
