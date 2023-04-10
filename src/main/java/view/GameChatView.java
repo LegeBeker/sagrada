@@ -34,6 +34,22 @@ public class GameChatView extends VBox {
 
         Button sendButton = new Button("Verstuur");
 
+        // Input handling
+        textInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(final KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    addMessage(textInput.getText());
+                    textInput.setText("");
+            }
+            }
+        });
+
+        sendButton.setOnAction(e -> {
+            addMessage(textInput.getText());
+            textInput.setText("");
+        });
+
         chatInput.getChildren().addAll(textInput, sendButton);
         chatInput.setAlignment(Pos.CENTER_RIGHT);
 
