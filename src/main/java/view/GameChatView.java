@@ -35,9 +35,15 @@ public class GameChatView extends VBox {
         Button sendButton = new Button("Verstuur");
 
         chatInput.getChildren().addAll(textInput, sendButton);
-        chatBox.getChildren().add(0, chatInput);
+        chatInput.setAlignment(Pos.CENTER_RIGHT);
 
-        this.getChildren().add(chatBox);
+        ScrollPane chatMessageScrollPane = new ScrollPane(chatMessageBox);
+        chatMessageScrollPane.setBackground(null);
+        chatMessageScrollPane.setMaxWidth(view.getWidth());
+        // Remove the color of the chatMessageScrollPane
+
+        this.getChildren().add(0, chatMessageScrollPane);
+        this.getChildren().add(1, chatInput);
     }
 
 }
