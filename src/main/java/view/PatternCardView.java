@@ -50,7 +50,7 @@ public class PatternCardView extends BorderPane {
         grid.setPadding(new Insets(0, PADDING, PADDING, 0));
         this.setCenter(grid);
 
-        cardDifficulty.setText("Difficulty: " + patternCard.getDifficulty());
+        cardDifficulty.setText("Moeilijkheid: " + patternCard.getDifficulty());
         TextFlow cardDifficultyFlow = new TextFlow(cardDifficulty);
         cardDifficultyFlow.setPadding(new Insets(0, PADDING, PADDING, PADDING));
         cardDifficulty.setFill(Color.WHITE);
