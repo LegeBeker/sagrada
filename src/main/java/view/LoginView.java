@@ -74,11 +74,12 @@ public class LoginView extends VBox {
             if (!view.getAccountController().loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
                 throw new RuntimeException("Gebruikersnaam of wachtwoord is onjuist");
             }
+
+            view.openMenuView();
         } catch (RuntimeException e) {
             view.displayError(e.getMessage());
+            return;
         }
-
-        view.openMenuView();
     }
 
     public void openRegisterView() {
