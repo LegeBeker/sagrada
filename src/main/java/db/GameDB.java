@@ -23,4 +23,13 @@ public final class GameDB {
 
         return db.exec(sql, null);
     }
+
+    public static List<Map<String, String>> getPlayers(final int idGame) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM player WHERE idgame = ?";
+        String[] params = {Integer.toString(idGame)};
+
+        return db.exec(sql, params);
+    }
 }

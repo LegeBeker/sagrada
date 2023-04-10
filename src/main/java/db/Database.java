@@ -39,9 +39,7 @@ public final class Database {
             this.conn = DriverManager.getConnection("jdbc:mysql://" + this.host + "/" + this.name + "?user="
                     + this.username + "&password=" + this.password);
         } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            System.out.println("SQLState: " + e.getSQLState());
-            System.out.println("VendorError: " + e.getErrorCode());
+            throw new RuntimeException(e);
         }
     }
 
@@ -76,9 +74,7 @@ public final class Database {
             stmt.close();
             conn.close();
         } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            System.out.println("SQLState: " + e.getSQLState());
-            System.out.println("VendorError: " + e.getErrorCode());
+            throw new RuntimeException(e);
         }
         return result;
     }
