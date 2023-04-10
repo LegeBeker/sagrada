@@ -8,4 +8,8 @@ public class GameController {
     public ArrayList<Game> getGames() {
         return Game.getAll();
     }
+
+    public Game getGame(final int gameId) {
+        return Game.get(gameId);
+    }
 }
