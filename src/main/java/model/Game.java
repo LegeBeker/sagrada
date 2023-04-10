@@ -16,6 +16,8 @@ public class Game {
 
     private String creationDate;
 
+    private ArrayList<Player> players = new ArrayList<>();
+
     public int getId() {
         return this.idGame;
     }
@@ -32,6 +34,10 @@ public class Game {
         return this.creationDate;
     }
 
+    public ArrayList<Player> getPlayers() {
+        return this.players;
+    }
+
     public static Game get(final int idGame) {
         Game game = new Game();
 
@@ -41,6 +47,23 @@ public class Game {
         game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
         game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
         game.creationDate = gameMap.get("creationdate");
+
+        List<Map<String, String>> playersMap = GameDB.getPlayers(idGame);
+
+        for (Map<String, String> map : playersMap) {
+            Player player = new Player();
+
+            player.setId(Integer.parseInt(map.get("idplayer")));
+            player.setUsername(map.get("username"));
+            player.setIdGame(Integer.parseInt(map.get("idgame")));
+            player.setPlayStatus(map.get("playstatus"));
+            player.setSeqnr(Integer.parseInt(map.get("seqnr")));
+            player.setPrivateObjCardColor(map.get("privateobjcardcolor"));
+            player.setIdPatternCard(Integer.parseInt(map.get("idpatterncard")));
+            player.setScore(Integer.parseInt(map.get("score")));
+
+            game.players.add(player);
+        }
 
         return game;
     }
@@ -57,6 +80,25 @@ public class Game {
             game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
             game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
             game.creationDate = gameMap.get("creationdate");
+
+            List<Map<String, String>> playersMap = GameDB.getPlayers(game.idGame);
+
+            for (Map<String, String> map : playersMap) {
+                Player player = new Player();
+
+                player.setId(Integer.parseInt(map.get("idplayer")));
+                player.setUsername(map.get("username"));
+                player.setIdGame(Integer.parseInt(map.get("idgame")));
+                player.setPlayStatus(map.get("playstatus"));
+                player.setSeqnr(Integer.parseInt(map.get("seqnr")));
+                player.setPrivateObjCardColor(map.get("private_objectivecard_color"));
+                if (map.get("idpatterncard") != null) {
+                    player.setIdPatternCard(Integer.parseInt(map.get("idpatterncard")));
+                }
+                player.setScore(Integer.parseInt(map.get("score")));
+
+                game.players.add(player);
+            }
 
             games.add(game);
         }

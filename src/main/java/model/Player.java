@@ -16,7 +16,7 @@ public class Player {
     private int seqnr;
 
     private String privateObjCardColor;
-    private int idPatternCard;
+    private Integer idPatternCard;
 
     private int score;
 
@@ -45,11 +45,46 @@ public class Player {
     }
 
     public PatternCard getPatternCard() {
+        if (this.idPatternCard == null) {
+            return null;
+        }
         return PatternCard.get(this.idPatternCard);
     }
 
     public int getScore() {
         return this.score;
+    }
+
+    public void setId(final int idPlayer) {
+        this.idPlayer = idPlayer;
+    }
+
+    public void setUsername(final String username) {
+        this.username = username;
+    }
+
+    public void setIdGame(final int idGame) {
+        this.idGame = idGame;
+    }
+
+    public void setPlayStatus(final String playStatus) {
+        this.playStatus = playStatus;
+    }
+
+    public void setSeqnr(final int seqnr) {
+        this.seqnr = seqnr;
+    }
+
+    public void setPrivateObjCardColor(final String privateObjCardColor) {
+        this.privateObjCardColor = privateObjCardColor;
+    }
+
+    public void setIdPatternCard(final int idPatternCard) {
+        this.idPatternCard = idPatternCard;
+    }
+
+    public void setScore(final int score) {
+        this.score = score;
     }
 
     public static Player get(final int idPlayer) {
@@ -63,7 +98,9 @@ public class Player {
         player.playStatus = playerMap.get("playstatus");
         player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
         player.privateObjCardColor = playerMap.get("private_objectivecard_color");
-        player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
+        if (playerMap.get("idpatterncard") != null) {
+            player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
+        }
         player.score = Integer.parseInt(playerMap.get("score"));
 
         return player;
@@ -83,7 +120,9 @@ public class Player {
             player.playStatus = playerMap.get("playstatus");
             player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
             player.privateObjCardColor = playerMap.get("private_objectivecard_color");
-            player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
+            if (playerMap.get("idpatterncard") != null) {
+                player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
+            }
             player.score = Integer.parseInt(playerMap.get("score"));
 
             players.add(player);
