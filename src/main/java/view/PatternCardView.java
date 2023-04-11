@@ -10,6 +10,7 @@ import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.PatternCard;
 import main.java.model.PatternCardField;
+import main.java.model.Player;
 
 public class PatternCardView extends BorderPane {
 
@@ -23,30 +24,34 @@ public class PatternCardView extends BorderPane {
     private final int height = 300;
 
     private final GridPane grid = new GridPane();
-    private final Text cardName = new Text();
+    private final Text cardTopText = new Text();
     private final Text cardDifficulty = new Text();
 
-    public PatternCardView(final ViewController view, final PatternCard patternCard) {
+    public PatternCardView(final ViewController view, final PatternCard patternCard, final Player player) {
         this.setPrefSize(width, height);
         this.getStyleClass().add("background");
-
-        cardName.setText(patternCard.getName());
-        TextFlow cardNameFlow = new TextFlow(cardName);
-        cardNameFlow.setPadding(new Insets(PADDING, PADDING, 0, PADDING));
-        cardName.setFill(Color.WHITE);
-
-        this.setTop(cardNameFlow);
 
         drawPatternCard(patternCard);
         grid.setPadding(new Insets(0, PADDING, PADDING, 0));
         this.setCenter(grid);
 
-        cardDifficulty.setText("Moeilijkheid: " + patternCard.getDifficulty());
-        TextFlow cardDifficultyFlow = new TextFlow(cardDifficulty);
-        cardDifficultyFlow.setPadding(new Insets(0, PADDING, PADDING, PADDING));
-        cardDifficulty.setFill(Color.WHITE);
+        TextFlow cardTopTextFlow = new TextFlow(cardTopText);
+        cardTopTextFlow.setPadding(new Insets(PADDING, PADDING, 0, PADDING));
+        cardTopText.setFill(Color.WHITE);
+        this.setTop(cardTopTextFlow);
 
-        this.setBottom(cardDifficultyFlow);
+        if (player == null) {
+            cardTopText.setText(patternCard.getName());
+
+            cardDifficulty.setText("Moeilijkheid: " + patternCard.getDifficulty());
+            TextFlow cardDifficultyFlow = new TextFlow(cardDifficulty);
+            cardDifficultyFlow.setPadding(new Insets(0, PADDING, PADDING, PADDING));
+            cardDifficulty.setFill(Color.WHITE);
+
+            this.setBottom(cardDifficultyFlow);
+        } else {
+            cardTopText.setText(player.getUsername());
+        }
 
         grid.setHgap(PADDING);
         grid.setVgap(PADDING);

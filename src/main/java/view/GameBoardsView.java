@@ -3,7 +3,6 @@ package main.java.view;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -35,7 +34,8 @@ public class GameBoardsView extends HBox {
                 break; // exit the loop once max grid size is reached
             }
 
-            grid.add(new PatternCardView(view, player.getPatternCard()), cardCount % maxCols, cardCount / maxCols);
+            grid.add(new PatternCardView(view, player.getPatternCard(), player), cardCount % maxCols,
+                    cardCount / maxCols);
             cardCount++;
         }
 
