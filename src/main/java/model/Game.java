@@ -1,7 +1,6 @@
 package main.java.model;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -39,71 +38,33 @@ public class Game {
     }
 
     public static Game get(final int idGame) {
-        Game game = new Game();
+        return mapToGame(GameDB.get(idGame));
+    }
 
-        Map<String, String> gameMap = GameDB.get(idGame);
+    public static ArrayList<Game> getAll() {
+        ArrayList<Game> games = new ArrayList<Game>();
+
+        for (Map<String, String> gameMap : GameDB.getAll()) {
+            Game game = mapToGame(gameMap);
+            games.add(game);
+        }
+
+        return games;
+    }
+
+    public static Game mapToGame(final Map<String, String> gameMap) {
+        Game game = new Game();
 
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
         game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
         game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
         game.creationDate = gameMap.get("creationdate");
 
-        List<Map<String, String>> playersMap = GameDB.getPlayers(idGame);
-
-        for (Map<String, String> map : playersMap) {
-            Player player = new Player();
-
-            player.setId(Integer.parseInt(map.get("idplayer")));
-            player.setUsername(map.get("username"));
-            player.setIdGame(Integer.parseInt(map.get("idgame")));
-            player.setPlayStatus(map.get("playstatus"));
-            player.setSeqnr(Integer.parseInt(map.get("seqnr")));
-            player.setPrivateObjCardColor(map.get("privateobjcardcolor"));
-            player.setIdPatternCard(Integer.parseInt(map.get("idpatterncard")));
-            player.setScore(Integer.parseInt(map.get("score")));
-
-            game.players.add(player);
+        for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
+            game.players.add(Player.mapToPlayer(map));
         }
 
         return game;
-    }
-
-    public static ArrayList<Game> getAll() {
-        List<Map<String, String>> gamesDB = GameDB.getAll();
-
-        ArrayList<Game> games = new ArrayList<Game>();
-
-        for (Map<String, String> gameMap : gamesDB) {
-            Game game = new Game();
-
-            game.idGame = Integer.parseInt(gameMap.get("idgame"));
-            game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
-            game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
-            game.creationDate = gameMap.get("creationdate");
-
-            List<Map<String, String>> playersMap = GameDB.getPlayers(game.idGame);
-
-            for (Map<String, String> map : playersMap) {
-                Player player = new Player();
-
-                player.setId(Integer.parseInt(map.get("idplayer")));
-                player.setUsername(map.get("username"));
-                player.setIdGame(Integer.parseInt(map.get("idgame")));
-                player.setPlayStatus(map.get("playstatus"));
-                player.setSeqnr(Integer.parseInt(map.get("seqnr")));
-                player.setPrivateObjCardColor(map.get("private_objectivecard_color"));
-                if (map.get("idpatterncard") != null) {
-                    player.setIdPatternCard(Integer.parseInt(map.get("idpatterncard")));
-                }
-                player.setScore(Integer.parseInt(map.get("score")));
-
-                game.players.add(player);
-            }
-
-            games.add(game);
-        }
-
-        return games;
     }
 
     public StringProperty turnPlayerUsernameProperty() {
