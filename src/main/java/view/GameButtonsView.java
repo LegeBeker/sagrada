@@ -22,7 +22,7 @@ public class GameButtonsView extends FlowPane {
         this.buttonEndTurn = new Button("Einde beurt");
 
         this.buttonEndTurn.setOnAction(e -> {
-            // game.endTurn();
+            game.endTurn();
         });
 
         this.buttonBack.setOnAction(e -> {
