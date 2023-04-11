@@ -1,27 +1,31 @@
 package main.java.view;
 
-import javafx.scene.control.Button;
+import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
 
-public class GameScoreView extends HBox {
+public class GameScoreView extends VBox {
 
     private final Background background = new Background(new BackgroundFill(Color.web("#666666"), null, null));
-    private final Button buttonBack = new Button("Terug");
+    private final int padding = 10;
 
     public GameScoreView(final ViewController view, final Game game) {
         this.setBackground(background);
 
-        this.buttonBack.setOnAction(e -> {
-            view.openGamesView();
+        game.getPlayers().forEach(player -> {
+            Text text = new Text(player.getUsername() + ": " + player.getScore());
+
+            text.setFill(Color.WHITE);
+            text.setStyle("-fx-font-size: 15px;");
+
+            this.getChildren().add(text);
         });
 
-        this.getChildren().add(buttonBack);
-        this.getChildren().add(new Text("Huidige score per speler"));
+        this.setPadding(new Insets(padding));
     }
 }

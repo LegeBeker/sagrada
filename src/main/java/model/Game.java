@@ -37,6 +37,10 @@ public class Game {
         return this.players;
     }
 
+    public void endTurn() {
+        // TODO: implement
+    }
+
     public static Game get(final int idGame) {
         return mapToGame(GameDB.get(idGame));
     }
