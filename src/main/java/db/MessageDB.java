@@ -1,6 +1,7 @@
 package main.java.db;
 
-import javafx.scene.chart.PieChart.Data;
+import java.util.List;
+import java.util.Map;
 
 public class MessageDB {
     // Create methods to add messages to the database
@@ -8,7 +9,7 @@ public class MessageDB {
         // Add message to database
     }
 
-    public List<Map<String, String>> getMessages(final int playerId) {
+    public static List<Map<String, String>> getMessages(final int playerId) {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM chatline WHERE idplayer = ?";
