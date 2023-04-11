@@ -1,3 +1,7 @@
+* {
+    -fx-font-family: "Arial";
+}
+
 .error-box {
     -fx-text-fill: white;
     -fx-font-size: 14px;
