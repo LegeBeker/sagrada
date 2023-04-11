@@ -57,6 +57,9 @@ public class LoginView extends VBox {
         this.setPadding(new Insets(0, this.padding, 0, this.padding));
 
         this.getChildren().addAll(view.getLogo(), this.fieldUsername, this.fieldPassword, this.boxButtons);
+
+        this.fieldUsername.setOnAction(e -> this.submit());
+        this.fieldPassword.setOnAction(e -> this.submit());
     }
 
     public void submit() {
