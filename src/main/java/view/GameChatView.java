@@ -66,7 +66,7 @@ public class GameChatView extends VBox {
         this.getChildren().add(1, chatInput);
     }
 
-    private void addMessage(final String message) {
+    public void addMessage(final String message) {
         FlowPane chatMessage;
         chatMessage = new FlowPane();
         chatMessage.setBackground(null);
