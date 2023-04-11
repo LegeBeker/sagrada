@@ -26,6 +26,6 @@ public class GameScoreView extends VBox {
             this.getChildren().add(text);
         });
 
-        this.setPadding(new Insets(padding, padding, padding, padding));
+        this.setPadding(new Insets(padding));
     }
 }
