@@ -13,7 +13,6 @@ import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
 import main.java.model.Game;
 import main.java.view.GameView;
