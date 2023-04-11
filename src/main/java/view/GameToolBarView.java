@@ -16,5 +16,6 @@ public class GameToolBarView extends HBox {
         this.setBackground(background);
 
         this.getChildren().add(new Text("Gereedschapkaarten en knoppen"));
+        this.getChildren().add(new RoundTrackView());
     }
 }
