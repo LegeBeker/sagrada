@@ -6,9 +6,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
@@ -33,7 +37,7 @@ public class ViewController extends Scene {
     private GameController gameController;
     private PatternCardController patternCardController;
 
-    private final Background background = new Background(new BackgroundFill(Color.web("#4483c2"), null, null));
+    private final Background background;
     private final ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
 
     private final double errorTimeout = 2.5;
@@ -46,6 +50,14 @@ public class ViewController extends Scene {
 
         this.rootPane = new StackPane();
         this.setRoot(this.rootPane);
+
+        Color startColor = Color.web("#5897d6");
+        Color endColor = Color.web("#0d4e8f");
+
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
+
+        this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
 
         this.getStylesheets().add("file:resources/css/style.css");
 
