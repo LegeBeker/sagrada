@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Background;
@@ -75,6 +76,22 @@ public class GamesView extends VBox {
         for (Game game : view.getGameController().getGames()) {
             this.table.getItems().add(game);
         }
+
+        this.table.setRowFactory(tv -> new TableRow<Game>() {
+            @Override
+            protected void updateItem(final Game game, final boolean empty) {
+                super.updateItem(game, empty);
+
+                if (game == null) {
+                    setStyle("");
+                } else if (game.getTurnPlayer().getUsername()
+                        .equals(view.getAccountController().getAccount().getUsername())) {
+                    setStyle("-fx-background-color: lightblue;");
+                } else {
+                    setStyle("");
+                }
+            }
+        });
 
         this.table.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
