@@ -63,7 +63,7 @@ public class PatternCardView extends BorderPane {
                 PatternCardField field = patternCard.getField(row, col);
 
                 if (field.getValue() != null) {
-                    grid.add(new DieView(field.getValue(), Color.WHITE), row, col);
+                    grid.add(new DieView(field.getValue()), row, col);
                 } else {
                     Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
                     rectangle.setFill(field.getColor());
