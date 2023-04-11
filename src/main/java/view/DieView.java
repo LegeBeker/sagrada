@@ -16,13 +16,37 @@ public class DieView extends Group {
     private static final int POSITIONMEDIUM = 25;
     private static final int POSITIONHIGH = 35;
 
+    private final int radius = 10;
+    private final double scale = 0.8;
+
     private int value;
 
     public DieView(final int value, final Color color) {
         this.value = value;
 
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
-        rectangle.setFill(color);
+        rectangle.setFill(Color.WHITE);
+
+        Rectangle die = new Rectangle(RECTANGLE, RECTANGLE);
+        die.setFill(color);
+        die.setStroke(Color.BLACK);
+
+        die.setArcHeight(this.radius);
+        die.setArcWidth(this.radius);
+
+        die.setScaleX(scale);
+        die.setScaleY(scale);
+
+        die.setTranslateX((rectangle.getWidth() - die.getWidth()) / 2);
+
+        this.getChildren().addAll(rectangle, die, this.addDotsToDie());
+    }
+
+    public DieView(final int value) {
+        this.value = value;
+
+        Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
+        rectangle.setFill(Color.WHITE);
 
         this.getChildren().addAll(rectangle, this.addDotsToDie());
     }
