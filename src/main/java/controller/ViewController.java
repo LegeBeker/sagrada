@@ -34,7 +34,6 @@ public class ViewController extends Scene {
     private GameController gameController;
     private PatternCardController patternCardController;
 
-    private final Font font = new Font("Arial", 20);
     private final Background background = new Background(new BackgroundFill(Color.web("#4483c2"), null, null));
     private final ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
 
@@ -93,10 +92,6 @@ public class ViewController extends Scene {
 
         pause.play();
         transition.play();
-    }
-
-    public Font getFont() {
-        return this.font;
     }
 
     public Background getBackground() {
