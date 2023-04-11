@@ -16,6 +16,13 @@ public class Game {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
+    
+    public static Game createGame(final ArrayList<Player> players, final boolean useDefaultCards) {
+        Game newGame = new Game();
+        newGame.players = players;
+        // TODO ask database for creationDate, for idGame and check players
+        return newGame;
+    }
 
     public int getId() {
         return this.idGame;
