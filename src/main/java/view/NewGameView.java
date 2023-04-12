@@ -2,7 +2,7 @@ package main.java.view;
 
 import java.util.ArrayList;
 
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -29,7 +29,7 @@ public class NewGameView extends HBox {
         Font buttonFont = new Font("Arial", 16);
         
         // label
-        Label title = new Label("Nieuw spel aanmaken");
+        Label title = new Label(" Nieuw spel aanmaken ");
         title.setFont(titleFont); 
         title.setTextFill(Color.ALICEBLUE);
         
@@ -59,12 +59,13 @@ public class NewGameView extends HBox {
         
         VBox buttonPane = new VBox();
         buttonPane.getChildren().setAll(title, standardRb, randomRb, create, back);
-        buttonPane.setPadding(new Insets(10));
         
         // TODO choose players here
         ScrollPane playerList = new ScrollPane();
         
         // TODO order things
+        buttonPane.setSpacing(10);
+        buttonPane.setAlignment(Pos.BASELINE_CENTER);
         
         this.getChildren().addAll(buttonPane, playerList);
     }
