@@ -59,16 +59,20 @@ public class NewGameView extends HBox {
         back.setFont(buttonFont);
         back.setOnAction(e -> goBack());
         
+        // add all buttons to a pane
         VBox buttonPane = new VBox();
         buttonPane.getChildren().setAll(title, standardRb, randomRb, create, back);
         
-        // TODO choose players here
+        // TODO choose players here, I gave you the space
         ScrollPane playerList = new ScrollPane();
+        final double scrollPaneWidth = view.getWidth() * 0.65; //TODO something like (view.getWidth() - buttonPaneWidth* - spacing * 2). *bPW is 0 at the moment
+        playerList.setPrefWidth(scrollPaneWidth);
         
-        // TODO order things
+        // order things in buttonPane
         buttonPane.setSpacing(spacing);
         buttonPane.setAlignment(Pos.CENTER);
         
+        // add all panes to this pane and order more things
         this.getChildren().addAll(buttonPane, playerList);
         this.setAlignment(Pos.CENTER_LEFT);
         this.setPadding(new Insets(spacing));
