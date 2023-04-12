@@ -2,6 +2,7 @@ package main.java.view;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,6 +22,7 @@ public class NewGameView extends HBox {
     private ViewController view;
     private ToggleGroup cards;
     private ArrayList<Player> players;
+    private final int spacing = 10;
 
     public NewGameView(final ViewController view) {
         this.view = view;
@@ -64,10 +66,13 @@ public class NewGameView extends HBox {
         ScrollPane playerList = new ScrollPane();
         
         // TODO order things
-        buttonPane.setSpacing(10);
-        buttonPane.setAlignment(Pos.BASELINE_CENTER);
+        buttonPane.setSpacing(spacing);
+        buttonPane.setAlignment(Pos.CENTER);
         
         this.getChildren().addAll(buttonPane, playerList);
+        this.setAlignment(Pos.CENTER_LEFT);
+        this.setPadding(new Insets(spacing));
+        this.setSpacing(spacing);
     }
     
     private void createGame() {
