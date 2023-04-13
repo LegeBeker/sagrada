@@ -12,7 +12,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import main.java.controller.GameController;
 import main.java.controller.ViewController;
 import main.java.model.Player;
@@ -27,12 +26,12 @@ public class NewGameView extends HBox {
     public NewGameView(final ViewController view) {
         this.view = view;
         this.setBackground(view.getBackground());
-        Font titleFont = new Font("Arial", 24); //TODO make default font conquer the world
-        Font buttonFont = new Font("Arial", 16);
+        final String textStyle = "-fx-font-size: 20px";
+        final String labelStyle = "-fx-font-weight: bold";
         
         // label
         Label title = new Label(" Nieuw spel aanmaken ");
-        title.setFont(titleFont); 
+        title.setStyle(textStyle + "; " + labelStyle); 
         title.setTextFill(Color.ALICEBLUE);
         
         // 2 radio buttons for default cards and random cards
@@ -51,12 +50,12 @@ public class NewGameView extends HBox {
         
         // create game button
         Button create = new Button("Maak nieuw spel aan");
-        create.setFont(buttonFont);
+        create.setStyle(textStyle);
         create.setOnAction(e -> createGame());
         
         // return button
         Button back = new Button("Terug");
-        back.setFont(buttonFont);
+        back.setStyle(textStyle);
         back.setOnAction(e -> goBack());
         
         // add all buttons to a pane
