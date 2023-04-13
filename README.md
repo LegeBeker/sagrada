@@ -1,19 +1,20 @@
-# Sagrada - Avans - Projectgroup J
+# Sagrada
 
 ## Table of Contents
-- [Sagrada - Avans - Projectgroup J](#sagrada---avans---projectgroup-j)
-  - [Table of Contents](#table-of-contents)
-  - [Env file](#env-file)
-  - [Sagrada](#sagrada)
-  - [Avans](#avans)
+
+- [Env file](#env-file)
+- [Sagrada](#sagrada)
+- [Avans](#avans)
+
 ## Env file
 
 The env file should contain the following template
+
 ```env
-DB_HOST = DATABASE_IP:PORT
-DB_NAME = DATABASE_SCHEMA_NAME
-DB_USERNAME = DATABASE_USER_USERNAME
-DB_PASSWORD = DATABASE_USER_PASSWORD
+DB_HOST=
+DB_NAME=
+DB_USERNAME=
+DB_PASSWORD=
 ```
 
 By using the .env file we prevent the database credentials to be pushed to a repository
@@ -25,4 +26,3 @@ Sagrada is a board game for 1-4 players. The goal of the game is to get the most
 ## Avans
 
 Avans is a Dutch university of applied sciences located in the south of the Netherlands. The university offers a wide range of study programmes in the fields of ICT, Business, Engineering, Healthcare, Media and Design.
-

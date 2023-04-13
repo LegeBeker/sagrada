@@ -1,7 +1,6 @@
 package main.java.model;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -15,6 +14,8 @@ public class Game {
     private int currentRound;
 
     private String creationDate;
+
+    private ArrayList<Player> players = new ArrayList<>();
 
     public int getId() {
         return this.idGame;
@@ -32,36 +33,42 @@ public class Game {
         return this.creationDate;
     }
 
-    public static Game get(final int idGame) {
-        Game game = new Game();
+    public ArrayList<Player> getPlayers() {
+        return this.players;
+    }
 
-        Map<String, String> gameMap = GameDB.get(idGame);
+    public void endTurn() {
+        // TODO: implement
+    }
+
+    public static Game get(final int idGame) {
+        return mapToGame(GameDB.get(idGame));
+    }
+
+    public static ArrayList<Game> getAll() {
+        ArrayList<Game> games = new ArrayList<Game>();
+
+        for (Map<String, String> gameMap : GameDB.getAll()) {
+            Game game = mapToGame(gameMap);
+            games.add(game);
+        }
+
+        return games;
+    }
+
+    public static Game mapToGame(final Map<String, String> gameMap) {
+        Game game = new Game();
 
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
         game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
         game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
         game.creationDate = gameMap.get("creationdate");
 
-        return game;
-    }
-
-    public static ArrayList<Game> getAll() {
-        List<Map<String, String>> gamesDB = GameDB.getAll();
-
-        ArrayList<Game> games = new ArrayList<Game>();
-
-        for (Map<String, String> gameMap : gamesDB) {
-            Game game = new Game();
-
-            game.idGame = Integer.parseInt(gameMap.get("idgame"));
-            game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
-            game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
-            game.creationDate = gameMap.get("creationdate");
-
-            games.add(game);
+        for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
+            game.players.add(Player.mapToPlayer(map));
         }
 
-        return games;
+        return game;
     }
 
     public StringProperty turnPlayerUsernameProperty() {

@@ -57,6 +57,9 @@ public class LoginView extends VBox {
         this.setPadding(new Insets(0, this.padding, 0, this.padding));
 
         this.getChildren().addAll(view.getLogo(), this.fieldUsername, this.fieldPassword, this.boxButtons);
+
+        this.fieldUsername.setOnAction(e -> this.submit());
+        this.fieldPassword.setOnAction(e -> this.submit());
     }
 
     public void submit() {
@@ -74,11 +77,12 @@ public class LoginView extends VBox {
             if (!view.getAccountController().loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
                 throw new RuntimeException("Gebruikersnaam of wachtwoord is onjuist");
             }
+
+            view.openMenuView();
         } catch (RuntimeException e) {
             view.displayError(e.getMessage());
+            return;
         }
-
-        view.openMenuView();
     }
 
     public void openRegisterView() {
