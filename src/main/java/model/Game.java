@@ -16,9 +16,14 @@ public class Game {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Die> offer = new ArrayList<>();
 
     public int getId() {
         return this.idGame;
+    }
+    
+    public ArrayList<Die> getOffer() {
+    	return this.offer;
     }
 
     public Player getTurnPlayer() {
@@ -79,4 +84,9 @@ public class Game {
         final int year = 5;
         return new SimpleStringProperty(getCreationDate().substring(year));
     }
+
+	public void getNewOffer() {
+		this.offer = Die.getOffer(idGame, players.size());
+		
+	}
 }
