@@ -12,6 +12,8 @@ public class AccountController {
     public Boolean loginAccount(final String username, final String password) {
         Account curAccount = new Account();
 
+
+        // -- Test
         curAccount.setUsername(username);
         curAccount.setPassword(password);
 
