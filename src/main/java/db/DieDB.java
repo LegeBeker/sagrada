@@ -11,12 +11,13 @@ public class DieDB {
 		String sql = "INSERT INTO gamedie (idgame, diecolor, dienumber, eyes) "
 				+ "SELECT ?, d.color, d.number, FLOOR(RAND()* 6) + 1 " + "FROM die d " + "LEFT JOIN gamedie g "
 				+ "ON d.color = g.diecolor AND d.number = g.dienumber AND g.idgame = ? " + "WHERE g.idgame IS NULL "
-				+ "ORDER BY RAND() " + "LIMIT ?;";
-		String[] params = { Integer.toString(idGame), Integer.toString(idGame), Integer.toString(dieAmount) };
+				+ "ORDER BY RAND() " + "LIMIT " + Integer.toString(dieAmount);
 		
-			db.exec(sql, params);
+		String[] params = { Integer.toString(idGame), Integer.toString(idGame)};
 
-			return true;
+		db.exec(sql, params);
+
+		return true;
 	}
 
 	public static List<Map<String, String>> getOffer(final int idGame) {
