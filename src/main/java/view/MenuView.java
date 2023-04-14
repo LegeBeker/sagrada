@@ -18,6 +18,7 @@ public class MenuView extends VBox {
     private Button buttonGames;
     private Button buttonStats;
     private Button buttonLogout;
+    private Button buttonAccounts;
 
     private final int buttonHeight = 25;
     private final int buttonWidth = 200;
@@ -41,6 +42,10 @@ public class MenuView extends VBox {
         this.buttonGames.setPrefSize(this.buttonWidth, this.buttonHeight);
         this.buttonGames.setOnAction(e -> view.openGamesView());
 
+        this.buttonAccounts = new Button("Spelers");
+        this.buttonAccounts.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonAccounts.setOnAction(e -> view.openAccountsView());
+
         this.buttonStats = new Button("Statistieken");
         this.buttonStats.setPrefSize(this.buttonWidth, this.buttonHeight);
         this.buttonStats.setOnAction(e -> view.openStatsView());
@@ -52,7 +57,7 @@ public class MenuView extends VBox {
         this.setSpacing(this.spacing);
         this.setPadding(new Insets(0, this.padding, 0, this.padding));
 
-        this.getChildren().addAll(view.getLogo(), this.textGreet, this.buttonGames, this.buttonStats,
+        this.getChildren().addAll(view.getLogo(), this.textGreet, this.buttonGames, this.buttonAccounts,this.buttonStats,
                 this.buttonLogout);
     }
 

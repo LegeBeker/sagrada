@@ -19,6 +19,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.util.Duration;
 import main.java.model.Game;
+import main.java.view.AccountsView;
 import main.java.view.GameView;
 import main.java.view.GamesView;
 import main.java.view.LoginView;
@@ -148,6 +149,11 @@ public class ViewController extends Scene {
     public void openGameView(final Game game) {
         GameView gameView = new GameView(this, game);
         changeView(gameView);
+    }
+
+    public void openAccountsView(){
+        AccountsView accountsView = new AccountsView(this);
+        changeView(accountsView);
     }
 
     public AccountController getAccountController() {
