@@ -1,5 +1,9 @@
 package main.java.controller;
 
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,14 +17,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import javafx.animation.PauseTransition;
-import javafx.animation.TranslateTransition;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.util.Duration;
 import main.java.model.Game;
 import main.java.view.GameView;
-import main.java.view.GamesView;
+import main.java.view.GamesOverview;
 import main.java.view.LoginView;
 import main.java.view.MenuView;
 import main.java.view.NewGameView;
@@ -54,7 +54,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -130,9 +130,9 @@ public class ViewController extends Scene {
         changeView(menuView);
     }
 
-    public void openGamesView() {
-        GamesView gamesView = new GamesView(this);
-        changeView(gamesView);
+    public void openGamesOverview() {
+        GamesOverview gamesOverview = new GamesOverview(this);
+        changeView(gamesOverview);
     }
 
     public void openStatsView() {
