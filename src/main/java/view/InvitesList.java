@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
+import main.java.model.Invite;
 
 public class InvitesList extends VBox {
 
@@ -30,7 +31,7 @@ public class InvitesList extends VBox {
     private final int scrollBoxHeight = 300;
     private final int scrollBoxWidth = 200;
 
-    private TableView<Game> table;
+    private TableView<Invite> table;
 
     private HBox boxButtons;
 
@@ -55,17 +56,17 @@ public class InvitesList extends VBox {
         this.textTitle = new StackPane(text);
         this.textTitle.setPadding(new Insets(0, 0, this.spacing, 0));
 
-        this.table = new TableView<Game>();
+        this.table = new TableView<Invite>();
 
-        TableColumn<Game, Integer> idCol = new TableColumn<>("Id");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Game, Integer> idCol = new TableColumn<>("Naam");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<Game, String> turnPlayerCol = new TableColumn<>("Beurt Speler");
-        turnPlayerCol.setCellValueFactory(new PropertyValueFactory<>("turnPlayerUsername"));
+        TableColumn<Game, String> turnPlayerCol = new TableColumn<>("Status");
+        turnPlayerCol.setCellValueFactory(new PropertyValueFactory<>("1"));
 
         Collections.addAll(this.table.getColumns(), idCol, turnPlayerCol);
 
-        for (Game game : view.getGameController().getGames()) {
+        for (Invite game : view.getInviteController().getInvites()) {
             this.table.getItems().add(game);
         }
 
