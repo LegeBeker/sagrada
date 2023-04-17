@@ -8,36 +8,14 @@ import javafx.scene.paint.Color;
 import main.java.db.DieDB;
 
 public class Die {
-	private int idGame;
-	private int number;
-	private Color color;
-	private int eyes;
-	private int roundtrack;
-	private int roundID;
+    private int idGame;
+    private int number;
+    private Color color;
+    private int eyes;
+    private int roundtrack;
+    private int roundID;
 
-	public static ArrayList<Die> getOffer(final int idGame, final int playerAmount) {
-		int dieAmount = (playerAmount * 2) + 1;
-		
-		DieDB.putOffer(idGame, dieAmount);
-		
-		List<Map<String, String>> offer = DieDB.getOffer(idGame);
-		ArrayList<Die> dice = new ArrayList<Die>();
-
-		for (Map<String, String> dieMap : offer) {
-			Die die = new Die();
-			
-			die.idGame = Integer.parseInt(dieMap.get("idgame"));
-			die.number = Integer.parseInt(dieMap.get("dienumber"));
-			die.setColor(dieMap.get("diecolor"));
-			die.eyes = Integer.parseInt(dieMap.get("eyes"));
-			
-			dice.add(die);
-			
-		}
-		return dice;
-	}
-	
-	public void setColor(final String color) {
+    public void setColor(final String color) {
         if (color == null) {
             this.color = Color.web("#F8F8F8");
             return;
@@ -63,11 +41,33 @@ public class Die {
         }
     }
 
-	public int getEyes() {
-		return eyes;
-	}
+    public int getEyes() {
+        return eyes;
+    }
 
-	public Color getColor() {
-		return color;
-	}
+    public Color getColor() {
+        return color;
+    }
+
+    public static ArrayList<Die> getOffer(final int idGame, final int playerAmount) {
+        int dieAmount = (playerAmount * 2) + 1;
+
+        DieDB.putOffer(idGame, dieAmount);
+
+        List<Map<String, String>> offer = DieDB.getOffer(idGame);
+        ArrayList<Die> dice = new ArrayList<Die>();
+
+        for (Map<String, String> dieMap : offer) {
+            Die die = new Die();
+
+            die.idGame = Integer.parseInt(dieMap.get("idgame"));
+            die.number = Integer.parseInt(dieMap.get("dienumber"));
+            die.setColor(dieMap.get("diecolor"));
+            die.eyes = Integer.parseInt(dieMap.get("eyes"));
+
+            dice.add(die);
+
+        }
+        return dice;
+    }
 }
