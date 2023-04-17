@@ -41,8 +41,6 @@ public class Account {
             acc.username = accountMap.get("username");
             accounts.add(acc);
         }
-
         return accounts;
-        
     }
 }
