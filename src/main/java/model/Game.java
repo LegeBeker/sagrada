@@ -6,8 +6,9 @@ import java.util.Map;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.db.GameDB;
+import main.java.pattern.Observable;
 
-public class Game {
+public class Game extends Observable {
     private int idGame;
 
     private int turnIdPlayer;
@@ -21,9 +22,9 @@ public class Game {
     public int getId() {
         return this.idGame;
     }
-    
+
     public ArrayList<Die> getOffer() {
-    	return this.offer;
+        return this.offer;
     }
 
     public Player getTurnPlayer() {
@@ -85,8 +86,8 @@ public class Game {
         return new SimpleStringProperty(getCreationDate().substring(year));
     }
 
-	public void getNewOffer() {
-		this.offer = Die.getOffer(idGame, players.size());
-		
-	}
+    public void getNewOffer() {
+        this.offer = Die.getOffer(idGame, players.size());
+        notifyObservers();
+    }
 }
