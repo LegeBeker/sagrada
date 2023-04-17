@@ -17,14 +17,13 @@ public class Game extends Observable {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
-    private ArrayList<Die> offer = new ArrayList<>();
 
     public int getId() {
         return this.idGame;
     }
 
     public ArrayList<Die> getOffer() {
-        return this.offer;
+        return Die.getOffer(idGame);
     }
 
     public Player getTurnPlayer() {
@@ -87,7 +86,7 @@ public class Game extends Observable {
     }
 
     public void getNewOffer() {
-        this.offer = Die.getOffer(idGame, players.size());
+        Die.putOffer(idGame, players.size());
         notifyObservers();
     }
 }

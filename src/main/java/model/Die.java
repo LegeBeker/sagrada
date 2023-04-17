@@ -49,11 +49,12 @@ public class Die {
         return color;
     }
 
-    public static ArrayList<Die> getOffer(final int idGame, final int playerAmount) {
+    public static Boolean putOffer(final int idGame, final int playerAmount) {
         int dieAmount = (playerAmount * 2) + 1;
+        return DieDB.putOffer(idGame, dieAmount);
+    }
 
-        DieDB.putOffer(idGame, dieAmount);
-
+    public static ArrayList<Die> getOffer(final int idGame) {
         List<Map<String, String>> offer = DieDB.getOffer(idGame);
         ArrayList<Die> dice = new ArrayList<Die>();
 
