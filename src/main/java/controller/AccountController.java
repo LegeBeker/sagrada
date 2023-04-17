@@ -42,7 +42,7 @@ public class AccountController {
         return true;
     }
 
-    public ArrayList<Account> getAccounts(){
+    public ArrayList<Account> getAccounts() {
         return Account.getAll();
     }
 }

@@ -1,4 +1,5 @@
 package main.java.view;
+
 import javafx.scene.layout.VBox;
 import java.util.Collections;
 
@@ -6,21 +7,18 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Account;
-import main.java.model.Game;
 
-public class AccountsView extends VBox{
+public class AccountsView extends VBox {
     private ViewController view;
 
     private StackPane textTitle;
@@ -71,7 +69,7 @@ public class AccountsView extends VBox{
             if (e.getClickCount() == 2) {
                 Account acc = this.table.getSelectionModel().getSelectedItem();
                 // this.view.openGameView(a);
-                //-- @Tim, check/discuss out what we want to do at on-click event.
+                // -- @Tim, check/discuss out what we want to do at on-click event.
             }
         });
 
