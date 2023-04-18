@@ -40,6 +40,9 @@ public class AccountsView extends VBox {
     private final int buttonHeight = 25;
     private final int buttonWidth = 200;
 
+    private final int tableHeaderInsets = -10;
+    private final int textTitleInset = 10;
+
     private final int padding = 200;
     private final int spacing = 20;
 
@@ -55,7 +58,7 @@ public class AccountsView extends VBox {
         text.setFill(Color.web("#ffffff"));
 
         this.textTitle = new StackPane(text);
-        this.textTitle.setPadding(new Insets(10, 0, this.spacing, 0));
+        this.textTitle.setPadding(new Insets(textTitleInset, 0, this.spacing, 0));
 
         Text text2 = new Text("Gebruikersnaam:");
         text2.setStyle("-fx-font-size: 20px");
@@ -63,7 +66,7 @@ public class AccountsView extends VBox {
         text2.setY(20);
 
         this.tableHeader = new AnchorPane(text2);
-        this.tableHeader.setPadding(new Insets(-10, 0, this.spacing, 0));
+        this.tableHeader.setPadding(new Insets(tableHeaderInsets, 0, this.spacing, 0));
 
         this.contentBox = new VBox();
         this.contentBox.setMinWidth(scrollBoxWidth - 2);
@@ -100,7 +103,7 @@ public class AccountsView extends VBox {
         this.view.openMenuView();
     }
 
-    public void resize(double width, double height) {
+    public void resize(final double width, final double height) {
         super.resize(width, height);
         // -- TODO: @Tim, check this out later, resizing is doing le funnies atm.
         for (AccountView av : tableContents) {
