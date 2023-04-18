@@ -13,7 +13,7 @@ public class GameController {
     public Game getGame(final int gameId) {
         return Game.get(gameId);
     }
-    
+
     public Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
         return Game.createGame(accounts, useDefaultCards);
     }
