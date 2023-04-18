@@ -2,8 +2,8 @@ package main.java.controller;
 
 import java.util.ArrayList;
 
+import main.java.model.Account;
 import main.java.model.Game;
-import main.java.model.Player;
 
 public class GameController {
     public ArrayList<Game> getGames() {
@@ -14,7 +14,7 @@ public class GameController {
         return Game.get(gameId);
     }
     
-    public Game createGame(final ArrayList<Player> players, final boolean useDefaultCards) {
-        return Game.createGame(players, useDefaultCards);
+    public Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
+        return Game.createGame(accounts, useDefaultCards);
     }
 }
