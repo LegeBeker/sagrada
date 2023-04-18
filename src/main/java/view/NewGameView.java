@@ -14,13 +14,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import main.java.controller.GameController;
 import main.java.controller.ViewController;
-import main.java.model.Player;
+import main.java.model.Account;
 
 public class NewGameView extends HBox {
 
     private ViewController view;
     private ToggleGroup cards;
-    private ArrayList<Player> players;
+    private ArrayList<Account> accounts;
     private final int spacing = 10;
 
     public NewGameView(final ViewController view) {
@@ -66,6 +66,7 @@ public class NewGameView extends HBox {
         ScrollPane playerList = new ScrollPane();
         final double scrollPaneWidth = view.getWidth() * 0.65; //TODO something like (view.getWidth() - buttonPaneWidth* - spacing * 2). *bPW is 0 at the moment
         playerList.setPrefWidth(scrollPaneWidth);
+        accounts = new ArrayList<Account>();
         
         // order things in buttonPane
         buttonPane.setSpacing(spacing);
@@ -86,8 +87,17 @@ public class NewGameView extends HBox {
         if(settingText.equals("Willekeurig")) {
             useDefaultCards = false;
         }
+        if(accounts.size() < 1) {
+            view.displayError("Selecteer meer spelers");
+            return;
+        }
+        if(accounts.size() > 3) {
+            view.displayError("Selecteer minder spelers");
+            return;
+        }
         
-        new GameController().createGame(this.players, useDefaultCards);   
+        new GameController().createGame(this.accounts, useDefaultCards);
+        //TODO go to the newly made game
     }
     
     private void goBack() {
