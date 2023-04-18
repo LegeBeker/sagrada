@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Background;
@@ -17,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
+import main.java.model.Account;
 import main.java.model.Game;
 import main.java.model.Invite;
 
@@ -44,6 +44,8 @@ public class InvitesList extends VBox {
     private final int spacing = 15;
 
     public InvitesList(final ViewController view) {
+        Account player = view.getAccountController().getAccount();
+
         this.view = view;
 
         this.setAlignment(Pos.CENTER);
@@ -58,16 +60,16 @@ public class InvitesList extends VBox {
 
         this.table = new TableView<Invite>();
 
-        TableColumn<Game, Integer> idCol = new TableColumn<>("Naam");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("username"));
+        TableColumn<Invite, String> name = new TableColumn<>("Naam");
+        name.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<Game, String> turnPlayerCol = new TableColumn<>("Status");
-        turnPlayerCol.setCellValueFactory(new PropertyValueFactory<>("1"));
+        TableColumn<Invite, String> status = new TableColumn<>("Status");
+        status.setCellValueFactory(new PropertyValueFactory<>("PlayStatus"));
 
-        Collections.addAll(this.table.getColumns(), idCol, turnPlayerCol);
+        Collections.addAll(this.table.getColumns(), name, status);
 
-        for (Invite game : view.getInviteController().getInvites()) {
-            this.table.getItems().add(game);
+        for (Invite invite : view.getInviteController().getInvites(player.getUsername())) {
+            this.table.getItems().add(invite);
         }
 
         this.scrollBox = new StackPane();
@@ -84,7 +86,7 @@ public class InvitesList extends VBox {
 
         this.inviteTypeButton = new Button("Verstuurde uitnodigingen");
         this.inviteTypeButton.setPrefSize(this.buttonWidth, this.buttonHeight);
-        this.inviteTypeButton.setOnAction(e -> this.back());
+        // this.inviteTypeButton.setOnAction(e -> this.back());
 
         this.boxButtons = new HBox();
         this.boxButtons.getChildren().addAll(this.inviteTypeButton);

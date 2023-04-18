@@ -1,6 +1,5 @@
 package main.java.controller;
 
-import javax.swing.text.html.ImageView;
 
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
@@ -9,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.util.Duration;
 import main.java.model.Game;
 import main.java.view.GameView;
 import main.java.view.GamesOverview;
@@ -73,7 +74,8 @@ public class ViewController extends Scene {
         this.accountController = new AccountController();
         this.gameController = new GameController();
         this.patternCardController = new PatternCardController();
-
+        this.inviteController = new InviteController();
+        
         this.openLoginView();
     }
 
