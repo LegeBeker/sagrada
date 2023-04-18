@@ -11,10 +11,10 @@ public class Invite {
     private int idGame;
     private String playStatus;
 
-    public static ArrayList<Invite> getInvites() {
+    public static ArrayList<Invite> getInvites(final String player) {
         ArrayList<Invite> invites = new ArrayList<Invite>();
 
-        for (Map<String, String> inviteMap : PlayerDB.getInvites()) {
+        for (Map<String, String> inviteMap : PlayerDB.getInvites(player)) {
             Invite game = mapToInvite(inviteMap);
             invites.add(game);
         }
@@ -32,4 +32,16 @@ public class Invite {
         return invite;
     }
 
+    public String getUsername() {
+        return this.username;
+    }
+
+    public int getIdGame() {
+        return this.idGame;
+    }
+
+    public String getPlayStatus() {
+        return this.playStatus;
+    }
 }
+
