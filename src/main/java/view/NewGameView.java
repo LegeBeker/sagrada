@@ -21,85 +21,89 @@ public class NewGameView extends HBox {
     private ViewController view;
     private ToggleGroup cards;
     private ArrayList<Account> accounts;
+
     private final int spacing = 10;
+    private final int maxPlayers = 4;
 
     public NewGameView(final ViewController view) {
         this.view = view;
         this.setBackground(view.getBackground());
         final String textStyle = "-fx-font-size: 20px";
         final String labelStyle = "-fx-font-weight: bold";
-        
+
         // label
         Label title = new Label(" Nieuw spel aanmaken ");
-        title.setStyle(textStyle + "; " + labelStyle); 
+        title.setStyle(textStyle + "; " + labelStyle);
         title.setTextFill(Color.ALICEBLUE);
-        
+
         // 2 radio buttons for default cards and random cards
         cards = new ToggleGroup();
-        
+
         RadioButton standardRb = new RadioButton("Standaard");
         standardRb.setText("Standaard");
         standardRb.setToggleGroup(cards);
         standardRb.setSelected(true);
         standardRb.setTextFill(Color.ALICEBLUE);
-        
+
         RadioButton randomRb = new RadioButton("Willekeurig");
         randomRb.setText("Willekeurig");
         randomRb.setToggleGroup(cards);
         randomRb.setTextFill(Color.ALICEBLUE);
-        
+
         // create game button
         Button create = new Button("Maak nieuw spel aan");
         create.setStyle(textStyle);
         create.setOnAction(e -> createGame());
-        
+
         // return button
         Button back = new Button("Terug");
         back.setStyle(textStyle);
         back.setOnAction(e -> goBack());
-        
+
         // add all buttons to a pane
         VBox buttonPane = new VBox();
         buttonPane.getChildren().setAll(title, standardRb, randomRb, create, back);
-        
+
         // TODO choose players here, I gave you the space
         ScrollPane playerList = new ScrollPane();
-        final double scrollPaneWidth = view.getWidth() * 0.65; //TODO something like (view.getWidth() - buttonPaneWidth* - spacing * 2). *bPW is 0 at the moment
+        final double scrollPaneWidth = view.getWidth() * 0.65; // TODO something like (view.getWidth() -
+                                                               // buttonPaneWidth* - spacing * 2). *bPW is 0 at the
+                                                               // moment
         playerList.setPrefWidth(scrollPaneWidth);
         accounts = new ArrayList<Account>();
-        
+
         // order things in buttonPane
         buttonPane.setSpacing(spacing);
         buttonPane.setAlignment(Pos.CENTER);
-        
+
         // add all panes to this pane and order more things
         this.getChildren().addAll(buttonPane, playerList);
         this.setAlignment(Pos.CENTER_LEFT);
         this.setPadding(new Insets(spacing));
         this.setSpacing(spacing);
     }
-    
+
     private void createGame() {
         RadioButton setting = (RadioButton) this.cards.getSelectedToggle();
         String settingText = setting.getText();
-        
+
         boolean useDefaultCards = true;
-        if(settingText.equals("Willekeurig")) {
+        if (settingText.equals("Willekeurig")) {
             useDefaultCards = false;
         }
-        if(accounts.size() < 1) {
+        if (accounts.size() <= 0) {
             view.displayError("Selecteer meer spelers");
             return;
         }
-        if(accounts.size() > 3) {
+        if (accounts.size() > maxPlayers - 1) {
             view.displayError("Selecteer minder spelers");
             return;
         }
-        
+
         new GameController().createGame(this.accounts, useDefaultCards);
-        //TODO go to the newly made game
+        // TODO go to the newly made game
     }
-    
+
     private void goBack() {
         this.view.openGamesView();
     }
