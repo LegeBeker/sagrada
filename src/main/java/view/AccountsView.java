@@ -46,6 +46,8 @@ public class AccountsView extends VBox {
     private final int padding = 200;
     private final int spacing = 20;
 
+    private final int yValueText = 20;
+
     public AccountsView(final ViewController view) {
         this.view = view;
         this.setBackground(view.getBackground());
@@ -63,7 +65,7 @@ public class AccountsView extends VBox {
         Text text2 = new Text("Gebruikersnaam:");
         text2.setStyle("-fx-font-size: 20px");
         text2.setFill(Color.web("#ffffff"));
-        text2.setY(20);
+        text2.setY(yValueText);
 
         this.tableHeader = new AnchorPane(text2);
         this.tableHeader.setPadding(new Insets(tableHeaderInsets, 0, this.spacing, 0));

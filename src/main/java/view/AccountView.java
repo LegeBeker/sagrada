@@ -15,18 +15,18 @@ public class AccountView extends BorderPane {
     private Account acc;
     private ViewController view;
 
-    private double rowHeight = 50;
+    private final double rowHeight = 50;
     private double rowWidth = 400;
-    private double paddingInsetValue = 8;
+    private final double paddingInsetValue = 8;
 
     public AccountView(final ViewController view, final Account account, final String type) {
         this.setMinHeight(rowHeight);
         this.setWidth(rowWidth);
         this.view = view;
 
-        this.setStyle("-fx-border-style: solid inside;" 
-        + "-fx-border-width: 0 0 1 0;" 
-        +"-fx-border-color: black;");
+        this.setStyle("-fx-border-style: solid inside;"
+        + "-fx-border-width: 0 0 1 0;"
+        + "-fx-border-color: black;");
 
         this.setPadding(new Insets(paddingInsetValue));
         this.acc = account;
@@ -64,11 +64,11 @@ public class AccountView extends BorderPane {
         this.setWidth(this.rowWidth);
     }
 
-    private void invitePlayer(Account acc) {
+    private void invitePlayer(final Account acc) {
         // -- @Someone, insert invite logic here
     }
 
-    private void showPlayerStats(Account acc) {
+    private void showPlayerStats(final Account acc) {
         // -- @Someone, insert player stats logic here
     }
 
