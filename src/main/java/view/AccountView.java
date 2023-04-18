@@ -16,7 +16,7 @@ public class AccountView extends BorderPane {
     private ViewController view;
 
     private final double rowHeight = 50;
-    private double rowWidth = 400;
+    private final double rowWidth = 400;
     private final double paddingInsetValue = 8;
 
     public AccountView(final ViewController view, final Account account, final String type) {
@@ -60,8 +60,8 @@ public class AccountView extends BorderPane {
 
     public void resize(final double width, final double height) {
         super.resize(width, height);
-        this.rowWidth = width;
-        this.setWidth(this.rowWidth);
+        // this.rowWidth = width;
+        this.setWidth(width);
     }
 
     private void invitePlayer(final Account acc) {
