@@ -17,17 +17,18 @@ public class AccountView extends BorderPane {
 
     private double rowHeight = 50;
     private double rowWidth = 400;
+    private double paddingInsetValue = 8;
 
-    public AccountView(final ViewController view, Account account, String type) {
+    public AccountView(final ViewController view, final Account account, final String type) {
         this.setMinHeight(rowHeight);
         this.setWidth(rowWidth);
         this.view = view;
 
-        this.setStyle("-fx-border-style: solid inside;" +
-                "-fx-border-width: 0 0 1 0;" +
-                "-fx-border-color: black;");
+        this.setStyle("-fx-border-style: solid inside;" 
+        + "-fx-border-width: 0 0 1 0;" 
+        +"-fx-border-color: black;");
 
-        this.setPadding(new Insets(8));
+        this.setPadding(new Insets(paddingInsetValue));
         this.acc = account;
 
         String text = acc.getUsername();
@@ -57,7 +58,7 @@ public class AccountView extends BorderPane {
         }
     }
 
-    public void resize(double width, double height) {
+    public void resize(final double width, final double height) {
         super.resize(width, height);
         this.rowWidth = width;
         this.setWidth(this.rowWidth);
