@@ -18,19 +18,19 @@ public class Player {
     private Integer idPatternCard;
 
     private int score;
-    
+
     public Player createPlayer(final int gameID, final String username) {
         Player newPlayer = new Player();
         newPlayer.setIdGame(gameID);
         newPlayer.setUsername(username);
-        
+
         // TODO colors and refine the status
-        newPlayer.setPlayStatus("CHALLENGEE"); 
-        newPlayer.setPrivateObjCardColor("red"); 
-        
+        newPlayer.setPlayStatus("CHALLENGEE");
+        newPlayer.setPrivateObjCardColor("red");
+
         return newPlayer;
     }
-    
+
     public void addPlayerToDB() {
         PlayerDB.createPlayer(this.username, this.idGame, this.playStatus, this.privateObjCardColor);
         Map<String, String> addedPlayer = PlayerDB.getRecentPlayerFromGame(this.idGame).get(0);
