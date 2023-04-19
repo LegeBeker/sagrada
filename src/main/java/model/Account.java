@@ -30,13 +30,11 @@ public class Account {
     }
 
     public static ArrayList<Account> getAll() {
-        List<Map<String, String>> accountDB = AccountDB.getAll();
 
         ArrayList<Account> accounts = new ArrayList<Account>();
 
-        for (Map<String, String> accountMap : accountDB) {
+        for (Map<String, String> accountMap : AccountDB.getAll()) {
             Account acc = new Account();
-            // Temp design choice: Only get username since password is not interesting
             acc.username = accountMap.get("username");
             accounts.add(acc);
         }

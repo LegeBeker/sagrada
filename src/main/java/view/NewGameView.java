@@ -9,18 +9,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import main.java.controller.GameController;
 import main.java.controller.ViewController;
 import main.java.model.Account;
+import main.java.model.Game;
 
 public class NewGameView extends HBox {
 
     private ViewController view;
     private ToggleGroup cards;
     private ArrayList<Account> accounts;
+    private final Game game;
 
     private final int spacing = 10;
     private final int maxPlayers = 4;
@@ -59,14 +63,11 @@ public class NewGameView extends HBox {
         VBox buttonPane = new VBox();
         buttonPane.getChildren().setAll(title, standardRb, randomRb, create, back);
 
-        // TODO choose players here, I gave you the space
-        ScrollPane playerList = new ScrollPane();
-        final double scrollPaneWidth = view.getWidth() * 0.65; // TODO something like (view.getWidth() -
-                                                               // buttonPaneWidth* - spacing * 2). *bPW is 0 at the
-                                                               // moment
-        playerList.setPrefWidth(scrollPaneWidth);
-        accounts = new ArrayList<Account>();
-
+        Game game = new Game();
+        this.game = game;
+        VBox playerList = new AccountsView(this.view, game);
+        playerList.setMinWidth(400);
+        
         buttonPane.setSpacing(spacing);
         buttonPane.setAlignment(Pos.CENTER);
 
