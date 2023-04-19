@@ -25,7 +25,7 @@ public class DieView extends Group {
         this.value = value;
 
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
-        rectangle.setFill(Color.WHITE);
+        rectangle.setFill(Color.rgb(0, 0, 0, 0));
 
         Rectangle die = new Rectangle(RECTANGLE, RECTANGLE);
         die.setFill(color);
