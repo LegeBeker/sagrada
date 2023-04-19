@@ -24,8 +24,6 @@ public class GameChatView extends VBox {
 
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
-    private ViewController view;
-    private final int buttonRatio = 3;
 
     public GameChatView(final ViewController view, final Game game) {
         this.setBackground(background);
