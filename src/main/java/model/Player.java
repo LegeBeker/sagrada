@@ -34,7 +34,7 @@ public class Player {
     public void addPlayerToDB() {
         PlayerDB.createPlayer(this.username, this.idGame, this.playStatus, this.privateObjCardColor);
         Map<String, String> addedPlayer = PlayerDB.getRecentPlayerFromGame(this.idGame).get(0);
-        this.setId(Integer.parseInt(addedPlayer.get("idplayer"))); // also adds the idplayer
+        this.setId(Integer.parseInt(addedPlayer.get("idplayer")));
     }
 
     public int getId() {

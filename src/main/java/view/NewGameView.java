@@ -31,12 +31,10 @@ public class NewGameView extends HBox {
         final String textStyle = "-fx-font-size: 20px";
         final String labelStyle = "-fx-font-weight: bold";
 
-        // label
         Label title = new Label(" Nieuw spel aanmaken ");
         title.setStyle(textStyle + "; " + labelStyle);
         title.setTextFill(Color.ALICEBLUE);
 
-        // 2 radio buttons for default cards and random cards
         cards = new ToggleGroup();
 
         RadioButton standardRb = new RadioButton("Standaard");
@@ -50,17 +48,14 @@ public class NewGameView extends HBox {
         randomRb.setToggleGroup(cards);
         randomRb.setTextFill(Color.ALICEBLUE);
 
-        // create game button
         Button create = new Button("Maak nieuw spel aan");
         create.setStyle(textStyle);
         create.setOnAction(e -> createGame());
 
-        // return button
         Button back = new Button("Terug");
         back.setStyle(textStyle);
         back.setOnAction(e -> goBack());
 
-        // add all buttons to a pane
         VBox buttonPane = new VBox();
         buttonPane.getChildren().setAll(title, standardRb, randomRb, create, back);
 
@@ -72,11 +67,9 @@ public class NewGameView extends HBox {
         playerList.setPrefWidth(scrollPaneWidth);
         accounts = new ArrayList<Account>();
 
-        // order things in buttonPane
         buttonPane.setSpacing(spacing);
         buttonPane.setAlignment(Pos.CENTER);
 
-        // add all panes to this pane and order more things
         this.getChildren().addAll(buttonPane, playerList);
         this.setAlignment(Pos.CENTER_LEFT);
         this.setPadding(new Insets(spacing));
