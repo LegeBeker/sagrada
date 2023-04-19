@@ -1,6 +1,9 @@
 package main.java.model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -17,6 +20,39 @@ public class Game extends Observable {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
+
+    public static Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
+        Game newGame = new Game();
+        Player playerCreator = new Player();
+        final int thisGameID = newGame.getId();
+
+        for (Account ac : accounts) {
+            String username = ac.getUsername();
+            Player newPlayer = playerCreator.createPlayer(thisGameID, username);
+            // TODO colors and role (challenger or challengee)
+
+            newPlayer.addPlayerToDB();
+            newGame.addPlayer(newPlayer);
+        }
+
+        LocalDateTime time = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedTime = dtf.format(time);
+
+        GameDB.createGame(formattedTime);
+        List<Map<String, String>> response = GameDB.getGameByTimestamp(formattedTime);
+        newGame.idGame = Integer.parseInt(response.get(0).get("idgame"));
+        // TODO BUG HERE after adding a game to the db you can't restart the application
+        // without getting errors
+
+        // if (useDefaultCards) {
+        // TODO get default cards
+        // } else {
+        // TODO make random but valid cards
+        // }
+
+        return newGame;
+    }
 
     public int getId() {
         return this.idGame;
@@ -40,6 +76,10 @@ public class Game extends Observable {
 
     public ArrayList<Player> getPlayers() {
         return this.players;
+    }
+
+    public void addPlayer(final Player player) {
+        this.players.add(player);
     }
 
     public void endTurn() {
