@@ -36,6 +36,7 @@ public class ViewController extends Scene {
     private AccountController accountController;
     private GameController gameController;
     private PatternCardController patternCardController;
+    private MessageController messageController;
 
     private final Background background;
     private final ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
@@ -160,5 +161,9 @@ public class ViewController extends Scene {
 
     public PatternCardController getPatternCardController() {
         return patternCardController;
+    }
+
+    public MessageController getMessageController() {
+        return messageController;
     }
 }
