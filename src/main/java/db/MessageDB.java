@@ -1,11 +1,12 @@
 package main.java.db;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 public class MessageDB {
     // Create methods to add messages to the database
-    public void addMessage(final String message, final int playerId) {
+    public static void addMessage(final String message, final int playerId, final Timestamp time) {
         // Add message to database
     }
 
