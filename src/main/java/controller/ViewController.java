@@ -73,6 +73,7 @@ public class ViewController extends Scene {
         this.accountController = new AccountController();
         this.gameController = new GameController();
         this.patternCardController = new PatternCardController();
+        this.messageController = new MessageController();
 
         this.openLoginView();
     }
