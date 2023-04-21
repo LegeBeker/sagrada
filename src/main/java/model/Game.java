@@ -139,4 +139,8 @@ public class Game extends Observable {
         Die.putOffer(idGame, players.size());
         notifyObservers();
     }
+
+    public ArrayList<ToolCard> getToolCards() {
+        return ToolCard.getToolCards(idGame);
+    }
 }
