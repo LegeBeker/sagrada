@@ -20,14 +20,7 @@ import javafx.geometry.Pos;
 import javafx.util.Duration;
 import main.java.model.Account;
 import main.java.model.Game;
-import main.java.view.GameView;
-import main.java.view.GamesView;
-import main.java.view.LoginView;
-import main.java.view.MenuView;
-import main.java.view.NewGameView;
-import main.java.view.RegisterView;
-import main.java.view.StatView;
-import main.java.view.StatsView;
+import main.java.view.*;
 
 public class ViewController extends Scene {
 
