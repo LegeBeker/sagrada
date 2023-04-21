@@ -22,11 +22,6 @@ public class MessageController {
         time = new Timestamp(System.currentTimeMillis());
 
         this.message = new GameMessage(message, idPlayer, time);
-
-        System.out.println(this.message.getMessage() + Integer.toString(this.message.getIdPlayer()) +
-                this.message.getTime().toString());
-
-        // Message.sendMessage(message, game, idPlayer);
     }
 
 }
