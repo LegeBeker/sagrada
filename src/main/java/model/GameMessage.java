@@ -23,10 +23,6 @@ public class GameMessage {
         return message.get();
     }
 
-    public void setMessage(final String message) {
-        this.message.set(message);
-    }
-
     public SimpleStringProperty messageProperty() {
         return message;
     }
@@ -35,20 +31,12 @@ public class GameMessage {
         return idPlayer.get();
     }
 
-    public void setIdPlayer(final int idPlayer) {
-        this.idPlayer.set(idPlayer);
-    }
-
     public SimpleIntegerProperty idPlayerProperty() {
         return idPlayer;
     }
 
     public Timestamp getTime() {
         return this.time;
-    }
-
-    public void setTime(final Timestamp time) {
-        this.time = time;
     }
 
 }
