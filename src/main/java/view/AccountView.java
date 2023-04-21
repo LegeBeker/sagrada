@@ -4,10 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Account;
 import main.java.model.Game;
@@ -42,8 +39,6 @@ public class AccountView extends BorderPane {
                 + "-fx-border-width: 0 0 1 0;"
                 + "-fx-border-color: black;");
 
-        // this.setBackground(new Background(new BackgroundFill(Color.RED, null,
-        // null)));
         this.setPadding(new Insets(paddingInsetValue));
         this.acc = account;
 
@@ -56,14 +51,10 @@ public class AccountView extends BorderPane {
     private void generateButton(final Game game) {
         this.game = game;
         if (this.game != null) {
-            if (acc.getUsername().equals(this.view.getAccountController().getAccount().getUsername())) {
-                this.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
-            } else {
-                Button inviteButton = new Button("Invite");
-                inviteButton.setOnAction(e -> invitePlayer(acc));
-                this.setRight(inviteButton);
-                this.setAlignment(inviteButton, Pos.CENTER);
-            }
+            Button inviteButton = new Button("Invite");
+            inviteButton.setOnAction(e -> invitePlayer(acc));
+            this.setRight(inviteButton);
+            this.setAlignment(inviteButton, Pos.CENTER);
         }
     }
 
@@ -76,7 +67,6 @@ public class AccountView extends BorderPane {
 
     public void resize(final double width, final double height) {
         super.resize(width, height);
-        // this.rowWidth = width;
         this.setWidth(width);
     }
 
@@ -85,7 +75,6 @@ public class AccountView extends BorderPane {
     }
 
     private void showPlayerStats(final Account acc) {
-        // -- @Someone, insert player stats logic here
+        view.openStatView(acc);
     }
-
 }

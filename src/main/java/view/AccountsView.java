@@ -93,6 +93,9 @@ public class AccountsView extends VBox {
 
     private void generateAccountViews(final Game game) {
         for (Account acc : view.getAccountController().getAccounts()) {
+            if (acc.getUsername().equals(view.getAccountController().getAccount().getUsername())) {
+                continue;
+            }
             AccountView accountView = new AccountView(view, acc, game);
             this.contentBox.getChildren().add(accountView);
             tableContents.add(accountView);
