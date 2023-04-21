@@ -82,6 +82,16 @@ public class Game extends Observable {
         this.players.add(player);
     }
 
+    public Player getPlayer(final String username) {
+        for (Player player : this.players) {
+            if (player.getUsername().equals(username)) {
+                return player;
+            }
+        }
+
+        return null;
+    }
+
     public void endTurn() {
         // TODO: implement
     }
