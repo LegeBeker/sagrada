@@ -26,7 +26,7 @@ public class GameButtonsView extends FlowPane {
         });
 
         this.buttonBack.setOnAction(e -> {
-            view.openGamesOverview();
+            view.openGamesList();
         });
 
         this.getChildren().add(buttonBack);

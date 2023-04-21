@@ -40,11 +40,12 @@ public class GamesList extends VBox {
     private final int buttonHeight = 25;
     private final int buttonWidth = 200;
 
-    private final int padding = 100;
+    private final int padding = 200;
     private final int spacing = 15;
 
     public GamesList(final ViewController view) {
         this.view = view;
+        this.setBackground(view.getBackground());
 
         this.setAlignment(Pos.CENTER);
 
@@ -74,6 +75,7 @@ public class GamesList extends VBox {
 
         for (Game game : view.getGameController().getGames()) {
             this.table.getItems().add(game);
+            System.out.println(game.getPlayers());
         }
 
         this.table.setRowFactory(tv -> new TableRow<Game>() {
@@ -89,6 +91,7 @@ public class GamesList extends VBox {
                 } else {
                     setStyle("");
                 }
+
             }
         });
 
@@ -114,6 +117,10 @@ public class GamesList extends VBox {
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefSize(this.buttonWidth, this.buttonHeight);
         this.buttonBack.setOnAction(e -> this.back());
+
+        this.buttonNewGame = new Button("Nieuwe potje starten");
+        this.buttonNewGame.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonNewGame.setOnAction(e -> this.openNewGameView());
 
         this.buttonNewGame = new Button("Nieuwe potje starten");
         this.buttonNewGame.setPrefSize(this.buttonWidth, this.buttonHeight);

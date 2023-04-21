@@ -39,7 +39,7 @@ public class MenuView extends VBox {
 
         this.buttonGames = new Button("Spellen");
         this.buttonGames.setPrefSize(this.buttonWidth, this.buttonHeight);
-        this.buttonGames.setOnAction(e -> view.openGamesOverview());
+        this.buttonGames.setOnAction(e -> view.openGamesList());
 
         this.buttonStats = new Button("Statistieken");
         this.buttonStats.setPrefSize(this.buttonWidth, this.buttonHeight);

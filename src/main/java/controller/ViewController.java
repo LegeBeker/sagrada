@@ -1,6 +1,5 @@
 package main.java.controller;
 
-
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
@@ -21,7 +20,7 @@ import javafx.scene.paint.Stop;
 import javafx.util.Duration;
 import main.java.model.Game;
 import main.java.view.GameView;
-import main.java.view.GamesOverview;
+import main.java.view.GamesList;
 import main.java.view.LoginView;
 import main.java.view.MenuView;
 import main.java.view.NewGameView;
@@ -75,7 +74,7 @@ public class ViewController extends Scene {
         this.gameController = new GameController();
         this.patternCardController = new PatternCardController();
         this.inviteController = new InviteController();
-        
+
         this.openLoginView();
     }
 
@@ -133,8 +132,8 @@ public class ViewController extends Scene {
         changeView(menuView);
     }
 
-    public void openGamesOverview() {
-        GamesOverview gamesOverview = new GamesOverview(this);
+    public void openGamesList() {
+        GamesList gamesOverview = new GamesList(this);
         changeView(gamesOverview);
     }
 
