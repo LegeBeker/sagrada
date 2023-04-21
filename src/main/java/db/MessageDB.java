@@ -29,7 +29,7 @@ public final class MessageDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM chatline WHERE idplayer = ?";
-        String[] params = { Integer.toString(playerId) };
+        String[] params = {Integer.toString(playerId)};
 
         return db.exec(sql, params);
     }
