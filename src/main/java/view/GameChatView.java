@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
@@ -63,7 +64,7 @@ public class GameChatView extends VBox {
     }
 
     private void setupListener(final ViewController view) {
-        view.getMessageController().
+        // view.getMessageController().
     }
 
     public void addMessage(final String message, final String username, final Boolean sender) {
