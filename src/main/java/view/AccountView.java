@@ -53,7 +53,7 @@ public class AccountView extends BorderPane {
         this.setLeft(l1);
     }
 
-    private void generateButton(Game game) {
+    private void generateButton(final Game game) {
         this.game = game;
         if (this.game != null) {
             if (acc.getUsername().equals(this.view.getAccountController().getAccount().getUsername())) {
