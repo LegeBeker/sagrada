@@ -12,6 +12,7 @@ public class GameButtonsView extends FlowPane {
 
     private Button buttonBack;
     private Button buttonEndTurn;
+    private Button buttonGetDice;
 
     private final int padding = 10;
 
@@ -19,17 +20,18 @@ public class GameButtonsView extends FlowPane {
         this.view = view;
 
         this.buttonBack = new Button("Terug");
+
         this.buttonEndTurn = new Button("Einde beurt");
 
-        this.buttonEndTurn.setOnAction(e -> {
-            game.endTurn();
-        });
+        this.buttonGetDice = new Button("Pak dobbelstenen");
 
-        this.buttonBack.setOnAction(e -> {
-            view.openGamesView();
-        });
+        this.buttonEndTurn.setOnAction(e -> game.endTurn());
 
-        this.getChildren().add(buttonBack);
+        this.buttonBack.setOnAction(e -> view.openGamesView());
+
+        this.buttonGetDice.setOnAction(e -> game.getNewOffer());
+
+        this.getChildren().addAll(this.buttonBack, this.buttonGetDice);
 
         if (game.getTurnPlayer().getUsername().equals(view.getAccountController().getAccount().getUsername())) {
             this.getChildren().addAll(buttonEndTurn);
@@ -39,4 +41,13 @@ public class GameButtonsView extends FlowPane {
         this.setHgap(padding);
         this.setVgap(padding);
     }
+
+    public void getDice(final Game game) {
+        try {
+            game.getNewOffer();
+        } catch (RuntimeException e) {
+            this.view.displayError(e.getMessage());
+        }
+    }
+
 }
