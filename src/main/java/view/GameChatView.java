@@ -62,14 +62,18 @@ public class GameChatView extends VBox {
         this.getChildren().add(1, chatInput);
     }
 
-    public void addMessage(final String message, final String username) {
+    public void addMessage(final String message, final String username, final Boolean sender) {
         FlowPane chatMessage;
         chatMessage = new FlowPane();
         chatMessage.setBackground(null);
-        chatMessage.getChildren().add(new Text("Speler 1: "));
+        chatMessage.getChildren().add(new Text(username));
         chatMessage.getChildren().add(new Text(message));
 
-        if ()
+        if (sender) {
+            chatMessage.setAlignment(Pos.CENTER_RIGHT);
+        } else {
+            chatMessage.setAlignment(Pos.CENTER_LEFT);
+        }
         System.out.println(this.getWidth());
 
         chatMessageBox.getChildren().add(chatMessage);
