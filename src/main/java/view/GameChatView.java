@@ -25,15 +25,17 @@ public class GameChatView extends VBox {
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
 
+    private String username;
+
     public GameChatView(final ViewController view, final Game game) {
         this.setBackground(background);
 
         this.setAlignment(Pos.BOTTOM_CENTER);
 
+        // Chat input
         TextField textInput = new TextField();
         textInput.setPromptText("Typ je geweldige bericht hier");
         HBox.setHgrow(textInput, Priority.ALWAYS);
-
         Button sendButton = new Button("Verstuur");
 
         // Input handling
@@ -41,7 +43,7 @@ public class GameChatView extends VBox {
             @Override
             public void handle(final KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER) {
-                    addMessage(textInput.getText());
+                    view.getMessageController().sendMessage(textInput.getText(), view, game);
                     textInput.setText("");
                 }
             }
@@ -64,13 +66,14 @@ public class GameChatView extends VBox {
         this.getChildren().add(1, chatInput);
     }
 
-    public void addMessage(final String message) {
+    public void addMessage(final String message, final String username) {
         FlowPane chatMessage;
         chatMessage = new FlowPane();
         chatMessage.setBackground(null);
         chatMessage.getChildren().add(new Text("Speler 1: "));
         chatMessage.getChildren().add(new Text(message));
 
+        if ()
         System.out.println(this.getWidth());
 
         chatMessageBox.getChildren().add(chatMessage);
