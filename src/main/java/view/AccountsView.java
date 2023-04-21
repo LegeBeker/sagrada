@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.AnchorPane;
@@ -31,6 +30,7 @@ public class AccountsView extends VBox {
 
     private final int scrollBoxHeight = 300;
     private final int scrollBoxWidth = 300;
+    private final int widthCorrection = 100;
 
     private final int tableHeaderInsets = -10;
 
@@ -39,7 +39,7 @@ public class AccountsView extends VBox {
 
     private final int yValueText = 20;
 
-    public AccountsView(final ViewController view, final Game game){
+    public AccountsView(final ViewController view, final Game game) {
         generateGeneralAccountsView(view);
         generateAccountViews(game);
         setScrollBoxStyling();
@@ -63,8 +63,7 @@ public class AccountsView extends VBox {
         }
     }
 
-
-    private void generateGeneralAccountsView(ViewController view){
+    private void generateGeneralAccountsView(final ViewController view) {
         this.view = view;
 
         this.setAlignment(Pos.CENTER);
@@ -84,15 +83,15 @@ public class AccountsView extends VBox {
         this.setPadding(new Insets(0, this.padding, 0, this.padding));
     }
 
-    private void setScrollBoxStyling(){
+    private void setScrollBoxStyling() {
         this.scrollBox.setPrefSize(scrollBoxWidth, scrollBoxHeight);
-        this.scrollBox.setMinWidth(scrollBoxWidth - 100);
+        this.scrollBox.setMinWidth(scrollBoxWidth - widthCorrection);
         this.scrollBox.setHbarPolicy(ScrollBarPolicy.NEVER);
         this.scrollBox.setBackground(new Background(new BackgroundFill(Color.web("#ffffff"), null, null)));
         this.scrollBox.setPadding(new Insets(0, 0, 0, 0));
     }
 
-    private void generateAccountViews(Game game){
+    private void generateAccountViews(final Game game) {
         for (Account acc : view.getAccountController().getAccounts()) {
             AccountView accountView = new AccountView(view, acc, game);
             this.contentBox.getChildren().add(accountView);
@@ -101,7 +100,7 @@ public class AccountsView extends VBox {
         this.scrollBox = new ScrollPane(this.contentBox);
     }
 
-    private void generateAccountViews(){
+    private void generateAccountViews() {
         for (Account acc : view.getAccountController().getAccounts()) {
             AccountView accountView = new AccountView(view, acc);
             this.contentBox.getChildren().add(accountView);

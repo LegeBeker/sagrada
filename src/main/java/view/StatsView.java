@@ -17,7 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Account;
-import main.java.model.Game;
 
 public class StatsView extends VBox {
 

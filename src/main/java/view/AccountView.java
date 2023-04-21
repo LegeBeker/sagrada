@@ -20,9 +20,9 @@ public class AccountView extends BorderPane {
     private final double rowHeight = 50;
     private final double rowWidth = 150;
     private final double paddingInsetValue = 8;
+    private final double minWidth = 200;
 
-
-    public AccountView(final ViewController view, final Account account){
+    public AccountView(final ViewController view, final Account account) {
         generateAccountView(view, account);
         generateButton();
     }
@@ -32,17 +32,18 @@ public class AccountView extends BorderPane {
         generateButton(game);
     }
 
-    private void generateAccountView(final ViewController view, final Account account){
+    private void generateAccountView(final ViewController view, final Account account) {
         this.setMinHeight(rowHeight);
         this.setMaxWidth(rowWidth);
-        this.setMinWidth(200);
+        this.setMinWidth(minWidth);
         this.view = view;
 
         this.setStyle("-fx-border-style: solid inside;"
-        + "-fx-border-width: 0 0 1 0;"
-        + "-fx-border-color: black;");
+                + "-fx-border-width: 0 0 1 0;"
+                + "-fx-border-color: black;");
 
-        // this.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+        // this.setBackground(new Background(new BackgroundFill(Color.RED, null,
+        // null)));
         this.setPadding(new Insets(paddingInsetValue));
         this.acc = account;
 
@@ -52,7 +53,7 @@ public class AccountView extends BorderPane {
         this.setLeft(l1);
     }
 
-    private void generateButton(Game game){
+    private void generateButton(Game game) {
         this.game = game;
         if (this.game != null) {
             if (acc.getUsername().equals(this.view.getAccountController().getAccount().getUsername())) {
@@ -66,7 +67,7 @@ public class AccountView extends BorderPane {
         }
     }
 
-    private void generateButton(){
+    private void generateButton() {
         Button statsButton = new Button("Show stats");
         statsButton.setOnAction(e -> showPlayerStats(acc));
         this.setRight(statsButton);

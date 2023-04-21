@@ -7,10 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -28,6 +25,7 @@ public class NewGameView extends HBox {
 
     private final int spacing = 10;
     private final int maxPlayers = 4;
+    private final double minWidth = 400;
 
     public NewGameView(final ViewController view) {
         this.view = view;
@@ -66,8 +64,8 @@ public class NewGameView extends HBox {
         Game game = new Game();
         this.game = game;
         VBox playerList = new AccountsView(this.view, game);
-        playerList.setMinWidth(400);
-        
+        playerList.setMinWidth(minWidth);
+
         buttonPane.setSpacing(spacing);
         buttonPane.setAlignment(Pos.CENTER);
 
