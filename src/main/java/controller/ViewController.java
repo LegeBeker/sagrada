@@ -18,14 +18,15 @@ import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.util.Duration;
+import main.java.model.Account;
 import main.java.model.Game;
-import main.java.view.AccountsView;
 import main.java.view.GameView;
 import main.java.view.GamesView;
 import main.java.view.LoginView;
 import main.java.view.MenuView;
 import main.java.view.NewGameView;
 import main.java.view.RegisterView;
+import main.java.view.StatView;
 import main.java.view.StatsView;
 
 public class ViewController extends Scene {
@@ -151,9 +152,9 @@ public class ViewController extends Scene {
         changeView(gameView);
     }
 
-    public void openAccountsView() {
-        AccountsView accountsView = new AccountsView(this);
-        changeView(accountsView);
+    public void openStatView(final Account account) {
+        StatView statView = new StatView(this, account);
+        changeView(statView);
     }
 
     public AccountController getAccountController() {
