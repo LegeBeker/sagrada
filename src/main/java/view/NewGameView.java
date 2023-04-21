@@ -61,6 +61,7 @@ public class NewGameView extends HBox {
         VBox buttonPane = new VBox();
         buttonPane.getChildren().setAll(title, standardRb, randomRb, create, back);
 
+        accounts = new ArrayList<Account>();
         Game game = new Game();
         this.game = game;
         VBox playerList = new AccountsView(this.view, game);
