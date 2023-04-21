@@ -3,7 +3,6 @@ package main.java.model;
 import java.util.ArrayList;
 import java.util.Map;
 
-import main.java.db.GameDB;
 import main.java.db.PlayerDB;
 
 public class Player {

@@ -1,5 +1,7 @@
 package main.java.view;
 
+import java.util.List;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -12,24 +14,30 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
+import main.java.model.GameMessage;
+import main.java.pattern.Observer;
 
-public class GameChatView extends VBox {
-
+public class GameChatView extends VBox implements Observer {
     private final Background background = new Background(new BackgroundFill(Color.web("#B00322"), null, null));
 
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
 
+    private ViewController view;
+    private Game game;
+
     private String username;
 
     public GameChatView(final ViewController view, final Game game) {
         this.setBackground(background);
-
         this.setAlignment(Pos.BOTTOM_CENTER);
+
+        this.view = view;
+        this.game = game;
+        this.username = view.getAccountController().getAccount().getUsername();
 
         // Chat input
         TextField textInput = new TextField();

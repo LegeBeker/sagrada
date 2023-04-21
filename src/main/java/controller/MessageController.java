@@ -1,27 +1,31 @@
 package main.java.controller;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import main.java.model.Game;
 import main.java.model.GameMessage;
+import main.java.model.Player;
+import main.java.pattern.Observer;
 
 public class MessageController {
-    private String username;
-    private int idGame;
-    private int idPlayer;
-
     private GameMessage message;
 
-    private Timestamp time;
+    public MessageController() {
+        message.addObserver(this);
+    }
 
     public void sendMessage(final String message, final ViewController view, final Game game) {
-        username = view.getAccountController().getAccount().getUsername();
-        idGame = game.getId();
-        idPlayer = game.getPlayer(username).getId();
+        String username = view.getAccountController().getAccount().getUsername();
+        Player player = game.getPlayer(username);
+        Timestamp time = new Timestamp(System.currentTimeMillis());
 
-        time = new Timestamp(System.currentTimeMillis());
+        this.message = new GameMessage(message, player, time);
 
-        this.message = new GameMessage(message, idPlayer, time);
+    }
+
+    public List<GameMessage> getMessages(final Game game) {
+        return game.getMessages();
     }
 
 }
