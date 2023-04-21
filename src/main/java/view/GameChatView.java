@@ -1,12 +1,10 @@
 package main.java.view;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.FlowPane;
@@ -39,18 +37,16 @@ public class GameChatView extends VBox {
         Button sendButton = new Button("Verstuur");
 
         // Input handling
-        textInput.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(final KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    view.getMessageController().sendMessage(textInput.getText(), view, game);
-                    textInput.setText("");
-                }
+        textInput.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                view.getMessageController().sendMessage(textInput.getText(), view, game);
+                textInput.setText("");
             }
         });
 
         sendButton.setOnAction(e -> {
-            addMessage(textInput.getText());
+            view.getMessageController().sendMessage(textInput.getText(), view, game);
+
             textInput.setText("");
         });
 
