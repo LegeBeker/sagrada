@@ -2,20 +2,27 @@ package main.java.model;
 
 import java.sql.Timestamp;
 
+import com.mysql.cj.conf.StringProperty;
+
+import javafx.beans.property.SimpleStringProperty;
 import main.java.db.MessageDB;
 
 public class Message {
+    private SimpleStringProperty message;
 
-    public void sendMessage(final String message, final int idGame, final int playerId) {
-        Timestamp time = new Timestamp(System.currentTimeMillis());
-        MessageDB.addMessage(message, playerId, time);
+    public Message(final String message) {
+        this.message = new SimpleStringProperty(message);
     }
 
-    public void addMessage(final String message, final int playerId) {
-
+    public String getMessage() {
+        return message.get();
     }
 
-    public void getMessages(final int playerId) {
-        System.out.println(MessageDB.getMessages(playerId));
+    public void setMessage(final String message) {
+        this.message.set(message);
+    }
+
+    public SimpleStringProperty messageProperty() {
+        return message;
     }
 }

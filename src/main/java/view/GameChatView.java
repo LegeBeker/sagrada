@@ -62,6 +62,10 @@ public class GameChatView extends VBox {
         this.getChildren().add(1, chatInput);
     }
 
+    private void setupListener(final ViewController view) {
+        view.getMessageController().
+    }
+
     public void addMessage(final String message, final String username, final Boolean sender) {
         FlowPane chatMessage;
         chatMessage = new FlowPane();
