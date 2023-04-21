@@ -32,4 +32,23 @@ public final class GameDB {
 
         return db.exec(sql, params);
     }
+
+    public static List<Map<String, String>> createGame(final String time) {
+        Database db = Database.getInstance();
+
+        String sql = "INSERT INTO game (creationDate) VALUE(?);";
+        String[] params = {time};
+
+        return db.exec(sql, params);
+    }
+
+    public static List<Map<String, String>> getGameByTimestamp(final String time) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM game WHERE creationdate = ?;";
+        String[] params = {time};
+
+        return db.exec(sql, params);
+    }
+
 }
