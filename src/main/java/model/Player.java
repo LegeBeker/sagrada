@@ -109,26 +109,6 @@ public class Player {
         return mapToPlayer(PlayerDB.get(idPlayer));
     }
 
-    public static int getIdPlayer(final String username, final int idGame) {
-        int idPlayer;
-
-        ArrayList<Player> players = new ArrayList<Player>();
-
-        for (Map<String, String> playerMap : GameDB.getPlayers(idGame)) {
-            Player player = mapToPlayer(playerMap);
-            players.add(player);
-        }
-
-        for (Player player : players) {
-            if (player.getUsername().equals(username) || player.getGame().getId() == idGame) {
-                idPlayer = player.getId();
-                return idPlayer;
-            }
-        }
-
-        return 0;
-    }
-
     public static ArrayList<Player> getAll() {
         ArrayList<Player> players = new ArrayList<Player>();
 
