@@ -34,6 +34,7 @@ public class RoundTrackView extends HBox {
             Rectangle rectangle = new Rectangle(size, size);
             rectangle.setFill(Color.BEIGE);
             Text text = new Text("Ronde " + (i + 1));
+            text.setFont(text.getFont().font(12));
             TextFlow textFlow = new TextFlow(text);
             textFlow.setPadding(new Insets(textPadding));
             textFlow.setTextAlignment(TextAlignment.CENTER);
