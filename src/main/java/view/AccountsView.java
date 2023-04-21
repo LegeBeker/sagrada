@@ -108,5 +108,5 @@ public class AccountsView extends VBox {
         }
         this.scrollBox = new ScrollPane(this.contentBox);
     }
-    
+
 }
