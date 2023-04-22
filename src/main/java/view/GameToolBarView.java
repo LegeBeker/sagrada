@@ -22,7 +22,7 @@ public class GameToolBarView extends HBox {
         });
 
         RoundTrackView roundTrackView = new RoundTrackView(game);
-        
+
         this.getChildren().add(roundTrackView);
     }
 }
