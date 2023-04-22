@@ -11,6 +11,9 @@ public class GameToolCardView extends ImageView {
     private final int width = 150;
     private final int height = 200;
 
+    private final double scaleIncrease = 1.75;
+    private final int offset = 100;
+
     public GameToolCardView(final ViewController view, final ToolCard toolCard) {
         this.imageToolCard = new Image("file:resources/img/toolcards/"
                 + toolCard.getName().toLowerCase().replace(" ", "-") + ".png");
@@ -20,17 +23,6 @@ public class GameToolCardView extends ImageView {
 
         this.setImage(this.imageToolCard);
 
-        this.setOnMouseEntered(event -> {
-            this.setScaleX(1.5);
-            this.setScaleY(1.5);
-            // bring closer to the user in 3D space
-            this.setTranslateY(-10);
-        });
-
-        // Add a mouse exited event handler to reset the image scale
-        this.setOnMouseExited(event -> {
-            this.setScaleX(1.0);
-            this.setScaleY(1.0);
-        });
+        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, offset);
     }
 }

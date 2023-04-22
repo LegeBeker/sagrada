@@ -1,5 +1,9 @@
 package main.java.controller;
 
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,10 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import javafx.animation.PauseTransition;
-import javafx.animation.TranslateTransition;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.util.Duration;
 import main.java.model.Game;
 import main.java.view.GameView;
@@ -36,6 +36,8 @@ public class ViewController extends Scene {
     private AccountController accountController;
     private GameController gameController;
     private PatternCardController patternCardController;
+
+    private EffectsController effectsController;
 
     private final Background background;
     private final ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
@@ -73,6 +75,8 @@ public class ViewController extends Scene {
         this.gameController = new GameController();
         this.patternCardController = new PatternCardController();
 
+        this.effectsController = new EffectsController();
+
         this.openLoginView();
     }
 
@@ -103,6 +107,10 @@ public class ViewController extends Scene {
 
         pause.play();
         transition.play();
+    }
+
+    public EffectsController effects() {
+        return this.effectsController;
     }
 
     public Background getBackground() {
