@@ -22,7 +22,6 @@ public class GameToolBarView extends HBox {
         });
 
         RoundTrackView roundTrackView = new RoundTrackView(game);
-        roundTrackView.setPrefSize(500, 100);
         
         this.getChildren().add(roundTrackView);
     }
