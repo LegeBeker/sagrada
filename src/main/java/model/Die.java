@@ -11,6 +11,7 @@ public class Die {
     private int idGame;
     private int number;
     private Color color;
+    private String colorString;
     private int eyes;
     private int roundtrack;
     private int roundID;
@@ -53,9 +54,19 @@ public class Die {
         return roundtrack;
     }
 
+    public Game getGame() {
+        return Game.get(this.idGame);
+    }
+
     public static Boolean putOffer(final int idGame, final int playerAmount) {
         int dieAmount = (playerAmount * 2) + 1;
         return DieDB.putOffer(idGame, dieAmount);
+    }
+
+    public Boolean putRoundTrack(final int roundID) {
+        DieDB.putRoundTrack(this.idGame, roundID, this.number, this.colorString);
+        this.getGame().notifyObservers();
+        return true;
     }
 
     public static ArrayList<Die> getOffer(final int idGame) {
@@ -68,6 +79,7 @@ public class Die {
             die.idGame = Integer.parseInt(dieMap.get("idgame"));
             die.number = Integer.parseInt(dieMap.get("dienumber"));
             die.setColor(dieMap.get("diecolor"));
+            die.colorString = dieMap.get("diecolor");
             die.eyes = Integer.parseInt(dieMap.get("eyes"));
 
             dice.add(die);
@@ -75,7 +87,6 @@ public class Die {
         }
         return dice;
     }
-
 
     public static ArrayList<Die> getRoundTrack(final int idGame) {
         List<Map<String, String>> offer = DieDB.getRoundTrack(idGame);
@@ -87,6 +98,7 @@ public class Die {
             die.idGame = Integer.parseInt(dieMap.get("idgame"));
             die.number = Integer.parseInt(dieMap.get("dienumber"));
             die.setColor(dieMap.get("diecolor"));
+            die.colorString = dieMap.get("diecolor");
             die.eyes = Integer.parseInt(dieMap.get("eyes"));
             die.roundtrack = Integer.parseInt(dieMap.get("roundtrack"));
 
@@ -94,6 +106,5 @@ public class Die {
         }
         return dice;
     }
-
 
 }

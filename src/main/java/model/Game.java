@@ -90,6 +90,7 @@ public class Game extends Observable {
         // TODO: implement
     }
 
+
     public static Game get(final int idGame) {
         return mapToGame(GameDB.get(idGame));
     }

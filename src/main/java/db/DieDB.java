@@ -42,4 +42,17 @@ public final class DieDB {
 
         return db.exec(sql, params);
     }
+
+    public static boolean putRoundTrack(final int idGame, final int roundID, final int dieNumber, final String dieColor) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE gamedie SET roundtrack = ? WHERE idgame = ? AND dienumber = ?, diecolor = ?";
+
+        String[] params = {Integer.toString(roundID), Integer.toString(idGame), Integer.toString(dieNumber), dieColor};
+
+        db.exec(sql, params);
+
+        return true;
+    }
+
 }
