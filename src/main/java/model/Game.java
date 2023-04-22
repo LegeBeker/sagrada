@@ -62,6 +62,10 @@ public class Game extends Observable {
         return Die.getOffer(idGame);
     }
 
+    public ArrayList<Die> getRoundTrack() {
+        return Die.getRoundTrack(idGame);
+    }
+
     public Player getTurnPlayer() {
         return Player.get(this.turnIdPlayer);
     }
@@ -85,6 +89,7 @@ public class Game extends Observable {
     public void endTurn() {
         // TODO: implement
     }
+
 
     public static Game get(final int idGame) {
         return mapToGame(GameDB.get(idGame));
