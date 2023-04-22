@@ -19,5 +19,18 @@ public class GameToolCardView extends ImageView {
         this.setFitHeight(this.height);
 
         this.setImage(this.imageToolCard);
+
+        this.setOnMouseEntered(event -> {
+            this.setScaleX(1.5);
+            this.setScaleY(1.5);
+            // bring closer to the user in 3D space
+            this.setTranslateY(-10);
+        });
+
+        // Add a mouse exited event handler to reset the image scale
+        this.setOnMouseExited(event -> {
+            this.setScaleX(1.0);
+            this.setScaleY(1.0);
+        });
     }
 }
