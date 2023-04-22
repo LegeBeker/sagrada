@@ -1,7 +1,5 @@
 package main.java.controller;
 
-import javafx.animation.PauseTransition;
-import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,7 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import javafx.util.Duration;
 import main.java.model.Game;
 import main.java.view.GameView;
 import main.java.view.GamesView;
@@ -31,7 +28,7 @@ public class ViewController extends Scene {
 
     private StackPane rootPane;
 
-    private Label errorBox;
+    private Label messageBox;
 
     private AccountController accountController;
     private GameController gameController;
@@ -41,9 +38,6 @@ public class ViewController extends Scene {
 
     private final Background background;
     private final ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
-
-    private final double errorTimeout = 2.5;
-    private final double errorAnimation = 0.5;
 
     private final int logoWidth = 300;
 
@@ -56,20 +50,19 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
 
         this.getStylesheets().add("file:resources/css/style.css");
 
-        this.errorBox = new Label();
-        this.errorBox.getStyleClass().add("error-box");
-        this.errorBox.setVisible(false);
+        this.messageBox = new Label();
+        this.messageBox.setVisible(false);
 
-        StackPane.setMargin(this.errorBox, new Insets(0, 0, 0, 0));
-        StackPane.setAlignment(this.errorBox, Pos.TOP_LEFT);
-        this.errorBox.setMaxWidth(Double.MAX_VALUE);
+        StackPane.setMargin(this.messageBox, new Insets(0, 0, 0, 0));
+        StackPane.setAlignment(this.messageBox, Pos.TOP_LEFT);
+        this.messageBox.setMaxWidth(Double.MAX_VALUE);
 
         this.accountController = new AccountController();
         this.gameController = new GameController();
@@ -82,31 +75,15 @@ public class ViewController extends Scene {
 
     public void changeView(final Pane pane) {
         this.rootPane.getChildren().clear();
-        this.rootPane.getChildren().addAll(pane, this.errorBox);
+        this.rootPane.getChildren().addAll(pane, this.messageBox);
     }
 
     public void displayError(final String message) {
-        this.errorBox.setText(message);
-        this.errorBox.setVisible(true);
+        this.effectsController.displayMessageBox(this.messageBox, message, true);
+    }
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(this.errorTimeout));
-        pause.setOnFinished(e -> {
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(errorAnimation), this.errorBox);
-            transition.setFromY(0);
-            transition.setToY(-this.errorBox.getHeight());
-
-            PauseTransition fullAnimation = new PauseTransition(Duration.seconds(errorAnimation));
-            fullAnimation.setOnFinished(ee -> this.errorBox.setVisible(false));
-
-            transition.play();
-        });
-
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(errorAnimation), this.errorBox);
-        transition.setFromY(-this.errorBox.getHeight());
-        transition.setToY(0);
-
-        pause.play();
-        transition.play();
+    public void displayMessage(final String message) {
+        this.effectsController.displayMessageBox(this.messageBox, message, false);
     }
 
     public EffectsController effects() {

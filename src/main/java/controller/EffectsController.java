@@ -1,9 +1,11 @@
 package main.java.controller;
 
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.effect.PerspectiveTransform;
 import javafx.util.Duration;
 
@@ -11,6 +13,9 @@ public class EffectsController {
 
     private static final int TRANSITION_DURATION = 300;
     private static final double PERSPECTIVE_RATIO = 0.2;
+
+    private final double messageTimeout = 2.5;
+    private final double messageAnimation = 0.5;
 
     public void add3DHoverEffect(final Node node, final int width, final int height, final double scaleIncrease,
             final int pixelOffset) {
@@ -68,6 +73,36 @@ public class EffectsController {
 
             resetPerspectiveTransform(perspectiveTransform, width, height);
         });
+    }
+
+    public void displayMessageBox(final Label box, final String message, final Boolean error) {
+        if (error) {
+            box.getStyleClass().add("error-box");
+        } else {
+            box.getStyleClass().add("message-box");
+        }
+
+        box.setText(message);
+        box.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(this.messageTimeout));
+        pause.setOnFinished(e -> {
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(this.messageAnimation), box);
+            transition.setFromY(0);
+            transition.setToY(-box.getHeight());
+
+            PauseTransition fullAnimation = new PauseTransition(Duration.seconds(this.messageAnimation));
+            fullAnimation.setOnFinished(ee -> box.setVisible(false));
+
+            transition.play();
+        });
+
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(this.messageAnimation), box);
+        transition.setFromY(-box.getHeight());
+        transition.setToY(0);
+
+        pause.play();
+        transition.play();
     }
 
     private void resetPerspectiveTransform(final PerspectiveTransform perspectiveTransform, final int width,
