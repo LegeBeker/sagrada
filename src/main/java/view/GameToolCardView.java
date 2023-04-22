@@ -19,5 +19,12 @@ public class GameToolCardView extends ImageView {
         this.setFitHeight(this.height);
 
         this.setImage(this.imageToolCard);
+        
+        this.setOnMouseClicked(event -> {
+            System.out.println(toolCard.getName() + " has been clicked!");
+        });
     }
+    
+    
+   
 }
