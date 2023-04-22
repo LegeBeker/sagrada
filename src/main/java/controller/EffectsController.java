@@ -11,7 +11,6 @@ public class EffectsController {
 
     private static final int TRANSITION_DURATION = 300;
     private static final double PERSPECTIVE_RATIO = 0.2;
-    private static final double PERSPECTIVE_FACTOR = 1.5;
 
     public void add3DHoverEffect(final Node node, final int width, final int height, final double scaleIncrease,
             final int pixelOffset) {
@@ -27,19 +26,21 @@ public class EffectsController {
             double currentMousePosX = mousePosition.getX();
             double currentMousePosY = mousePosition.getY();
 
-            double around2 = (1 * (currentMousePosY * 100 / width * PERSPECTIVE_RATIO - 10)) / PERSPECTIVE_FACTOR;
+            double around2 = (currentMousePosY * 100 / height * PERSPECTIVE_RATIO - 10);
 
             perspectiveTransform.setUrx(width + around2);
             perspectiveTransform.setUlx(around2 * -1);
-            perspectiveTransform.setLrx(width + around2 / 2);
-            perspectiveTransform.setLlx(around2 / 2);
+
+            perspectiveTransform.setLrx(width - around2);
+            perspectiveTransform.setLlx(around2);
 
             double around1 = 1 * (currentMousePosX * 100 / width * PERSPECTIVE_RATIO - 10);
 
-            perspectiveTransform.setUry(around1);
             perspectiveTransform.setUly(around1 * -1);
-            perspectiveTransform.setLry(height - around1);
             perspectiveTransform.setLly(height - (-1 * around1));
+
+            perspectiveTransform.setUry(around1);
+            perspectiveTransform.setLry(height - around1);
         });
 
         node.setOnMouseEntered(event -> {
