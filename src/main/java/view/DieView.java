@@ -2,9 +2,13 @@ package main.java.view;
 
 import java.util.ArrayList;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -45,10 +49,26 @@ public class DieView extends Group {
         die.setTranslateX((rectangle.getWidth() - die.getWidth()) / 2);
 
         if (isDraggable) {
+
+            // this.setOnMousePressed(new EventHandler<MouseEvent>() {
+            //     public void handle(final MouseEvent event) {
+            //         dragStartX = event.getSceneX() - DieView.this.getTranslateX();
+            //         dragStartY = event.getSceneY() - DieView.this.getTranslateY();
+            //     }
+            // });
+            // this.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            //     public void handle(final MouseEvent event) {
+            //         DieView.this.setTranslateX(event.getSceneX() - dragStartX);
+            //         DieView.this.setTranslateY(event.getSceneY() - dragStartY);
+            //     }
+            // });
+
             this.setOnDragDetected(event -> {
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
-                content.putString(String.valueOf(this.value));
+                Image image = this.snapshot(new SnapshotParameters(), null);
+                content.putImage(image);
+                // content.putString(String.valueOf(this.value));
                 db.setContent(content);
                 event.consume();
             });
