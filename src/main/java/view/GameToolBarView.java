@@ -20,5 +20,9 @@ public class GameToolBarView extends HBox {
         this.getChildren().forEach(child -> {
             HBox.setHgrow(child, Priority.ALWAYS);
         });
+
+        RoundTrackView roundTrackView = new RoundTrackView(game);
+
+        this.getChildren().add(roundTrackView);
     }
 }
