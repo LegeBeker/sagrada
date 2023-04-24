@@ -63,12 +63,16 @@ public class PatternCardView extends BorderPane {
                 PatternCardField field = patternCard.getField(row, col);
 
                 if (field.getValue() != null) {
-                    grid.add(new DieView(field.getValue()), row, col);
+                    DieView target = new DieView(field.getValue());
+                    DieDropTarget dieDropTarget = new DieDropTarget();
+                    dieDropTarget.getChildren().add(target);
+                    grid.add(dieDropTarget, row, col);
                 } else {
-                    Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
-                    rectangle.setFill(field.getColor());
-
-                    grid.add(rectangle, row, col);
+                    Rectangle target = new Rectangle(RECTANGLE, RECTANGLE);
+                    target.setFill(field.getColor());
+                    DieDropTarget dieDropTarget = new DieDropTarget();
+                    dieDropTarget.getChildren().add(target);
+                    grid.add(dieDropTarget, row, col);
                 }
             }
         }
