@@ -21,7 +21,8 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragEntered(event -> {
             if (event.getGestureSource() instanceof DieView) {
-                this.setStyle("-fx-border-color: blue;");
+            // TODO Checken of een dobbelsteen geplaats mag worden.
+            this.setStyle("-fx-border-color: blue;");
             }
         });
 
