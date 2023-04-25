@@ -2,13 +2,11 @@ package main.java.view;
 
 import java.util.ArrayList;
 
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -27,9 +25,6 @@ public class DieView extends Group {
     private final double scale = 0.8;
 
     private int value;
-
-    private double dragStartX;
-    private double dragStartY;
 
     public DieView(final int value, final Color color, final Boolean isDraggable) {
         this.value = value;

@@ -6,8 +6,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class DieDropTarget extends StackPane {
+
+    private static final int RECTANGLE = 50;
+
     public DieDropTarget() {
-        Rectangle rectangle = new Rectangle(50, 50);
+        Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
         rectangle.setFill(Color.WHITE);
 
         this.getChildren().addAll(rectangle);
@@ -21,8 +24,8 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragEntered(event -> {
             if (event.getGestureSource() instanceof DieView) {
-            // TODO Checken of een dobbelsteen geplaats mag worden.
-            this.setStyle("-fx-border-color: blue;");
+                // TODO Checken of een dobbelsteen geplaats mag worden.
+                this.setStyle("-fx-border-color: blue;");
             }
         });
 
