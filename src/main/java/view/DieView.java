@@ -49,26 +49,11 @@ public class DieView extends Group {
         die.setTranslateX((rectangle.getWidth() - die.getWidth()) / 2);
 
         if (isDraggable) {
-
-            // this.setOnMousePressed(new EventHandler<MouseEvent>() {
-            //     public void handle(final MouseEvent event) {
-            //         dragStartX = event.getSceneX() - DieView.this.getTranslateX();
-            //         dragStartY = event.getSceneY() - DieView.this.getTranslateY();
-            //     }
-            // });
-            // this.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            //     public void handle(final MouseEvent event) {
-            //         DieView.this.setTranslateX(event.getSceneX() - dragStartX);
-            //         DieView.this.setTranslateY(event.getSceneY() - dragStartY);
-            //     }
-            // });
-
             this.setOnDragDetected(event -> {
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
                 Image image = this.snapshot(new SnapshotParameters(), null);
                 content.putImage(image);
-                // content.putString(String.valueOf(this.value));
                 db.setContent(content);
                 event.consume();
             });
