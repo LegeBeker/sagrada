@@ -52,13 +52,6 @@ public class DieView extends Group {
                 db.setContent(content);
                 event.consume();
             });
-
-            this.setOnDragDone(event -> {
-                if (event.getTransferMode() == TransferMode.MOVE) {
-                    this.getParent().getChildrenUnmodifiable().remove(this);
-                }
-                event.consume();
-            });
         }
 
         die.setTranslateX((rectangle.getWidth() - die.getWidth()) / 2);
