@@ -6,8 +6,8 @@ import javafx.stage.Stage;
 
 public class MainController extends Application {
 
-    private final int minHeight = 500;
-    private final int minWidth = 800;
+    private final int minHeight = 800;
+    private final int minWidth = 1280;
 
     public void startup(final String[] args) {
         launch(args);
