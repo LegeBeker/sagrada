@@ -3,6 +3,7 @@ package main.java.controller;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import main.java.db.Database;
 
 public class MainController extends Application {
 
@@ -28,5 +29,10 @@ public class MainController extends Application {
         stage.isAlwaysOnTop();
 
         stage.show();
+    }
+
+    public void stop() {
+        Database.getInstance().close();
+        System.exit(0);
     }
 }
