@@ -93,6 +93,8 @@ public class NewGameView extends HBox {
             return;
         }
 
+        // TODO add current account to accounts
+
         new GameController().createGame(this.accounts, useDefaultCards);
         // TODO go to the newly made game
     }

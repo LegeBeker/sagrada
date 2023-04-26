@@ -25,11 +25,20 @@ public class Game extends Observable {
         Game newGame = new Game();
         Player playerCreator = new Player();
         final int thisGameID = newGame.getId();
+        List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
+        boolean isChallenger = true;
 
         for (Account ac : accounts) {
             String username = ac.getUsername();
-            Player newPlayer = playerCreator.createPlayer(thisGameID, username);
-            // TODO colors and role (challenger or challengee)
+            String privateColor = colorList.remove(0).get("color");
+
+            Player newPlayer;
+            if(isChallenger) {
+                newPlayer = playerCreator.createPlayer(thisGameID, username, "CHALLENGER", privateColor);    
+                isChallenger = false;
+            } else {
+                newPlayer = playerCreator.createPlayer(thisGameID, username, "CHALLENGEE", privateColor);
+            }
 
             newPlayer.addPlayerToDB();
             newGame.addPlayer(newPlayer);
@@ -46,9 +55,10 @@ public class Game extends Observable {
         // without getting errors
 
         // if (useDefaultCards) {
-        // TODO get default cards
+        // newGame.addPatternCards()
         // } else {
         // TODO make random but valid cards
+        // newGame.addPatternCards(randomCards)
         // }
 
         return newGame;

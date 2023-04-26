@@ -23,8 +23,6 @@ public class Player {
         Player newPlayer = new Player();
         newPlayer.setIdGame(gameID);
         newPlayer.setUsername(username);
-
-        // TODO colors and refine the status
         newPlayer.setPlayStatus(playerStatus);
         newPlayer.setPrivateObjCardColor(privateColor);
 

@@ -50,5 +50,13 @@ public final class GameDB {
 
         return db.exec(sql, params);
     }
+    
+    public static List<Map<String, String>> getColors(final int playerCount) {
+        Database db = Database.getInstance();
+        
+        String sql = "SELECT * FROM color ORDER BY RAND() LIMIT " + Integer.toString(playerCount) + ";";
+        
+        return db.exec(sql, null);
+    }
 
 }
