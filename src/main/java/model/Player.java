@@ -19,14 +19,14 @@ public class Player {
 
     private int score;
 
-    public Player createPlayer(final int gameID, final String username) {
+    public Player createPlayer(final int gameID, final String username, final String playerStatus, final String privateColor) {
         Player newPlayer = new Player();
         newPlayer.setIdGame(gameID);
         newPlayer.setUsername(username);
 
         // TODO colors and refine the status
-        newPlayer.setPlayStatus("CHALLENGEE");
-        newPlayer.setPrivateObjCardColor("red");
+        newPlayer.setPlayStatus(playerStatus);
+        newPlayer.setPrivateObjCardColor(privateColor);
 
         return newPlayer;
     }
