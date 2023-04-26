@@ -1,6 +1,7 @@
 package main.java.view;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -92,8 +93,9 @@ public class NewGameView extends HBox {
             view.displayError("Selecteer minder spelers");
             return;
         }
-
-        // TODO add current account to accounts
+        Collections.reverse(accounts);
+        accounts.add(view.getAccountController().getAccount());
+        Collections.reverse(accounts);
 
         new GameController().createGame(this.accounts, useDefaultCards);
         // TODO go to the newly made game

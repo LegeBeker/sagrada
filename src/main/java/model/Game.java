@@ -25,7 +25,7 @@ public class Game extends Observable {
         Game newGame = new Game();
         Player playerCreator = new Player();
         final int thisGameID = newGame.getId();
-        List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
+        List<Map<String, String>> colorList = GameDB.getColors(accounts.size());
         boolean isChallenger = true;
 
         for (Account ac : accounts) {
@@ -51,8 +51,6 @@ public class Game extends Observable {
         GameDB.createGame(formattedTime);
         List<Map<String, String>> response = GameDB.getGameByTimestamp(formattedTime);
         newGame.idGame = Integer.parseInt(response.get(0).get("idgame"));
-        // TODO BUG HERE after adding a game to the db you can't restart the application
-        // without getting errors
 
         // if (useDefaultCards) {
         // newGame.addPatternCards()
