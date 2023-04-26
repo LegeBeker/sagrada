@@ -14,8 +14,8 @@ import main.java.model.Player;
 
 public class PatternCardView extends BorderPane {
 
-    private static final int ROWS = 5;
-    private static final int COLUMNS = 4;
+    private static final int ROWS = 4;
+    private static final int COLUMNS = 5;
 
     private static final int RECTANGLE = 50;
     private static final int PADDING = 10;
@@ -58,17 +58,17 @@ public class PatternCardView extends BorderPane {
     }
 
     private void drawPatternCard(final PatternCard patternCard) {
-        for (int col = 1; col <= COLUMNS; col++) {
-            for (int row = 1; row <= ROWS; row++) {
+        for (int row = 1; row <= ROWS; row++) {
+            for (int col = 1; col <= COLUMNS; col++) {
                 PatternCardField field = patternCard.getField(row, col);
 
                 if (field.getValue() != null) {
-                    grid.add(new DieView(field.getValue()), row, col);
+                    grid.add(new DieView(field.getValue()), col, row);
                 } else {
                     Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
                     rectangle.setFill(field.getColor());
 
-                    grid.add(rectangle, row, col);
+                    grid.add(rectangle, col, row);
                 }
             }
         }
