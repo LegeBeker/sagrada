@@ -23,14 +23,4 @@ public final class PlayerDB {
 
         return db.exec(sql, null);
     }
-
-    public static List<Map<String, String>> getInvites(final String player) {
-        Database db = Database.getInstance();
-
-        String sql = "SELECT * FROM player WHERE username = ? AND playstatus = ?";
-        String[] params = {player, "challengee"};
-
-        return db.exec(sql, params);
-    }
-
 }
