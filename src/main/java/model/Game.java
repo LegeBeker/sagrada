@@ -90,14 +90,13 @@ public class Game extends Observable {
     public boolean playerHasNotReplied(final String username) {
         for (Player player : this.players) {
             if (player.getUsername().equals(username)) {
-                if (player.getPlayStatus().equals("challengee"))
+                if (player.getPlayStatus().equals("challengee")) {
                     return true;
-                else
-                    return false;
+                }
             }
         }
 
-        return true;
+        return false;
     }
 
     public void addPlayer(final Player player) {
