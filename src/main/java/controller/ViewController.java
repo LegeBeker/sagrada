@@ -20,7 +20,7 @@ import javafx.scene.paint.Stop;
 import javafx.util.Duration;
 import main.java.model.Game;
 import main.java.view.GameView;
-import main.java.view.GamesList;
+import main.java.view.GamesView;
 import main.java.view.LoginView;
 import main.java.view.MenuView;
 import main.java.view.NewGameView;
@@ -132,8 +132,8 @@ public class ViewController extends Scene {
         changeView(menuView);
     }
 
-    public void openGamesList() {
-        GamesList gamesOverview = new GamesList(this);
+    public void openGamesView() {
+        GamesView gamesOverview = new GamesView(this);
         changeView(gamesOverview);
     }
 

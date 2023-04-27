@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
 
-public class GamesList extends VBox {
+public class GamesView extends VBox {
 
     private ViewController view;
 
@@ -43,7 +43,7 @@ public class GamesList extends VBox {
     private final int padding = 200;
     private final int spacing = 15;
 
-    public GamesList(final ViewController view) {
+    public GamesView(final ViewController view) {
         this.view = view;
         this.setBackground(view.getBackground());
 
