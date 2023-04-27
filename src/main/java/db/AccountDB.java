@@ -7,7 +7,7 @@ public final class AccountDB {
     public static Boolean checkLogin(final String username, final String password) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
+        String sql = "SELECT * FROM account WHERE BINARY username = ? AND password = ?";
         String[] params = {username, password};
 
         return !db.exec(sql, params).isEmpty();
