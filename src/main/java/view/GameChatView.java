@@ -1,7 +1,6 @@
 package main.java.view;
 
-import java.util.List;
-
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -16,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
+import main.java.model.Chat;
 import main.java.model.Game;
 import main.java.model.GameMessage;
 import main.java.pattern.Observer;
@@ -26,18 +26,23 @@ public class GameChatView extends VBox implements Observer {
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
 
+    private Chat chat;
+
     private ViewController view;
     private Game game;
 
     private String username;
 
-    public GameChatView(final ViewController view, final Game game) {
+    public GameChatView(final ViewController view, final Game game, final Chat chat) {
         this.setBackground(background);
         this.setAlignment(Pos.BOTTOM_CENTER);
 
         this.view = view;
         this.game = game;
         this.username = view.getAccountController().getAccount().getUsername();
+
+        this.chat = chat;
+        chat.getObservableList().addListener(new MessageListener());
 
         // Chat input
         TextField textInput = new TextField();
@@ -71,10 +76,6 @@ public class GameChatView extends VBox implements Observer {
         this.getChildren().add(1, chatInput);
     }
 
-    private void setupListener(final ViewController view) {
-        // view.getMessageController().
-    }
-
     public void addMessage(final String message, final String username, final Boolean sender) {
         FlowPane chatMessage;
         chatMessage = new FlowPane();
@@ -90,5 +91,13 @@ public class GameChatView extends VBox implements Observer {
         System.out.println(this.getWidth());
 
         chatMessageBox.getChildren().add(chatMessage);
+    }
+
+    private class MessageListener implements ListChangeListener<GameMessage> {
+
+        @Override
+        public void onChanged(Change<? extends GameMessage> final c) {
+            System.out.println("Message added");
+        }
     }
 }
