@@ -59,6 +59,8 @@ public class GamesView extends VBox {
 
         this.table = new TableView<Game>();
 
+        this.table.setPlaceholder(new Text("Geen spellen gevonden"));
+
         TableColumn<Game, Integer> idCol = new TableColumn<>("Id");
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
