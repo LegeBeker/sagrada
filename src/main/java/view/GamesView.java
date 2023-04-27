@@ -45,6 +45,7 @@ public class GamesView extends VBox {
 
     public GamesView(final ViewController view) {
         this.view = view;
+        String loggedInPlayer = view.getAccountController().getAccount().getUsername();
         this.setBackground(view.getBackground());
 
         this.setAlignment(Pos.CENTER);
@@ -87,10 +88,10 @@ public class GamesView extends VBox {
                 if (game == null) {
                     setStyle("");
                 } else if (game.getTurnPlayer().getUsername()
-                        .equals(view.getAccountController().getAccount().getUsername())) {
+                        .equals(loggedInPlayer)) {
                     setStyle("-fx-background-color: lightblue;");
-                } else {
-                    setStyle("");
+                } else if (game.getPlayerNames().contains(loggedInPlayer) && game.playerHasNotReplied(loggedInPlayer)) {
+                    setStyle("-fx-background-color: orange;");
                 }
 
             }
