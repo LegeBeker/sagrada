@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
+import main.java.model.Player;
 
 public class GamesView extends VBox {
 
@@ -106,7 +107,7 @@ public class GamesView extends VBox {
                 Game game = this.table.getSelectionModel().getSelectedItem();
 
                 if (hasOpenInvite(game, loggedInPlayer)) {
-                    showAcceptInviteAlert();
+                    showInviteAlert(game, loggedInPlayer);
                 } else {
                     this.view.openGameView(game);
                 }
@@ -161,7 +162,9 @@ public class GamesView extends VBox {
         return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
     }
 
-    private void showInviteAlert() {
+    private void showInviteAlert(final Game game, final String playerName) {
+        Player player = new Player();
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uitnodiging");
         alert.setHeaderText("Bevestiging");
@@ -176,11 +179,9 @@ public class GamesView extends VBox {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent()) {
             if (result.get() == acceptButton) {
-                // Accept button was clicked
-                System.out.println("Invitation accepted.");
+                player.acceptInvite(game.getId(), playerName);
             } else if (result.get() == refuseButton) {
-                // Refuse button was clicked
-                System.out.println("Invitation refused.");
+                player.refuseInvite(game.getId(), playerName);
             }
         }
     }
