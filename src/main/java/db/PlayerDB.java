@@ -11,7 +11,7 @@ public final class PlayerDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM player WHERE idplayer = ? LIMIT 1";
-        String[] params = {Integer.toString(idPlayer)};
+        String[] params = { Integer.toString(idPlayer) };
 
         return db.exec(sql, params).get(0);
     }
@@ -30,7 +30,7 @@ public final class PlayerDB {
 
         String sql = "INSERT INTO player (username, idgame, playstatus, private_objectivecard_color)"
                 + "VALUE (?, ?, ?, ?);";
-        String[] params = {username, Integer.toString(idGame), playStatus, color};
+        String[] params = { username, Integer.toString(idGame), playStatus, color };
 
         return db.exec(sql, params);
     }
@@ -39,9 +39,31 @@ public final class PlayerDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM player WHERE idplayer = (SELECT MAX(idplayer) FROM player WHERE idgame = ? LIMIT 1);";
-        String[] params = {Integer.toString(idGame)};
+        String[] params = { Integer.toString(idGame) };
 
         return db.exec(sql, params);
+    }
+
+    public static boolean acceptInvite(final int gameId, final String playername) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET playstatus = 'accepted' WHERE idgame = ? AND username = ?;";
+        String[] params = { Integer.toString(gameId), playername };
+
+        db.exec(sql, params);
+
+        return true;
+    }
+
+    public static boolean refuseInvite(final int gameId, final String playername) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET playstatus = 'refused' WHERE idgame = ? AND username = ?;";
+        String[] params = { Integer.toString(gameId), playername };
+
+        db.exec(sql, params);
+
+        return true;
     }
 
 }

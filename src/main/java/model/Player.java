@@ -108,6 +108,14 @@ public class Player {
         return mapToPlayer(PlayerDB.get(idPlayer));
     }
 
+    public boolean acceptInvite(final int gameId, final String playername)   {
+        return PlayerDB.acceptInvite(gameId, playername);
+    }
+
+    public boolean refuseInvite(final int gameId, final String playername)   {
+        return PlayerDB.refuseInvite(gameId, playername);
+    }
+
     public static ArrayList<Player> getAll() {
         ArrayList<Player> players = new ArrayList<Player>();
 
