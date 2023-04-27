@@ -37,5 +37,4 @@ public enum ColorEnum {
                 return DEFAULT;
         }
     }
-
 }
