@@ -1,10 +1,14 @@
 package main.java.view;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -100,7 +104,12 @@ public class GamesView extends VBox {
         this.table.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Game game = this.table.getSelectionModel().getSelectedItem();
-                this.view.openGameView(game);
+                System.out.println(hasOpenInvite(game, loggedInPlayer));
+                if (hasOpenInvite(game, loggedInPlayer)) {
+                    showAcceptInviteAlert();
+                } else {
+                    this.view.openGameView(game);
+                }
             }
         });
 
@@ -148,8 +157,32 @@ public class GamesView extends VBox {
         this.view.openNewGameView();
     }
 
-    private boolean hasOpenInvite(Game game, String playerNamer){
-       return game.getPlayerNames().contains(playerNamer) && game.playerHasNotReplied(playerNamer);
+    private boolean hasOpenInvite(final Game game, final String playerName) {
+        return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
     }
-    
+
+    private void showInviteAlert() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Bevestiging");
+        alert.setTitle("Uitnodiging");
+        alert.setHeaderText("Bevestiging");
+        alert.setContentText(
+                "Je bent uitgenodigd voor een spel. Door op accepteren te klikken ga doe je mee aan het spel.");
+
+        ButtonType acceptButton = new ButtonType("Accepteren");
+        ButtonType refuseButton = new ButtonType("Weigeren");
+        ButtonType closeButton = new ButtonType("Sluiten", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(acceptButton, refuseButton, closeButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent()) {
+            if (result.get() == acceptButton) {
+                // Accept button was clicked
+                System.out.println("Invitation accepted.");
+            } else if (result.get() == refuseButton) {
+                // Refuse button was clicked
+                System.out.println("Invitation refused.");
+            }
+        }
+    }
+
 }
