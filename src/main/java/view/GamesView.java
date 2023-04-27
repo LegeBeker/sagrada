@@ -90,7 +90,7 @@ public class GamesView extends VBox {
                 } else if (game.getTurnPlayer().getUsername()
                         .equals(loggedInPlayer)) {
                     setStyle("-fx-background-color: lightblue;");
-                } else if (game.getPlayerNames().contains(loggedInPlayer) && game.playerHasNotReplied(loggedInPlayer)) {
+                } else if (hasOpenInvite(game, loggedInPlayer)) {
                     setStyle("-fx-background-color: orange;");
                 }
 
@@ -147,4 +147,9 @@ public class GamesView extends VBox {
     private void openNewGameView() {
         this.view.openNewGameView();
     }
+
+    private boolean hasOpenInvite(Game game, String playerNamer){
+       return game.getPlayerNames().contains(playerNamer) && game.playerHasNotReplied(playerNamer);
+    }
+    
 }
