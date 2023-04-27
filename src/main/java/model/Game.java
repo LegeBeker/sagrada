@@ -20,6 +20,7 @@ public class Game extends Observable {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<String> playerNames = new ArrayList<>();
 
     public static Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
         Game newGame = new Game();
@@ -82,6 +83,10 @@ public class Game extends Observable {
         return this.players;
     }
 
+    public ArrayList<String> getPlayerNames() {
+        return this.playerNames;
+    }
+
     public void addPlayer(final Player player) {
         this.players.add(player);
     }
@@ -89,7 +94,6 @@ public class Game extends Observable {
     public void endTurn() {
         // TODO: implement
     }
-
 
     public static Game get(final int idGame) {
         return mapToGame(GameDB.get(idGame));
@@ -115,7 +119,9 @@ public class Game extends Observable {
         game.creationDate = gameMap.get("creationdate");
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
-            game.players.add(Player.mapToPlayer(map));
+            Player player = Player.mapToPlayer(map);
+            game.players.add(player);
+            game.playerNames.add(player.getUsername());
         }
 
         return game;
