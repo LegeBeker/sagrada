@@ -162,7 +162,7 @@ public class GamesView extends VBox {
     }
 
     private void showInviteAlert() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Bevestiging");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uitnodiging");
         alert.setHeaderText("Bevestiging");
         alert.setContentText(
