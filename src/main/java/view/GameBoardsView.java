@@ -45,7 +45,7 @@ public class GameBoardsView extends HBox {
         grid.setAlignment(Pos.CENTER);
         this.setAlignment(Pos.CENTER);
 
-        this.getChildren().addAll(grid);
+        this.getChildren().add(grid);
 
     }
 }
