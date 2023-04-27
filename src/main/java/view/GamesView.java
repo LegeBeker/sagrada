@@ -104,7 +104,7 @@ public class GamesView extends VBox {
         this.table.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Game game = this.table.getSelectionModel().getSelectedItem();
-                System.out.println(hasOpenInvite(game, loggedInPlayer));
+
                 if (hasOpenInvite(game, loggedInPlayer)) {
                     showAcceptInviteAlert();
                 } else {
