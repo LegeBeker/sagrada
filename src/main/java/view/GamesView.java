@@ -77,7 +77,6 @@ public class GamesView extends VBox {
 
         for (Game game : view.getGameController().getGames()) {
             this.table.getItems().add(game);
-            System.out.println(game.getPlayers());
         }
 
         this.table.setRowFactory(tv -> new TableRow<Game>() {
