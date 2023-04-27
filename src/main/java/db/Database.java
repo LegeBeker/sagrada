@@ -45,6 +45,9 @@ public final class Database {
 
     public void close() {
         try {
+            if (this.conn == null || this.conn.isClosed()) {
+                return;
+            }
             this.conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
