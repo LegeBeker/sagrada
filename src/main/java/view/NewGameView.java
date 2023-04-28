@@ -8,14 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import main.java.controller.GameController;
 import main.java.controller.ViewController;
 import main.java.model.Account;
-import main.java.model.Game;
 
 public class NewGameView extends HBox {
 

@@ -18,9 +18,13 @@ public class AccountsView extends HBox {
     private TableView<Account> selectionTable;
     private ArrayList<Account> selectedAccounts = new ArrayList<Account>();
 
+    private double tableHeight = 400;
+    private double selectionTableHeight = 120;
+    private int maxSizeSelection = 3;
+
     public AccountsView(final ViewController view, final Boolean inviteBoolean) {
         this.alignmentProperty().set(Pos.CENTER);
-        generateGeneralAccountsView(view, inviteBoolean);
+        generateGeneralAccountsView(view);
         if (inviteBoolean) {
             generateInvitedAccountsOverview();
         }
@@ -38,11 +42,11 @@ public class AccountsView extends HBox {
         return this.selectedAccounts;
     }
 
-    private void generateGeneralAccountsView(final ViewController view, final Boolean inviteBoolean) {
+    private void generateGeneralAccountsView(final ViewController view) {
         this.view = view;
         this.table = new TableView<Account>();
         this.table.setPlaceholder(new Text("Geen accounts gevonden"));
-        this.table.setMaxHeight(400);
+        this.table.setMaxHeight(tableHeight);
 
         TableColumn<Account, String> idUsername = new TableColumn<>("Username");
         idUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -56,7 +60,7 @@ public class AccountsView extends HBox {
         this.getChildren().addAll(this.table);
     }
 
-    private void setTableClickEvent(Boolean inviteBoolean) {
+    private void setTableClickEvent(final Boolean inviteBoolean) {
         if (inviteBoolean) {
             // -- Custom on click logic to add value to the generated table
             this.table.setOnMouseClicked(e -> {
@@ -76,7 +80,7 @@ public class AccountsView extends HBox {
                         selectedAccounts.remove(acc);
                         showSelectedAccounts();
                     } else {
-                        if (selectedAccounts.size() < 3) {
+                        if (selectedAccounts.size() < maxSizeSelection) {
                             selectedAccounts.add(acc);
                             showSelectedAccounts();
                         }
@@ -92,7 +96,7 @@ public class AccountsView extends HBox {
         // -- Generate table for chosen values
         this.selectionTable = new TableView<Account>();
         this.selectionTable.setPlaceholder(new Text("Geen accounts geselecteerd"));
-        this.selectionTable.setMaxHeight(120);
+        this.selectionTable.setMaxHeight(selectionTableHeight);
 
         TableColumn<Account, String> idUsernameSelected = new TableColumn<>("Username");
         idUsernameSelected.setCellValueFactory(new PropertyValueFactory<>("username"));
