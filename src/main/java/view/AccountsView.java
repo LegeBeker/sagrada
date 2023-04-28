@@ -1,115 +1,104 @@
 package main.java.view;
 
-import javafx.scene.layout.VBox;
-
 import java.util.ArrayList;
+import java.util.Collections;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Color;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Account;
-import main.java.model.Game;
 
-public class AccountsView extends VBox {
+public class AccountsView extends HBox {
     private ViewController view;
+    private TableView<Account> table;
+    private TableView<Account> selectionTable;
+    private ArrayList<Account> selectedAccounts = new ArrayList<Account>();
 
-    private ArrayList<AccountView> tableContents = new ArrayList<AccountView>();
-
-    private AnchorPane tableHeader;
-
-    private ScrollPane scrollBox;
-
-    private VBox contentBox;
-
-    private final int scrollBoxHeight = 300;
-    private final int scrollBoxWidth = 300;
-    private final int widthCorrection = 100;
-
-    private final int tableHeaderInsets = -10;
-
-    private final int padding = 200;
-    private final int spacing = 20;
-
-    private final int yValueText = 20;
-
-    public AccountsView(final ViewController view, final Game game) {
-        generateGeneralAccountsView(view);
-        generateAccountViews(game);
-        setScrollBoxStyling();
-
-        this.getChildren().addAll(this.tableHeader, this.scrollBox);
+    public AccountsView(final ViewController view, final Boolean inviteBoolean) {
+        this.alignmentProperty().set(Pos.CENTER);
+        generateGeneralAccountsView(view, inviteBoolean);
+        if (inviteBoolean) {
+            generateInvitedAccountsOverview();
+        }
+        setTableClickEvent(inviteBoolean);
     }
 
-    public AccountsView(final ViewController view) {
-        generateGeneralAccountsView(view);
-        generateAccountViews();
-        setScrollBoxStyling();
-
-        this.getChildren().addAll(this.tableHeader, this.scrollBox);
-    }
-
-    public void resize(final double width, final double height) {
-        super.resize(width, height);
-        // -- TODO: @Tim, check this out later, resizing is doing le funnies atm.
-        for (AccountView av : tableContents) {
-            av.resize(width, height);
+    private void showSelectedAccounts() {
+        this.selectionTable.getItems().clear();
+        for (Account loopAcc : selectedAccounts) {
+            this.selectionTable.getItems().add(loopAcc);
         }
     }
 
-    private void generateGeneralAccountsView(final ViewController view) {
+    public ArrayList<Account> getSelectedAccounts() {
+        return this.selectedAccounts;
+    }
+
+    private void generateGeneralAccountsView(final ViewController view, final Boolean inviteBoolean) {
         this.view = view;
+        this.table = new TableView<Account>();
+        this.table.setPlaceholder(new Text("Geen accounts gevonden"));
+        this.table.setMaxHeight(400);
 
-        this.setAlignment(Pos.CENTER);
-        this.setMinWidth(scrollBoxWidth);
+        TableColumn<Account, String> idUsername = new TableColumn<>("Username");
+        idUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        Text text2 = new Text("Gebruikersnaam:");
-        text2.setStyle("-fx-font-size: 20px");
-        text2.setFill(Color.web("#ffffff"));
-        text2.setY(yValueText);
+        Collections.addAll(this.table.getColumns(), idUsername);
 
-        this.tableHeader = new AnchorPane(text2);
-        this.tableHeader.setPadding(new Insets(tableHeaderInsets, 0, this.spacing, 0));
-
-        this.contentBox = new VBox();
-        this.contentBox.setMinWidth(scrollBoxWidth - 2);
-
-        this.setPadding(new Insets(0, this.padding, 0, this.padding));
-    }
-
-    private void setScrollBoxStyling() {
-        this.scrollBox.setPrefSize(scrollBoxWidth, scrollBoxHeight);
-        this.scrollBox.setMinWidth(scrollBoxWidth - widthCorrection);
-        this.scrollBox.setHbarPolicy(ScrollBarPolicy.NEVER);
-        this.scrollBox.setBackground(new Background(new BackgroundFill(Color.web("#ffffff"), null, null)));
-        this.scrollBox.setPadding(new Insets(0, 0, 0, 0));
-    }
-
-    private void generateAccountViews(final Game game) {
         for (Account acc : view.getAccountController().getAccounts()) {
-            if (acc.getUsername().equals(view.getAccountController().getAccount().getUsername())) {
-                continue;
-            }
-            AccountView accountView = new AccountView(view, acc, game);
-            this.contentBox.getChildren().add(accountView);
-            tableContents.add(accountView);
+            this.table.getItems().add(acc);
         }
-        this.scrollBox = new ScrollPane(this.contentBox);
+
+        this.getChildren().addAll(this.table);
     }
 
-    private void generateAccountViews() {
-        for (Account acc : view.getAccountController().getAccounts()) {
-            AccountView accountView = new AccountView(view, acc);
-            this.contentBox.getChildren().add(accountView);
-            tableContents.add(accountView);
+    private void setTableClickEvent(Boolean inviteBoolean) {
+        if (inviteBoolean) {
+            // -- Custom on click logic to add value to the generated table
+            this.table.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 2) {
+                    Account acc = this.table.getSelectionModel().getSelectedItem();
+                    boolean found = false;
+                    if (selectedAccounts.size() > 0) {
+                        for (Account loopAcc : selectedAccounts) {
+                            if (loopAcc.getUsername().equals(acc.getUsername())) {
+                                // -- Value is found in list
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (found) {
+                        selectedAccounts.remove(acc);
+                        showSelectedAccounts();
+                    } else {
+                        if (selectedAccounts.size() < 3) {
+                            selectedAccounts.add(acc);
+                            showSelectedAccounts();
+                        }
+                    }
+                }
+            });
+        } else {
+            // -- TODO: @Someone, map this to the account-stats overview
         }
-        this.scrollBox = new ScrollPane(this.contentBox);
+    }
+
+    private void generateInvitedAccountsOverview() {
+        // -- Generate table for chosen values
+        this.selectionTable = new TableView<Account>();
+        this.selectionTable.setPlaceholder(new Text("Geen accounts geselecteerd"));
+        this.selectionTable.setMaxHeight(120);
+
+        TableColumn<Account, String> idUsernameSelected = new TableColumn<>("Username");
+        idUsernameSelected.setCellValueFactory(new PropertyValueFactory<>("username"));
+        Collections.addAll(this.selectionTable.getColumns(), idUsernameSelected);
+
+        this.getChildren().addAll(this.selectionTable);
     }
 
 }
