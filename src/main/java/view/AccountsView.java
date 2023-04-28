@@ -88,6 +88,7 @@ public class AccountsView extends HBox {
                 }
             });
         } else {
+            System.out.println("Dit is momenteel een W.I.P.");
             // -- TODO: @Someone, map this to the account-stats overview
         }
     }
