@@ -18,9 +18,9 @@ public class AccountsView extends HBox {
     private TableView<Account> selectionTable;
     private ArrayList<Account> selectedAccounts = new ArrayList<Account>();
 
-    private double tableHeight = 400;
-    private double selectionTableHeight = 120;
-    private int maxSizeSelection = 3;
+    private final double tableHeight = 400;
+    private final double selectionTableHeight = 120;
+    private final int maxSizeSelection = 3;
 
     public AccountsView(final ViewController view, final Boolean inviteBoolean) {
         this.alignmentProperty().set(Pos.CENTER);
