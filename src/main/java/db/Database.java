@@ -43,6 +43,17 @@ public final class Database {
         }
     }
 
+    public void close() {
+        try {
+            if (this.conn == null || this.conn.isClosed()) {
+                return;
+            }
+            this.conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Map<String, String>> exec(final String query, final String[] params) {
         List<Map<String, String>> result = new ArrayList<>();
 
@@ -72,7 +83,6 @@ public final class Database {
             }
 
             stmt.close();
-            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
