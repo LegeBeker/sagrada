@@ -1,6 +1,7 @@
 package main.java.view;
 
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -64,29 +65,25 @@ public class PatternCardView extends BorderPane {
                 PatternCardField field = patternCard.getField(row, col);
 
                 if (field.getValue() != null) {
-                    if (isCardOwner) {
-                        DieView target = new DieView(field.getValue());
-                        DieDropTarget dieDropTarget = new DieDropTarget();
-                        dieDropTarget.getChildren().add(target);
-                        grid.add(dieDropTarget, col, row);
-                    } else {
-                        DieView target = new DieView(field.getValue());
-                        grid.add(target, col, row);
-                    }
+                    createAndAddNode(isCardOwner, new DieView(field.getValue()), field.getColor(), col, row);
                 } else {
-                    if (isCardOwner) {
-                        Rectangle target = new Rectangle(RECTANGLE, RECTANGLE);
-                        target.setFill(field.getColor());
-                        DieDropTarget dieDropTarget = new DieDropTarget();
-                        dieDropTarget.getChildren().add(target);
-                        grid.add(dieDropTarget, col, row);
-                    } else {
-                        Rectangle target = new Rectangle(RECTANGLE, RECTANGLE);
-                        target.setFill(field.getColor());
-                        grid.add(target, col, row);
-                    }
+                    createAndAddNode(isCardOwner, new Rectangle(RECTANGLE, RECTANGLE), field.getColor(), col, row);
                 }
             }
+        }
+    }
+
+    private void createAndAddNode(final boolean isCardOwner, final Node node, final Color color, final int col,
+            final int row) {
+        if (node instanceof Rectangle) {
+            ((Rectangle) node).setFill(color);
+        }
+        if (isCardOwner) {
+            DieDropTarget dieDropTarget = new DieDropTarget();
+            dieDropTarget.getChildren().add(node);
+            grid.add(dieDropTarget, col, row);
+        } else {
+            grid.add(node, col, row);
         }
     }
 }

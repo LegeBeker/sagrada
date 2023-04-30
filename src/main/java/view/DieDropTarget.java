@@ -17,8 +17,7 @@ public class DieDropTarget extends StackPane {
         this.setOnDragEntered(event -> {
             if (event.getGestureSource() instanceof DieView) {
                 GridPane gridPane = (GridPane) this.getParent();
-                System.out.println("Y" + gridPane.getColumnIndex(this));
-                System.out.println("X" + gridPane.getRowIndex(this));
+                System.out.println("Y: " + gridPane.getColumnIndex(this) + " X: " + gridPane.getRowIndex(this));
 
                 this.setStyle("-fx-border-color: blue;");
             }
