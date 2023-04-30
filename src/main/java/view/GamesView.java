@@ -50,7 +50,6 @@ public class GamesView extends VBox {
 
     public GamesView(final ViewController view) {
         this.view = view;
-        String loggedInPlayer = view.getAccountController().getAccount().getUsername();
         this.setBackground(view.getBackground());
 
         this.setAlignment(Pos.CENTER);
@@ -93,9 +92,9 @@ public class GamesView extends VBox {
                 if (game == null) {
                     setStyle("");
                 } else if (game.getTurnPlayer().getUsername()
-                        .equals(loggedInPlayer)) {
+                        .equals(view.getAccountController().getAccount().getUsername())) {
                     setStyle("-fx-background-color: lightblue;");
-                } else if (hasOpenInvite(game, loggedInPlayer)) {
+                } else if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
                     setStyle("-fx-background-color: orange;");
                 }
 
@@ -106,8 +105,8 @@ public class GamesView extends VBox {
             if (e.getClickCount() == 2) {
                 Game game = this.table.getSelectionModel().getSelectedItem();
 
-                if (hasOpenInvite(game, loggedInPlayer)) {
-                    showInviteAlert(game, loggedInPlayer);
+                if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
+                    showInviteAlert(game, view.getGameController().getCurrentPlayer(game.getId()));
                 } else {
                     this.view.openGameView(game);
                 }
@@ -162,9 +161,7 @@ public class GamesView extends VBox {
         return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
     }
 
-    private void showInviteAlert(final Game game, final String playerName) {
-        Player player = new Player();
-
+    private void showInviteAlert(final Game game, final Player player) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uitnodiging");
         alert.setHeaderText("Bevestiging");
@@ -179,9 +176,11 @@ public class GamesView extends VBox {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent()) {
             if (result.get() == acceptButton) {
-                player.acceptInvite(game.getId(), playerName);
+                System.out.println("accept");
+                player.acceptInvite();
             } else if (result.get() == refuseButton) {
-                player.refuseInvite(game.getId(), playerName);
+                System.out.println("accept");
+                player.refuseInvite();
             }
         }
     }

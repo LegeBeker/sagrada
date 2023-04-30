@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -20,7 +21,6 @@ public class Game extends Observable {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
-    private ArrayList<String> playerNames = new ArrayList<>();
 
     public static Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
         Game newGame = new Game();
@@ -83,8 +83,20 @@ public class Game extends Observable {
         return this.players;
     }
 
+    public Player getCurrentPlayer(final int id, final String username) {
+        for (Player player : this.players) {
+            if (player.getId() == id || player.getUsername().equals(username)) {
+                return player;
+            }
+        }
+
+        return null;
+    }
+
     public ArrayList<String> getPlayerNames() {
-        return this.playerNames;
+        return (ArrayList<String>) players.stream()
+                .map(Player::getUsername)
+                .collect(Collectors.toList());
     }
 
     public boolean playerHasNotReplied(final String username) {
@@ -133,7 +145,6 @@ public class Game extends Observable {
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
             Player player = Player.mapToPlayer(map);
             game.players.add(player);
-            game.playerNames.add(player.getUsername());
         }
 
         return game;

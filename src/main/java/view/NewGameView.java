@@ -12,7 +12,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import main.java.controller.GameController;
 import main.java.controller.ViewController;
 import main.java.model.Account;
 
@@ -93,7 +92,7 @@ public class NewGameView extends HBox {
             return;
         }
 
-        new GameController().createGame(this.accounts, useDefaultCards);
+        view.getGameController().createGame(this.accounts, useDefaultCards);
         // TODO go to the newly made game
     }
 

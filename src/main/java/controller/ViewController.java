@@ -1,6 +1,5 @@
 package main.java.controller;
 
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -51,7 +50,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -66,7 +65,7 @@ public class ViewController extends Scene {
         this.messageBox.setMaxWidth(Double.MAX_VALUE);
 
         this.accountController = new AccountController();
-        this.gameController = new GameController();
+        this.gameController = new GameController(this);
         this.patternCardController = new PatternCardController();
 
         this.effectsController = new EffectsController();
