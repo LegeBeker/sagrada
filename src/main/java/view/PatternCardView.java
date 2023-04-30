@@ -78,11 +78,14 @@ public class PatternCardView extends BorderPane {
         if (node instanceof Rectangle) {
             ((Rectangle) node).setFill(color);
         }
+
         if (isCardOwner) {
             DieDropTarget dieDropTarget = new DieDropTarget();
             dieDropTarget.getChildren().add(node);
+            dieDropTarget.setStyle("-fx-border-color: black;");
             grid.add(dieDropTarget, col, row);
         } else {
+            node.setStyle("-fx-border-color: black;");
             grid.add(node, col, row);
         }
     }

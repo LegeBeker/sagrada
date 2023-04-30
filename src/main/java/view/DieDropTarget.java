@@ -19,12 +19,13 @@ public class DieDropTarget extends StackPane {
                 GridPane gridPane = (GridPane) this.getParent();
                 System.out.println("Y: " + gridPane.getColumnIndex(this) + " X: " + gridPane.getRowIndex(this));
 
-                this.setStyle("-fx-border-color: blue;");
+                // fluorescent color blue
+                this.setStyle("-fx-border-color: #00FFBF;");
             }
         });
 
         this.setOnDragExited(event -> {
-            this.setStyle("");
+            this.setStyle("-fx-border-color: black;");
         });
 
         this.setOnDragDropped(event -> {
