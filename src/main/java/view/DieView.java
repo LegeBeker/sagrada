@@ -47,7 +47,9 @@ public class DieView extends Group {
             this.setOnDragDetected(event -> {
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
-                Image image = this.snapshot(new SnapshotParameters(), null);
+                SnapshotParameters sp = new SnapshotParameters();
+                sp.setFill(Color.TRANSPARENT);
+                Image image = this.snapshot(sp, null);
                 content.putImage(image);
                 db.setContent(content);
                 event.consume();
