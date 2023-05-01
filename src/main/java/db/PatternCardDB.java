@@ -40,4 +40,13 @@ public final class PatternCardDB {
 
         return db.exec(sql, params);
     }
+
+    public static List<Map<String, String>> setPatternCardOptions(final int idPatternCard, final int idPlayer) {
+        Database db = Database.getInstance();
+
+        String sql = "INSERT INTO patterncardoption VALUE (?, ?);";
+        String[] params = {Integer.toString(idPatternCard), Integer.toString(idPlayer)};
+
+        return db.exec(sql, params);
+    }
 }

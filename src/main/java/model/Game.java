@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.db.GameDB;
+import main.java.db.PatternCardDB;
 import main.java.pattern.Observable;
 
 public class Game extends Observable {
@@ -21,6 +22,7 @@ public class Game extends Observable {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
+    private final int uniqueCardsPerPlayer = 4;
 
     public static Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
         Game newGame = new Game();
@@ -28,15 +30,6 @@ public class Game extends Observable {
         final int thisGameID = newGame.getId();
         List<Map<String, String>> colorList = GameDB.getColors(accounts.size());
         boolean isChallenger = true;
-        
-        if (useDefaultCards) {
-            newGame.addPatternCards();
-        } else {
-            newGame.addPatternCards();
-            // TODO create random (but valid) cards
-            // ArrayList<PatternCard> randomCards = new PatternCard().generateRandomCards();
-            // newGame.addPatternCards(randomCards);
-        }
 
         for (Account ac : accounts) {
             String username = ac.getUsername();
@@ -54,6 +47,15 @@ public class Game extends Observable {
             newGame.addPlayer(newPlayer);
         }
 
+        if (useDefaultCards) {
+            newGame.addPatternCards();
+        } else {
+            newGame.addPatternCards();
+            // TODO create random (but valid) cards
+            // ArrayList<PatternCard> randomCards = new PatternCard().generateRandomCards();
+            // newGame.addPatternCards(randomCards);
+        }
+
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedTime = dtf.format(time);
@@ -66,13 +68,16 @@ public class Game extends Observable {
     }
 
     private void addPatternCards() {
-        // get patterncards from database
         ArrayList<PatternCard> defaultCards = PatternCard.getDefaultCards();
         addPatternCards(defaultCards);
     }
     
     private void addPatternCards(ArrayList<PatternCard> cards) {
-        // give cards to players
+        for(Player pl : players) {
+            for(int i = 0; i < uniqueCardsPerPlayer; i++) {
+                PatternCardDB.setPatternCardOptions(cards.remove(0).getIdPatternCard(), pl.getId());
+            }
+        }
     }
 
     public int getId() {
