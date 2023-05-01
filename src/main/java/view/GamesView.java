@@ -166,7 +166,7 @@ public class GamesView extends VBox {
         alert.setTitle("Uitnodiging");
         alert.setHeaderText("Bevestiging");
         alert.setContentText(
-                "Je bent uitgenodigd voor een spel. Door op accepteren te klikken doe je mee aan het spel.");
+                "Je bent uitgenodigd voor een spel. Door op accepteren te klikken, doe je mee aan het spel.");
 
         ButtonType acceptButton = new ButtonType("Accepteren");
         ButtonType refuseButton = new ButtonType("Weigeren");
