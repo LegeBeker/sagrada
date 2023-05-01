@@ -170,12 +170,15 @@ public class GamesView extends VBox {
         alert.getButtonTypes().setAll(acceptButton, refuseButton, closeButton);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent()) {
-            if (result.get() == acceptButton) {
-                player.acceptInvite();
-            } else if (result.get() == refuseButton) {
-                player.refuseInvite();
-            }
+
+        if (!result.isPresent()) {
+            return;
+        }
+
+        if (result.get() == acceptButton) {
+            player.acceptInvite();
+        } else if (result.get() == refuseButton) {
+            player.refuseInvite();
         }
     }
 
