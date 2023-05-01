@@ -1,23 +1,13 @@
 package main.java.enums;
 
 public enum PlayStatusEnum {
-    ACCEPTED("accepted"),
-    CHALLENGEE("challengee"),
-    CHALLANGER("challenger"),
-    FINISHED("finished"),
-    REFUSED("refused");
-
-    private final String playStatus;
-
-    PlayStatusEnum(final String playStatus) {
-        this.playStatus = playStatus;
-    }
-
-    public String getPlayStatus() {
-        return playStatus;
-    }
+    ACCEPTED,
+    CHALLENGEE,
+    CHALLANGER,
+    FINISHED,
+    REFUSED;
 
     public String toString() {
-        return playStatus;
+        return this.name().toLowerCase();
     }
 }
