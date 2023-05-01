@@ -52,7 +52,8 @@ public class MenuView extends VBox {
         this.setSpacing(this.spacing);
         this.setPadding(new Insets(0, this.padding, 0, this.padding));
 
-        this.getChildren().addAll(view.getLogo(), this.textGreet, this.buttonGames, this.buttonStats,
+        this.getChildren().addAll(view.getLogo(), this.textGreet, this.buttonGames,
+                this.buttonStats,
                 this.buttonLogout);
     }
 
