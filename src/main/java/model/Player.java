@@ -19,12 +19,15 @@ public class Player {
 
     private int score;
 
-    public Player createPlayer(final int gameID, final String username, final String playerStatus, final String privateColor) {
+    public static Player createPlayer(final int gameID, final String username, final String playerStatus, final String privateColor) {
         Player newPlayer = new Player();
         newPlayer.setIdGame(gameID);
         newPlayer.setUsername(username);
         newPlayer.setPlayStatus(playerStatus);
         newPlayer.setPrivateObjCardColor(privateColor);
+        
+        Map<String, String> idplayer = PlayerDB.createPlayer(username, gameID, playerStatus, privateColor).get(0);
+        newPlayer.setId(Integer.parseInt(idplayer.get("idplayer")));
 
         return newPlayer;
     }

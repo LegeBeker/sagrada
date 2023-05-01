@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.db.GameDB;
 import main.java.db.PatternCardDB;
+import main.java.enums.PlayStatusEnum;
 import main.java.pattern.Observable;
 
 public class Game extends Observable {
@@ -24,36 +25,24 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private final int uniqueCardsPerPlayer = 4;
 
-    public static Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
+    public static Game createGame(final ArrayList<Account> accounts, final Account currAccount, final boolean useDefaultCards) {
         Game newGame = new Game();
 
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedTime = dtf.format(time);
-        GameDB.createGame(formattedTime);
-        List<Map<String, String>> response = GameDB.getGameByTimestamp(formattedTime);
+        List<Map<String, String>> response = GameDB.createGame(formattedTime);
 
         newGame.idGame = Integer.parseInt(response.get(0).get("idgame"));
-
-        Player playerCreator = new Player();
         final int thisGameID = newGame.getId();
-        List<Map<String, String>> colorList = GameDB.getColors(accounts.size());
-        boolean isChallenger = true;
+
+        List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
+        
+        newGame.addPlayer(Player.createPlayer(thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(), colorList.remove(0).get("color")));
+        GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
 
         for (Account ac : accounts) {
-            String username = ac.getUsername();
-            String privateColor = colorList.remove(0).get("color");
-
-            Player newPlayer;
-            if (isChallenger) {
-                newPlayer = playerCreator.createPlayer(thisGameID, username, "challenger", privateColor);
-                isChallenger = false;
-            } else {
-                newPlayer = playerCreator.createPlayer(thisGameID, username, "challengee", privateColor);
-            }
-
-            newPlayer.addPlayerToDB();
-            newGame.addPlayer(newPlayer);
+            newGame.addPlayer(Player.createPlayer(thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(), colorList.remove(0).get("color")));
         }
 
         if (useDefaultCards) {
@@ -65,7 +54,6 @@ public class Game extends Observable {
             // newGame.addPatternCards(randomCards);
         }
 
-
         return newGame;
     }
 
@@ -75,8 +63,8 @@ public class Game extends Observable {
     }
 
     private void addPatternCards(final ArrayList<PatternCard> cards) {
-        for(Player pl : players) {
-            for(int i = 0; i < uniqueCardsPerPlayer; i++) {
+        for (Player pl : players) {
+            for (int i = 0; i < uniqueCardsPerPlayer; i++) {
                 PatternCardDB.setPatternCardOptions(cards.remove(0).getIdPatternCard(), pl.getId());
             }
         }

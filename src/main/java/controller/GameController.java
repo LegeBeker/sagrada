@@ -22,8 +22,8 @@ public final class GameController {
         return Game.get(gameId);
     }
 
-    public Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
-        return Game.createGame(accounts, useDefaultCards);
+    public Game createGame(final ArrayList<Account> accounts, final Account currAccount, final boolean useDefaultCards) {
+        return Game.createGame(accounts, currAccount, useDefaultCards);
     }
 
     public Player getCurrentPlayer(final int idGame) {
