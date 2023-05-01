@@ -44,4 +44,26 @@ public final class PlayerDB {
         return db.exec(sql, params);
     }
 
+    public static boolean acceptInvite(final int gameId, final String playername) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET playstatus = 'accepted' WHERE idgame = ? AND username = ?;";
+        String[] params = {Integer.toString(gameId), playername};
+
+        db.exec(sql, params);
+
+        return true;
+    }
+
+    public static boolean refuseInvite(final int gameId, final String playername) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET playstatus = 'refused' WHERE idgame = ? AND username = ?;";
+        String[] params = {Integer.toString(gameId), playername};
+
+        db.exec(sql, params);
+
+        return true;
+    }
+
 }

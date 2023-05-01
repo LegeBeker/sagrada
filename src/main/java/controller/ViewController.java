@@ -67,7 +67,7 @@ public class ViewController extends Scene {
         this.messageBox.setMaxWidth(Double.MAX_VALUE);
 
         this.accountController = new AccountController();
-        this.gameController = new GameController();
+        this.gameController = new GameController(this);
         this.patternCardController = new PatternCardController();
 
         this.effectsController = new EffectsController();
