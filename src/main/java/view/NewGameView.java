@@ -21,7 +21,6 @@ public class NewGameView extends HBox {
     private ToggleGroup cards;
     private ArrayList<Account> accounts;
     private InvitesView playerList;
-    // private final Game game;
 
     private final int spacing = 10;
     private final int maxPlayers = 4;
@@ -94,8 +93,7 @@ public class NewGameView extends HBox {
         accounts.add(view.getAccountController().getAccount());
         Collections.reverse(accounts);
 
-        view.getGameController().createGame(this.accounts, useDefaultCards);
-        // TODO go to the newly made game
+        this.view.openGameView(view.getGameController().createGame(this.accounts, useDefaultCards));
     }
 
     private void goBack() {
