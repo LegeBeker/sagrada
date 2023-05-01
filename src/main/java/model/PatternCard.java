@@ -21,10 +21,10 @@ public class PatternCard {
     public static PatternCard get(final int idPatternCard) {
         return mapToPatternCard(PatternCardDB.get(idPatternCard));
     }
-    
-    public static ArrayList<PatternCard> getDefaultCards(){
+
+    public static ArrayList<PatternCard> getDefaultCards() {
         ArrayList<PatternCard> defaultCards = new ArrayList<PatternCard>();
-        for(Map<String, String> cardInfo : PatternCardDB.getAllStandard()) {
+        for (Map<String, String> cardInfo : PatternCardDB.getAllStandard()) {
             PatternCard card = mapToPatternCard(cardInfo);
             defaultCards.add(card);
         }

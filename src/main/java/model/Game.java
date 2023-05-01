@@ -45,8 +45,8 @@ public class Game extends Observable {
             String privateColor = colorList.remove(0).get("color");
 
             Player newPlayer;
-            if(isChallenger) {
-                newPlayer = playerCreator.createPlayer(thisGameID, username, "challenger", privateColor);    
+            if (isChallenger) {
+                newPlayer = playerCreator.createPlayer(thisGameID, username, "challenger", privateColor);
                 isChallenger = false;
             } else {
                 newPlayer = playerCreator.createPlayer(thisGameID, username, "challengee", privateColor);
@@ -73,8 +73,8 @@ public class Game extends Observable {
         ArrayList<PatternCard> defaultCards = PatternCard.getDefaultCards();
         addPatternCards(defaultCards);
     }
-    
-    private void addPatternCards(ArrayList<PatternCard> cards) {
+
+    private void addPatternCards(final ArrayList<PatternCard> cards) {
         for(Player pl : players) {
             for(int i = 0; i < uniqueCardsPerPlayer; i++) {
                 PatternCardDB.setPatternCardOptions(cards.remove(0).getIdPatternCard(), pl.getId());
