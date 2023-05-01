@@ -27,6 +27,15 @@ public class Game extends Observable {
         final int thisGameID = newGame.getId();
         List<Map<String, String>> colorList = GameDB.getColors(accounts.size());
         boolean isChallenger = true;
+        
+        if (useDefaultCards) {
+            newGame.addPatternCards();
+        } else {
+            newGame.addPatternCards();
+            // TODO create random (but valid) cards
+            // ArrayList<PatternCard> randomCards = new PatternCard().generateRandomCards();
+            // newGame.addPatternCards(randomCards);
+        }
 
         for (Account ac : accounts) {
             String username = ac.getUsername();
@@ -34,10 +43,10 @@ public class Game extends Observable {
 
             Player newPlayer;
             if(isChallenger) {
-                newPlayer = playerCreator.createPlayer(thisGameID, username, "CHALLENGER", privateColor);    
+                newPlayer = playerCreator.createPlayer(thisGameID, username, "challenger", privateColor);    
                 isChallenger = false;
             } else {
-                newPlayer = playerCreator.createPlayer(thisGameID, username, "CHALLENGEE", privateColor);
+                newPlayer = playerCreator.createPlayer(thisGameID, username, "challengee", privateColor);
             }
 
             newPlayer.addPlayerToDB();
@@ -52,14 +61,17 @@ public class Game extends Observable {
         List<Map<String, String>> response = GameDB.getGameByTimestamp(formattedTime);
         newGame.idGame = Integer.parseInt(response.get(0).get("idgame"));
 
-        // if (useDefaultCards) {
-        // newGame.addPatternCards()
-        // } else {
-        // TODO make random but valid cards
-        // newGame.addPatternCards(randomCards)
-        // }
-
         return newGame;
+    }
+
+    private void addPatternCards() {
+        // get patterncards from database
+        ArrayList<PatternCard> defaultCards = PatternCard.getDefaultCards();
+        addPatternCards(defaultCards);
+    }
+    
+    private void addPatternCards(ArrayList<PatternCard> cards) {
+        // give cards to players
     }
 
     public int getId() {

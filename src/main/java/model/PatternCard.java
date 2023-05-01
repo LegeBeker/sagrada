@@ -1,6 +1,8 @@
 package main.java.model;
 
+import java.util.ArrayList;
 import java.util.Map;
+
 import main.java.db.PatternCardDB;
 
 public class PatternCard {
@@ -18,6 +20,15 @@ public class PatternCard {
 
     public static PatternCard get(final int idPatternCard) {
         return mapToPatternCard(PatternCardDB.get(idPatternCard));
+    }
+    
+    public static ArrayList<PatternCard> getDefaultCards(){
+        ArrayList<PatternCard> defaultCards = new ArrayList<PatternCard>();
+        for(Map<String, String> cardInfo : PatternCardDB.getAllStandard()) {
+            PatternCard card = mapToPatternCard(cardInfo);
+            defaultCards.add(card);
+        }
+        return defaultCards;
     }
 
     public static PatternCard mapToPatternCard(final Map<String, String> patternCardMap) {

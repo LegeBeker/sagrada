@@ -24,6 +24,14 @@ public final class PatternCardDB {
         return db.exec(sql, null);
     }
 
+    public static List<Map<String, String>> getAllStandard() {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM patterncard WHERE standard = 1 ORDER BY RAND();";
+
+        return db.exec(sql, null);
+    }
+
     public static List<Map<String, String>> getAllFieldsForCard(final int idPatternCard) {
         Database db = Database.getInstance();
 
