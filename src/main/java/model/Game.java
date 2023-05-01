@@ -143,8 +143,7 @@ public class Game extends Observable {
         game.creationDate = gameMap.get("creationdate");
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
-            Player player = Player.mapToPlayer(map);
-            game.players.add(player);
+            game.players.add(Player.mapToPlayer(map));
         }
 
         return game;
