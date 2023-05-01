@@ -20,7 +20,7 @@ public class NewGameView extends HBox {
     private ViewController view;
     private ToggleGroup cards;
     private ArrayList<Account> accounts;
-    private AccountsView playerList;
+    private InvitesView playerList;
     // private final Game game;
 
     private final int spacing = 10;
@@ -61,7 +61,7 @@ public class NewGameView extends HBox {
         VBox buttonPane = new VBox();
         buttonPane.getChildren().setAll(title, standardRb, randomRb, create, back);
 
-        this.playerList = new AccountsView(this.view, true);
+        this.playerList = new InvitesView(this.view);
         this.playerList.setMinWidth(minWidth);
 
         buttonPane.setSpacing(spacing);

@@ -1,7 +1,5 @@
 package main.java.view;
 
-import java.util.ArrayList;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,8 +13,6 @@ import main.java.controller.ViewController;
 public class StatsView extends VBox {
 
     private ViewController view;
-
-    private ArrayList<AccountView> tableContents = new ArrayList<AccountView>();
 
     private StackPane textTitle;
     private AccountsView accountsView;
@@ -53,7 +49,7 @@ public class StatsView extends VBox {
         text2.setFill(Color.web("#ffffff"));
         text2.setY(yValueText);
 
-        this.accountsView = new AccountsView(view, false);
+        this.accountsView = new AccountsView(view);
 
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefSize(this.buttonWidth, this.buttonHeight);
@@ -69,13 +65,5 @@ public class StatsView extends VBox {
         this.setPadding(new Insets(0, this.padding, 0, this.padding));
 
         this.getChildren().addAll(this.textTitle, this.accountsView, this.boxButtons);
-    }
-
-    public void resize(final double width, final double height) {
-        super.resize(width, height);
-        // -- TODO: @Tim, check this out later, resizing is doing le funnies atm.
-        for (AccountView av : tableContents) {
-            av.resize(width, height);
-        }
     }
 }
