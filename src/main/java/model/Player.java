@@ -106,6 +106,14 @@ public class Player {
         return mapToPlayer(PlayerDB.get(idPlayer));
     }
 
+    public boolean acceptInvite() {
+        return PlayerDB.acceptInvite(this.idGame, this.username);
+    }
+
+    public boolean refuseInvite() {
+        return PlayerDB.refuseInvite(this.idGame, this.username);
+    }
+
     public static ArrayList<Player> getAll() {
         ArrayList<Player> players = new ArrayList<Player>();
 

@@ -1,5 +1,8 @@
 package main.java.model;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import main.java.db.AccountDB;
 
 public class Account {
@@ -24,5 +27,17 @@ public class Account {
 
     public Boolean createAccount() {
         return AccountDB.createAccount(username, password);
+    }
+
+    public static ArrayList<Account> getAll() {
+
+        ArrayList<Account> accounts = new ArrayList<Account>();
+
+        for (Map<String, String> accountMap : AccountDB.getAll()) {
+            Account acc = new Account();
+            acc.username = accountMap.get("username");
+            accounts.add(acc);
+        }
+        return accounts;
     }
 }

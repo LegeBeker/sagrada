@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import main.java.model.Account;
 import main.java.model.Game;
 import main.java.view.GameView;
 import main.java.view.GamesView;
@@ -22,6 +23,7 @@ import main.java.view.LoginView;
 import main.java.view.MenuView;
 import main.java.view.NewGameView;
 import main.java.view.RegisterView;
+import main.java.view.StatView;
 import main.java.view.StatsView;
 
 public class ViewController extends Scene {
@@ -50,7 +52,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -65,7 +67,7 @@ public class ViewController extends Scene {
         this.messageBox.setMaxWidth(Double.MAX_VALUE);
 
         this.accountController = new AccountController();
-        this.gameController = new GameController();
+        this.gameController = new GameController(this);
         this.patternCardController = new PatternCardController();
 
         this.effectsController = new EffectsController();
@@ -133,6 +135,11 @@ public class ViewController extends Scene {
     public void openGameView(final Game game) {
         GameView gameView = new GameView(this, game);
         changeView(gameView);
+    }
+
+    public void openStatView(final Account account) {
+        StatView statView = new StatView(this, account);
+        changeView(statView);
     }
 
     public AccountController getAccountController() {
