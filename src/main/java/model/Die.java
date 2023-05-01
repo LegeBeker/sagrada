@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javafx.scene.paint.Color;
 import main.java.db.DieDB;
+import main.java.enums.ColorEnum;
 
 public class Die {
     private int idGame;
@@ -17,29 +18,8 @@ public class Die {
     private int roundID;
 
     public void setColor(final String color) {
-        if (color == null) {
-            this.color = Color.web("#F8F8F8");
-            return;
-        }
-        switch (color) {
-            case "red":
-                this.color = Color.web("#F44336");
-                return;
-            case "blue":
-                this.color = Color.web("#2196F3");
-                return;
-            case "green":
-                this.color = Color.web("#4CAF50");
-                return;
-            case "yellow":
-                this.color = Color.web("#FFEB3B");
-                return;
-            case "purple":
-                this.color = Color.web("#9C27B0");
-                return;
-            default:
-                this.color = Color.web("#F8F8F8");
-        }
+        ColorEnum colorEnum = ColorEnum.fromString(color);
+        this.color = Color.web(colorEnum.getHexCode());
     }
 
     public int getEyes() {

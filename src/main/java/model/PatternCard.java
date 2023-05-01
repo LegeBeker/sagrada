@@ -13,8 +13,8 @@ public class PatternCard {
 
     private Boolean standard;
 
-    private static final int ROWS = 5;
-    private static final int COLUMNS = 4;
+    private static final int ROWS = 4;
+    private static final int COLUMNS = 5;
 
     private PatternCardField[][] fields = new PatternCardField[ROWS][COLUMNS];
 
@@ -40,8 +40,8 @@ public class PatternCard {
         patternCard.standard = Boolean.parseBoolean(patternCardMap.get("standard"));
 
         for (Map<String, String> map : PatternCardDB.getAllFieldsForCard(patternCard.idPatternCard)) {
-            int row = Integer.parseInt(map.get("position_x"));
-            int col = Integer.parseInt(map.get("position_y"));
+            int row = Integer.parseInt(map.get("position_y"));
+            int col = Integer.parseInt(map.get("position_x"));
 
             patternCard.fields[row - 1][col - 1] = PatternCardField.mapToPatternCardField(map);
         }
