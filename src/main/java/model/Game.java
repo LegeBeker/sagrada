@@ -26,6 +26,15 @@ public class Game extends Observable {
 
     public static Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
         Game newGame = new Game();
+
+        LocalDateTime time = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedTime = dtf.format(time);
+        GameDB.createGame(formattedTime);
+        List<Map<String, String>> response = GameDB.getGameByTimestamp(formattedTime);
+
+        newGame.idGame = Integer.parseInt(response.get(0).get("idgame"));
+
         Player playerCreator = new Player();
         final int thisGameID = newGame.getId();
         List<Map<String, String>> colorList = GameDB.getColors(accounts.size());
@@ -56,13 +65,6 @@ public class Game extends Observable {
             // newGame.addPatternCards(randomCards);
         }
 
-        LocalDateTime time = LocalDateTime.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedTime = dtf.format(time);
-
-        GameDB.createGame(formattedTime);
-        List<Map<String, String>> response = GameDB.getGameByTimestamp(formattedTime);
-        newGame.idGame = Integer.parseInt(response.get(0).get("idgame"));
 
         return newGame;
     }
