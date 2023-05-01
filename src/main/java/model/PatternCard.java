@@ -61,11 +61,6 @@ public class PatternCard {
     }
 
     public boolean validateMove(final int dieValue, final Color dieColor, final int columnIndex, final int rowIndex) {
-            
-
-
-
-    
         System.out.println("validateMove");
         return true;
     }
