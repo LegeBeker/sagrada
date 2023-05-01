@@ -116,8 +116,8 @@ public class ViewController extends Scene {
     }
 
     public void openGamesView() {
-        GamesView gamesOverview = new GamesView(this);
-        changeView(gamesOverview);
+        GamesView gamesView = new GamesView(this);
+        changeView(gamesView);
     }
 
     public void openStatsView() {
