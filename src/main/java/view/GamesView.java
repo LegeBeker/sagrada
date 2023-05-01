@@ -1,10 +1,14 @@
 package main.java.view;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -18,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
+import main.java.model.Player;
 
 public class GamesView extends VBox {
 
@@ -89,16 +94,22 @@ public class GamesView extends VBox {
                 } else if (game.getTurnPlayer().getUsername()
                         .equals(view.getAccountController().getAccount().getUsername())) {
                     setStyle("-fx-background-color: lightblue;");
-                } else {
-                    setStyle("");
+                } else if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
+                    setStyle("-fx-background-color: orange;");
                 }
+
             }
         });
 
         this.table.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Game game = this.table.getSelectionModel().getSelectedItem();
-                this.view.openGameView(game);
+
+                if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
+                    showInviteAlert(game, view.getGameController().getCurrentPlayer(game.getId()));
+                } else {
+                    this.view.openGameView(game);
+                }
             }
         });
 
@@ -141,4 +152,34 @@ public class GamesView extends VBox {
     private void openNewGameView() {
         this.view.openNewGameView();
     }
+
+    private boolean hasOpenInvite(final Game game, final String playerName) {
+        return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
+    }
+
+    private void showInviteAlert(final Game game, final Player player) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Uitnodiging");
+        alert.setHeaderText("Bevestiging");
+        alert.setContentText(
+                "Je bent uitgenodigd voor een spel. Door op accepteren te klikken, doe je mee aan het spel.");
+
+        ButtonType acceptButton = new ButtonType("Accepteren");
+        ButtonType refuseButton = new ButtonType("Weigeren");
+        ButtonType closeButton = new ButtonType("Sluiten", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(acceptButton, refuseButton, closeButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (!result.isPresent()) {
+            return;
+        }
+
+        if (result.get() == acceptButton) {
+            player.acceptInvite();
+        } else if (result.get() == refuseButton) {
+            player.refuseInvite();
+        }
+    }
+
 }

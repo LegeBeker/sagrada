@@ -3,6 +3,8 @@ package main.java.db;
 import java.util.List;
 import java.util.Map;
 
+import main.java.enums.PlayStatusEnum;
+
 public final class PlayerDB {
     private PlayerDB() {
     }
@@ -42,6 +44,28 @@ public final class PlayerDB {
         String[] params = {Integer.toString(idGame)};
 
         return db.exec(sql, params);
+    }
+
+    public static boolean acceptInvite(final int gameId, final String playername) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET playstatus = '" + PlayStatusEnum.ACCEPTED + "' WHERE idgame = ? AND username = ?;";
+        String[] params = {Integer.toString(gameId), playername};
+
+        db.exec(sql, params);
+
+        return true;
+    }
+
+    public static boolean refuseInvite(final int gameId, final String playername) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET playstatus =  '" + PlayStatusEnum.REFUSED + "'  WHERE idgame = ? AND username = ?;";
+        String[] params = {Integer.toString(gameId), playername};
+
+        db.exec(sql, params);
+
+        return true;
     }
 
 }

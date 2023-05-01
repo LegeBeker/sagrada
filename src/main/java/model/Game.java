@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -83,6 +84,34 @@ public class Game extends Observable {
         return this.players;
     }
 
+    public Player getCurrentPlayer(final int id, final String username) {
+        for (Player player : this.players) {
+            if (player.getId() == id || player.getUsername().equals(username)) {
+                return player;
+            }
+        }
+
+        return null;
+    }
+
+    public ArrayList<String> getPlayerNames() {
+        return (ArrayList<String>) players.stream()
+                .map(Player::getUsername)
+                .collect(Collectors.toList());
+    }
+
+    public boolean playerHasNotReplied(final String username) {
+        for (Player player : this.players) {
+            if (player.getUsername().equals(username)) {
+                if (player.getPlayStatus().equals("challengee")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public void addPlayer(final Player player) {
         this.players.add(player);
     }
@@ -100,7 +129,6 @@ public class Game extends Observable {
     public void endTurn() {
         // TODO: implement
     }
-
 
     public static Game get(final int idGame) {
         return mapToGame(GameDB.get(idGame));

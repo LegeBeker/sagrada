@@ -1,5 +1,7 @@
 package main.java.controller;
 
+import java.util.ArrayList;
+
 import main.java.model.Account;
 
 public class AccountController {
@@ -38,5 +40,9 @@ public class AccountController {
     public boolean logoutAccount() {
         this.curAccount = null;
         return true;
+    }
+
+    public ArrayList<Account> getAccounts() {
+        return Account.getAll();
     }
 }
