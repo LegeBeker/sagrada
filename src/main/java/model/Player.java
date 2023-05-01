@@ -17,6 +17,11 @@ public class Player {
     private String privateObjCardColor;
     private Integer idPatternCard;
 
+    private static final int ROWS = 4;
+    private static final int COLUMNS = 5;
+
+    private Die[][] board = new Die[ROWS][COLUMNS];
+
     private int score;
 
     public Player createPlayer(final int gameID, final String username) {
@@ -55,6 +60,10 @@ public class Player {
 
     public int getSeqnr() {
         return this.seqnr;
+    }
+
+    public Die[][] getBoard() {
+        return this.board;
     }
 
     public String getPrivateObjCardColor() {
