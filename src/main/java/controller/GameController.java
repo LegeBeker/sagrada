@@ -4,8 +4,16 @@ import java.util.ArrayList;
 
 import main.java.model.Account;
 import main.java.model.Game;
+import main.java.model.Player;
 
-public class GameController {
+public final class GameController {
+
+    private final ViewController view;
+
+    public GameController(final ViewController view) {
+        this.view = view;
+    }
+
     public ArrayList<Game> getGames() {
         return Game.getAll();
     }
@@ -16,5 +24,10 @@ public class GameController {
 
     public Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
         return Game.createGame(accounts, useDefaultCards);
+    }
+
+    public Player getCurrentPlayer(final int idGame) {
+        Game game = Game.get(idGame);
+        return game.getCurrentPlayer(idGame, this.view.getAccountController().getAccount().getUsername());
     }
 }

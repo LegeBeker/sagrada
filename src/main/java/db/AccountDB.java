@@ -1,5 +1,8 @@
 package main.java.db;
 
+import java.util.List;
+import java.util.Map;
+
 public final class AccountDB {
     private AccountDB() {
     }
@@ -7,7 +10,7 @@ public final class AccountDB {
     public static Boolean checkLogin(final String username, final String password) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
+        String sql = "SELECT * FROM account WHERE BINARY username = ? AND password = ?";
         String[] params = {username, password};
 
         return !db.exec(sql, params).isEmpty();
@@ -22,5 +25,12 @@ public final class AccountDB {
         db.exec(sql, params);
 
         return true;
+    }
+
+    public static List<Map<String, String>> getAll() {
+        Database db = Database.getInstance();
+        String sql = "SELECT * FROM account";
+
+        return db.exec(sql, null);
     }
 }
