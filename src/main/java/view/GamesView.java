@@ -133,10 +133,6 @@ public class GamesView extends VBox {
         this.buttonNewGame.setPrefSize(this.buttonWidth, this.buttonHeight);
         this.buttonNewGame.setOnAction(e -> this.openNewGameView());
 
-        this.buttonNewGame = new Button("Nieuwe potje starten");
-        this.buttonNewGame.setPrefSize(this.buttonWidth, this.buttonHeight);
-        this.buttonNewGame.setOnAction(e -> this.openNewGameView());
-
         this.boxButtons = new HBox();
         this.boxButtons.getChildren().addAll(this.buttonBack, this.buttonNewGame);
 
