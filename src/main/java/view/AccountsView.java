@@ -24,7 +24,7 @@ public class AccountsView extends HBox {
 
     public AccountsView(final ViewController view, final Boolean inviteBoolean) {
         this.alignmentProperty().set(Pos.CENTER);
-        generateGeneralAccountsView(view);
+        generateGeneralAccountsView(view,inviteBoolean);
         if (inviteBoolean) {
             generateInvitedAccountsOverview();
         }
@@ -42,7 +42,7 @@ public class AccountsView extends HBox {
         return this.selectedAccounts;
     }
 
-    private void generateGeneralAccountsView(final ViewController view) {
+    private void generateGeneralAccountsView(final ViewController view, final boolean inviteBoolean) {
         this.view = view;
         this.table = new TableView<Account>();
         this.table.setPlaceholder(new Text("Geen accounts gevonden"));
@@ -54,7 +54,14 @@ public class AccountsView extends HBox {
         Collections.addAll(this.table.getColumns(), idUsername);
 
         for (Account acc : view.getAccountController().getAccounts()) {
-            this.table.getItems().add(acc);
+            if(inviteBoolean){
+                if (!acc.getUsername().equals(this.view.getAccountController().getAccount().getUsername())){
+                    this.table.getItems().add(acc);        
+                }
+            }
+            else{
+                this.table.getItems().add(acc);
+            }
         }
 
         this.getChildren().addAll(this.table);
