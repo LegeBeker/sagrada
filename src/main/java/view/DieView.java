@@ -3,6 +3,11 @@ package main.java.view;
 import java.util.ArrayList;
 
 import javafx.scene.Group;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.Image;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -21,7 +26,7 @@ public class DieView extends Group {
 
     private int value;
 
-    public DieView(final int value, final Color color) {
+    public DieView(final int value, final Color color, final Boolean isDraggable) {
         this.value = value;
 
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
@@ -36,6 +41,20 @@ public class DieView extends Group {
 
         die.setScaleX(scale);
         die.setScaleY(scale);
+        die.setTranslateX((rectangle.getWidth() - die.getWidth()) / 2);
+
+        if (isDraggable) {
+            this.setOnDragDetected(event -> {
+                Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                SnapshotParameters sp = new SnapshotParameters();
+                sp.setFill(Color.TRANSPARENT);
+                Image image = this.snapshot(sp, null);
+                content.putImage(image);
+                db.setContent(content);
+                event.consume();
+            });
+        }
 
         die.setTranslateX((rectangle.getWidth() - die.getWidth()) / 2);
 
