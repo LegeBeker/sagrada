@@ -96,7 +96,7 @@ public class PatternCardView extends BorderPane {
         }
     }
 
-    public void validateMove(final int dieValue, final Color color ,final int columnIndex, final int rowIndex) {
-        this.view.getPatternCardController().validateMove(this.patternCard, dieValue, color ,columnIndex, rowIndex);
+    public void validateMove(final int dieValue, final Color color, final int columnIndex, final int rowIndex) {
+        this.view.getPatternCardController().validateMove(this.patternCard, dieValue, color, columnIndex, rowIndex);
     }
 }
