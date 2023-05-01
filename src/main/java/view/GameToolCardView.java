@@ -15,21 +15,18 @@ public class GameToolCardView extends ImageView {
     private final int offset = 100;
 
     public GameToolCardView(final ViewController view, final ToolCard toolCard) {
-        this.imageToolCard = new Image("file:resources/img/toolcards/"
-                + toolCard.getName().toLowerCase().replace(" ", "-") + ".png");
+        this.imageToolCard = new Image(
+                "file:resources/img/toolcards/" + toolCard.getName().toLowerCase().replace(" ", "-") + ".png");
 
         this.setFitWidth(this.width);
         this.setFitHeight(this.height);
 
         this.setImage(this.imageToolCard);
-        
+
+        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, offset);
+
         this.setOnMouseClicked(event -> {
             System.out.println(toolCard.getName() + " has been clicked!");
         });
-
-        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, offset);
     }
-    
-    
-   
 }
