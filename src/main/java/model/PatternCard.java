@@ -60,7 +60,8 @@ public class PatternCard {
         return fields[row - 1][column - 1];
     }
 
-    public boolean validateMove(final int dieValue, final Color dieColor, final int columnIndex, final int rowIndex) {
+    public boolean validateMove(final Die[][] board, final int dieValue, final Color dieColor, final int columnIndex,
+            final int rowIndex) {
         System.out.println("validateMove");
         return true;
     }
