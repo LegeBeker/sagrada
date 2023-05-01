@@ -1,6 +1,8 @@
 package main.java.model;
 
 import java.util.Map;
+
+import javafx.scene.paint.Color;
 import main.java.db.PatternCardDB;
 
 public class PatternCard {
@@ -56,5 +58,15 @@ public class PatternCard {
 
     public PatternCardField getField(final int row, final int column) {
         return fields[row - 1][column - 1];
+    }
+
+    public boolean validateMove(final int dieValue, final Color dieColor, final int columnIndex, final int rowIndex) {
+            
+
+
+
+    
+        System.out.println("validateMove");
+        return true;
     }
 }
