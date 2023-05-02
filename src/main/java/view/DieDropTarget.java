@@ -30,9 +30,10 @@ public class DieDropTarget extends StackPane {
             PatternCardView patternCardView = (PatternCardView) gridPane.getParent();
             DieView dieView = (DieView) event.getGestureSource();
 
-            patternCardView.validateMove(dieView.getValue(), dieView.getColor(), gridPane.getColumnIndex(this), gridPane.getRowIndex(this));
+            Boolean placeDie = patternCardView.validateMove(dieView.getValue(), dieView.getColor(),
+                    gridPane.getColumnIndex(this), gridPane.getRowIndex(this));
 
-            if (event.getGestureSource() instanceof DieView) {
+            if (placeDie) {
                 this.getChildren().add(dieView);
             }
 
