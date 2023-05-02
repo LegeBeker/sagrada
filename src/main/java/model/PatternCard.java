@@ -72,6 +72,16 @@ public class PatternCard {
             return false;
         }
 
+        if (!this.getField(rowIndex, columnIndex).getColor().equals(dieColor)
+                && this.getField(rowIndex, columnIndex).getColor().equals(null)) {
+            return false;
+        }
+
+        if (this.getField(rowIndex, columnIndex).getValue() != dieValue
+                && this.getField(rowIndex, columnIndex).getValue() != null) {
+            return false;
+        }
+
         return true;
     }
 
