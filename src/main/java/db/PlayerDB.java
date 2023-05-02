@@ -30,8 +30,8 @@ public final class PlayerDB {
             final String playStatus, final String color) {
         Database db = Database.getInstance();
 
-        String sql = "INSERT INTO player (username, idgame, playstatus, private_objectivecard_color)"
-                + "VALUE (?, ?, ?, ?);";
+        String sql = "INSERT INTO player (username, idgame, playstatus, private_objectivecard_color, score)"
+                + "VALUE (?, ?, ?, ?, -20);";
         String[] params = {username, Integer.toString(idGame), playStatus, color};
         
         db.exec(sql, params);

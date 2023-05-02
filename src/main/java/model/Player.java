@@ -17,7 +17,8 @@ public class Player {
     private String privateObjCardColor;
     private Integer idPatternCard;
 
-    private int score;
+    private final int defaultScore = -20;
+    private int score = defaultScore;
 
     public static Player createPlayer(final int gameID, final String username, final String playerStatus, final String privateColor) {
         Player newPlayer = new Player();
@@ -135,7 +136,9 @@ public class Player {
         player.username = playerMap.get("username");
         player.idGame = Integer.parseInt(playerMap.get("idgame"));
         player.playStatus = playerMap.get("playstatus");
-        player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
+        if (playerMap.get("seqnr") != null) {
+            player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
+        }
         player.privateObjCardColor = playerMap.get("private_objectivecard_color");
         if (playerMap.get("idpatterncard") != null) {
             player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));

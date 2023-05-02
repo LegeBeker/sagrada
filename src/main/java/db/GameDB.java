@@ -57,7 +57,7 @@ public final class GameDB {
     public static List<Map<String, String>> setTurnPlayer(final int gameID, final int playerID) {
         Database db = Database.getInstance();
         
-        String sql = "UPDATE game SET current_roundID = ? WHERE idgame = " + Integer.toString(gameID) + ";";
+        String sql = "UPDATE game SET turn_idplayer = ? WHERE idgame = " + Integer.toString(gameID) + ";";
         String[] params = {Integer.toString(playerID)};
         
         return db.exec(sql, params);
@@ -66,7 +66,7 @@ public final class GameDB {
     public static List<Map<String, String>> setRound(final int gameID, final int round) {
         Database db = Database.getInstance();
         
-        String sql = "UPDATE game SET turn_idplayer = ? WHERE idgame = " + Integer.toString(gameID) + ";";
+        String sql = "UPDATE game SET current_roundID = ? WHERE idgame = " + Integer.toString(gameID) + ";";
         String[] params = {Integer.toString(round)};
         
         return db.exec(sql, params);

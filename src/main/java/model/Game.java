@@ -40,6 +40,7 @@ public class Game extends Observable {
         
         newGame.addPlayer(Player.createPlayer(thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(), colorList.remove(0).get("color")));
         GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
+        newGame.setTurnPlayer(newGame.getPlayers().get(0).getId());
 
         for (Account ac : accounts) {
             newGame.addPlayer(Player.createPlayer(thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(), colorList.remove(0).get("color")));
@@ -84,6 +85,10 @@ public class Game extends Observable {
 
     public Player getTurnPlayer() {
         return Player.get(this.turnIdPlayer);
+    }
+    
+    public void setTurnPlayer(final int idPlayer) {
+        this.turnIdPlayer = idPlayer;
     }
 
     public int getCurrentRound() {
@@ -153,8 +158,12 @@ public class Game extends Observable {
         Game game = new Game();
 
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
-        game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
-        game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+        if(gameMap.get("turn_idplayer") != null) {
+            game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
+        }
+        if(gameMap.get("current_roundID") != null) {
+            game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+        }
         game.creationDate = gameMap.get("creationdate");
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
