@@ -49,4 +49,13 @@ public final class PatternCardDB {
 
         return db.exec(sql, params);
     }
+    
+    public static List<Map<String, String>> getPatternCardOptions(final int idPlayer) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM patterncardoption WHERE idplayer = ?;";
+        String[] params = {Integer.toString(idPlayer)};
+
+        return db.exec(sql, params);
+    }
 }

@@ -1,8 +1,10 @@
 package main.java.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import main.java.db.PatternCardDB;
 import main.java.db.PlayerDB;
 
 public class Player {
@@ -147,5 +149,16 @@ public class Player {
         player.score = Integer.parseInt(playerMap.get("score"));
 
         return player;
+    }
+
+    public List<PatternCard> getPatternCardOptions() {
+        List<Map<String, String>> patternCardNumbers = PatternCardDB.getPatternCardOptions(getId());
+
+        ArrayList<PatternCard> patternCardOptions = new ArrayList<PatternCard>();
+        for (Map<String, String> patternCardMap : patternCardNumbers) {
+            PatternCard patternCard = PatternCard.get(Integer.parseInt(patternCardMap.get("idpatterncard")));
+            patternCardOptions.add(patternCard);
+        }
+        return patternCardOptions;
     }
 }
