@@ -75,7 +75,9 @@ public class PatternCard {
         return true;
     }
 
-    public boolean isOnSideOrCorner(int row, int col) {
+    private boolean isOnSideOrCorner(int row, int col) {
         return row == 1 || row == 4 || col == 1 || col == 5;
     }
+
+
 }
