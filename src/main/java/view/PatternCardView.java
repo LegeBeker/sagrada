@@ -96,7 +96,15 @@ public class PatternCardView extends BorderPane {
         }
     }
 
-    public void validateMove(final int dieValue, final Color color, final int columnIndex, final int rowIndex) {
-        this.view.getPatternCardController().validateMove(this.patternCard, dieValue, color, columnIndex, rowIndex);
+    public boolean validateMove(final int dieValue, final Color color, final int columnIndex, final int rowIndex) {
+        Boolean validated = this.view.getPatternCardController().validateMove(this.patternCard, dieValue, color,
+                columnIndex,
+                rowIndex);
+
+        if (!validated) {
+            this.view.displayError("Deze zet is niet geldig.");
+        }
+
+        return validated;
     }
 }
