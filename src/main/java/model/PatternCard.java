@@ -142,7 +142,7 @@ public class PatternCard {
 
             // Check if the neighbor position is within bounds
             if (neighborRow > 0 && neighborRow < ROWS && neighborCol > 0 && neighborCol < COLUMNS + 1) {
-                int[] neighbor = { neighborRow, neighborCol };
+                int[] neighbor = {neighborRow, neighborCol};
                 neighbors.add(neighbor);
             }
         }
