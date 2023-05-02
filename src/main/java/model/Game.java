@@ -61,6 +61,9 @@ public class Game extends Observable {
             // newGame.addPatternCards(randomCards);
         }
 
+        ArrayList<Integer> gametoolcardNumbers = GameDB.assignToolcards(thisGameID);
+        GameDB.assignPublicObjectivecards(thisGameID);
+
         return newGame;
     }
 

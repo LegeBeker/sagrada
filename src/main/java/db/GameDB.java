@@ -1,5 +1,6 @@
 package main.java.db;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +71,46 @@ public final class GameDB {
         String[] params = {Integer.toString(round)};
 
         return db.exec(sql, params);
+    }
+
+    public static ArrayList<Integer> assignToolcards(final int gameID) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT idtoolcard FROM toolcard ORDER BY RAND() LIMIT 3;";
+        List<Map<String, String>> toolcardIDs = db.exec(sql, null);
+
+        String[] params = new String[1];
+        sql = "INSERT INTO gametoolcard (idtoolcard, idgame) VALUE (?, " + Integer.toString(gameID) + ");";
+        for (Map<String, String> toolcardMap : toolcardIDs) {
+            params[0] = toolcardMap.get("idtoolcard");
+            db.exec(sql, params);
+        }
+
+        sql = "SELECT gametoolcard FROM gametoolcard WHERE idgame = " + Integer.toString(gameID) + ";";
+        List<Map<String, String>> gametoolcardIDs = db.exec(sql, null);
+
+        ArrayList<Integer> toolcardNumbers = new ArrayList<Integer>();
+        for (Map<String, String> gametoolcardMap : gametoolcardIDs) {
+            toolcardNumbers.add(Integer.parseInt(gametoolcardMap.get("gametoolcard")));
+        }
+
+        return toolcardNumbers;
+    }
+
+    public static List<Map<String, String>> assignPublicObjectivecards(final int gameID) {
+        Database db = Database.getInstance();
+        
+        String sql = "SELECT idpublic_objectivecard FROM public_objectivecard ORDER BY RAND() LIMIT 3;";
+        List<Map<String, String>> publicObjectivecardIDs = db.exec(sql, null);
+
+        String[] params = new String[1];
+        sql = "INSERT INTO gameobjectivecard_public VALUE (" + Integer.toString(gameID) + ", ?);";
+        for (Map<String, String> publicObjectivecardMap : publicObjectivecardIDs) {
+            params[0] = publicObjectivecardMap.get("idpublic_objectivecard");
+            db.exec(sql, params);
+        }
+        sql = "SELECT * FROM gameobjectivecard_public WHERE idgame = " + Integer.toString(gameID) + ";";
+        return db.exec(sql, null);
     }
 
 }
