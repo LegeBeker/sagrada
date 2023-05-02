@@ -33,9 +33,9 @@ public final class PlayerDB {
         String sql = "INSERT INTO player (username, idgame, playstatus, private_objectivecard_color, score)"
                 + "VALUE (?, ?, ?, ?, -20);";
         String[] params = {username, Integer.toString(idGame), playStatus, color};
-        
+
         db.exec(sql, params);
-        
+
         sql = "SELECT * FROM player WHERE username = ? AND idgame = ? AND playstatus = ? AND private_objectivecard_color = ?;";
 
         return db.exec(sql, params);

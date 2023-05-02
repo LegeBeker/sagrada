@@ -1,7 +1,6 @@
 package main.java.view;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

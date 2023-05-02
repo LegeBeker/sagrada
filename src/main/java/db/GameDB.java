@@ -48,9 +48,9 @@ public final class GameDB {
 
     public static List<Map<String, String>> getColors(final int playerCount) {
         Database db = Database.getInstance();
-        
+
         String sql = "SELECT * FROM color ORDER BY RAND() LIMIT " + Integer.toString(playerCount) + ";";
-        
+
         return db.exec(sql, null);
     }
 
@@ -62,13 +62,13 @@ public final class GameDB {
 
         return db.exec(sql, params);
     }
-    
+
     public static List<Map<String, String>> setRound(final int gameID, final int round) {
         Database db = Database.getInstance();
-        
+
         String sql = "UPDATE game SET current_roundID = ? WHERE idgame = " + Integer.toString(gameID) + ";";
         String[] params = {Integer.toString(round)};
-        
+
         return db.exec(sql, params);
     }
 
