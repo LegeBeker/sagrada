@@ -11,4 +11,7 @@ public class Board {
 
     }
 
+    public Die getField(final int row, final int column) {
+        return board[row - 1][column - 1];
+    }
 }
