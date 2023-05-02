@@ -30,9 +30,13 @@ public final class PlayerDB {
             final String playStatus, final String color) {
         Database db = Database.getInstance();
 
-        String sql = "INSERT INTO player (username, idgame, playstatus, private_objectivecard_color)"
-                + "VALUE (?, ?, ?, ?);";
+        String sql = "INSERT INTO player (username, idgame, playstatus, private_objectivecard_color, score)"
+                + "VALUE (?, ?, ?, ?, -20);";
         String[] params = {username, Integer.toString(idGame), playStatus, color};
+
+        db.exec(sql, params);
+
+        sql = "SELECT * FROM player WHERE username = ? AND idgame = ? AND playstatus = ? AND private_objectivecard_color = ?;";
 
         return db.exec(sql, params);
     }
@@ -66,6 +70,19 @@ public final class PlayerDB {
         db.exec(sql, params);
 
         return true;
+    }
+
+    public static int setSeqnr(final int playerId, final int seqNr) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET seqnr = ? WHERE idplayer = ?;";
+        String[] params = {Integer.toString(seqNr), Integer.toString(playerId)};
+
+        db.exec(sql, params);
+
+        sql = "SELECT seqnr FROM player WHERE idplayer = " + Integer.toString(playerId) + ";";
+
+        return Integer.parseInt(db.exec(sql, null).get(0).get("seqnr"));
     }
 
 }

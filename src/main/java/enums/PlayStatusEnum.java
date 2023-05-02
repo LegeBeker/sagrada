@@ -3,7 +3,7 @@ package main.java.enums;
 public enum PlayStatusEnum {
     ACCEPTED,
     CHALLENGEE,
-    CHALLANGER,
+    CHALLENGER,
     FINISHED,
     REFUSED;
 

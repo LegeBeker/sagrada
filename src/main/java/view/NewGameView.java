@@ -80,7 +80,7 @@ public class NewGameView extends HBox {
         if (settingText.equals("Willekeurig")) {
             useDefaultCards = false;
         }
-        if (accounts.size() <= 0) {
+        if (accounts.size() < 1) {
             view.displayError("Selecteer meer spelers");
             return;
         }
@@ -88,8 +88,7 @@ public class NewGameView extends HBox {
             view.displayError("Selecteer minder spelers");
             return;
         }
-
-        this.view.openGameView(view.getGameController().createGame(this.accounts, useDefaultCards));
+        this.view.openGameView(view.getGameController().createGame(this.accounts, view.getAccountController().getAccount(), useDefaultCards));
     }
 
     private void goBack() {
