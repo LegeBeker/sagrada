@@ -134,7 +134,7 @@ public class PatternCard {
     public ArrayList<int[]> getOrthogonalNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
         // Up, down, left, right
-        int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; 
+        int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
