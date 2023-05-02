@@ -92,6 +92,7 @@ public class Player {
 
     public void setSeqnr(final int seqnr) {
         this.seqnr = seqnr;
+        PlayerDB.setSeqnr(getId(), seqnr);
     }
 
     public void setPrivateObjCardColor(final String privateObjCardColor) {

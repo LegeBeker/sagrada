@@ -71,5 +71,18 @@ public final class PlayerDB {
 
         return true;
     }
+    
+    public static int setSeqnr(final int playerId, final int seqNr) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET seqnr = ? WHERE idplayer = ?;";
+        String[] params = {Integer.toString(seqNr), Integer.toString(playerId)};
+
+        db.exec(sql, params);
+
+        sql = "SELECT seqnr FROM player WHERE idplayer = " + Integer.toString(playerId) + ";";
+
+        return Integer.parseInt(db.exec(sql, null).get(0).get("seqnr"));
+    }
 
 }

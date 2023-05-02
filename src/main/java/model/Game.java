@@ -47,6 +47,10 @@ public class Game extends Observable {
             newGame.addPlayer(Player.createPlayer(
                     thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(), colorList.remove(0).get("color")));
         }
+        
+        for (int playerNr = 0; playerNr < newGame.getPlayers().size(); playerNr++) {
+            newGame.getPlayers().get(playerNr).setSeqnr(playerNr + 1);
+        }
 
         if (useDefaultCards) {
             newGame.addPatternCards();
