@@ -65,12 +65,9 @@ public class PatternCard {
     public boolean validateMove(final Board board, final int dieValue, final Color dieColor, final int columnIndex,
             final int rowIndex) {
 
-        // check if position not empty
         if (board.getField(rowIndex, columnIndex) != null) {
             return false;
         }
-
-        // check if die is on side or corner
         if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
             return false;
         }
@@ -136,7 +133,8 @@ public class PatternCard {
 
     public ArrayList<int[]> getOrthogonalNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
-        int[][] offsets = {{ -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }}; // Up, down, left, right
+        // Up, down, left, right
+        int[][] offsets = {{ -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }}; 
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];

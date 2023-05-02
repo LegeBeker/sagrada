@@ -126,7 +126,7 @@ public class DieView extends Group {
     public int getValue() {
         return this.value;
     }
-    
+
     public Color getColor() {
         return this.color;
     }
