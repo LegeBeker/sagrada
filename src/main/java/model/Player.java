@@ -17,6 +17,8 @@ public class Player {
     private String privateObjCardColor;
     private Integer idPatternCard;
 
+    private Board board;
+
     private int score;
 
     public Player createPlayer(final int gameID, final String username) {
@@ -57,7 +59,7 @@ public class Player {
         return this.seqnr;
     }
 
-    public Die[][] getBoard() {
+    public Board getBoard() {
         return this.board;
     }
 
