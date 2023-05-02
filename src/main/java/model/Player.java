@@ -26,7 +26,7 @@ public class Player {
         newPlayer.setUsername(username);
         newPlayer.setPlayStatus(playerStatus);
         newPlayer.setPrivateObjCardColor(privateColor);
-        
+
         Map<String, String> idplayer = PlayerDB.createPlayer(username, gameID, playerStatus, privateColor).get(0);
         newPlayer.setId(Integer.parseInt(idplayer.get("idplayer")));
 
