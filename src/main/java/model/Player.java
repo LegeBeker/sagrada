@@ -145,6 +145,7 @@ public class Player {
         if (playerMap.get("idpatterncard") != null) {
             player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
         }
+        player.board = new Board();
         player.score = Integer.parseInt(playerMap.get("score"));
 
         return player;
