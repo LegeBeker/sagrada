@@ -63,12 +63,14 @@ public class PatternCard {
     public boolean validateMove(final Board board, final int dieValue, final Color dieColor, final int columnIndex,
             final int rowIndex) {
 
+        // check if position not empty
+        if (board.getField(rowIndex, columnIndex) != null) {
+            return false;
+        }
         // check if die is on side or corner
         if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
             return false;
         }
-
-
 
         return true;
     }
