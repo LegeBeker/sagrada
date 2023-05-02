@@ -32,8 +32,8 @@ public class GameBoardsView extends HBox {
 
         boolean thisPlayerHasChosen = true;
         for (Player player : this.game.getPlayers()) {
-            if(player.getUsername().equals(view.getAccountController().getAccount().getUsername())) {
-                if(player.getPatternCard() == null) {
+            if (player.getUsername().equals(view.getAccountController().getAccount().getUsername())) {
+                if (player.getPatternCard() == null) {
                     thisPlayerHasChosen = false;
                 }
                 currentUser = player;
@@ -54,7 +54,7 @@ public class GameBoardsView extends HBox {
 
         this.getChildren().add(grid);
     }
-    
+
     private void showPlayerGameboards() {
         int cardCount = 0;
         for (Player player : this.game.getPlayers()) {
@@ -71,7 +71,7 @@ public class GameBoardsView extends HBox {
             cardCount++;
         }
     }
-    
+
     private void showPatternCardOptions(final Player player) {
         int cardCount = 0;
         for (PatternCard patternCardOption : player.getPatternCardOptions()) {

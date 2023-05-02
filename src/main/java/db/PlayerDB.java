@@ -71,7 +71,7 @@ public final class PlayerDB {
 
         return true;
     }
-    
+
     public static int setSeqnr(final int playerId, final int seqNr) {
         Database db = Database.getInstance();
 

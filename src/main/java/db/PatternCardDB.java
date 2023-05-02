@@ -49,7 +49,7 @@ public final class PatternCardDB {
 
         return db.exec(sql, params);
     }
-    
+
     public static List<Map<String, String>> getPatternCardOptions(final int idPlayer) {
         Database db = Database.getInstance();
 
