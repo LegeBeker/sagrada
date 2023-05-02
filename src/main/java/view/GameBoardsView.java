@@ -27,13 +27,25 @@ public class GameBoardsView extends HBox {
     public GameBoardsView(final ViewController view, final Game game) {
         this.view = view;
         this.game = game;
+        Player currentUser = null;
         this.setBackground(background);
+
+        boolean thisPlayerHasChosen = true;
         for (Player player : this.game.getPlayers()) {
-            if(player.getUsername() == view.getAccountController().getAccount().getUsername()) {
-                showPatternCardOptions(player);
+            if(player.getUsername().equals(view.getAccountController().getAccount().getUsername())) {
+                if(player.getPatternCard() == null) {
+                    thisPlayerHasChosen = false;
+                }
+                currentUser = player;
                 break;
             }
         }
+        if (thisPlayerHasChosen) {
+            showPlayerGameboards();
+        } else {
+            showPatternCardOptions(currentUser);
+        }
+
         grid.setHgap(GRIDGAP);
         grid.setVgap(GRIDGAP);
 
