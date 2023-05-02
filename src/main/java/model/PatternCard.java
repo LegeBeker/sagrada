@@ -94,8 +94,8 @@ public class PatternCard {
         return true;
     }
 
-    private boolean isOnSideOrCorner(int row, int col) {
-        return row == 1 || row == 4 || col == 1 || col == 5;
+    private boolean isOnSideOrCorner(final int row, final int col) {
+        return row == 1 || row == ROWS || col == 1 || col == COLUMNS;
     }
 
     private boolean validateAgainstAdjacentFields(
@@ -134,9 +134,9 @@ public class PatternCard {
         return dieDoesNotMatchNeighbor;
     }
 
-    public ArrayList<int[]> getOrthogonalNeighbors(int row, int col) {
+    public ArrayList<int[]> getOrthogonalNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
-        int[][] offsets = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } }; // Up, down, left, right
+        int[][] offsets = {{ -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }}; // Up, down, left, right
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
