@@ -50,6 +50,10 @@ public class InvitesView extends HBox {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Account acc = this.accountsView.getSelectionModel().getSelectedItem();
+                if (this.view.getAccountController().getAccount().getUsername().equals(acc.getUsername())) {
+                    this.view.displayError("Je kan jezelf niet uitnodigen");
+                    return;
+                }
                 if (!selectedAccounts.contains(acc) && selectedAccounts.size() < maxSizeSelection) {
                     selectedAccounts.add(acc);
                     this.selectionTable.getItems().add(acc);

@@ -24,6 +24,15 @@ public class PatternCard {
         return mapToPatternCard(PatternCardDB.get(idPatternCard));
     }
 
+    public static ArrayList<PatternCard> getDefaultCards() {
+        ArrayList<PatternCard> defaultCards = new ArrayList<PatternCard>();
+        for (Map<String, String> cardInfo : PatternCardDB.getAllStandard()) {
+            PatternCard card = mapToPatternCard(cardInfo);
+            defaultCards.add(card);
+        }
+        return defaultCards;
+    }
+
     public static PatternCard mapToPatternCard(final Map<String, String> patternCardMap) {
         PatternCard patternCard = new PatternCard();
 
