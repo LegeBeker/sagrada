@@ -28,7 +28,13 @@ public class PatternCardView extends BorderPane {
     private final Text cardTopText = new Text();
     private final Text cardDifficulty = new Text();
 
+    private final ViewController view;
+    private final PatternCard patternCard;
+
     public PatternCardView(final ViewController view, final PatternCard patternCard, final Player player) {
+        this.view = view;
+        this.patternCard = patternCard;
+
         this.setPrefSize(width, height);
         this.getStyleClass().add("background");
 
@@ -88,5 +94,17 @@ public class PatternCardView extends BorderPane {
             node.setStyle("-fx-border-color: black;");
             grid.add(node, col, row);
         }
+    }
+
+    public boolean validateMove(final int dieValue, final Color color, final int columnIndex, final int rowIndex) {
+        Boolean validated = this.view.getPatternCardController().validateMove(this.patternCard, dieValue, color,
+                columnIndex,
+                rowIndex);
+
+        if (!validated) {
+            this.view.displayError("Deze zet is niet geldig.");
+        }
+
+        return validated;
     }
 }

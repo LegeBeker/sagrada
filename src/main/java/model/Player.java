@@ -19,6 +19,8 @@ public class Player {
     private String privateObjCardColor;
     private Integer idPatternCard;
 
+    private Board board;
+
     private final int defaultScore = -20;
     private int score = defaultScore;
 
@@ -59,6 +61,10 @@ public class Player {
 
     public int getSeqnr() {
         return this.seqnr;
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 
     public String getPrivateObjCardColor() {
@@ -146,6 +152,7 @@ public class Player {
         if (playerMap.get("idpatterncard") != null) {
             player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
         }
+        player.board = new Board();
         player.score = Integer.parseInt(playerMap.get("score"));
 
         return player;

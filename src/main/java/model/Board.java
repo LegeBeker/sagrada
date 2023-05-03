@@ -1,0 +1,25 @@
+package main.java.model;
+
+public class Board {
+
+    private static final int ROWS = 4;
+    private static final int COLUMNS = 5;
+
+    private Die[][] board = new Die[ROWS][COLUMNS];
+
+    public Die getField(final int row, final int column) {
+        return board[row - 1][column - 1];
+    }
+
+    public Boolean isEmpty() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                if (board[i][j] != null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+}

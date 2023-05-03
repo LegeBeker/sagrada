@@ -25,9 +25,11 @@ public class DieView extends Group {
     private final double scale = 0.8;
 
     private int value;
+    private Color color;
 
     public DieView(final int value, final Color color, final Boolean isDraggable) {
         this.value = value;
+        this.color = color;
 
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
         rectangle.setFill(Color.rgb(0, 0, 0, 0));
@@ -119,5 +121,13 @@ public class DieView extends Group {
 
     private Circle createDot(final double x, final double y) {
         return new Circle(x, y, DOTRADIUS, Color.BLACK);
+    }
+
+    public int getValue() {
+        return this.value;
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 }
