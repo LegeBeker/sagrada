@@ -68,9 +68,9 @@ public class PatternCard {
         if (board.getField(rowIndex, columnIndex) != null) {
             return false;
         }
-        if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
-            return false;
-        }
+        // if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
+        //     return false;
+        // }
 
         if (!this.getField(rowIndex, columnIndex).getColor().equals(dieColor)
                 && !this.getField(rowIndex, columnIndex).getColor().equals(Color.web(ColorEnum.DEFAULT.getHexCode()))) {
@@ -111,8 +111,8 @@ public class PatternCard {
             PatternCardField patternCardField = this.getField(neighborRow, neighborCol);
 
             // check if one of the neighbors is same color
-            if (!patternCardField.getColor().equals(Color.web(ColorEnum.DEFAULT.getHexCode()))
-                    && this.getField(rowIndex, columnIndex).getColor().equals(patternCardField.getColor())
+            if ((!patternCardField.getColor().equals(Color.web(ColorEnum.DEFAULT.getHexCode()))
+                    && this.getField(rowIndex, columnIndex).getColor().equals(patternCardField.getColor()))
                     || patternCardField.getColor().equals(dieColor)) {
                 dieDoesNotMatchNeighbor = false;
             }
@@ -133,14 +133,12 @@ public class PatternCard {
 
     public ArrayList<int[]> getOrthogonalNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
-        // Up, down, left, right
         int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
             int neighborCol = col + offset[1];
 
-            // Check if the neighbor position is within bounds
             if (neighborRow > 0 && neighborRow < ROWS && neighborCol > 0 && neighborCol < COLUMNS + 1) {
                 int[] neighbor = {neighborRow, neighborCol};
                 neighbors.add(neighbor);

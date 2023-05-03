@@ -16,7 +16,6 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragEntered(event -> {
             if (event.getGestureSource() instanceof DieView) {
-                // fluorescent color blue
                 this.setStyle("-fx-border-color: #00FFBF;");
             }
         });
