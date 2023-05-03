@@ -77,9 +77,9 @@ public class PatternCard {
         if (board.getField(rowIndex, columnIndex) != null) {
             return false;
         }
-        // if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
-        //     return false;
-        // }
+        if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
+            return false;
+        }
 
         if (!this.getField(rowIndex, columnIndex).getColor().equals(dieColor)
                 && !this.getField(rowIndex, columnIndex).getColor().equals(Color.web(ColorEnum.DEFAULT.getHexCode()))) {
