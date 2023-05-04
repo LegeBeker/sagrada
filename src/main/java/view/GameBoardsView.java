@@ -91,8 +91,8 @@ public class GameBoardsView extends HBox {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
         moves.forEach((move) -> {
             patternCardView.getGrid().getChildren().forEach((cell) -> {
-                int[] location = { patternCardView.getGrid().getColumnIndex(cell),
-                        patternCardView.getGrid().getRowIndex(cell) };
+                int[] location = {patternCardView.getGrid().getColumnIndex(cell),
+                        patternCardView.getGrid().getRowIndex(cell)};
                 if (move[0] == location[0] && move[1] == location[1]) {
                     cell.setStyle("-fx-border-color: blue;");
                 }

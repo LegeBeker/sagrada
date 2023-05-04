@@ -40,12 +40,12 @@ public class GameOfferView extends FlowPane implements Observer {
     }
 
     public void showPossibleMoves(final int value, final Color color) {
-        ArrayList<int[]> moves =this.view.getPatternCardController().getPossibleMoves(value, color);
+        ArrayList<int[]> moves = this.view.getPatternCardController().getPossibleMoves(value, color);
         GameCenterView gameCenterView = (GameCenterView) this.getParent();
         gameCenterView.showPossibleMoves(moves);
     }
-     
-    public void cleanTargets(){
+
+    public void cleanTargets() {
         GameCenterView gameCenterView = (GameCenterView) this.getParent();
         gameCenterView.cleanTargets();
     }
