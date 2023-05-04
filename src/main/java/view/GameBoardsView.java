@@ -68,9 +68,7 @@ public class GameBoardsView extends HBox {
                     cell.setStyle("-fx-border-color: blue;");
                 }
             });
-
         });
-
     }
 
     public void cleanTargets() {
