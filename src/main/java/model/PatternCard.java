@@ -71,16 +71,18 @@ public class PatternCard {
         return fields[row - 1][column - 1];
     }
 
-    public boolean showPossibleMoves(final Board board, final int dieValue, final Color dieColor) {
+    public ArrayList<int[]> showPossibleMoves(final Board board, final int dieValue, final Color dieColor) {
+        ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 if (validateMove(board, dieValue, dieColor, col, row)) {
-                    System.out.println("Possible move: " + row + " " + col);
+                    int[] move = {row, col};
+                    possibleMoves.add(move);
                 }
             }
         }
 
-        return true;
+        return possibleMoves;
     }
 
     public boolean validateMove(final Board board, final int dieValue, final Color dieColor, final int columnIndex,
