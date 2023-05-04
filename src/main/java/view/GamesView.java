@@ -41,6 +41,7 @@ public class GamesView extends VBox {
 
     private Button buttonBack;
     private Button buttonNewGame;
+    private Button invitesButton;
 
     private final int buttonHeight = 25;
     private final int buttonWidth = 200;
@@ -133,12 +134,12 @@ public class GamesView extends VBox {
         this.buttonNewGame.setPrefSize(this.buttonWidth, this.buttonHeight);
         this.buttonNewGame.setOnAction(e -> this.openNewGameView());
 
-        this.buttonNewGame = new Button("Nieuwe potje starten");
-        this.buttonNewGame.setPrefSize(this.buttonWidth, this.buttonHeight);
-        this.buttonNewGame.setOnAction(e -> this.openNewGameView());
+        this.invitesButton = new Button("Uitnodigingen bekijken");
+        this.invitesButton.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.invitesButton.setOnAction(e -> this.openOpenInvitesView());
 
         this.boxButtons = new HBox();
-        this.boxButtons.getChildren().addAll(this.buttonBack, this.buttonNewGame);
+        this.boxButtons.getChildren().addAll(this.buttonBack, this.buttonNewGame, this.invitesButton);
 
         this.boxButtons.setAlignment(Pos.CENTER);
         this.boxButtons.setSpacing(this.spacing);
@@ -155,6 +156,10 @@ public class GamesView extends VBox {
 
     private void openNewGameView() {
         this.view.openNewGameView();
+    }
+
+    private void openOpenInvitesView(){
+        this.view.openOpenInvitesView(this.view.getAccountController().getAccount());
     }
 
     private boolean hasOpenInvite(final Game game, final String playerName) {

@@ -24,6 +24,15 @@ public final class PlayerDB {
         return db.exec(sql, null);
     }
 
+    public static List<Map<String, String>> getAll(final String username) {
+        Database db = Database.getInstance();
+        String sql = "SELECT * FROM player WHERE username = ?";
+        String[] params = {username};
+
+        return db.exec(sql, params);
+    }
+    
+
     public static List<Map<String, String>> createPlayer(final String username, final int idGame,
             final String playStatus, final String color) {
         Database db = Database.getInstance();

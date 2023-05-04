@@ -17,11 +17,13 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import main.java.model.Account;
 import main.java.model.Game;
+import main.java.model.Player;
 import main.java.view.GameView;
 import main.java.view.GamesView;
 import main.java.view.LoginView;
 import main.java.view.MenuView;
 import main.java.view.NewGameView;
+import main.java.view.OpenInvitesView;
 import main.java.view.RegisterView;
 import main.java.view.StatView;
 import main.java.view.StatsView;
@@ -35,6 +37,7 @@ public class ViewController extends Scene {
     private AccountController accountController;
     private GameController gameController;
     private PatternCardController patternCardController;
+    private PlayerController playerController;
 
     private EffectsController effectsController;
 
@@ -69,6 +72,7 @@ public class ViewController extends Scene {
         this.accountController = new AccountController();
         this.gameController = new GameController(this);
         this.patternCardController = new PatternCardController();
+        this.playerController = new PlayerController();
 
         this.effectsController = new EffectsController();
 
@@ -142,6 +146,11 @@ public class ViewController extends Scene {
         changeView(statView);
     }
 
+    public void openOpenInvitesView(Account account){
+        OpenInvitesView openInvitesView = new OpenInvitesView(this, account);
+        changeView(openInvitesView);
+    } 
+
     public AccountController getAccountController() {
         return accountController;
     }
@@ -152,5 +161,9 @@ public class ViewController extends Scene {
 
     public PatternCardController getPatternCardController() {
         return patternCardController;
+    }
+
+    public PlayerController getPlayerController(){
+        return playerController;
     }
 }
