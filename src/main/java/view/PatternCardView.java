@@ -113,4 +113,8 @@ public class PatternCardView extends BorderPane {
 
         return validated;
     }
+
+    public GridPane getGrid() {
+        return this.grid;
+    }
 }
