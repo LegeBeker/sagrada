@@ -26,6 +26,7 @@ public class PatternCardSelectionView extends BorderPane {
     private final int spacing = 10;
 
     private final ViewController view;
+    private final Player player;
 
     private final Background background = new Background(new BackgroundFill(Color.web("#334564"), null, null));
 
@@ -33,6 +34,7 @@ public class PatternCardSelectionView extends BorderPane {
         super();
         this.view = view;
         this.flowPane = new FlowPane();
+        this.player = player;
 
         this.setBackground(background);
 
@@ -67,7 +69,9 @@ public class PatternCardSelectionView extends BorderPane {
         Button button = new Button("Kiezen");
 
         button.setOnAction(event -> {
+            this.view.getGameController().setGame(player.getGame());
             this.view.getGameController().choosePatternCard(patternCard);
+            this.view.openGameView(player.getGame());
         });
 
         this.vbox.getChildren().add(button);
