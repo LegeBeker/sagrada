@@ -131,6 +131,10 @@ public class Player {
         return this.idPatternCard != null;
     }
 
+    public boolean choosePatternCard(final PatternCard patternCard, final int idgame) {
+        return PlayerDB.updatePatternCard(patternCard.getIdPatternCard(), idgame, this.username);
+    }
+
     public static ArrayList<Player> getAll() {
         ArrayList<Player> players = new ArrayList<Player>();
 

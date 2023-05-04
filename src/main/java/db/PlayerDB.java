@@ -72,6 +72,17 @@ public final class PlayerDB {
         return true;
     }
 
+    public static boolean updatePatternCard(final int patternCardId, final int gameId, final String playername) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET idpatterncard = ? WHERE idgame = ? AND username = ?;";
+        String[] params = {Integer.toString(patternCardId), Integer.toString(gameId), playername};
+
+        db.exec(sql, params);
+
+        return true;
+    }
+
     public static int setSeqnr(final int playerId, final int seqNr) {
         Database db = Database.getInstance();
 
