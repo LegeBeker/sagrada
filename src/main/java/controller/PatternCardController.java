@@ -18,8 +18,7 @@ public class PatternCardController {
         return PatternCard.get(cardId);
     }
 
-    public boolean validateMove(final PatternCard patternCard, final int dieValue, final Color dieColor,
-            final int columnIndex, final int rowIndex) {
+    public boolean validateMove(final PatternCard patternCard, final int dieValue, final Color dieColor, final int columnIndex, final int rowIndex) {
         GameController gameController = view.getGameController();
         Player player = gameController.getCurrentPlayer(gameController.getGame().getId());
 
