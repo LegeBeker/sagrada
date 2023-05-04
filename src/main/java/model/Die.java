@@ -54,16 +54,7 @@ public class Die {
         ArrayList<Die> dice = new ArrayList<Die>();
 
         for (Map<String, String> dieMap : offer) {
-            Die die = new Die();
-
-            die.idGame = Integer.parseInt(dieMap.get("idgame"));
-            die.number = Integer.parseInt(dieMap.get("dienumber"));
-            die.setColor(dieMap.get("diecolor"));
-            die.colorString = dieMap.get("diecolor");
-            die.eyes = Integer.parseInt(dieMap.get("eyes"));
-
-            dice.add(die);
-
+            dice.add(mapToDie(dieMap));
         }
         return dice;
     }
@@ -73,18 +64,26 @@ public class Die {
         ArrayList<Die> dice = new ArrayList<Die>();
 
         for (Map<String, String> dieMap : offer) {
-            Die die = new Die();
-
-            die.idGame = Integer.parseInt(dieMap.get("idgame"));
-            die.number = Integer.parseInt(dieMap.get("dienumber"));
-            die.setColor(dieMap.get("diecolor"));
-            die.colorString = dieMap.get("diecolor");
-            die.eyes = Integer.parseInt(dieMap.get("eyes"));
-            die.roundtrack = Integer.parseInt(dieMap.get("roundtrack"));
-
-            dice.add(die);
+            dice.add(mapToDie(dieMap));
         }
         return dice;
     }
 
+    public static Die mapToDie(final Map<String, String> dieMap) {
+        Die die = new Die();
+
+        die.idGame = Integer.parseInt(dieMap.get("idgame"));
+        die.number = Integer.parseInt(dieMap.get("dienumber"));
+        die.setColor(dieMap.get("diecolor"));
+        die.colorString = dieMap.get("diecolor");
+        die.eyes = Integer.parseInt(dieMap.get("eyes"));
+        if (dieMap.get("roundtrack") != null) {
+            die.roundtrack = Integer.parseInt(dieMap.get("roundtrack"));
+        }
+        if (dieMap.get("roundid") != null) {
+            die.roundID = Integer.parseInt(dieMap.get("roundid"));
+        }
+
+        return die;
+    }
 }

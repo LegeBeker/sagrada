@@ -1,5 +1,8 @@
 package main.java.model;
 
+import java.util.List;
+import java.util.Map;
+
 import javafx.scene.paint.Color;
 import main.java.db.BoardDB;
 import main.java.enums.ColorEnum;
@@ -35,8 +38,7 @@ public class Board {
     public boolean placeDie(final int value, final Color color, final int row, final int column) {
         boolean result = BoardDB.setField(
                 this.player.getGame().getId(), this.player.getGame().getCurrentRound(), this.player.getId(), row,
-                ColorEnum.fromString(color.toString()).getName(), column,
-                value);
+                column, ColorEnum.fromString(color.toString()).getName(), value);
 
         if (!result) {
             return false;
@@ -44,5 +46,34 @@ public class Board {
 
         this.player.getGame().notifyObservers();
         return true;
+    }
+
+    public static Board get(final Player player) {
+        Board board = new Board();
+        board.setPlayer(player);
+
+        List<Map<String, String>> fieldValues = BoardDB.getBoard(player.getGame().getId(), player.getId());
+
+        for (Map<String, String> map : fieldValues) {
+            int row = Integer.parseInt(map.get("position_y"));
+            int col = Integer.parseInt(map.get("position_x"));
+
+            board.board[row - 1][col - 1] = Die.mapToDie(map);
+        }
+
+        return board;
+    }
+
+    public static Board update(final Board board) {
+        List<Map<String, String>> fieldValues = BoardDB.getBoard(board.player.getGame().getId(), board.player.getId());
+
+        for (Map<String, String> map : fieldValues) {
+            int row = Integer.parseInt(map.get("position_y"));
+            int col = Integer.parseInt(map.get("position_x"));
+
+            board.board[row - 1][col - 1] = Die.mapToDie(map);
+        }
+
+        return board;
     }
 }

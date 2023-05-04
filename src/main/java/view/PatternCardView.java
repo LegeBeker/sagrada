@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -73,7 +74,6 @@ public class PatternCardView extends BorderPane implements Observer {
     public void update() {
         grid.getChildren().clear();
         drawPatternCard(patternCard, view, player);
-
     }
 
     private void drawPatternCard(final PatternCard patternCard, final ViewController view, final Player player) {
@@ -110,15 +110,17 @@ public class PatternCardView extends BorderPane implements Observer {
 
             grid.add(dieDropTarget, col, row);
         } else {
+            StackPane stackPane = new StackPane();
+            stackPane.getChildren().add(node);
             node.setStyle("-fx-border-color: black;");
 
             if (this.player.getBoard().getField(row, col) != null) {
                 Die die = this.player.getBoard().getField(row, col);
                 DieView dieView = new DieView(die.getEyes(), die.getColor(), false);
-                grid.add(dieView, col, row);
-            } else {
-                grid.add(node, col, row);
+                stackPane.getChildren().add(dieView);
             }
+
+            grid.add(stackPane, col, row);
         }
     }
 }
