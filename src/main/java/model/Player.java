@@ -127,6 +127,10 @@ public class Player {
         return PlayerDB.refuseInvite(this.idGame, this.username);
     }
 
+    public boolean hasPatternCard() {
+        return this.idPatternCard != null;
+    }
+
     public static ArrayList<Player> getAll() {
         ArrayList<Player> players = new ArrayList<Player>();
 
