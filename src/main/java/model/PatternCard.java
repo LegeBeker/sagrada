@@ -71,6 +71,18 @@ public class PatternCard {
         return fields[row - 1][column - 1];
     }
 
+    public boolean showPossibleMoves(final Board board, final int dieValue, final Color dieColor) {
+        for (int row = 1; row <= ROWS; row++) {
+            for (int col = 1; col <= COLUMNS; col++) {
+                if (validateMove(board, dieValue, dieColor, col, row)) {
+                    System.out.println("Possible move: " + row + " " + col);
+                }
+            }
+        }
+
+        return true;
+    }
+
     public boolean validateMove(final Board board, final int dieValue, final Color dieColor, final int columnIndex,
             final int rowIndex) {
 
@@ -156,5 +168,4 @@ public class PatternCard {
 
         return neighbors;
     }
-
 }

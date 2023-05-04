@@ -51,7 +51,7 @@ public class DieView extends Group {
                 ClipboardContent content = new ClipboardContent();
                 GameOfferView gameOfferView = (GameOfferView) this.getParent();
                 if (gameOfferView.getHelpFunction()) {
-                    System.out.println("help function enabled");
+                    gameOfferView.showPossibleMoves(this.value, this.color);
                 }
                 SnapshotParameters sp = new SnapshotParameters();
                 sp.setFill(Color.TRANSPARENT);

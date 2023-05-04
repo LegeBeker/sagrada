@@ -1,6 +1,7 @@
 package main.java.view;
 
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Die;
 import main.java.model.Game;
@@ -34,5 +35,9 @@ public class GameOfferView extends FlowPane implements Observer {
 
     public boolean getHelpFunction() {
         return this.game.getHelpFunction();
+    }
+
+    public void showPossibleMoves(final int value, final Color color) {
+        this.view.getPatternCardController().showPossibleMoves(value, color);
     }
 }
