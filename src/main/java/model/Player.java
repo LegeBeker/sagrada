@@ -24,7 +24,8 @@ public class Player {
     private final int defaultScore = -20;
     private int score = defaultScore;
 
-    public static Player createPlayer(final int gameID, final String username, final String playerStatus, final String privateColor) {
+    public static Player createPlayer(final int gameID, final String username, final String playerStatus,
+            final String privateColor) {
         Player newPlayer = new Player();
         newPlayer.setIdGame(gameID);
         newPlayer.setUsername(username);
@@ -155,6 +156,7 @@ public class Player {
         player.board = new Board();
         player.score = Integer.parseInt(playerMap.get("score"));
 
+        player.board.setPlayer(player);
         return player;
     }
 
