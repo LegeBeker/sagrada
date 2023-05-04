@@ -1,5 +1,7 @@
 package main.java.view;
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
@@ -38,6 +40,13 @@ public class GameOfferView extends FlowPane implements Observer {
     }
 
     public void showPossibleMoves(final int value, final Color color) {
-        this.view.getPatternCardController().getPossibleMoves(value, color);
+        ArrayList<int[]> moves =this.view.getPatternCardController().getPossibleMoves(value, color);
+        GameCenterView gameCenterView = (GameCenterView) this.getParent();
+        gameCenterView.showPossibleMoves(moves);
+    }
+     
+    public void cleanTargets(){
+        GameCenterView gameCenterView = (GameCenterView) this.getParent();
+        gameCenterView.cleanTargets();
     }
 }
