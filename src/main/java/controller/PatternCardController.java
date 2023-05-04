@@ -24,7 +24,7 @@ public class PatternCardController {
         boolean valid = patternCard.validateMove(player.getBoard(), dieValue, dieColor, columnIndex, rowIndex);
 
         if (valid) {
-            return player.getBoard().placeDie(dieValue, dieColor, columnIndex, rowIndex);
+            return player.getBoard().placeDie(dieValue, dieColor, rowIndex, columnIndex);
         }
 
         return false;
