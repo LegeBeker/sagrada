@@ -11,6 +11,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.db.GameDB;
 import main.java.db.MessageDB;
+import main.java.db.PatternCardDB;
+import main.java.enums.PlayStatusEnum;
 import main.java.pattern.Observable;
 
 public class Game extends Observable {
@@ -22,38 +24,61 @@ public class Game extends Observable {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
+    private final int uniqueCardsPerPlayer = 4;
 
-    public static Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
+    public static Game createGame(final ArrayList<Account> accounts, final Account currAccount, final boolean useDefaultCards) {
         Game newGame = new Game();
-        Player playerCreator = new Player();
-        final int thisGameID = newGame.getId();
-
-        for (Account ac : accounts) {
-            String username = ac.getUsername();
-            Player newPlayer = playerCreator.createPlayer(thisGameID, username);
-            // TODO colors and role (challenger or challengee)
-
-            newPlayer.addPlayerToDB();
-            newGame.addPlayer(newPlayer);
-        }
 
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedTime = dtf.format(time);
+        List<Map<String, String>> response = GameDB.createGame(formattedTime);
 
-        GameDB.createGame(formattedTime);
-        List<Map<String, String>> response = GameDB.getGameByTimestamp(formattedTime);
         newGame.idGame = Integer.parseInt(response.get(0).get("idgame"));
-        // TODO BUG HERE after adding a game to the db you can't restart the application
-        // without getting errors
+        final int thisGameID = newGame.getId();
 
-        // if (useDefaultCards) {
-        // TODO get default cards
-        // } else {
-        // TODO make random but valid cards
-        // }
+        List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
+
+        newGame.addPlayer(Player.createPlayer(
+                thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(), colorList.remove(0).get("color")));
+        GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
+        newGame.setTurnPlayer(newGame.getPlayers().get(0).getId());
+
+        for (Account ac : accounts) {
+            newGame.addPlayer(Player.createPlayer(
+                    thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(), colorList.remove(0).get("color")));
+        }
+
+        for (int playerNr = 0; playerNr < newGame.getPlayers().size(); playerNr++) {
+            newGame.getPlayers().get(playerNr).setSeqnr(playerNr + 1);
+        }
+
+        if (useDefaultCards) {
+            newGame.addPatternCards();
+        } else {
+            newGame.addPatternCards();
+            // TODO create random (but valid) cards
+            // ArrayList<PatternCard> randomCards = new PatternCard().generateRandomCards();
+            // newGame.addPatternCards(randomCards);
+        }
+
+        GameDB.assignToolcards(thisGameID);
+        GameDB.assignPublicObjectivecards(thisGameID);
 
         return newGame;
+    }
+
+    private void addPatternCards() {
+        ArrayList<PatternCard> defaultCards = PatternCard.getDefaultCards();
+        addPatternCards(defaultCards);
+    }
+
+    private void addPatternCards(final ArrayList<PatternCard> cards) {
+        for (Player pl : players) {
+            for (int i = 0; i < uniqueCardsPerPlayer; i++) {
+                PatternCardDB.setPatternCardOptions(cards.remove(0).getIdPatternCard(), pl.getId());
+            }
+        }
     }
 
     public int getId() {
@@ -70,6 +95,10 @@ public class Game extends Observable {
 
     public Player getTurnPlayer() {
         return Player.get(this.turnIdPlayer);
+    }
+
+    public void setTurnPlayer(final int idPlayer) {
+        this.turnIdPlayer = idPlayer;
     }
 
     public int getCurrentRound() {
@@ -149,8 +178,12 @@ public class Game extends Observable {
         Game game = new Game();
 
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
-        game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
-        game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+        if (gameMap.get("turn_idplayer") != null) {
+            game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
+        }
+        if (gameMap.get("current_roundID") != null) {
+            game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+        }
         game.creationDate = gameMap.get("creationdate");
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {

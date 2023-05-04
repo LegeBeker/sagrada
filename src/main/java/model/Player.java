@@ -1,8 +1,10 @@
 package main.java.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import main.java.db.PatternCardDB;
 import main.java.db.PlayerDB;
 
 public class Player {
@@ -17,16 +19,20 @@ public class Player {
     private String privateObjCardColor;
     private Integer idPatternCard;
 
-    private int score;
+    private Board board;
 
-    public Player createPlayer(final int gameID, final String username) {
+    private final int defaultScore = -20;
+    private int score = defaultScore;
+
+    public static Player createPlayer(final int gameID, final String username, final String playerStatus, final String privateColor) {
         Player newPlayer = new Player();
         newPlayer.setIdGame(gameID);
         newPlayer.setUsername(username);
+        newPlayer.setPlayStatus(playerStatus);
+        newPlayer.setPrivateObjCardColor(privateColor);
 
-        // TODO colors and refine the status
-        newPlayer.setPlayStatus("CHALLENGEE");
-        newPlayer.setPrivateObjCardColor("red");
+        Map<String, String> idplayer = PlayerDB.createPlayer(username, gameID, playerStatus, privateColor).get(0);
+        newPlayer.setId(Integer.parseInt(idplayer.get("idplayer")));
 
         return newPlayer;
     }
@@ -55,6 +61,10 @@ public class Player {
 
     public int getSeqnr() {
         return this.seqnr;
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 
     public String getPrivateObjCardColor() {
@@ -90,6 +100,7 @@ public class Player {
 
     public void setSeqnr(final int seqnr) {
         this.seqnr = seqnr;
+        PlayerDB.setSeqnr(getId(), seqnr);
     }
 
     public void setPrivateObjCardColor(final String privateObjCardColor) {
@@ -134,13 +145,27 @@ public class Player {
         player.username = playerMap.get("username");
         player.idGame = Integer.parseInt(playerMap.get("idgame"));
         player.playStatus = playerMap.get("playstatus");
-        player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
+        if (playerMap.get("seqnr") != null) {
+            player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
+        }
         player.privateObjCardColor = playerMap.get("private_objectivecard_color");
         if (playerMap.get("idpatterncard") != null) {
             player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
         }
+        player.board = new Board();
         player.score = Integer.parseInt(playerMap.get("score"));
 
         return player;
+    }
+
+    public List<PatternCard> getPatternCardOptions() {
+        List<Map<String, String>> patternCardNumbers = PatternCardDB.getPatternCardOptions(getId());
+
+        ArrayList<PatternCard> patternCardOptions = new ArrayList<PatternCard>();
+        for (Map<String, String> patternCardMap : patternCardNumbers) {
+            PatternCard patternCard = PatternCard.get(Integer.parseInt(patternCardMap.get("idpatterncard")));
+            patternCardOptions.add(patternCard);
+        }
+        return patternCardOptions;
     }
 }

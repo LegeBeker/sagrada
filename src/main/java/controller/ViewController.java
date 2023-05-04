@@ -69,9 +69,8 @@ public class ViewController extends Scene {
 
         this.accountController = new AccountController();
         this.gameController = new GameController(this);
-        this.patternCardController = new PatternCardController();
+        this.patternCardController = new PatternCardController(this);
         this.messageController = new MessageController();
-
         this.effectsController = new EffectsController();
 
         this.openLoginView();
@@ -135,6 +134,7 @@ public class ViewController extends Scene {
     }
 
     public void openGameView(final Game game) {
+        getGameController().setGame(game);
         GameView gameView = new GameView(this, game);
         changeView(gameView);
     }

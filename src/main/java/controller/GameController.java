@@ -10,6 +10,8 @@ public final class GameController {
 
     private final ViewController view;
 
+    private Game game;
+
     public GameController(final ViewController view) {
         this.view = view;
     }
@@ -19,15 +21,24 @@ public final class GameController {
     }
 
     public Game getGame(final int gameId) {
-        return Game.get(gameId);
+        this.game = Game.get(gameId);
+        return this.game;
     }
 
-    public Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
-        return Game.createGame(accounts, useDefaultCards);
+    public Game createGame(final ArrayList<Account> accounts, final Account currAccount, final boolean useDefaultCards) {
+        return Game.createGame(accounts, currAccount, useDefaultCards);
     }
 
     public Player getCurrentPlayer(final int idGame) {
         Game game = Game.get(idGame);
         return game.getCurrentPlayer(idGame, this.view.getAccountController().getAccount().getUsername());
+    }
+
+    public void setGame(final Game game) {
+        this.game = game;
+    }
+
+    public Game getGame() {
+        return this.game;
     }
 }
