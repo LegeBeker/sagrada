@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Game;
-import main.java.model.PatternCard;
 import main.java.model.Player;
 
 public class GameBoardsView extends HBox {
@@ -29,24 +28,9 @@ public class GameBoardsView extends HBox {
     public GameBoardsView(final ViewController view, final Game game) {
         this.view = view;
         this.game = game;
-        Player currentUser = null;
         this.setBackground(background);
 
-        boolean thisPlayerHasChosen = true;
-        for (Player player : this.game.getPlayers()) {
-            if (player.getUsername().equals(view.getAccountController().getAccount().getUsername())) {
-                if (player.getPatternCard() == null) {
-                    thisPlayerHasChosen = false;
-                }
-                currentUser = player;
-                break;
-            }
-        }
-        if (thisPlayerHasChosen) {
-            showPlayerGameboards();
-        } else {
-            showPatternCardOptions(currentUser);
-        }
+        showPlayerGameboards();
 
         grid.setHgap(GRIDGAP);
         grid.setVgap(GRIDGAP);
@@ -74,19 +58,6 @@ public class GameBoardsView extends HBox {
         }
     }
 
-    private void showPatternCardOptions(final Player player) {
-        int cardCount = 0;
-        for (PatternCard patternCardOption : player.getPatternCardOptions()) {
-            if (cardCount >= maxRows * maxCols) {
-                break; // exit the loop once max grid size is reached
-            }
-
-            grid.add(new PatternCardView(this.view, patternCardOption, player), cardCount % maxCols,
-                    cardCount / maxCols);
-            cardCount++;
-        }
-    }
-
     public void showPossibleMoves(final ArrayList<int[]> moves) {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
         moves.forEach((move) -> {
@@ -96,7 +67,6 @@ public class GameBoardsView extends HBox {
                 if (move[0] == location[0] && move[1] == location[1]) {
                     cell.setStyle("-fx-border-color: blue;");
                 }
-
             });
         });
     }
