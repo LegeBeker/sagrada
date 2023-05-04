@@ -2,6 +2,7 @@ package main.java.view;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.FlowPane;
 import main.java.controller.ViewController;
 import main.java.model.Game;
@@ -13,6 +14,7 @@ public class GameButtonsView extends FlowPane {
     private Button buttonBack;
     private Button buttonEndTurn;
     private Button buttonGetDice;
+    private ToggleButton helpToggle;
 
     private final int padding = 10;
 
@@ -25,13 +27,19 @@ public class GameButtonsView extends FlowPane {
 
         this.buttonGetDice = new Button("Pak dobbelstenen");
 
+        this.helpToggle = new ToggleButton("Help!");
+
         this.buttonEndTurn.setOnAction(e -> game.endTurn());
 
         this.buttonBack.setOnAction(e -> view.openGamesView());
 
         this.buttonGetDice.setOnAction(e -> game.getNewOffer());
 
-        this.getChildren().addAll(this.buttonBack, this.buttonGetDice);
+        this.helpToggle.setOnAction(e -> {
+            game.setHelpFunction();
+        });
+
+        this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle);
 
         if (game.getTurnPlayer().getUsername().equals(view.getAccountController().getAccount().getUsername())) {
             this.getChildren().addAll(buttonEndTurn);
