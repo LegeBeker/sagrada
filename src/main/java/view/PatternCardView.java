@@ -9,11 +9,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
+import main.java.model.Die;
 import main.java.model.PatternCard;
 import main.java.model.PatternCardField;
 import main.java.model.Player;
+import main.java.pattern.Observer;
 
-public class PatternCardView extends BorderPane {
+public class PatternCardView extends BorderPane implements Observer {
 
     private static final int ROWS = 4;
     private static final int COLUMNS = 5;
@@ -30,15 +32,17 @@ public class PatternCardView extends BorderPane {
 
     private final ViewController view;
     private final PatternCard patternCard;
+    private final Player player;
 
     public PatternCardView(final ViewController view, final PatternCard patternCard, final Player player) {
         this.view = view;
         this.patternCard = patternCard;
+        this.player = player;
 
         this.setPrefSize(width, height);
         this.getStyleClass().add("background");
 
-        drawPatternCard(patternCard, view, player);
+        this.update();
         grid.setPadding(new Insets(0, PADDING, PADDING, 0));
         this.setCenter(grid);
 
@@ -58,10 +62,18 @@ public class PatternCardView extends BorderPane {
             this.setBottom(cardDifficultyFlow);
         } else {
             cardTopText.setText(player.getUsername());
+            player.getGame().addObserver(this);
         }
 
         grid.setHgap(PADDING);
         grid.setVgap(PADDING);
+    }
+
+    @Override
+    public void update() {
+        grid.getChildren().clear();
+        drawPatternCard(patternCard, view, player);
+
     }
 
     private void drawPatternCard(final PatternCard patternCard, final ViewController view, final Player player) {
@@ -86,25 +98,27 @@ public class PatternCardView extends BorderPane {
         }
 
         if (isCardOwner) {
-            DieDropTarget dieDropTarget = new DieDropTarget();
+            DieDropTarget dieDropTarget = new DieDropTarget(this.view, patternCard);
             dieDropTarget.getChildren().add(node);
             dieDropTarget.setStyle("-fx-border-color: black;");
+
+            if (this.player.getBoard().getField(row, col) != null) {
+                Die die = this.player.getBoard().getField(row, col);
+                DieView dieView = new DieView(die.getEyes(), die.getColor(), false);
+                dieDropTarget.getChildren().add(dieView);
+            }
+
             grid.add(dieDropTarget, col, row);
         } else {
             node.setStyle("-fx-border-color: black;");
-            grid.add(node, col, row);
+
+            if (this.player.getBoard().getField(row, col) != null) {
+                Die die = this.player.getBoard().getField(row, col);
+                DieView dieView = new DieView(die.getEyes(), die.getColor(), false);
+                grid.add(dieView, col, row);
+            } else {
+                grid.add(node, col, row);
+            }
         }
-    }
-
-    public boolean validateMove(final int dieValue, final Color color, final int columnIndex, final int rowIndex) {
-        Boolean validated = this.view.getPatternCardController().validateMove(this.patternCard, dieValue, color,
-                columnIndex,
-                rowIndex);
-
-        if (!validated) {
-            this.view.displayError("Deze zet is niet geldig.");
-        }
-
-        return validated;
     }
 }

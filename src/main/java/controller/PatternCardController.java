@@ -16,10 +16,17 @@ public class PatternCardController {
         return PatternCard.get(cardId);
     }
 
-    public boolean validateMove(final PatternCard patternCard, final int dieValue, final Color dieColor, final int columnIndex, final int rowIndex) {
+    public boolean doMove(final PatternCard patternCard, final int dieValue, final Color dieColor,
+            final int columnIndex, final int rowIndex) {
         GameController gameController = view.getGameController();
         Player player = gameController.getCurrentPlayer(gameController.getGame().getId());
 
-        return patternCard.validateMove(player.getBoard(), dieValue, dieColor, columnIndex, rowIndex);
+        boolean valid = patternCard.validateMove(player.getBoard(), dieValue, dieColor, columnIndex, rowIndex);
+
+        if (valid) {
+            return player.getBoard().placeDie(dieValue, dieColor, columnIndex, rowIndex);
+        }
+
+        return false;
     }
 }
