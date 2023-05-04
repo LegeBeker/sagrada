@@ -27,24 +27,9 @@ public class GameBoardsView extends HBox {
     public GameBoardsView(final ViewController view, final Game game) {
         this.view = view;
         this.game = game;
-        Player currentUser = null;
         this.setBackground(background);
 
-        boolean thisPlayerHasChosen = true;
-        for (Player player : this.game.getPlayers()) {
-            if (player.getUsername().equals(view.getAccountController().getAccount().getUsername())) {
-                if (player.getPatternCard() == null) {
-                    thisPlayerHasChosen = false;
-                }
-                currentUser = player;
-                break;
-            }
-        }
-        if (thisPlayerHasChosen) {
-            showPlayerGameboards();
-        } else {
-            showPatternCardOptions(currentUser);
-        }
+        showPlayerGameboards();
 
         grid.setHgap(GRIDGAP);
         grid.setVgap(GRIDGAP);
@@ -67,19 +52,6 @@ public class GameBoardsView extends HBox {
             }
 
             grid.add(new PatternCardView(this.view, player.getPatternCard(), player), cardCount % maxCols,
-                    cardCount / maxCols);
-            cardCount++;
-        }
-    }
-
-    private void showPatternCardOptions(final Player player) {
-        int cardCount = 0;
-        for (PatternCard patternCardOption : player.getPatternCardOptions()) {
-            if (cardCount >= maxRows * maxCols) {
-                break; // exit the loop once max grid size is reached
-            }
-
-            grid.add(new PatternCardView(this.view, patternCardOption, player), cardCount % maxCols,
                     cardCount / maxCols);
             cardCount++;
         }
