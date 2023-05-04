@@ -49,6 +49,10 @@ public class DieView extends Group {
             this.setOnDragDetected(event -> {
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
+                GameOfferView gameOfferView = (GameOfferView) this.getParent();
+                if (gameOfferView.getHelpFunction()) {
+                    System.out.println("help function enabled");
+                }
                 SnapshotParameters sp = new SnapshotParameters();
                 sp.setFill(Color.TRANSPARENT);
                 Image image = this.snapshot(sp, null);

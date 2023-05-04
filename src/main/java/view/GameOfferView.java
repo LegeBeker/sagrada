@@ -31,4 +31,8 @@ public class GameOfferView extends FlowPane implements Observer {
             this.getChildren().add(dieView);
         }
     }
+
+    public boolean getHelpFunction() {
+        return this.game.getHelpFunction();
+    }
 }
