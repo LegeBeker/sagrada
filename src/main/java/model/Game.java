@@ -25,6 +25,8 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private final int uniqueCardsPerPlayer = 4;
 
+    private boolean helpFunctionEnabled;
+
     public static Game createGame(final ArrayList<Account> accounts, final Account currAccount,
             final boolean useDefaultCards) {
         Game newGame = new Game();
@@ -115,6 +117,14 @@ public class Game extends Observable {
         return this.players;
     }
 
+    public void setHelpFunctionEnabled() {
+        this.helpFunctionEnabled = !this.helpFunctionEnabled;
+    }
+
+    public boolean getHelpFunctionEnabled() {
+        return this.helpFunctionEnabled;
+    }
+
     public Player getCurrentPlayer(final int id, final String username) {
         for (Player player : this.players) {
             if (player.getId() == id || player.getUsername().equals(username)) {
@@ -183,6 +193,7 @@ public class Game extends Observable {
             game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
         }
         game.creationDate = gameMap.get("creationdate");
+        game.helpFunctionEnabled = false;
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
             game.players.add(Player.mapToPlayer(map));
