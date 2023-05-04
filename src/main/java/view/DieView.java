@@ -60,6 +60,12 @@ public class DieView extends Group {
                 db.setContent(content);
                 event.consume();
             });
+            this.setOnDragDone(event -> {
+                GameOfferView gameOfferView = (GameOfferView) this.getParent();
+                if (gameOfferView.getHelpFunction()) {
+                    gameOfferView.cleanTargets();
+                }
+            });
         }
 
         die.setTranslateX((rectangle.getWidth() - die.getWidth()) / 2);
