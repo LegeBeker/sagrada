@@ -121,8 +121,8 @@ public class Game extends Observable {
         this.helpFunction = !this.helpFunction;
     }
 
-    public boolean getHelpFunctionEnabled() {
-        return this.helpFunctionEnabled;
+    public boolean getHelpFunction() {
+        return this.helpFunction;
     }
 
     public Player getCurrentPlayer(final int id, final String username) {
