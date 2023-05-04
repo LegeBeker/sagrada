@@ -37,6 +37,7 @@ public class GameButtonsView extends FlowPane {
 
         this.helpToggle.setOnAction(e -> {
             game.setHelpFunction();
+            this.view.displayMessage("Help functie is " + (game.getHelpFunction() ? "aan" : "uit"));
         });
 
         this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle);
