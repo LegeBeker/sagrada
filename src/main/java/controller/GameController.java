@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import main.java.model.Account;
 import main.java.model.Game;
+import main.java.model.PatternCard;
 import main.java.model.Player;
 
 public final class GameController {
@@ -32,6 +33,11 @@ public final class GameController {
     public Player getCurrentPlayer(final int idGame) {
         Game game = Game.get(idGame);
         return game.getCurrentPlayer(idGame, this.view.getAccountController().getAccount().getUsername());
+    }
+
+    public void choosePatternCard(final PatternCard patternCard) {
+        getCurrentPlayer(this.game.getId()).choosePatternCard(patternCard, this.game.getId());
+        view.openGameView(this.game);
     }
 
     public void setGame(final Game game) {

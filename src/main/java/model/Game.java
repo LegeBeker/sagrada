@@ -25,7 +25,8 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private final int uniqueCardsPerPlayer = 4;
 
-    public static Game createGame(final ArrayList<Account> accounts, final Account currAccount, final boolean useDefaultCards) {
+    public static Game createGame(final ArrayList<Account> accounts, final Account currAccount,
+            final boolean useDefaultCards) {
         Game newGame = new Game();
 
         LocalDateTime time = LocalDateTime.now();
@@ -39,13 +40,15 @@ public class Game extends Observable {
         List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
 
         newGame.addPlayer(Player.createPlayer(
-                thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(), colorList.remove(0).get("color")));
+                thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(),
+                colorList.remove(0).get("color")));
         GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
         newGame.setTurnPlayer(newGame.getPlayers().get(0).getId());
 
         for (Account ac : accounts) {
             newGame.addPlayer(Player.createPlayer(
-                    thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(), colorList.remove(0).get("color")));
+                    thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(),
+                    colorList.remove(0).get("color")));
         }
 
         for (int playerNr = 0; playerNr < newGame.getPlayers().size(); playerNr++) {
@@ -138,6 +141,12 @@ public class Game extends Observable {
         }
 
         return false;
+    }
+
+    public boolean playerHasChoosenPatternCard(final String username) {
+        Player player = getCurrentPlayer(idGame, username);
+
+        return player.hasPatternCard();
     }
 
     public void addPlayer(final Player player) {
