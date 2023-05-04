@@ -71,7 +71,7 @@ public class PatternCard {
         return fields[row - 1][column - 1];
     }
 
-    public ArrayList<int[]> showPossibleMoves(final Board board, final int dieValue, final Color dieColor) {
+    public ArrayList<int[]> getPossibleMoves(final Board board, final int dieValue, final Color dieColor) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {

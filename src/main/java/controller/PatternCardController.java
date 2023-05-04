@@ -26,10 +26,10 @@ public class PatternCardController {
         return patternCard.validateMove(player.getBoard(), dieValue, dieColor, columnIndex, rowIndex);
     }
 
-    public ArrayList<int[]> showPossibleMoves(final int value, final Color color) {
+    public ArrayList<int[]> getPossibleMoves(final int value, final Color color) {
         GameController gameController = view.getGameController();
         Player player = gameController.getCurrentPlayer(gameController.getGame().getId());
 
-        return player.getPatternCard().showPossibleMoves(player.getBoard(), value, color);
+        return player.getPatternCard().getPossibleMoves(player.getBoard(), value, color);
     }
 }

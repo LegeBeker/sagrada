@@ -38,6 +38,6 @@ public class GameOfferView extends FlowPane implements Observer {
     }
 
     public void showPossibleMoves(final int value, final Color color) {
-        this.view.getPatternCardController().showPossibleMoves(value, color);
+        this.view.getPatternCardController().getPossibleMoves(value, color);
     }
 }
