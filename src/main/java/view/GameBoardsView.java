@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Game;
-import main.java.model.PatternCard;
 import main.java.model.Player;
 
 public class GameBoardsView extends HBox {
@@ -76,7 +75,8 @@ public class GameBoardsView extends HBox {
 
     public void cleanTargets() {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
-            cell.setStyle(null);
         patternCardView.getGrid().getChildren().forEach((cell) -> {
+            cell.setStyle(null);
         });
+    }
 }
