@@ -91,6 +91,7 @@ public class PatternCard {
         if (board.getField(rowIndex, columnIndex) != null) {
             return false;
         }
+
         if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
             return false;
         }
@@ -133,7 +134,6 @@ public class PatternCard {
 
             PatternCardField patternCardField = this.getField(neighborRow, neighborCol);
 
-            // check if one of the neighbors is same color
             if ((!patternCardField.getColor().equals(Color.web(ColorEnum.DEFAULT.getHexCode()))
                     && this.getField(rowIndex, columnIndex).getColor().equals(patternCardField.getColor()))
                     || patternCardField.getColor().equals(dieColor)) {

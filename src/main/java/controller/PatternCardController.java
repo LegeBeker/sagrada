@@ -18,15 +18,15 @@ public class PatternCardController {
         return PatternCard.get(cardId);
     }
 
-    public boolean doMove(final PatternCard patternCard, final int dieValue, final Color dieColor,
+    public boolean doMove(final PatternCard patternCard, final int value, final Color dieColor, final int dieNumber,
             final int columnIndex, final int rowIndex) {
         GameController gameController = view.getGameController();
         Player player = gameController.getCurrentPlayer(gameController.getGame().getId());
 
-        boolean valid = patternCard.validateMove(player.getBoard(), dieValue, dieColor, columnIndex, rowIndex);
+        boolean valid = patternCard.validateMove(player.getBoard(), value, dieColor, columnIndex, rowIndex);
 
         if (valid) {
-            return player.getBoard().placeDie(dieValue, dieColor, rowIndex, columnIndex);
+            return player.getBoard().placeDie(dieColor, dieNumber, rowIndex, columnIndex);
         }
 
         return false;

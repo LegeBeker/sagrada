@@ -10,18 +10,18 @@ public final class BoardDB {
     public static Boolean setField(final int idGame, final int roundID, final int idPlayer, final int row,
             final int column,
             final String color,
-            final int value) {
+            final int number) {
         Database db = Database.getInstance();
 
         String sql = "UPDATE playerframefield SET dienumber = ?, diecolor = ?"
                 + " WHERE idgame = ? AND idplayer = ? AND position_x = ? AND position_y = ?";
-        String[] params = {String.valueOf(value), color, String.valueOf(idGame), String.valueOf(idPlayer),
+        String[] params = {String.valueOf(number), color, String.valueOf(idGame), String.valueOf(idPlayer),
                 String.valueOf(column), String.valueOf(row)};
 
         db.exec(sql, params);
 
         sql = "UPDATE gamedie SET roundID = ? WHERE idgame = ? AND dienumber = ? AND diecolor = ?";
-        params = new String[] {String.valueOf(roundID), String.valueOf(idGame), String.valueOf(value), color};
+        params = new String[] {String.valueOf(roundID), String.valueOf(idGame), String.valueOf(number), color};
 
         db.exec(sql, params);
 

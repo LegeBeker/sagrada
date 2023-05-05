@@ -34,6 +34,10 @@ public class Die {
         return roundtrack;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
     public Game getGame() {
         return Game.get(this.idGame);
     }
