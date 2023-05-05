@@ -5,8 +5,7 @@ public enum ColorEnum {
     BLUE("#2196F3"),
     GREEN("#4CAF50"),
     YELLOW("#FFEB3B"),
-    PURPLE("#9C27B0"),
-    DEFAULT("#F8F8F8");
+    PURPLE("#9C27B0");
 
     private final String hexCode;
 
@@ -24,7 +23,7 @@ public enum ColorEnum {
 
     public static ColorEnum fromString(final String color) {
         if (color == null) {
-            return DEFAULT;
+            return null;
         }
         switch (color.toLowerCase()) {
             case "red":
@@ -48,7 +47,7 @@ public enum ColorEnum {
             case "0x9c27b0ff":
                 return PURPLE;
             default:
-                return DEFAULT;
+                return null;
         }
     }
 }
