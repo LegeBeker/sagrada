@@ -65,7 +65,7 @@ public class GameBoardsView extends HBox {
                 int[] location = {patternCardView.getGrid().getColumnIndex(cell),
                         patternCardView.getGrid().getRowIndex(cell)};
                 if (move[0] == location[0] && move[1] == location[1]) {
-                    cell.setStyle("-fx-border-color: blue;");
+                    cell.setStyle("-fx-border-color: #00FFBF;");
                 }
             });
         });
@@ -74,7 +74,7 @@ public class GameBoardsView extends HBox {
     public void cleanTargets() {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
         patternCardView.getGrid().getChildren().forEach((cell) -> {
-            cell.setStyle(null);
+            cell.setStyle("-fx-border-color: black;");
         });
     }
 }
