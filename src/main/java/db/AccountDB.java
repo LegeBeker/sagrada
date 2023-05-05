@@ -30,7 +30,14 @@ public final class AccountDB {
     public static List<Map<String, String>> getAll() {
         Database db = Database.getInstance();
         String sql = "SELECT * FROM account";
-
         return db.exec(sql, null);
+    }
+
+    public static List<Map<String,String>> getInviteableAccounts(final String username){
+        Database db = Database.getInstance();
+        String sql = "SELECT account.username, IF (COUNT(player.idGame) > 0, false, true) AS 'inviteable' FROM account LEFT JOIN player ON player.username = account.username AND player.playstatus = 'challengee' AND player.username != ? AND player.idGame IN (SELECT idGame FROM player WHERE username = ? AND playstatus = 'CHALLENGER') GROUP BY account.username;";
+        String[] params = {username, username};
+        return db.exec(sql, params);
+
     }
 }

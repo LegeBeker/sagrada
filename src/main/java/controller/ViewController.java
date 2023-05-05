@@ -155,11 +155,6 @@ public class ViewController extends Scene {
         changeView(statView);
     }
 
-    public void openOpenInvitesView(Account account){
-        OpenInvitesView openInvitesView = new OpenInvitesView(this, account);
-        changeView(openInvitesView);
-    } 
-
     public AccountController getAccountController() {
         return accountController;
     }

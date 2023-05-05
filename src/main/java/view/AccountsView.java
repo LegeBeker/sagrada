@@ -25,7 +25,7 @@ public class AccountsView extends TableView<Account> {
 
         Collections.addAll(this.getColumns(), idUsername);
 
-        for (Account acc : view.getAccountController().getAccounts()) {
+        for (Account acc : view.getAccountController().getInviteableAccounts()) {
             this.getItems().add(acc);
         }
 

@@ -3,8 +3,12 @@ package main.java.view;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.mysql.cj.x.protobuf.MysqlxResultset.Row;
+
 import javafx.geometry.Pos;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -38,8 +42,22 @@ public class InvitesView extends HBox {
         Collections.addAll(this.selectionTable.getColumns(), idUsernameSelected);
 
         setTableClickEvent();
-
         this.getChildren().addAll(this.accountsView, this.selectionTable);
+
+        // Add custom logic to the fields
+        this.accountsView.setRowFactory(tv -> new TableRow<Account>(){
+            @Override
+            protected void updateItem(final Account acc, final boolean empty) {
+                super.updateItem(acc, empty);
+                if (acc == null) {
+                    setStyle("");
+                } else if (acc.getInviteable() == false) {
+                    setDisable(true);                    
+                }else {
+                    setStyle("");
+                }
+            }
+        });
     }
 
     public ArrayList<Account> getSelectedAccounts() {
