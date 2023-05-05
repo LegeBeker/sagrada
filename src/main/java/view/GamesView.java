@@ -134,10 +134,6 @@ public class GamesView extends VBox {
         this.buttonNewGame.setPrefSize(this.buttonWidth, this.buttonHeight);
         this.buttonNewGame.setOnAction(e -> this.openNewGameView());
 
-        this.invitesButton = new Button("Uitnodigingen bekijken");
-        this.invitesButton.setPrefSize(this.buttonWidth, this.buttonHeight);
-        this.invitesButton.setOnAction(e -> this.openOpenInvitesView());
-
         this.boxButtons = new HBox();
         this.boxButtons.getChildren().addAll(this.buttonBack, this.buttonNewGame, this.invitesButton);
 
@@ -179,14 +175,15 @@ public class GamesView extends VBox {
         alert.getButtonTypes().setAll(acceptButton, refuseButton, closeButton);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent()) {
-            if (result.get() == acceptButton) {
-                System.out.println("accept");
-                player.acceptInvite();
-            } else if (result.get() == refuseButton) {
-                System.out.println("accept");
-                player.refuseInvite();
-            }
+
+        if (!result.isPresent()) {
+            return;
+        }
+
+        if (result.get() == acceptButton) {
+            player.acceptInvite();
+        } else if (result.get() == refuseButton) {
+            player.refuseInvite();
         }
     }
 

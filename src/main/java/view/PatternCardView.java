@@ -28,7 +28,13 @@ public class PatternCardView extends BorderPane {
     private final Text cardTopText = new Text();
     private final Text cardDifficulty = new Text();
 
+    private final ViewController view;
+    private final PatternCard patternCard;
+
     public PatternCardView(final ViewController view, final PatternCard patternCard, final Player player) {
+        this.view = view;
+        this.patternCard = patternCard;
+
         this.setPrefSize(width, height);
         this.getStyleClass().add("background");
 
@@ -59,7 +65,13 @@ public class PatternCardView extends BorderPane {
     }
 
     private void drawPatternCard(final PatternCard patternCard, final ViewController view, final Player player) {
-        final boolean isCardOwner = view.getAccountController().getAccount().getUsername().equals(player.getUsername());
+        final boolean isCardOwner;
+        if (player != null) {
+            isCardOwner = view.getAccountController().getAccount().getUsername().equals(player.getUsername());
+        } else {
+            isCardOwner = false;
+        }
+
         for (int col = 1; col <= COLUMNS; col++) {
             for (int row = 1; row <= ROWS; row++) {
                 PatternCardField field = patternCard.getField(row, col);
@@ -88,5 +100,21 @@ public class PatternCardView extends BorderPane {
             node.setStyle("-fx-border-color: black;");
             grid.add(node, col, row);
         }
+    }
+
+    public boolean validateMove(final int dieValue, final Color color, final int columnIndex, final int rowIndex) {
+        Boolean validated = this.view.getPatternCardController().validateMove(this.patternCard, dieValue, color,
+                columnIndex,
+                rowIndex);
+
+        if (!validated) {
+            this.view.displayError("Deze zet is niet geldig.");
+        }
+
+        return validated;
+    }
+
+    public GridPane getGrid() {
+        return this.grid;
     }
 }

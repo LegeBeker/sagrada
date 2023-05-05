@@ -16,10 +16,6 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragEntered(event -> {
             if (event.getGestureSource() instanceof DieView) {
-                GridPane gridPane = (GridPane) this.getParent();
-                System.out.println("Y: " + gridPane.getColumnIndex(this) + " X: " + gridPane.getRowIndex(this));
-
-                // fluorescent color blue
                 this.setStyle("-fx-border-color: #00FFBF;");
             }
         });
@@ -29,8 +25,14 @@ public class DieDropTarget extends StackPane {
         });
 
         this.setOnDragDropped(event -> {
-            if (event.getGestureSource() instanceof DieView) {
-                DieView dieView = (DieView) event.getGestureSource();
+            GridPane gridPane = (GridPane) this.getParent();
+            PatternCardView patternCardView = (PatternCardView) gridPane.getParent();
+            DieView dieView = (DieView) event.getGestureSource();
+
+            Boolean placeDie = patternCardView.validateMove(dieView.getValue(), dieView.getColor(),
+                    gridPane.getColumnIndex(this), gridPane.getRowIndex(this));
+
+            if (placeDie) {
                 this.getChildren().add(dieView);
             }
 

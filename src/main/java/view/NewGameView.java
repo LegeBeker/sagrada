@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Account;
+import main.java.model.Game;
 
 public class NewGameView extends HBox {
 
@@ -20,7 +21,6 @@ public class NewGameView extends HBox {
     private ToggleGroup cards;
     private ArrayList<Account> accounts;
     private InvitesView playerList;
-    // private final Game game;
 
     private final int spacing = 10;
     private final int maxPlayers = 4;
@@ -81,7 +81,7 @@ public class NewGameView extends HBox {
         if (settingText.equals("Willekeurig")) {
             useDefaultCards = false;
         }
-        if (accounts.size() <= 0) {
+        if (accounts.size() < 1) {
             view.displayError("Selecteer meer spelers");
             return;
         }
@@ -89,9 +89,8 @@ public class NewGameView extends HBox {
             view.displayError("Selecteer minder spelers");
             return;
         }
-
-        view.getGameController().createGame(this.accounts, useDefaultCards);
-        // TODO go to the newly made game
+        Game game = view.getGameController().createGame(this.accounts, view.getAccountController().getAccount(), useDefaultCards);
+        this.view.openPatternCardSelectionView(game);
     }
 
     private void goBack() {

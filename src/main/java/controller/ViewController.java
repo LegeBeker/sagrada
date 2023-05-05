@@ -23,7 +23,7 @@ import main.java.view.GamesView;
 import main.java.view.LoginView;
 import main.java.view.MenuView;
 import main.java.view.NewGameView;
-import main.java.view.OpenInvitesView;
+import main.java.view.PatternCardSelectionView;
 import main.java.view.RegisterView;
 import main.java.view.StatView;
 import main.java.view.StatsView;
@@ -71,8 +71,7 @@ public class ViewController extends Scene {
 
         this.accountController = new AccountController();
         this.gameController = new GameController(this);
-        this.patternCardController = new PatternCardController();
-        this.playerController = new PlayerController();
+        this.patternCardController = new PatternCardController(this);
 
         this.effectsController = new EffectsController();
 
@@ -137,8 +136,18 @@ public class ViewController extends Scene {
     }
 
     public void openGameView(final Game game) {
-        GameView gameView = new GameView(this, game);
-        changeView(gameView);
+        getGameController().setGame(game);
+        if (game.playerHasChoosenPatternCard(getAccountController().getAccount().getUsername())) {
+            GameView gameView = new GameView(this, game);
+            changeView(gameView);
+        } else {
+            openPatternCardSelectionView(game);
+        }
+    }
+
+    public void openPatternCardSelectionView(final Game game) {
+        PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this, getGameController().getCurrentPlayer(game.getId()));
+        changeView(patternCardSelectionView);
     }
 
     public void openStatView(final Account account) {
