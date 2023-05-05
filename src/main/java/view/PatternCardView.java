@@ -77,7 +77,13 @@ public class PatternCardView extends BorderPane implements Observer {
     }
 
     private void drawPatternCard(final PatternCard patternCard, final ViewController view, final Player player) {
-        final boolean isCardOwner = view.getAccountController().getAccount().getUsername().equals(player.getUsername());
+        final boolean isCardOwner;
+        if (player != null) {
+            isCardOwner = view.getAccountController().getAccount().getUsername().equals(player.getUsername());
+        } else {
+            isCardOwner = false;
+        }
+
         for (int col = 1; col <= COLUMNS; col++) {
             for (int row = 1; row <= ROWS; row++) {
                 PatternCardField field = patternCard.getField(row, col);
@@ -122,5 +128,9 @@ public class PatternCardView extends BorderPane implements Observer {
 
             grid.add(stackPane, col, row);
         }
+    }
+
+    public GridPane getGrid() {
+        return this.grid;
     }
 }

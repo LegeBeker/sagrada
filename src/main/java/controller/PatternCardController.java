@@ -1,5 +1,7 @@
 package main.java.controller;
 
+import java.util.ArrayList;
+
 import javafx.scene.paint.Color;
 import main.java.model.PatternCard;
 import main.java.model.Player;
@@ -28,5 +30,12 @@ public class PatternCardController {
         }
 
         return false;
+    }
+
+    public ArrayList<int[]> getPossibleMoves(final int value, final Color color) {
+        GameController gameController = view.getGameController();
+        Player player = gameController.getCurrentPlayer(gameController.getGame().getId());
+
+        return player.getPatternCard().getPossibleMoves(player.getBoard(), value, color);
     }
 }
