@@ -1,5 +1,6 @@
 package main.java.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -75,5 +76,19 @@ public class Board {
         }
 
         return board;
+    }
+
+    public static void createBoards(final Game game) {
+        ArrayList<int[]> boards = new ArrayList<>();
+        game.getPlayers().forEach((player) -> {
+            for (int row = 1; row <= ROWS; row++) {
+                for (int col = 1; col <= COLUMNS; col++) {
+                    int[] field = {player.getId(), col, row, game.getId()};
+                    boards.add(field);
+                }
+            }
+        });
+
+        BoardDB.createBoard(boards);
     }
 }
