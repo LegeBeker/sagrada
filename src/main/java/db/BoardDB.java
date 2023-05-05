@@ -52,7 +52,7 @@ public final class BoardDB {
 
         String sql = "SELECT DISTINCT pf.*, gd.eyes FROM playerframefield pf"
                 + " JOIN gamedie gd ON gd.dienumber = pf.dienumber AND gd.diecolor = pf.diecolor WHERE pf.idgame = ? AND pf.idplayer = ?";
-        String[] params = { String.valueOf(idGame), String.valueOf(idPlayer) };
+        String[] params = {String.valueOf(idGame), String.valueOf(idPlayer)};
 
         return db.exec(sql, params);
     }
@@ -61,7 +61,7 @@ public final class BoardDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM playerframefield WHERE idgame = ?";
-        String[] params = { String.valueOf(idGame) };
+        String[] params = {String.valueOf(idGame)};
 
         return db.exec(sql, params);
     }
