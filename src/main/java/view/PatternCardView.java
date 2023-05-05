@@ -108,7 +108,7 @@ public class PatternCardView extends BorderPane implements Observer {
             dieDropTarget.getChildren().add(node);
             dieDropTarget.setStyle("-fx-border-color: black;");
 
-            if (this.player.getBoard().getField(row, col) != null) {
+            if (this.player != null && this.player.getBoard().getField(row, col) != null) {
                 Die die = this.player.getBoard().getField(row, col);
                 DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), false);
                 dieDropTarget.getChildren().add(dieView);
@@ -120,7 +120,7 @@ public class PatternCardView extends BorderPane implements Observer {
             stackPane.getChildren().add(node);
             node.setStyle("-fx-border-color: black;");
 
-            if (this.player.getBoard().getField(row, col) != null) {
+            if (this.player != null && this.player.getBoard().getField(row, col) != null) {
                 Die die = this.player.getBoard().getField(row, col);
                 DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), false);
                 stackPane.getChildren().add(dieView);
