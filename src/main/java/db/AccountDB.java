@@ -38,8 +38,8 @@ public final class AccountDB {
         String sql = "SELECT account.username, IF (COUNT(player.idGame) > 0, false, true) AS 'inviteable' FROM account "; 
         sql += "LEFT JOIN player ON player.username = account.username AND player.playstatus = 'challengee' AND player.username != ? ";
         sql += "AND player.idGame IN (SELECT idGame FROM player WHERE username = ? AND playstatus = 'CHALLENGER') GROUP BY account.username;";
-        
-        String[] params = { username, username };
+
+        String[] params = {username, username };
         return db.exec(sql, params);
 
     }

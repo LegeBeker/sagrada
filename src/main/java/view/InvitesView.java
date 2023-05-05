@@ -3,10 +3,7 @@ package main.java.view;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.mysql.cj.x.protobuf.MysqlxResultset.Row;
-
 import javafx.geometry.Pos;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;

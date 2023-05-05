@@ -24,7 +24,8 @@ public class Player {
     private final int defaultScore = -20;
     private int score = defaultScore;
 
-    public static Player createPlayer(final int gameID, final String username, final String playerStatus, final String privateColor) {
+    public static Player createPlayer(final int gameID, final String username, final String playerStatus,
+            final String privateColor) {
         Player newPlayer = new Player();
         newPlayer.setIdGame(gameID);
         newPlayer.setUsername(username);
@@ -119,7 +120,7 @@ public class Player {
         return mapToPlayer(PlayerDB.get(idPlayer));
     }
 
-    public static ArrayList<Player> getInvites(final String username){
+    public static ArrayList<Player> getInvites(final String username) {
         ArrayList<Player> players = new ArrayList<Player>();
 
         for (Map<String, String> playerMap : PlayerDB.getAll(username)) {

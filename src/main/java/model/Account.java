@@ -18,7 +18,7 @@ public class Account {
         return this.username;
     }
 
-    public boolean getInviteable(){
+    public boolean getInviteable() {
         return this.inviteable;
     }
 
@@ -46,7 +46,7 @@ public class Account {
         return accounts;
     }
 
-    public static ArrayList<Account> getInviteableAccounts(final String username){
+    public static ArrayList<Account> getInviteableAccounts(final String username) {
         ArrayList<Account> accounts = new ArrayList<Account>();
 
         for (Map<String, String> accountMap : AccountDB.getInviteableAccounts(username)) {
