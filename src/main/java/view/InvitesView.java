@@ -48,7 +48,7 @@ public class InvitesView extends HBox {
                 super.updateItem(acc, empty);
                 if (acc == null) {
                     setStyle("");
-                } else if (acc.getInviteable() == false) {
+                } else if (!acc.getInviteable()) {
                     setDisable(true);
                 } else {
                     setStyle("");
