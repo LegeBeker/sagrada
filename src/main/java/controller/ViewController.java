@@ -17,7 +17,6 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import main.java.model.Account;
 import main.java.model.Game;
-import main.java.model.Player;
 import main.java.view.GameView;
 import main.java.view.GamesView;
 import main.java.view.LoginView;
@@ -55,7 +54,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor) };
+        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -146,7 +145,8 @@ public class ViewController extends Scene {
     }
 
     public void openPatternCardSelectionView(final Game game) {
-        PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this, getGameController().getCurrentPlayer(game.getId()));
+        PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this,
+                getGameController().getCurrentPlayer(game.getId()));
         changeView(patternCardSelectionView);
     }
 
@@ -167,7 +167,7 @@ public class ViewController extends Scene {
         return patternCardController;
     }
 
-    public PlayerController getPlayerController(){
+    public PlayerController getPlayerController() {
         return playerController;
     }
 }

@@ -45,15 +45,15 @@ public class InvitesView extends HBox {
         this.getChildren().addAll(this.accountsView, this.selectionTable);
 
         // Add custom logic to the fields
-        this.accountsView.setRowFactory(tv -> new TableRow<Account>(){
+        this.accountsView.setRowFactory(tv -> new TableRow<Account>() {
             @Override
             protected void updateItem(final Account acc, final boolean empty) {
                 super.updateItem(acc, empty);
                 if (acc == null) {
                     setStyle("");
                 } else if (acc.getInviteable() == false) {
-                    setDisable(true);                    
-                }else {
+                    setDisable(true);
+                } else {
                     setStyle("");
                 }
             }

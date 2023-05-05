@@ -15,8 +15,8 @@ import main.java.controller.ViewController;
 import main.java.model.Account;
 import main.java.model.Player;
 
-public class OpenInvitesView extends VBox{
-    
+public class OpenInvitesView extends VBox {
+
     private ViewController view;
     private Account account;
     private StackPane textTitle;
@@ -27,7 +27,7 @@ public class OpenInvitesView extends VBox{
     private final int tableHeight = 400;
     private final int tableWidth = 600;
 
-    public OpenInvitesView(final ViewController view, final Account account){
+    public OpenInvitesView(final ViewController view, final Account account) {
         this.view = view;
         this.account = account;
 
@@ -41,7 +41,6 @@ public class OpenInvitesView extends VBox{
 
         this.textTitle = new StackPane(text);
         this.textTitle.setPadding(new Insets(0, 0, this.spacing, 0));
-    
 
         this.table = new TableView<Player>();
         this.table.setPlaceholder(new Text("Geen uitnodigingen gevonden"));
@@ -52,14 +51,15 @@ public class OpenInvitesView extends VBox{
         playerIdColumn.setCellValueFactory(new PropertyValueFactory<>("idPlayer"));
         TableColumn<Player, Integer> gameIdColumn = new TableColumn<>("Game ID");
         gameIdColumn.setCellValueFactory(new PropertyValueFactory<>("idGame"));
-        
+
         Collections.addAll(this.table.getColumns(), playerIdColumn, gameIdColumn);
 
-        for (Player player : view.getPlayerController().getInvites(view.getAccountController().getAccount().getUsername())) {
+        for (Player player : view.getPlayerController()
+                .getInvites(view.getAccountController().getAccount().getUsername())) {
             System.out.println("Adding playerID: " + player.getId());
             this.table.getItems().add(player);
         }
-         
+
         this.getChildren().addAll(this.textTitle, this.table);
     }
 

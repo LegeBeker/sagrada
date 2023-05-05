@@ -46,7 +46,7 @@ public class AccountController {
         return Account.getAll();
     }
 
-    public ArrayList<Account> getInviteableAccounts(){
+    public ArrayList<Account> getInviteableAccounts() {
         return Account.getInviteableAccounts(this.getAccount().getUsername());
     }
 }
