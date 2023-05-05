@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javafx.scene.paint.Color;
 import main.java.db.PatternCardDB;
-import main.java.enums.ColorEnum;
 
 public class PatternCard {
     private int idPatternCard;
@@ -91,17 +90,18 @@ public class PatternCard {
         if (board.getField(rowIndex, columnIndex) != null) {
             return false;
         }
+
         if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
             return false;
         }
 
-        if (!this.getField(rowIndex, columnIndex).getColor().equals(dieColor)
-                && !this.getField(rowIndex, columnIndex).getColor().equals(Color.web(ColorEnum.DEFAULT.getHexCode()))) {
+        if (this.getField(rowIndex, columnIndex).getColor() != null
+                && !dieColor.equals(this.getField(rowIndex, columnIndex).getColor())) {
             return false;
         }
 
         if (this.getField(rowIndex, columnIndex).getValue() != null
-                && this.getField(rowIndex, columnIndex).getValue() != dieValue) {
+                && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
 
             return false;
         }
@@ -123,48 +123,35 @@ public class PatternCard {
             final int columnIndex,
             final int dieValue,
             final Color dieColor) {
-        boolean dieDoesNotMatchNeighbor = true;
-
-        ArrayList<int[]> neighbors = getOrthogonalNeighbors(rowIndex, columnIndex);
+        ArrayList<int[]> neighbors = getNeighbors(rowIndex, columnIndex);
 
         for (int[] neighbor : neighbors) {
-            int neighborRow = neighbor[0];
-            int neighborCol = neighbor[1];
+            PatternCardField neighborField = this.getField(neighbor[0], neighbor[1]);
 
-            PatternCardField patternCardField = this.getField(neighborRow, neighborCol);
-
-            // check if one of the neighbors is same color
-            if ((!patternCardField.getColor().equals(Color.web(ColorEnum.DEFAULT.getHexCode()))
-                    && this.getField(rowIndex, columnIndex).getColor().equals(patternCardField.getColor()))
-                    || patternCardField.getColor().equals(dieColor)) {
-                dieDoesNotMatchNeighbor = false;
-            }
-
-            if (patternCardField.getValue() != null
-                    && patternCardField.getValue() == dieValue) {
-                dieDoesNotMatchNeighbor = false;
-            }
-
-            if (!dieDoesNotMatchNeighbor) {
+            if (neighborField.getColor() != null && dieColor.equals(neighborField.getColor())) {
                 return false;
             }
 
+            if (neighborField.getValue() != null && dieValue == neighborField.getValue()) {
+                return false;
+            }
         }
 
-        return dieDoesNotMatchNeighbor;
+        return true;
     }
 
-    public ArrayList<int[]> getOrthogonalNeighbors(final int row, final int col) {
+    public ArrayList<int[]> getNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
-        int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        int rowStart = Math.max(row - 1, 0);
+        int rowEnd = Math.min(row + 1, ROWS - 1);
+        int colStart = Math.max(col - 1, 0);
+        int colEnd = Math.min(col + 1, COLUMNS - 1);
 
-        for (int[] offset : offsets) {
-            int neighborRow = row + offset[0];
-            int neighborCol = col + offset[1];
-
-            if (neighborRow > 0 && neighborRow < ROWS && neighborCol > 0 && neighborCol < COLUMNS + 1) {
-                int[] neighbor = {neighborRow, neighborCol};
-                neighbors.add(neighbor);
+        for (int curRow = rowStart; curRow <= rowEnd; curRow++) {
+            for (int curCol = colStart; curCol <= colEnd; curCol++) {
+                if (curRow != row || curCol != col) {
+                    neighbors.add(new int[] {curRow, curCol});
+                }
             }
         }
 
