@@ -29,7 +29,7 @@ public class GameOfferView extends FlowPane implements Observer {
         this.getChildren().clear();
 
         for (Die die : game.getOffer()) {
-            DieView dieView = new DieView(die.getEyes(), die.getColor(), true);
+            DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), true);
 
             this.getChildren().add(dieView);
         }
