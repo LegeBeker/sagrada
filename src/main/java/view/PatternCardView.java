@@ -100,34 +100,26 @@ public class PatternCardView extends BorderPane implements Observer {
     private void createAndAddNode(final boolean isCardOwner, final Node node, final Color color, final int col,
             final int row) {
         if (node instanceof Rectangle) {
-            ((Rectangle) node).setFill(color);
+            ((Rectangle) node).setFill(color == null ? Color.WHITE : color);
         }
+
+        StackPane stackPane;
 
         if (isCardOwner) {
-            DieDropTarget dieDropTarget = new DieDropTarget(this.view, patternCard);
-            dieDropTarget.getChildren().add(node);
-            dieDropTarget.setStyle("-fx-border-color: black;");
-
-            if (this.player != null && this.player.getBoard().getField(row, col) != null) {
-                Die die = this.player.getBoard().getField(row, col);
-                DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), false);
-                dieDropTarget.getChildren().add(dieView);
-            }
-
-            grid.add(dieDropTarget, col, row);
+            stackPane = new DieDropTarget(this.view, patternCard);
         } else {
-            StackPane stackPane = new StackPane();
-            stackPane.getChildren().add(node);
-            node.setStyle("-fx-border-color: black;");
-
-            if (this.player != null && this.player.getBoard().getField(row, col) != null) {
-                Die die = this.player.getBoard().getField(row, col);
-                DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), false);
-                stackPane.getChildren().add(dieView);
-            }
-
-            grid.add(stackPane, col, row);
+            stackPane = new StackPane();
         }
+        stackPane.getChildren().add(node);
+        node.setStyle("-fx-border-color: black;");
+
+        if (this.player != null && this.player.getBoard().getField(row, col) != null) {
+            Die die = this.player.getBoard().getField(row, col);
+            DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), false);
+            stackPane.getChildren().add(dieView);
+        }
+
+        grid.add(stackPane, col, row);
     }
 
     public GridPane getGrid() {
