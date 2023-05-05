@@ -3,6 +3,7 @@ package main.java.controller;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -147,7 +148,9 @@ public class ViewController extends Scene {
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 public void run() {
-                    game.notifyObservers();
+                    Platform.runLater(() -> {
+                        game.notifyObservers();
+                    });
                 }
             }, 0, REFRESHRATE);
         } else {
