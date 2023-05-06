@@ -42,9 +42,8 @@ public class Die {
         return Game.get(this.idGame);
     }
 
-    public static Boolean putOffer(final int idGame, final int playerAmount) {
-        int dieAmount = (playerAmount * 2) + 1;
-        return DieDB.putOffer(idGame, dieAmount);
+    public static boolean createGameOffer(final int idGame) {
+        return DieDB.createGameOffer(idGame);
     }
 
     public Boolean putRoundTrack(final int roundID) {
