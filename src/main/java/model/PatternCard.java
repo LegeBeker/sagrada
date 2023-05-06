@@ -142,7 +142,7 @@ public class PatternCard {
 
     public ArrayList<int[]> getNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
-        int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
