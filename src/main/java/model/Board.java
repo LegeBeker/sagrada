@@ -1,5 +1,7 @@
 package main.java.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,5 +77,19 @@ public class Board {
         }
 
         return board;
+    }
+
+    public static void createBoards(final Game game) {
+        Map<Player, ArrayList<int[]>> boards = new HashMap<>();
+        game.getPlayers().forEach((player) -> {
+            boards.put(player, new ArrayList<>());
+            for (int row = 1; row <= ROWS; row++) {
+                for (int col = 1; col <= COLUMNS; col++) {
+                    boards.get(player).add(new int[] {col, row});
+                }
+            }
+        });
+
+        BoardDB.createBoard(boards);
     }
 }

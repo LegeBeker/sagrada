@@ -1,10 +1,33 @@
 package main.java.db;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import main.java.model.Player;
+
 public final class BoardDB {
     private BoardDB() {
+    }
+
+    public static boolean createBoard(final Map<Player, ArrayList<int[]>> boards) {
+        Database db = Database.getInstance();
+
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("INSERT INTO playerframefield (idplayer, position_x, position_y, idgame) VALUES ");
+
+        boards.forEach((player, board) -> {
+            for (int[] field : board) {
+                sqlBuilder.append("(" + player.getId() + ", " + field[0] + ", " + field[1] + ", " + player.getGame().getId() + "),");
+            }
+        });
+
+        String sql = sqlBuilder.toString();
+        sql = sql.substring(0, sql.length() - 1); // remove the last comma and space
+
+        db.exec(sql, null);
+
+        return true;
     }
 
     public static Boolean setField(final int idGame, final int roundID, final int idPlayer, final int row,
