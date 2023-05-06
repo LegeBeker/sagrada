@@ -69,6 +69,7 @@ public class Game extends Observable {
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);
 
+        Die.createGameOffer(thisGameID);
         Board.createBoards(newGame);
 
         return newGame;
@@ -92,7 +93,7 @@ public class Game extends Observable {
     }
 
     public ArrayList<Die> getOffer() {
-        return Die.getOffer(idGame);
+        return Die.getOffer(idGame, currentRound);
     }
 
     public ArrayList<Die> getRoundTrack() {
@@ -223,7 +224,7 @@ public class Game extends Observable {
     }
 
     public void getNewOffer() {
-        Die.putOffer(idGame, players.size());
+        Die.getNewOffer(idGame, currentRound, players.size());
         notifyObservers();
     }
 
