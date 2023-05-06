@@ -75,8 +75,7 @@ public class PatternCard {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 if (validateMove(board, dieValue, dieColor, col, row)) {
-                    int[] move = { row, col };
-                    possibleMoves.add(move);
+                    possibleMoves.add(new int[]{row, col});
                 }
             }
         }
