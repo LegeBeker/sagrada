@@ -52,13 +52,27 @@ public class Die {
         return true;
     }
 
-    public static ArrayList<Die> getOffer(final int idGame) {
-        List<Map<String, String>> offer = DieDB.getOffer(idGame);
+    public static ArrayList<Die> getOffer(final int idGame, final int roundID) {
+        List<Map<String, String>> offer = DieDB.getOffer(idGame, roundID);
         ArrayList<Die> dice = new ArrayList<Die>();
 
         for (Map<String, String> dieMap : offer) {
             dice.add(mapToDie(dieMap));
         }
+
+        return dice;
+    }
+
+    public static ArrayList<Die> getNewOffer(final int idGame, final int roundID, final int playerAmount) {
+        System.out.println("getNewOffer2");
+        int dieAmount = (playerAmount * 2) + 1;
+        List<Map<String, String>> offer = DieDB.getNewOffer(idGame, roundID, dieAmount);
+        ArrayList<Die> dice = new ArrayList<Die>();
+
+        for (Map<String, String> dieMap : offer) {
+            dice.add(mapToDie(dieMap));
+        }
+
         return dice;
     }
 

@@ -12,9 +12,7 @@ public final class DieDB {
 
         String sql = "INSERT INTO gamedie (idgame, diecolor, dienumber, eyes) "
                 + "SELECT ?, d.color, d.number, FLOOR(RAND()* 6) + 1 " + "FROM die d " + "LEFT JOIN gamedie g "
-                + "ON d.color = g.diecolor AND d.number = g.dienumber AND g.idgame = ? " + "WHERE g.idgame IS NULL "
-                + "ORDER BY RAND() ";
-
+                + "ON d.color = g.diecolor AND d.number = g.dienumber AND g.idgame = ? " + "WHERE g.idgame IS NULL";
         String[] params = {Integer.toString(idGame), Integer.toString(idGame)};
 
         db.exec(sql, params);
@@ -22,16 +20,28 @@ public final class DieDB {
         return true;
     }
 
-    public static List<Map<String, String>> getOffer(final int idGame) {
+    public static List<Map<String, String>> getOffer(final int idGame, final int roundID) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT * FROM gamedie WHERE idgame = ? AND eyes IS NOT NULL AND roundtrack IS NULL AND roundID IS NULL";
+        String sql = "SELECT * FROM gamedie WHERE idgame = ? AND roundtrack IS NULL AND roundID = ?";
+        System.out.println(sql);
 
-        String[] params = {Integer.toString(idGame)};
+        String[] params = {Integer.toString(idGame), Integer.toString(roundID)};
 
         return db.exec(sql, params);
     }
 
+    public static List<Map<String, String>> getNewOffer(final int idGame, final int roundID, final int dieAmount) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE gamedie SET roundID = ? "
+                + "WHERE idgame = ? AND roundtrack IS NULL AND roundID IS NULL ORDER BY RAND() LIMIT "
+                + Integer.toString(dieAmount);
+        String[] params = {Integer.toString(idGame), Integer.toString(idGame)};
+        System.out.println("getNewOffe32");
+
+        return db.exec(sql, params);
+    }
 
     public static List<Map<String, String>> getRoundTrack(final int idGame) {
         Database db = Database.getInstance();
@@ -43,12 +53,14 @@ public final class DieDB {
         return db.exec(sql, params);
     }
 
-    public static boolean putRoundTrack(final int idGame, final int roundID, final int dieNumber, final String dieColor) {
+    public static boolean putRoundTrack(final int idGame, final int roundID, final int dieNumber,
+            final String dieColor) {
         Database db = Database.getInstance();
 
         String sql = "UPDATE gamedie SET roundtrack = ? WHERE idgame = ? AND dienumber = ?, diecolor = ?";
 
-        String[] params = {Integer.toString(roundID), Integer.toString(idGame), Integer.toString(dieNumber), dieColor};
+        String[] params = {Integer.toString(roundID), Integer.toString(idGame), Integer.toString(dieNumber),
+                dieColor};
 
         db.exec(sql, params);
 
