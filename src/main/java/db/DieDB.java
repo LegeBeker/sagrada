@@ -7,13 +7,13 @@ public final class DieDB {
     private DieDB() {
     }
 
-    public static boolean putOffer(final int idGame, final int dieAmount) {
+    public static boolean createGameOffer(final int idGame) {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO gamedie (idgame, diecolor, dienumber, eyes) "
                 + "SELECT ?, d.color, d.number, FLOOR(RAND()* 6) + 1 " + "FROM die d " + "LEFT JOIN gamedie g "
                 + "ON d.color = g.diecolor AND d.number = g.dienumber AND g.idgame = ? " + "WHERE g.idgame IS NULL "
-                + "ORDER BY RAND() " + "LIMIT " + Integer.toString(dieAmount);
+                + "ORDER BY RAND() ";
 
         String[] params = {Integer.toString(idGame), Integer.toString(idGame)};
 
