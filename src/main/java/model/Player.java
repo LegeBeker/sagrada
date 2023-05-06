@@ -19,12 +19,14 @@ public class Player {
     private String privateObjCardColor;
     private Integer idPatternCard;
 
+    private Game game;
     private Board board;
 
     private final int defaultScore = -20;
     private int score = defaultScore;
 
-    public static Player createPlayer(final int gameID, final String username, final String playerStatus, final String privateColor) {
+    public static Player createPlayer(final int gameID, final String username, final String playerStatus,
+            final String privateColor) {
         Player newPlayer = new Player();
         newPlayer.setIdGame(gameID);
         newPlayer.setUsername(username);
@@ -52,7 +54,10 @@ public class Player {
     }
 
     public Game getGame() {
-        return Game.get(this.idGame);
+        if (this.game == null) {
+            this.game = Game.get(this.idGame);
+        }
+        return Game.update(this.game);
     }
 
     public String getPlayStatus() {
@@ -64,7 +69,10 @@ public class Player {
     }
 
     public Board getBoard() {
-        return this.board;
+        if (this.board == null) {
+            this.board = Board.get(this);
+        }
+        return Board.update(this.board);
     }
 
     public String getPrivateObjCardColor() {
@@ -127,6 +135,14 @@ public class Player {
         return PlayerDB.refuseInvite(this.idGame, this.username);
     }
 
+    public boolean hasPatternCard() {
+        return this.idPatternCard != null;
+    }
+
+    public boolean choosePatternCard(final PatternCard patternCard, final int idgame) {
+        return PlayerDB.updatePatternCard(patternCard.getIdPatternCard(), idgame, this.username);
+    }
+
     public static ArrayList<Player> getAll() {
         ArrayList<Player> players = new ArrayList<Player>();
 
@@ -152,9 +168,6 @@ public class Player {
         if (playerMap.get("idpatterncard") != null) {
             player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
         }
-        player.board = new Board();
-        player.score = Integer.parseInt(playerMap.get("score"));
-
         return player;
     }
 

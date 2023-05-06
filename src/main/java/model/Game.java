@@ -26,7 +26,10 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private final int uniqueCardsPerPlayer = 4;
 
-    public static Game createGame(final ArrayList<Account> accounts, final Account currAccount, final boolean useDefaultCards) {
+    private boolean helpFunction;
+
+    public static Game createGame(final ArrayList<Account> accounts, final Account currAccount,
+            final boolean useDefaultCards) {
         Game newGame = new Game();
 
         LocalDateTime time = LocalDateTime.now();
@@ -40,13 +43,15 @@ public class Game extends Observable {
         List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
 
         newGame.addPlayer(Player.createPlayer(
-                thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(), colorList.remove(0).get("color")));
+                thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(),
+                colorList.remove(0).get("color")));
         GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
         newGame.setTurnPlayer(newGame.getPlayers().get(0).getId());
 
         for (Account ac : accounts) {
             newGame.addPlayer(Player.createPlayer(
-                    thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(), colorList.remove(0).get("color")));
+                    thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(),
+                    colorList.remove(0).get("color")));
         }
 
         for (int playerNr = 0; playerNr < newGame.getPlayers().size(); playerNr++) {
@@ -64,6 +69,9 @@ public class Game extends Observable {
 
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);
+
+        Die.createGameOffer(thisGameID);
+        Board.createBoards(newGame);
 
         return newGame;
     }
@@ -86,7 +94,7 @@ public class Game extends Observable {
     }
 
     public ArrayList<Die> getOffer() {
-        return Die.getOffer(idGame);
+        return Die.getOffer(idGame, currentRound);
     }
 
     public ArrayList<Die> getRoundTrack() {
@@ -111,6 +119,14 @@ public class Game extends Observable {
 
     public ArrayList<Player> getPlayers() {
         return this.players;
+    }
+
+    public void setHelpFunction() {
+        this.helpFunction = !this.helpFunction;
+    }
+
+    public boolean getHelpFunction() {
+        return this.helpFunction;
     }
 
     public Player getCurrentPlayer(final int id, final String username) {
@@ -139,6 +155,12 @@ public class Game extends Observable {
         }
 
         return false;
+    }
+
+    public boolean playerHasChoosenPatternCard(final String username) {
+        Player player = getCurrentPlayer(idGame, username);
+
+        return player.hasPatternCard();
     }
 
     public void addPlayer(final Player player) {
@@ -185,10 +207,20 @@ public class Game extends Observable {
             game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
         }
         game.creationDate = gameMap.get("creationdate");
+        game.helpFunction = false;
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
             game.players.add(Player.mapToPlayer(map));
         }
+
+        return game;
+    }
+
+    public static Game update(final Game game) {
+        Map<String, String> values = GameDB.get(game.idGame);
+
+        game.turnIdPlayer = Integer.parseInt(values.get("turn_idplayer"));
+        game.currentRound = Integer.parseInt(values.get("current_roundID"));
 
         return game;
     }
@@ -203,7 +235,7 @@ public class Game extends Observable {
     }
 
     public void getNewOffer() {
-        Die.putOffer(idGame, players.size());
+        Die.getNewOffer(idGame, currentRound, players.size());
         notifyObservers();
     }
 
