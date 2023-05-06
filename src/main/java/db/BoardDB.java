@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import main.java.model.Player;
+
 public final class BoardDB {
     private BoardDB() {
     }
 
-    public static boolean createBoard(final ArrayList<int[]> boards) {
+    public static boolean createBoard(final Map<Player, ArrayList<int[]>> boards) {
         Database db = Database.getInstance();
 
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("INSERT INTO playerframefield (idplayer, position_x, position_y, idgame) VALUES ");
 
-        boards.forEach((board) -> {
-            sqlBuilder.append("(" + board[0] + ", " + board[1] + ", " + board[2] + ", " + board[3] + "),");
+        boards.forEach((player, board) -> {
+            for (int[] field : board) {
+                sqlBuilder.append("(" + player.getId() + ", " + field[0] + ", " + field[1] + ", " + player.getGame().getId() + "),");
+            }
         });
 
         String sql = sqlBuilder.toString();
