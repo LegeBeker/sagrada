@@ -77,7 +77,7 @@ public class ViewController extends Scene {
         this.accountController = new AccountController();
         this.gameController = new GameController(this);
         this.patternCardController = new PatternCardController(this);
-        this.messageController = new MessageController();
+        this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
 
         this.openLoginView();

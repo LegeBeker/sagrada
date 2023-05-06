@@ -1,18 +1,17 @@
 package main.java.controller;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import main.java.model.Game;
-import main.java.model.GameMessage;
+import main.java.model.Message;
 import main.java.model.Player;
-import main.java.pattern.Observer;
 
 public class MessageController {
-    private GameMessage message;
 
-    public MessageController() {
-        message.addObserver(this);
+    private ViewController view;
+
+    public MessageController(final ViewController view) {
+        this.view = view;
     }
 
     public void sendMessage(final String message, final ViewController view, final Game game) {
@@ -20,12 +19,6 @@ public class MessageController {
         Player player = game.getPlayer(username);
         Timestamp time = new Timestamp(System.currentTimeMillis());
 
-        this.message = new GameMessage(message, player, time);
-
+        Message.createMessage(message, player, time);
     }
-
-    public List<GameMessage> getMessages(final Game game) {
-        return game.getMessages();
-    }
-
 }
