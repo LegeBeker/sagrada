@@ -69,6 +69,8 @@ public class Game extends Observable {
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);
 
+        Die.createGameOffer(thisGameID);
+
         return newGame;
     }
 
@@ -221,7 +223,6 @@ public class Game extends Observable {
     }
 
     public void getNewOffer() {
-        Die.putOffer(idGame, players.size());
         notifyObservers();
     }
 
