@@ -1,6 +1,5 @@
 package main.java.view;
 
-import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -15,42 +14,34 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
-import main.java.model.Chat;
 import main.java.model.Game;
-import main.java.model.GameMessage;
+import main.java.model.Message;
 import main.java.pattern.Observer;
 
 public class GameChatView extends VBox implements Observer {
+
     private final Background background = new Background(new BackgroundFill(Color.web("#B00322"), null, null));
 
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
 
-    private Chat chat;
-
     private ViewController view;
     private Game game;
 
-    private String username;
-
-    public GameChatView(final ViewController view, final Game game, final Chat chat) {
+    public GameChatView(final ViewController view, final Game game) {
         this.setBackground(background);
         this.setAlignment(Pos.BOTTOM_CENTER);
 
         this.view = view;
         this.game = game;
-        this.username = view.getAccountController().getAccount().getUsername();
 
-        this.chat = chat;
-        chat.getObservableList().addListener(new MessageListener());
+        game.addObserver(this);
 
-        // Chat input
         TextField textInput = new TextField();
         textInput.setPromptText("Typ je geweldige bericht hier");
         HBox.setHgrow(textInput, Priority.ALWAYS);
         Button sendButton = new Button("Verstuur");
 
-        // Input handling
         textInput.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 view.getMessageController().sendMessage(textInput.getText(), view, game);
@@ -74,6 +65,8 @@ public class GameChatView extends VBox implements Observer {
 
         this.getChildren().add(0, chatMessageScrollPane);
         this.getChildren().add(1, chatInput);
+
+        update();
     }
 
     public void addMessage(final String message, final String username, final Boolean sender) {
@@ -88,16 +81,19 @@ public class GameChatView extends VBox implements Observer {
         } else {
             chatMessage.setAlignment(Pos.CENTER_LEFT);
         }
-        System.out.println(this.getWidth());
 
         chatMessageBox.getChildren().add(chatMessage);
     }
 
-    private class MessageListener implements ListChangeListener<GameMessage> {
+    public boolean senderIsLoggedInPlayer(final String username) {
+        return username.equals(view.getAccountController().getAccount().getUsername());
+    }
 
-        @Override
-        public void onChanged(Change<? extends GameMessage> final c) {
-            System.out.println("Message added");
+    @Override
+    public void update() {
+        chatMessageBox.getChildren().clear();
+        for (Message message : Message.getChatMessages(game.getId())) {
+            addMessage(message.getMessage(), message.getUsername(), senderIsLoggedInPlayer(message.getUsername()));
         }
     }
 }
