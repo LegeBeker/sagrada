@@ -24,7 +24,6 @@ public final class DieDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM gamedie WHERE idgame = ? AND roundtrack IS NULL AND roundID = ?";
-        System.out.println(sql);
 
         String[] params = {Integer.toString(idGame), Integer.toString(roundID)};
 
@@ -37,8 +36,8 @@ public final class DieDB {
         String sql = "UPDATE gamedie SET roundID = ? "
                 + "WHERE idgame = ? AND roundtrack IS NULL AND roundID IS NULL ORDER BY RAND() LIMIT "
                 + Integer.toString(dieAmount);
+
         String[] params = {Integer.toString(idGame), Integer.toString(idGame)};
-        System.out.println("getNewOffe32");
 
         return db.exec(sql, params);
     }

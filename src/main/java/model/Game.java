@@ -224,7 +224,6 @@ public class Game extends Observable {
     }
 
     public void getNewOffer() {
-        System.out.println("getNewOffer");
         Die.getNewOffer(idGame, currentRound, players.size());
         notifyObservers();
     }
