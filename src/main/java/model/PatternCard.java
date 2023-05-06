@@ -142,19 +142,36 @@ public class PatternCard {
 
     public ArrayList<int[]> getNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
-        int rowStart = Math.max(row - 1, 0);
-        int rowEnd = Math.min(row + 1, ROWS - 1);
-        int colStart = Math.max(col - 1, 0);
-        int colEnd = Math.min(col + 1, COLUMNS - 1);
+        int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-        for (int curRow = rowStart; curRow <= rowEnd; curRow++) {
-            for (int curCol = colStart; curCol <= colEnd; curCol++) {
-                if (curRow != row || curCol != col) {
-                    neighbors.add(new int[] {curRow, curCol});
-                }
+        for (int[] offset : offsets) {
+            int neighborRow = row + offset[0];
+            int neighborCol = col + offset[1];
+
+            if (neighborRow > 0 && neighborRow < ROWS && neighborCol > 0 && neighborCol < COLUMNS + 1) {
+                int[] neighbor = {neighborRow, neighborCol};
+                neighbors.add(neighbor);
             }
         }
 
         return neighbors;
     }
+
+    // public ArrayList<int[]> getNeighbors(final int row, final int col) {
+    //     ArrayList<int[]> neighbors = new ArrayList<>();
+    //     int rowStart = Math.max(row - 1, 0);
+    //     int rowEnd = Math.min(row + 1, ROWS - 1);
+    //     int colStart = Math.max(col - 1, 0);
+    //     int colEnd = Math.min(col + 1, COLUMNS - 1);
+
+    //     for (int curRow = rowStart; curRow <= rowEnd; curRow++) {
+    //         for (int curCol = colStart; curCol <= colEnd; curCol++) {
+    //             if (curRow != row || curCol != col) {
+    //                 neighbors.add(new int[] {curRow, curCol});
+    //             }
+    //         }
+    //     }
+
+    //     return neighbors;
+    // }
 }
