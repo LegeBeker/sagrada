@@ -70,6 +70,7 @@ public class Game extends Observable {
         GameDB.assignPublicObjectivecards(thisGameID);
 
         Die.createGameOffer(thisGameID);
+        Board.createBoards(newGame);
 
         return newGame;
     }

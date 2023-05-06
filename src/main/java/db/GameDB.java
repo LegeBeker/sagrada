@@ -36,7 +36,7 @@ public final class GameDB {
     public static List<Map<String, String>> createGame(final String time) {
         Database db = Database.getInstance();
 
-        String sql = "INSERT INTO game (creationDate, current_roundID) VALUE(?, 0);";
+        String sql = "INSERT INTO game (creationDate, current_roundID) VALUE(?, 1);";
         String[] params = {time};
 
         db.exec(sql, params);

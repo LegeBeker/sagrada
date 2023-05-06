@@ -75,8 +75,7 @@ public class PatternCard {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 if (validateMove(board, dieValue, dieColor, col, row)) {
-                    int[] move = {row, col};
-                    possibleMoves.add(move);
+                    possibleMoves.add(new int[]{row, col});
                 }
             }
         }
@@ -142,16 +141,14 @@ public class PatternCard {
 
     public ArrayList<int[]> getNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
-        int rowStart = Math.max(row - 1, 0);
-        int rowEnd = Math.min(row + 1, ROWS - 1);
-        int colStart = Math.max(col - 1, 0);
-        int colEnd = Math.min(col + 1, COLUMNS - 1);
+        int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-        for (int curRow = rowStart; curRow <= rowEnd; curRow++) {
-            for (int curCol = colStart; curCol <= colEnd; curCol++) {
-                if (curRow != row || curCol != col) {
-                    neighbors.add(new int[] {curRow, curCol});
-                }
+        for (int[] offset : offsets) {
+            int neighborRow = row + offset[0];
+            int neighborCol = col + offset[1];
+
+            if (neighborRow >= 1 && neighborRow <=  ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
+                neighbors.add(new int[]{neighborRow, neighborCol});
             }
         }
 
