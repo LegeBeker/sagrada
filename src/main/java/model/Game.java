@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.java.db.GameDB;
-import main.java.db.MessageDB;
 import main.java.db.PatternCardDB;
 import main.java.enums.PlayStatusEnum;
 import main.java.pattern.Observable;
@@ -241,9 +240,5 @@ public class Game extends Observable {
 
     public ArrayList<ToolCard> getToolCards() {
         return ToolCard.getToolCards(idGame);
-    }
-
-    public List<GameMessage> getMessages() {
-        return MessageDB.getMessages(this.idGame);
     }
 }
