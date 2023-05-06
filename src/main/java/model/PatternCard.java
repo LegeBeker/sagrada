@@ -156,22 +156,4 @@ public class PatternCard {
 
         return neighbors;
     }
-
-    // public ArrayList<int[]> getNeighbors(final int row, final int col) {
-    //     ArrayList<int[]> neighbors = new ArrayList<>();
-    //     int rowStart = Math.max(row - 1, 0);
-    //     int rowEnd = Math.min(row + 1, ROWS - 1);
-    //     int colStart = Math.max(col - 1, 0);
-    //     int colEnd = Math.min(col + 1, COLUMNS - 1);
-
-    //     for (int curRow = rowStart; curRow <= rowEnd; curRow++) {
-    //         for (int curCol = colStart; curCol <= colEnd; curCol++) {
-    //             if (curRow != row || curCol != col) {
-    //                 neighbors.add(new int[] {curRow, curCol});
-    //             }
-    //         }
-    //     }
-
-    //     return neighbors;
-    // }
 }
