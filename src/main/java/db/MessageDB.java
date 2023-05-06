@@ -1,7 +1,6 @@
 package main.java.db;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,5 +32,4 @@ public final class MessageDB {
 
         return db.exec(sql, params);
     }
- 
 }
