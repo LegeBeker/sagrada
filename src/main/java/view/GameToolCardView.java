@@ -6,12 +6,10 @@ import main.java.controller.ViewController;
 import main.java.model.ToolCard;
 
 public class GameToolCardView extends ImageView {
-    private ToolCard toolCard;
-    private Image imageToolCard;
-
+    private final ToolCard toolCard;
+    private final Image imageToolCard;
     private final int width = 150;
     private final int height = 200;
-
     private final double scaleIncrease = 1.75;
     private final int offset = 100;
 
@@ -19,35 +17,36 @@ public class GameToolCardView extends ImageView {
     private static GameToolCardView selectedToolCardView = null;
 
     public GameToolCardView(final ViewController view, final ToolCard toolCard) {
+        this.toolCard = toolCard;
         this.imageToolCard = new Image(
                 "file:resources/img/toolcards/" + toolCard.getName().toLowerCase().replace(" ", "-") + ".png");
 
-        this.setFitWidth(this.width);
-        this.setFitHeight(this.height);
-
-        this.setImage(this.imageToolCard);
-
-//        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, offset);
-
+        this.setFitWidth(width);
+        this.setFitHeight(height);
+        this.setImage(imageToolCard);
+        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, offset);
         this.setOnMouseClicked(event -> {
             if (!isSelected) {
                 if (selectedToolCardView != null) {
                     selectedToolCardView.removeSelection();
-                    System.out.println(selectedToolCardView.getToolCard().getName() + " has been deselected.");
+                    String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCard());
+                    System.out.println(deselectedMethodName + "() has been deselected.");
                 }
                 this.addSelection();
                 selectedToolCardView = this;
-                System.out.println(toolCard.getName() + " has been selected.");
+                String methodName = getSelectedMethodName(toolCard);
+                System.out.println(methodName + "() has been selected.");
             } else {
                 removeSelection();
                 selectedToolCardView = null;
-                System.out.println(toolCard.getName() + " has been deselected.");
+                String deselectedMethodName = getDeselectedMethodName(toolCard);
+                System.out.println(deselectedMethodName + "() has been deselected.");
             }
         });
     }
 
     private void addSelection() {
-        this.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+        this.setStyle("-fx-border-color: red; -fx-border-width: 100px;");
         isSelected = true;
     }
 
@@ -60,5 +59,13 @@ public class GameToolCardView extends ImageView {
         return toolCard;
     }
 
+    private String getSelectedMethodName(ToolCard toolCard) {
+        String methodName = toolCard.getName().replaceAll("[^a-zA-Z0-9]", "");
+        return Character.toLowerCase(methodName.charAt(0)) + methodName.substring(1);
+    }
 
+    private String getDeselectedMethodName(ToolCard toolCard) {
+        String deselectedMethodName = toolCard.getName().replaceAll("[^a-zA-Z0-9]", "");
+        return Character.toLowerCase(deselectedMethodName.charAt(0)) + deselectedMethodName.substring(1);
+    }
 }
