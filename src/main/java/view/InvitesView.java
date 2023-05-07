@@ -50,6 +50,7 @@ public class InvitesView extends HBox {
                     setStyle("");
                 } else if (!acc.getInviteable()) {
                     setDisable(true);
+                    setStyle("-fx-background-color: #9e9e9e;");
                 } else {
                     setStyle("");
                 }

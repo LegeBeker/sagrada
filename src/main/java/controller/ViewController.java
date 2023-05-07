@@ -36,7 +36,6 @@ public class ViewController extends Scene {
     private AccountController accountController;
     private GameController gameController;
     private PatternCardController patternCardController;
-    private PlayerController playerController;
 
     private EffectsController effectsController;
 
@@ -165,9 +164,5 @@ public class ViewController extends Scene {
 
     public PatternCardController getPatternCardController() {
         return patternCardController;
-    }
-
-    public PlayerController getPlayerController() {
-        return playerController;
     }
 }
