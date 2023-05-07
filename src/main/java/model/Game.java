@@ -69,6 +69,9 @@ public class Game extends Observable {
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);
 
+        Die.createGameOffer(thisGameID);
+        Board.createBoards(newGame);
+
         return newGame;
     }
 
@@ -90,7 +93,7 @@ public class Game extends Observable {
     }
 
     public ArrayList<Die> getOffer() {
-        return Die.getOffer(idGame);
+        return Die.getOffer(idGame, currentRound);
     }
 
     public ArrayList<Die> getRoundTrack() {
@@ -202,6 +205,15 @@ public class Game extends Observable {
         return game;
     }
 
+    public static Game update(final Game game) {
+        Map<String, String> values = GameDB.get(game.idGame);
+
+        game.turnIdPlayer = Integer.parseInt(values.get("turn_idplayer"));
+        game.currentRound = Integer.parseInt(values.get("current_roundID"));
+
+        return game;
+    }
+
     public StringProperty turnPlayerUsernameProperty() {
         return new SimpleStringProperty(getTurnPlayer().getUsername());
     }
@@ -212,7 +224,7 @@ public class Game extends Observable {
     }
 
     public void getNewOffer() {
-        Die.putOffer(idGame, players.size());
+        Die.getNewOffer(idGame, currentRound, players.size());
         notifyObservers();
     }
 

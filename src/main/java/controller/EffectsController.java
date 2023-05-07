@@ -77,8 +77,10 @@ public class EffectsController {
 
     public void displayMessageBox(final Label box, final String message, final Boolean error) {
         if (error) {
+            box.getStyleClass().remove("message-box");
             box.getStyleClass().add("error-box");
         } else {
+            box.getStyleClass().remove("error-box");
             box.getStyleClass().add("message-box");
         }
 

@@ -1,5 +1,9 @@
 package main.java.controller;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -44,6 +48,8 @@ public class ViewController extends Scene {
 
     private final int logoWidth = 300;
 
+    private static final int REFRESHRATE = 3000;
+
     public ViewController() {
         super(new Pane());
 
@@ -53,7 +59,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor) };
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -138,6 +144,15 @@ public class ViewController extends Scene {
         if (game.playerHasChoosenPatternCard(getAccountController().getAccount().getUsername())) {
             GameView gameView = new GameView(this, game);
             changeView(gameView);
+
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                public void run() {
+                    Platform.runLater(() -> {
+                        game.notifyObservers();
+                    });
+                }
+            }, 0, REFRESHRATE);
         } else {
             openPatternCardSelectionView(game);
         }
