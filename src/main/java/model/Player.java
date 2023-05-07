@@ -127,6 +127,17 @@ public class Player {
         return mapToPlayer(PlayerDB.get(idPlayer));
     }
 
+    public static ArrayList<Player> getInvites(final String username) {
+        ArrayList<Player> players = new ArrayList<Player>();
+
+        for (Map<String, String> playerMap : PlayerDB.getAll(username)) {
+            Player player = mapToPlayer(playerMap);
+            players.add(player);
+        }
+
+        return players;
+    }
+
     public boolean acceptInvite() {
         return PlayerDB.acceptInvite(this.idGame, this.username);
     }
