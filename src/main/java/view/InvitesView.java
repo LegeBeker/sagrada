@@ -49,7 +49,6 @@ public class InvitesView extends HBox {
                 if (acc == null) {
                     setStyle("");
                 } else if (!acc.getInviteable()) {
-                    setDisable(true);
                     setStyle("-fx-background-color: #9e9e9e;");
                 } else {
                     setStyle("");
@@ -66,6 +65,13 @@ public class InvitesView extends HBox {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Account acc = this.accountsView.getSelectionModel().getSelectedItem();
+                if (acc == null) {
+                    return;
+                }
+                if (!acc.getInviteable()) {
+                    this.view.displayError("Je wacht nog op een antwoord van deze speler");
+                    return;
+                }
                 if (this.view.getAccountController().getAccount().getUsername().equals(acc.getUsername())) {
                     this.view.displayError("Je kan jezelf niet uitnodigen");
                     return;
