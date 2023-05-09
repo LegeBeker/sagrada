@@ -14,6 +14,7 @@ public class GameView extends BorderPane {
         this.game = game;
 
         BorderPane left = new BorderPane();
+        left.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
 
         left.setTop(new GameScoreView(view, game));
         left.setBottom(new GameButtonsView(view, game));
