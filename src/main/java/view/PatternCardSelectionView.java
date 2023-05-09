@@ -3,8 +3,6 @@ package main.java.view;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -28,15 +26,11 @@ public class PatternCardSelectionView extends BorderPane {
     private final ViewController view;
     private final Player player;
 
-    private final Background background = new Background(new BackgroundFill(Color.web("#334564"), null, null));
-
     public PatternCardSelectionView(final ViewController view, final Player player) {
         super();
         this.view = view;
         this.flowPane = new FlowPane();
         this.player = player;
-
-        this.setBackground(background);
 
         Text text = new Text("Patroonkaart kiezen");
         text.setStyle("-fx-font-size: 40px");
@@ -61,6 +55,8 @@ public class PatternCardSelectionView extends BorderPane {
         this.buttonPane = new StackPane(buttonBack);
         this.buttonPane.setPadding(new Insets(0, 0, padding, 0));
         this.setBottom(this.buttonPane);
+
+        this.setBackground(view.getBackground());
     }
 
     private VBox patternCardSelect(final PatternCard patternCard) {

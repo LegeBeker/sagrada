@@ -24,12 +24,16 @@ public class PatternCardView extends BorderPane implements Observer {
     private static final int RECTANGLE = 50;
     private static final int PADDING = 10;
 
+    private static final int EASY = 3;
+    private static final int MEDIUM = 4;
+    private static final int HARD = 5;
+    private static final int VERYHARD = 6;
+
     private final int width = 300;
     private final int height = 300;
 
     private final GridPane grid = new GridPane();
     private final Text cardTopText = new Text();
-    private final Text cardDifficulty = new Text();
 
     private final ViewController view;
     private final PatternCard patternCard;
@@ -41,7 +45,7 @@ public class PatternCardView extends BorderPane implements Observer {
         this.player = player;
 
         this.setPrefSize(width, height);
-        this.getStyleClass().add("background");
+        this.getStyleClass().add("patterncard");
 
         this.update();
         grid.setPadding(new Insets(0, PADDING, PADDING, 0));
@@ -55,15 +59,45 @@ public class PatternCardView extends BorderPane implements Observer {
         if (player == null) {
             cardTopText.setText(patternCard.getName());
 
-            cardDifficulty.setText("Moeilijkheid: " + patternCard.getDifficulty());
-            TextFlow cardDifficultyFlow = new TextFlow(cardDifficulty);
-            cardDifficultyFlow.setPadding(new Insets(0, PADDING, PADDING, PADDING));
+            Text cardDifficulty = new Text("Moeilijkheid: ");
             cardDifficulty.setFill(Color.WHITE);
+
+            String dots = "";
+            for (int i = 0; i < patternCard.getDifficulty(); i++) {
+                dots += " • ";
+            }
+            Text cardDifficultyDots = new Text(dots);
+            cardDifficultyDots.setStyle("-fx-font-weight: bold;");
+
+            switch (patternCard.getDifficulty()) {
+                case EASY:
+                    cardDifficultyDots.setFill(Color.GREEN);
+                    break;
+                case MEDIUM:
+                    cardDifficultyDots.setFill(Color.YELLOW);
+                    break;
+                case HARD:
+                    cardDifficultyDots.setFill(Color.ORANGE);
+                    break;
+                case VERYHARD:
+                    cardDifficultyDots.setFill(Color.RED);
+                    break;
+                default:
+                    cardDifficultyDots.setFill(Color.WHITE);
+                    break;
+            }
+
+            TextFlow cardDifficultyFlow = new TextFlow(cardDifficulty, cardDifficultyDots);
+            cardDifficultyFlow.setPadding(new Insets(0, PADDING, PADDING, PADDING));
+
+            this.setStyle("-fx-background-color: black;");
 
             this.setBottom(cardDifficultyFlow);
         } else {
             cardTopText.setText(player.getUsername());
             player.getGame().addObserver(this);
+            Color playerColor = player.getColor().deriveColor(0, 1, 0.2, 1);
+            this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
         }
 
         grid.setHgap(PADDING);
@@ -111,7 +145,7 @@ public class PatternCardView extends BorderPane implements Observer {
             stackPane = new StackPane();
         }
         stackPane.getChildren().add(node);
-        node.setStyle("-fx-border-color: black;");
+        node.setStyle("-fx-border-color: transparent;");
 
         if (this.player != null && this.player.getBoard().getField(row, col) != null) {
             Die die = this.player.getBoard().getField(row, col);

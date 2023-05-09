@@ -3,11 +3,8 @@ package main.java.view;
 import java.util.ArrayList;
 
 import javafx.geometry.Pos;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Game;
 import main.java.model.Player;
@@ -23,12 +20,9 @@ public class GameBoardsView extends HBox {
 
     private GridPane grid = new GridPane();
 
-    private final Background background = new Background(new BackgroundFill(Color.web("#334564"), null, null));
-
     public GameBoardsView(final ViewController view, final Game game) {
         this.view = view;
         this.game = game;
-        this.setBackground(background);
 
         showPlayerGameboards();
 
@@ -43,7 +37,7 @@ public class GameBoardsView extends HBox {
 
     private void showPlayerGameboards() {
         int cardCount = 0;
-        for (Player player : this.game.getPlayers()) {
+        for (Player player : this.game.getPlayers(view.getAccountController().getAccount().getUsername())) {
             if (player.getPatternCard() == null) {
                 continue; // skip players without a pattern card
             }
@@ -62,8 +56,7 @@ public class GameBoardsView extends HBox {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
         moves.forEach((move) -> {
             patternCardView.getGrid().getChildren().forEach((cell) -> {
-                int[] location = {patternCardView.getGrid().getColumnIndex(cell),
-                        patternCardView.getGrid().getRowIndex(cell)};
+                int[] location = {GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell)};
                 if (move[0] == location[0] && move[1] == location[1]) {
                     cell.setStyle("-fx-border-color: #00FFBF;");
                 }
@@ -74,7 +67,7 @@ public class GameBoardsView extends HBox {
     public void cleanTargets() {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
         patternCardView.getGrid().getChildren().forEach((cell) -> {
-            cell.setStyle("-fx-border-color: black;");
+            cell.setStyle("-fx-border-color: transparent;");
         });
     }
 }
