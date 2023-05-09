@@ -40,7 +40,7 @@ public class Message extends Observable {
 
     }
 
-    public static boolean createMessage(final String message, final Player player, final Timestamp time) {
+    public static boolean createMessage(final String message, final Player player, final String time) {
         return MessageDB.createMessage(message, player, time);
     }
 

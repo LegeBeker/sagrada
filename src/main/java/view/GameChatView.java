@@ -50,9 +50,12 @@ public class GameChatView extends VBox implements Observer {
         });
 
         sendButton.setOnAction(e -> {
-            view.getMessageController().sendMessage(textInput.getText(), view, game);
-
-            textInput.setText("");
+            Boolean send = view.getMessageController().sendMessage(textInput.getText(), view, game);
+            if (send) {
+                textInput.setText("");
+            } else {
+                textInput.setStyle("-fx-border-color: red;");
+            }
         });
 
         chatInput.getChildren().addAll(textInput, sendButton);

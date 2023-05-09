@@ -1,6 +1,5 @@
 package main.java.db;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +11,7 @@ public final class MessageDB {
     }
     // Create methods to add messages to the database
     public static boolean createMessage(final String message, final Player player,
-            final Timestamp time) {
+            final String time) {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO chatline (idPlayer, time, message) VALUES (?, ?, ?);";
