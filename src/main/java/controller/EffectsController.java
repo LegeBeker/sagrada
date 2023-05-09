@@ -18,7 +18,7 @@ public class EffectsController {
     private final double messageAnimation = 0.5;
 
     public void add3DHoverEffect(final Node node, final int width, final int height, final double scaleIncrease,
-            final int pixelOffset) {
+            final int pixelOffsetY, final int pixelOffsetX) {
         PerspectiveTransform perspectiveTransform = new PerspectiveTransform();
 
         resetPerspectiveTransform(perspectiveTransform, width, height);
@@ -50,7 +50,8 @@ public class EffectsController {
 
         node.setOnMouseEntered(event -> {
             TranslateTransition tt = new TranslateTransition(Duration.millis(TRANSITION_DURATION), node);
-            tt.setToY(-pixelOffset);
+            tt.setToY(-pixelOffsetY);
+            tt.setToX(-pixelOffsetX);
 
             ScaleTransition st = new ScaleTransition(Duration.millis(TRANSITION_DURATION), node);
             st.setToX(scaleIncrease);
@@ -63,6 +64,7 @@ public class EffectsController {
         node.setOnMouseExited(event -> {
             TranslateTransition tt = new TranslateTransition(Duration.millis(TRANSITION_DURATION), node);
             tt.setToY(0);
+            tt.setToX(0);
 
             ScaleTransition st = new ScaleTransition(Duration.millis(TRANSITION_DURATION), node);
             st.setToX(1);

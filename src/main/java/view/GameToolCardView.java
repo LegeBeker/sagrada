@@ -23,6 +23,6 @@ public class GameToolCardView extends ImageView {
 
         this.setImage(this.imageToolCard);
 
-        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, offset);
+        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, offset, 0);
     }
 }
