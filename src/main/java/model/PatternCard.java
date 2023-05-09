@@ -94,7 +94,7 @@ public class PatternCard {
             return false;
         }
 
-        if (!this.neighborsNotEmpty(rowIndex, columnIndex, board)) {
+        if (this.neighborsEmpty(rowIndex, columnIndex, board)) {
             return false;
         }
 
@@ -143,16 +143,16 @@ public class PatternCard {
         return true;
     }
 
-    private boolean neighborsNotEmpty(final int row, final int col, final Board board) {
+    private boolean neighborsEmpty(final int row, final int col, final Board board) {
         ArrayList<int[]> neighbors = getNeighbors(row, col, true);
 
         for (int[] neighbor : neighbors) {
             if (board.getField(neighbor[0], neighbor[1]) != null) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     public ArrayList<int[]> getNeighbors(final int row, final int col, final boolean includeDiagonals) {
@@ -160,9 +160,9 @@ public class PatternCard {
         int[][] offsets;
 
         if (includeDiagonals) {
-            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+            offsets = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
         } else {
-            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1 }};
+            offsets = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1 }};
         }
 
         for (int[] offset : offsets) {
