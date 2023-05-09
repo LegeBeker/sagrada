@@ -61,6 +61,7 @@ public class RoundTrackView extends StackPane implements Observer {
             group.getChildren().add(rectangle);
             roundGroups.add(group);
             Text text = new Text(Integer.toString(i + 1));
+            text.setFill(Color.WHITE);
             TextFlow textFlow = new TextFlow(text);
             textFlow.setPadding(new Insets(TEXTPADDING));
             textFlow.setTextAlignment(TextAlignment.CENTER);
