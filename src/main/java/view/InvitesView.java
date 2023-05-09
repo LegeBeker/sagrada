@@ -20,8 +20,8 @@ public class InvitesView extends HBox {
 
     private TableView<Account> selectionTable;
     private ArrayList<Account> selectedAccounts = new ArrayList<Account>();
-    private final double selectionTableHeight = 120;
-    private final int maxSizeSelection = 3;
+    private static final double SELECTIONTABLEHEIGHT = 120;
+    private static final int MAXSIZESELECTION = 3;
 
     public InvitesView(final ViewController view) {
         this.view = view;
@@ -32,7 +32,7 @@ public class InvitesView extends HBox {
 
         this.selectionTable = new TableView<Account>();
         this.selectionTable.setPlaceholder(new Text("Geen accounts geselecteerd"));
-        this.selectionTable.setMaxHeight(selectionTableHeight);
+        this.selectionTable.setMaxHeight(SELECTIONTABLEHEIGHT);
 
         TableColumn<Account, String> idUsernameSelected = new TableColumn<>("Username");
         idUsernameSelected.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -76,7 +76,7 @@ public class InvitesView extends HBox {
                     this.view.displayError("Je kan jezelf niet uitnodigen");
                     return;
                 }
-                if (!selectedAccounts.contains(acc) && selectedAccounts.size() < maxSizeSelection) {
+                if (!selectedAccounts.contains(acc) && selectedAccounts.size() < MAXSIZESELECTION) {
                     selectedAccounts.add(acc);
                     this.selectionTable.getItems().add(acc);
                 }

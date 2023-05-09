@@ -29,8 +29,8 @@ public class PatternCardView extends BorderPane implements Observer {
     private static final int HARD = 5;
     private static final int VERYHARD = 6;
 
-    private final int width = 300;
-    private final int height = 300;
+    private static final int WIDTH = 300;
+    private static final int HEIGHT = 300;
 
     private final GridPane grid = new GridPane();
     private final Text cardTopText = new Text();
@@ -44,7 +44,7 @@ public class PatternCardView extends BorderPane implements Observer {
         this.patternCard = patternCard;
         this.player = player;
 
-        this.setPrefSize(width, height);
+        this.setPrefSize(WIDTH, HEIGHT);
         this.getStyleClass().add("patterncard");
 
         this.update();

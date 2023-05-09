@@ -8,21 +8,21 @@ import main.java.model.ToolCard;
 public class GameToolCardView extends ImageView {
     private Image imageToolCard;
 
-    private final int width = 150;
-    private final int height = 200;
+    private static final int WIDTH = 150;
+    private static final int HEIGHT = 200;
 
-    private final double scaleIncrease = 1.75;
-    private final int offset = 100;
+    private static final double SCALEINCREASE = 1.75;
+    private static final int OFFSET = 100;
 
     public GameToolCardView(final ViewController view, final ToolCard toolCard) {
         this.imageToolCard = new Image("file:resources/img/toolcards/"
                 + toolCard.getName().toLowerCase().replace(" ", "-") + ".png");
 
-        this.setFitWidth(this.width);
-        this.setFitHeight(this.height);
+        this.setFitWidth(WIDTH);
+        this.setFitHeight(HEIGHT);
 
         this.setImage(this.imageToolCard);
 
-        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, offset, 0);
+        view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, OFFSET, 0);
     }
 }

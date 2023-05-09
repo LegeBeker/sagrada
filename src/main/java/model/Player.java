@@ -25,8 +25,7 @@ public class Player {
     private Game game;
     private Board board;
 
-    private final int defaultScore = -20;
-    private int score = defaultScore;
+    private int score;
 
     public static Player createPlayer(final int gameID, final String username, final String playerStatus,
             final String privateColor) {
@@ -183,6 +182,7 @@ public class Player {
         player.username = playerMap.get("username");
         player.idGame = Integer.parseInt(playerMap.get("idgame"));
         player.playStatus = playerMap.get("playstatus");
+        player.score = Integer.parseInt(playerMap.get("score"));
         if (playerMap.get("seqnr") != null) {
             player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
         }

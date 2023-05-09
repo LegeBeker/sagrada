@@ -8,8 +8,8 @@ import main.java.model.ToolCard;
 
 public class GameToolCardsView extends FlowPane {
 
-    private final int gap = 10;
-    private final int padding = 5;
+    private static final int GAP = 10;
+    private static final int PADDING = 5;
 
     public GameToolCardsView(final ViewController view, final Game game) {
 
@@ -17,7 +17,7 @@ public class GameToolCardsView extends FlowPane {
             this.getChildren().add(new GameToolCardView(view, toolCard));
         }
 
-        this.setPadding(new Insets(0, 0, padding, padding));
-        this.setHgap(gap);
+        this.setPadding(new Insets(0, 0, PADDING, PADDING));
+        this.setHgap(GAP);
     }
 }

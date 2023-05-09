@@ -12,8 +12,8 @@ import main.java.model.Player;
 public class GameBoardsView extends HBox {
 
     private static final int GRIDGAP = 20;
-    private final int maxRows = 2;
-    private final int maxCols = 2;
+    private static final int MAXROWS = 2;
+    private static final int MAXCOLS = 2;
 
     private ViewController view;
     private Game game;
@@ -42,12 +42,12 @@ public class GameBoardsView extends HBox {
                 continue; // skip players without a pattern card
             }
 
-            if (cardCount >= maxRows * maxCols) {
+            if (cardCount >= MAXROWS * MAXCOLS) {
                 break; // exit the loop once max grid size is reached
             }
 
-            grid.add(new PatternCardView(this.view, player.getPatternCard(), player), cardCount % maxCols,
-                    cardCount / maxCols);
+            grid.add(new PatternCardView(this.view, player.getPatternCard(), player), cardCount % MAXCOLS,
+                    cardCount / MAXCOLS);
             cardCount++;
         }
     }

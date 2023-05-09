@@ -19,20 +19,20 @@ import main.java.model.Game;
 import main.java.pattern.Observer;
 
 public class RoundTrackView extends StackPane implements Observer {
-    private final int padding = 5;
-    private final int size = 32;
-    private final int textPadding = 2;
-    private final int rounds = 10;
-    private final int rowAmount = 5;
-    private final int rounding = 20;
+    private static final int PADDING = 5;
+    private static final int SIZE = 32;
+    private static final int TEXTPADDING = 2;
+    private static final int ROUNDS = 10;
+    private static final int ROWAMOUNT = 5;
+    private static final int ROUNDING = 20;
 
-    private final int width = 190;
-    private final int height = 120;
+    private static final int WIDTH = 190;
+    private static final int HEIGHT = 120;
 
-    private final double scaleIncrease = 1.75;
+    private static final double SCALEINCREASE = 1.75;
 
-    private final int leftAnimateOffset = 200;
-    private final int bottomAnimateOffset = 100;
+    private static final int LEFTANIMATEOFFSET = 200;
+    private static final int BOTTOMANIMATEOFFSET = 100;
 
     private Game game;
 
@@ -42,46 +42,46 @@ public class RoundTrackView extends StackPane implements Observer {
         this.game = game;
         this.roundGroups = new ArrayList<>();
 
-        this.setMaxSize(width, height);
-        this.setPadding(new Insets(padding));
+        this.setMaxSize(WIDTH, HEIGHT);
+        this.setPadding(new Insets(PADDING));
 
         GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(padding));
-        gridPane.setVgap(padding);
-        gridPane.setHgap(padding);
+        gridPane.setPadding(new Insets(PADDING));
+        gridPane.setVgap(PADDING);
+        gridPane.setHgap(PADDING);
 
         this.setAlignment(Pos.CENTER_RIGHT);
         gridPane.setAlignment(Pos.CENTER_RIGHT);
 
-        for (int i = 0; i < rounds; i++) {
+        for (int i = 0; i < ROUNDS; i++) {
             VBox vbox = new VBox();
             Group group = new Group();
-            Rectangle rectangle = new Rectangle(size, size);
+            Rectangle rectangle = new Rectangle(SIZE, SIZE);
             rectangle.setFill(Color.BEIGE);
             group.getChildren().add(rectangle);
             roundGroups.add(group);
             Text text = new Text(Integer.toString(i + 1));
             TextFlow textFlow = new TextFlow(text);
-            textFlow.setPadding(new Insets(textPadding));
+            textFlow.setPadding(new Insets(TEXTPADDING));
             textFlow.setTextAlignment(TextAlignment.CENTER);
             vbox.setAlignment(Pos.CENTER);
             vbox.getChildren().addAll(group, textFlow);
-            if (i >= rowAmount) {
-                gridPane.add(vbox, i - rowAmount, 2);
+            if (i >= ROWAMOUNT) {
+                gridPane.add(vbox, i - ROWAMOUNT, 2);
             } else {
                 gridPane.add(vbox, i, 1);
             }
         }
 
-        Rectangle rectangle = new Rectangle(width, height);
+        Rectangle rectangle = new Rectangle(WIDTH, HEIGHT);
         rectangle.setFill(Color.RED);
         rectangle.setOpacity(0.5);
-        rectangle.setArcHeight(rounding);
-        rectangle.setArcWidth(rounding);
+        rectangle.setArcHeight(ROUNDING);
+        rectangle.setArcWidth(ROUNDING);
         this.getChildren().add(rectangle);
         this.getChildren().add(gridPane);
 
-        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, bottomAnimateOffset, leftAnimateOffset);
+        view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, BOTTOMANIMATEOFFSET, LEFTANIMATEOFFSET);
 
         game.addObserver(this);
 

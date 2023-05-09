@@ -21,15 +21,15 @@ public class StatsView extends VBox {
 
     private Button buttonBack;
 
-    private final int buttonHeight = 25;
-    private final int buttonWidth = 200;
+    private static final int BUTTONHEIGHT = 25;
+    private static final int BUTTONWIDTH = 200;
 
-    private final int textTitleInset = 10;
+    private static final int TEXTTITLEINSET = 10;
 
-    private final int padding = 200;
-    private final int spacing = 20;
+    private static final int PADDING = 200;
+    private static final int SPACING = 20;
 
-    private final int yValueText = 20;
+    private static final int YVALUETEXT = 20;
 
     public StatsView(final ViewController view) {
         this.view = view;
@@ -42,27 +42,27 @@ public class StatsView extends VBox {
         text.setFill(Color.web("#ffffff"));
 
         this.textTitle = new StackPane(text);
-        this.textTitle.setPadding(new Insets(textTitleInset, 0, this.spacing, 0));
+        this.textTitle.setPadding(new Insets(TEXTTITLEINSET, 0, SPACING, 0));
 
         Text text2 = new Text("Gebruikersnaam:");
         text2.setStyle("-fx-font-size: 20px");
         text2.setFill(Color.web("#ffffff"));
-        text2.setY(yValueText);
+        text2.setY(YVALUETEXT);
 
         this.accountsView = new AccountsView(view);
 
         this.buttonBack = new Button("Terug");
-        this.buttonBack.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonBack.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonBack.setOnAction(e -> this.view.openMenuView());
 
         this.boxButtons = new HBox();
         this.boxButtons.getChildren().addAll(this.buttonBack);
 
         this.boxButtons.setAlignment(Pos.CENTER);
-        this.boxButtons.setSpacing(this.spacing);
-        this.boxButtons.setPadding(new Insets(this.spacing, 0, this.spacing, 0));
+        this.boxButtons.setSpacing(SPACING);
+        this.boxButtons.setPadding(new Insets(SPACING, 0, SPACING, 0));
 
-        this.setPadding(new Insets(0, this.padding, 0, this.padding));
+        this.setPadding(new Insets(0, PADDING, 0, PADDING));
 
         this.getChildren().addAll(this.textTitle, this.accountsView, this.boxButtons);
     }

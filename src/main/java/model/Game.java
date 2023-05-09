@@ -25,7 +25,7 @@ public class Game extends Observable {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
-    private final int uniqueCardsPerPlayer = 4;
+    private static final int CARDSPERPLAYER = 4;
 
     private boolean helpFunction;
 
@@ -84,7 +84,7 @@ public class Game extends Observable {
 
     private void addPatternCards(final ArrayList<PatternCard> cards) {
         for (Player pl : players) {
-            for (int i = 0; i < uniqueCardsPerPlayer; i++) {
+            for (int i = 0; i < CARDSPERPLAYER; i++) {
                 PatternCardDB.setPatternCardOptions(cards.remove(0).getIdPatternCard(), pl.getId());
             }
         }

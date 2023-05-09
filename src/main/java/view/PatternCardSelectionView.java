@@ -20,8 +20,8 @@ public class PatternCardSelectionView extends BorderPane {
     private StackPane textTitle;
     private StackPane buttonPane;
 
-    private final int padding = 50;
-    private final int spacing = 10;
+    private static final int PADDING = 50;
+    private static final int SPACING = 10;
 
     private final ViewController view;
     private final Player player;
@@ -37,7 +37,7 @@ public class PatternCardSelectionView extends BorderPane {
         text.setFill(Color.web("#ffffff"));
 
         this.textTitle = new StackPane(text);
-        textTitle.setPadding(new Insets(padding, 0, 0, 0));
+        textTitle.setPadding(new Insets(PADDING, 0, 0, 0));
         this.setTop(textTitle);
 
         player.getPatternCardOptions().forEach(patternCard -> {
@@ -53,7 +53,7 @@ public class PatternCardSelectionView extends BorderPane {
         Button buttonBack = new Button("Terug");
         buttonBack.setOnAction(e -> view.openGamesView());
         this.buttonPane = new StackPane(buttonBack);
-        this.buttonPane.setPadding(new Insets(0, 0, padding, 0));
+        this.buttonPane.setPadding(new Insets(0, 0, PADDING, 0));
         this.setBottom(this.buttonPane);
 
         this.setBackground(view.getBackground());
@@ -72,7 +72,7 @@ public class PatternCardSelectionView extends BorderPane {
 
         this.vbox.getChildren().add(button);
         vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(spacing);
+        vbox.setSpacing(SPACING);
         return this.vbox;
     }
 

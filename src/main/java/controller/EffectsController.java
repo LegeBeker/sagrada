@@ -14,8 +14,8 @@ public class EffectsController {
     private static final int TRANSITION_DURATION = 300;
     private static final double PERSPECTIVE_RATIO = 0.2;
 
-    private final double messageTimeout = 2.5;
-    private final double messageAnimation = 0.5;
+    private static final double MESSAGETIMEOUT = 2.5;
+    private static final double MESSAGEANIMATION = 0.5;
 
     public void add3DHoverEffect(final Node node, final int width, final int height, final double scaleIncrease,
             final int pixelOffsetY, final int pixelOffsetX) {
@@ -89,19 +89,19 @@ public class EffectsController {
         box.setText(message);
         box.setVisible(true);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(this.messageTimeout));
+        PauseTransition pause = new PauseTransition(Duration.seconds(MESSAGETIMEOUT));
         pause.setOnFinished(e -> {
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(this.messageAnimation), box);
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(MESSAGEANIMATION), box);
             transition.setFromY(0);
             transition.setToY(-box.getHeight());
 
-            PauseTransition fullAnimation = new PauseTransition(Duration.seconds(this.messageAnimation));
+            PauseTransition fullAnimation = new PauseTransition(Duration.seconds(MESSAGEANIMATION));
             fullAnimation.setOnFinished(ee -> box.setVisible(false));
 
             transition.play();
         });
 
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(this.messageAnimation), box);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(MESSAGEANIMATION), box);
         transition.setFromY(-box.getHeight());
         transition.setToY(0);
 
