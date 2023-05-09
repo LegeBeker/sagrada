@@ -43,7 +43,6 @@ public class RoundTrackView extends StackPane implements Observer {
         this.roundGroups = new ArrayList<>();
 
         this.setMaxSize(width, height);
-        // add margin to this
         this.setPadding(new Insets(padding));
 
         GridPane gridPane = new GridPane();
@@ -74,7 +73,6 @@ public class RoundTrackView extends StackPane implements Observer {
             }
         }
 
-        // add background to this
         Rectangle rectangle = new Rectangle(width, height);
         rectangle.setFill(Color.RED);
         rectangle.setOpacity(0.5);
