@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
 import main.java.db.PatternCardDB;
 import main.java.db.PlayerDB;
 
@@ -15,6 +16,8 @@ public class Player {
 
     private String playStatus;
     private int seqnr;
+
+    private Color color;
 
     private String privateObjCardColor;
     private Integer idPatternCard;
@@ -51,6 +54,14 @@ public class Player {
 
     public String getUsername() {
         return this.username;
+    }
+
+    public void setColor(final Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 
     public Game getGame() {
