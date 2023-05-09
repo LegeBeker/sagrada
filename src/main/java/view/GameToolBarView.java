@@ -15,14 +15,11 @@ public class GameToolBarView extends HBox {
     public GameToolBarView(final ViewController view, final Game game) {
         this.setBackground(background);
 
-        this.getChildren().addAll(new GameToolCardsView(view, game), new GameButtonsView(view, game));
+        this.getChildren().addAll(new GameToolCardsView(view, game),
+                new RoundTrackView(view, game));
 
         this.getChildren().forEach(child -> {
             HBox.setHgrow(child, Priority.ALWAYS);
         });
-
-        RoundTrackView roundTrackView = new RoundTrackView(game);
-
-        this.getChildren().add(roundTrackView);
     }
 }

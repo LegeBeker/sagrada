@@ -3,11 +3,11 @@ package main.java.view;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 import main.java.controller.ViewController;
 import main.java.model.Game;
 
-public class GameButtonsView extends FlowPane {
+public class GameButtonsView extends VBox {
 
     private ViewController view;
 
@@ -47,8 +47,7 @@ public class GameButtonsView extends FlowPane {
         }
 
         this.setPadding(new Insets(padding, padding, padding, padding));
-        this.setHgap(padding);
-        this.setVgap(padding);
+        this.setSpacing(padding);
     }
 
     public void getDice(final Game game) {
