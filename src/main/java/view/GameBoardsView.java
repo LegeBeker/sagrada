@@ -8,8 +8,9 @@ import javafx.scene.layout.HBox;
 import main.java.controller.ViewController;
 import main.java.model.Game;
 import main.java.model.Player;
+import main.java.pattern.Observer;
 
-public class GameBoardsView extends HBox {
+public class GameBoardsView extends HBox implements Observer {
 
     private static final int GRIDGAP = 20;
     private static final int MAXROWS = 2;
@@ -25,6 +26,8 @@ public class GameBoardsView extends HBox {
         this.game = game;
 
         showPlayerGameboards();
+
+        game.addObserver(this);
 
         grid.setHgap(GRIDGAP);
         grid.setVgap(GRIDGAP);
@@ -46,8 +49,13 @@ public class GameBoardsView extends HBox {
                 break; // exit the loop once max grid size is reached
             }
 
-            grid.add(new PatternCardView(this.view, player.getPatternCard(), player), cardCount % MAXCOLS,
-                    cardCount / MAXCOLS);
+            PatternCardView patternCardView = new PatternCardView(this.view, player.getPatternCard(), player);
+            if (player.getUsername().equals(this.game.getTurnPlayer().getUsername())) {
+                patternCardView
+                        .setStyle("-fx-border-color: #00FFBF; -fx-border-width: 1px;" + patternCardView.getStyle());
+            }
+
+            grid.add(patternCardView, cardCount % MAXCOLS, cardCount / MAXCOLS);
             cardCount++;
         }
     }
@@ -69,5 +77,11 @@ public class GameBoardsView extends HBox {
         patternCardView.getGrid().getChildren().forEach((cell) -> {
             cell.setStyle("-fx-border-color: transparent;");
         });
+    }
+
+    @Override
+    public void update() {
+        grid.getChildren().clear();
+        showPlayerGameboards();
     }
 }
