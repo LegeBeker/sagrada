@@ -94,6 +94,10 @@ public class PatternCard {
             return false;
         }
 
+        if (!this.neighborsNotEmpty(rowIndex, columnIndex, board)) {
+            return false;
+        }
+
         if (this.getField(rowIndex, columnIndex).getColor() != null
                 && !dieColor.equals(this.getField(rowIndex, columnIndex).getColor())) {
             return false;
@@ -122,7 +126,7 @@ public class PatternCard {
             final int columnIndex,
             final int dieValue,
             final Color dieColor) {
-        ArrayList<int[]> neighbors = getNeighbors(rowIndex, columnIndex);
+        ArrayList<int[]> neighbors = getNeighbors(rowIndex, columnIndex, false);
 
         for (int[] neighbor : neighbors) {
             PatternCardField neighborField = this.getField(neighbor[0], neighbor[1]);
@@ -139,16 +143,34 @@ public class PatternCard {
         return true;
     }
 
-    public ArrayList<int[]> getNeighbors(final int row, final int col) {
+    private boolean neighborsNotEmpty(final int row, final int col, final Board board) {
+        ArrayList<int[]> neighbors = getNeighbors(row, col, true);
+
+        for (int[] neighbor : neighbors) {
+            if (board.getField(neighbor[0], neighbor[1]) != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public ArrayList<int[]> getNeighbors(final int row, final int col, final boolean includeDiagonals) {
         ArrayList<int[]> neighbors = new ArrayList<>();
-        int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        int[][] offsets;
+
+        if (includeDiagonals) {
+            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+        } else {
+            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1 }};
+        }
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
             int neighborCol = col + offset[1];
 
-            if (neighborRow >= 1 && neighborRow <=  ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[]{neighborRow, neighborCol});
+            if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
+                neighbors.add(new int[] {neighborRow, neighborCol});
             }
         }
 
