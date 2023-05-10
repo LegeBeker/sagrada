@@ -53,8 +53,13 @@ public class GameChatView extends VBox implements Observer {
 
         textInput.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                view.getMessageController().sendMessage(textInput.getText(), view, game);
-                textInput.setText("");
+                Boolean send = view.getMessageController().sendMessage(textInput.getText(), view, game);
+                if (send) {
+                    textInput.setText("");
+                    textInput.setStyle(null);
+                } else {
+                    textInput.setStyle("-fx-border-color: red;");
+                }
             }
         });
 
@@ -62,6 +67,7 @@ public class GameChatView extends VBox implements Observer {
             Boolean send = view.getMessageController().sendMessage(textInput.getText(), view, game);
             if (send) {
                 textInput.setText("");
+                textInput.setStyle(null);
             } else {
                 textInput.setStyle("-fx-border-color: red;");
             }
