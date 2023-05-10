@@ -26,12 +26,12 @@ public class DieView extends Group {
 
     private GameOfferView gameOfferView;
 
-    private int value;
+    private int eyes;
     private Color color;
     private int number;
 
-    public DieView(final int value, final Color color, final int number, final Boolean isDraggable) {
-        this.value = value;
+    public DieView(final int eyes, final Color color, final int number, final Boolean isDraggable) {
+        this.eyes = eyes;
         this.color = color;
         this.number = number;
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
@@ -54,7 +54,7 @@ public class DieView extends Group {
                 ClipboardContent content = new ClipboardContent();
                 this.gameOfferView = (GameOfferView) this.getParent();
                 if (gameOfferView.getHelpFunction()) {
-                    gameOfferView.showPossibleMoves(this.value, this.color);
+                    gameOfferView.showPossibleMoves(this.eyes, this.color);
                 }
                 SnapshotParameters sp = new SnapshotParameters();
                 sp.setFill(Color.TRANSPARENT);
@@ -76,8 +76,8 @@ public class DieView extends Group {
         this.getChildren().addAll(rectangle, die, this.addDotsToDie());
     }
 
-    public DieView(final int value) {
-        this.value = value;
+    public DieView(final int eyes) {
+        this.eyes = eyes;
 
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
         rectangle.setFill(Color.WHITE);
@@ -88,7 +88,7 @@ public class DieView extends Group {
     private Group addDotsToDie() {
         ArrayList<Circle> dots = new ArrayList<Circle>();
 
-        switch (Integer.toString(this.value)) {
+        switch (Integer.toString(this.eyes)) {
             case "1":
                 dots.add(createDot(POSITIONMEDIUM, POSITIONMEDIUM));
                 break;
@@ -136,8 +136,8 @@ public class DieView extends Group {
         return new Circle(x, y, DOTRADIUS, Color.BLACK);
     }
 
-    public int getValue() {
-        return this.value;
+    public int getEyes() {
+        return this.eyes;
     }
 
     public Color getColor() {

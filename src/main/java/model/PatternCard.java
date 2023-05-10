@@ -94,7 +94,7 @@ public class PatternCard {
             return false;
         }
 
-        if (this.neighborsEmpty(rowIndex, columnIndex, board)) {
+        if (!board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
             return false;
         }
 
@@ -110,7 +110,7 @@ public class PatternCard {
         }
 
         if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue,
-                dieColor)) {
+                dieColor, board)) {
             return false;
         }
 
@@ -125,17 +125,27 @@ public class PatternCard {
             final int rowIndex,
             final int columnIndex,
             final int dieValue,
-            final Color dieColor) {
+            final Color dieColor,
+            final Board board) {
         ArrayList<int[]> neighbors = getNeighbors(rowIndex, columnIndex, false);
 
         for (int[] neighbor : neighbors) {
             PatternCardField neighborField = this.getField(neighbor[0], neighbor[1]);
+            Die neighborDie = board.getField(neighbor[0], neighbor[1]);
 
             if (neighborField.getColor() != null && dieColor.equals(neighborField.getColor())) {
                 return false;
             }
 
+            if (neighborDie != null && dieColor.equals(neighborDie.getColor())) {
+                return false;
+            }
+
             if (neighborField.getValue() != null && dieValue == neighborField.getValue()) {
+                return false;
+            }
+
+            if (neighborDie != null && dieValue == neighborDie.getEyes()) {
                 return false;
             }
         }
