@@ -25,7 +25,7 @@ public class Message extends Observable {
         String inputDateTime = time;
 
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
         LocalDateTime dateTime = LocalDateTime.parse(inputDateTime, inputFormatter);
         String outputDateTime = dateTime.format(outputFormatter);

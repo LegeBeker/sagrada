@@ -26,7 +26,7 @@ public final class MessageDB {
     public static List<Map<String, String>> getChatMessages(final int gameId) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT * FROM chatline INNER JOIN player ON player.idplayer = chatline.idplayer WHERE player.idgame = ? ORDER BY time ASC;";
+        String sql = "SELECT * FROM chatline INNER JOIN player ON player.idplayer = chatline.idplayer WHERE player.idgame = ? ORDER BY time DESC;";
         String[] params = {Integer.toString(gameId)};
 
         return db.exec(sql, params);

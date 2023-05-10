@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -22,7 +21,6 @@ public class GameChatView extends VBox implements Observer {
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
 
-    private ViewController view;
     private Game game;
 
     private static final int WIDTHCHATVIEW = 300;
@@ -31,14 +29,25 @@ public class GameChatView extends VBox implements Observer {
     public GameChatView(final ViewController view, final Game game) {
         this.setAlignment(Pos.BOTTOM_CENTER);
         this.setMaxWidth(WIDTHCHATVIEW);
-        chatMessageBox.setMaxWidth(WIDTHMESSAGEBOX);
-        this.view = view;
+        this.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
         this.game = game;
+
+        chatMessageBox.setMaxWidth(WIDTHMESSAGEBOX);
+        chatMessageBox.setStyle("-fx-background-color: transparent;");
+
+        ScrollPane chatMessageScrollPane = new ScrollPane(chatMessageBox);
+        chatMessageScrollPane.setMaxWidth(view.getWidth());
+        chatMessageScrollPane.setStyle("-fx-background: transparent;");
+
+        // set background to transparent
+        chatMessageScrollPane.setFitToWidth(true);
+        chatMessageScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        chatMessageScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
         game.addObserver(this);
 
         TextField textInput = new TextField();
-        textInput.setPromptText("Typ je geweldige bericht hier");
+        textInput.setPromptText("Typ hier je bericht");
         HBox.setHgrow(textInput, Priority.ALWAYS);
         Button sendButton = new Button("Verstuur");
 
@@ -61,24 +70,14 @@ public class GameChatView extends VBox implements Observer {
         chatInput.getChildren().addAll(textInput, sendButton);
         chatInput.setAlignment(Pos.CENTER_RIGHT);
 
-        ScrollPane chatMessageScrollPane = new ScrollPane(chatMessageBox);
-        chatMessageScrollPane.setBackground(null);
-        chatMessageScrollPane.setMaxWidth(view.getWidth());
-
-        this.getChildren().add(0, chatMessageScrollPane);
-        this.getChildren().add(1, chatInput);
+        this.getChildren().addAll(chatMessageBox, chatInput);
 
         update();
     }
 
     public void addMessage(final String message, final Player player, final String time) {
-        FlowPane chatMessage;
-        chatMessage = new FlowPane();
-        chatMessage.setBackground(null);
         Text username = new Text(player.getUsername());
-        username.setFill(player.getColor());
-        chatMessageBox.getChildren().add(username);
-        // chatMessageBox.getChildren().add(new TextFlow(new Text("[" + time + "]"), username, new Text(": " + message)));
+        chatMessageBox.getChildren().add(new TextFlow(new Text("[" + time + "] "), username, new Text(": " + message)));
     }
 
     @Override
