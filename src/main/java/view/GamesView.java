@@ -105,10 +105,12 @@ public class GamesView extends VBox {
             if (e.getClickCount() == 2) {
                 Game game = this.table.getSelectionModel().getSelectedItem();
 
-                if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
-                    showInviteAlert(game, view.getGameController().getCurrentPlayer(game.getId()));
-                } else {
-                    this.view.openGameView(game);
+                if (game != null) {
+                    if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
+                        showInviteAlert(game, view.getGameController().getCurrentPlayer(game.getId()));
+                    } else {
+                        this.view.openGameView(game);
+                    }
                 }
             }
         });
