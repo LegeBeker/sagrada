@@ -15,7 +15,6 @@ public class Die {
     private String colorString;
     private int eyes;
     private int roundtrack;
-    private int roundID;
 
     public void setColor(final String color) {
         ColorEnum colorEnum = ColorEnum.fromString(color);
@@ -95,9 +94,6 @@ public class Die {
         die.eyes = Integer.parseInt(dieMap.get("eyes"));
         if (dieMap.get("roundtrack") != null) {
             die.roundtrack = Integer.parseInt(dieMap.get("roundtrack"));
-        }
-        if (dieMap.get("roundid") != null) {
-            die.roundID = Integer.parseInt(dieMap.get("roundid"));
         }
 
         return die;

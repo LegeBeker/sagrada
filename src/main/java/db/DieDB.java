@@ -23,8 +23,9 @@ public final class DieDB {
     public static List<Map<String, String>> getOffer(final int idGame, final int roundID) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT * FROM gamedie WHERE idgame = ? AND roundtrack IS NULL AND roundID = ?";
-
+        String sql = "SELECT gd.* FROM gamedie gd"
+                + " LEFT JOIN playerframefield pff ON gd.idgame = pff.idgame AND gd.dienumber = pff.dienumber AND gd.diecolor = pff.diecolor"
+                + " WHERE gd.idgame = ? AND gd.roundtrack IS NULL AND gd.roundID = ? AND pff.idgame IS NULL";
         String[] params = {Integer.toString(idGame), Integer.toString(roundID)};
 
         return db.exec(sql, params);
@@ -37,7 +38,7 @@ public final class DieDB {
                 + "WHERE idgame = ? AND roundtrack IS NULL AND roundID IS NULL ORDER BY RAND() LIMIT "
                 + Integer.toString(dieAmount);
 
-        String[] params = {Integer.toString(idGame), Integer.toString(idGame)};
+        String[] params = {Integer.toString(roundID), Integer.toString(idGame)};
 
         return db.exec(sql, params);
     }
@@ -58,8 +59,7 @@ public final class DieDB {
 
         String sql = "UPDATE gamedie SET roundtrack = ? WHERE idgame = ? AND dienumber = ?, diecolor = ?";
 
-        String[] params = {Integer.toString(roundID), Integer.toString(idGame), Integer.toString(dieNumber),
-                dieColor};
+        String[] params = {Integer.toString(roundID), Integer.toString(idGame), Integer.toString(dieNumber), dieColor};
 
         db.exec(sql, params);
 
