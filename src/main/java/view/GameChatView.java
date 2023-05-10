@@ -9,15 +9,15 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.Game;
 import main.java.model.Message;
+import main.java.model.Player;
 import main.java.pattern.Observer;
 
 public class GameChatView extends VBox implements Observer {
-
 
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
@@ -25,9 +25,13 @@ public class GameChatView extends VBox implements Observer {
     private ViewController view;
     private Game game;
 
+    private static final int WIDTHCHATVIEW = 300;
+    private static final int WIDTHMESSAGEBOX = 200;
+
     public GameChatView(final ViewController view, final Game game) {
         this.setAlignment(Pos.BOTTOM_CENTER);
-
+        this.setMaxWidth(WIDTHCHATVIEW);
+        chatMessageBox.setMaxWidth(WIDTHMESSAGEBOX);
         this.view = view;
         this.game = game;
 
@@ -60,7 +64,6 @@ public class GameChatView extends VBox implements Observer {
         ScrollPane chatMessageScrollPane = new ScrollPane(chatMessageBox);
         chatMessageScrollPane.setBackground(null);
         chatMessageScrollPane.setMaxWidth(view.getWidth());
-        // Remove the color of the chatMessageScrollPane
 
         this.getChildren().add(0, chatMessageScrollPane);
         this.getChildren().add(1, chatInput);
@@ -68,31 +71,21 @@ public class GameChatView extends VBox implements Observer {
         update();
     }
 
-    public void addMessage(final String message, final String username, final Boolean sender) {
+    public void addMessage(final String message, final Player player, final String time) {
         FlowPane chatMessage;
         chatMessage = new FlowPane();
         chatMessage.setBackground(null);
-        chatMessage.getChildren().add(new Text(username));
-        chatMessage.getChildren().add(new Text(message));
-
-        if (sender) {
-            chatMessage.setAlignment(Pos.CENTER_RIGHT);
-        } else {
-            chatMessage.setAlignment(Pos.CENTER_LEFT);
-        }
-
-        chatMessageBox.getChildren().add(chatMessage);
-    }
-
-    public boolean senderIsLoggedInPlayer(final String username) {
-        return username.equals(view.getAccountController().getAccount().getUsername());
+        Text username = new Text(player.getUsername());
+        username.setFill(player.getColor());
+        chatMessageBox.getChildren().add(username);
+        // chatMessageBox.getChildren().add(new TextFlow(new Text("[" + time + "]"), username, new Text(": " + message)));
     }
 
     @Override
     public void update() {
         chatMessageBox.getChildren().clear();
         for (Message message : Message.getChatMessages(game.getId())) {
-            addMessage(message.getMessage(), message.getUsername(), senderIsLoggedInPlayer(message.getUsername()));
+            addMessage(message.getMessage(), message.getPlayer(), message.getTime());
         }
     }
 }
