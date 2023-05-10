@@ -7,8 +7,8 @@ import main.java.db.Database;
 
 public class MainController extends Application {
 
-    private final int minHeight = 800;
-    private final int minWidth = 1280;
+    private static final int MINHEIGHT = 800;
+    private static final int MINWIDTH = 1280;
 
     public void startup(final String[] args) {
         launch(args);
@@ -22,8 +22,8 @@ public class MainController extends Application {
 
         stage.setScene(view);
 
-        stage.setMinHeight(this.minHeight);
-        stage.setMinWidth(this.minWidth);
+        stage.setMinHeight(MINHEIGHT);
+        stage.setMinWidth(MINWIDTH);
 
         stage.centerOnScreen();
         stage.isAlwaysOnTop();

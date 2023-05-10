@@ -21,10 +21,10 @@ public class DieView extends Group {
     private static final int POSITIONMEDIUM = 25;
     private static final int POSITIONHIGH = 35;
 
-    private GameOfferView gameOfferView;
+    private static final int RADIUS = 10;
+    private static final double SCALE = 0.8;
 
-    private final int radius = 10;
-    private final double scale = 0.8;
+    private GameOfferView gameOfferView;
 
     private int value;
     private Color color;
@@ -41,11 +41,11 @@ public class DieView extends Group {
         die.setFill(color);
         die.setStroke(Color.BLACK);
 
-        die.setArcHeight(this.radius);
-        die.setArcWidth(this.radius);
+        die.setArcHeight(RADIUS);
+        die.setArcWidth(RADIUS);
 
-        die.setScaleX(scale);
-        die.setScaleY(scale);
+        die.setScaleX(SCALE);
+        die.setScaleY(SCALE);
         die.setTranslateX((rectangle.getWidth() - die.getWidth()) / 2);
 
         if (isDraggable) {
