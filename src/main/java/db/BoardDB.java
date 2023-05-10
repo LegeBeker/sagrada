@@ -18,7 +18,8 @@ public final class BoardDB {
 
         boards.forEach((player, board) -> {
             for (int[] field : board) {
-                sqlBuilder.append("(" + player.getId() + ", " + field[0] + ", " + field[1] + ", " + player.getGame().getId() + "),");
+                sqlBuilder.append("(" + player.getId() + ", " + field[0] + ", " + field[1] + ", "
+                        + player.getGame().getId() + "),");
             }
         });
 
@@ -38,13 +39,13 @@ public final class BoardDB {
 
         String sql = "UPDATE playerframefield SET dienumber = ?, diecolor = ?"
                 + " WHERE idgame = ? AND idplayer = ? AND position_x = ? AND position_y = ?";
-        String[] params = {String.valueOf(number), color, String.valueOf(idGame), String.valueOf(idPlayer),
-                String.valueOf(column), String.valueOf(row)};
+        String[] params = { String.valueOf(number), color, String.valueOf(idGame), String.valueOf(idPlayer),
+                String.valueOf(column), String.valueOf(row) };
 
         db.exec(sql, params);
 
         sql = "UPDATE gamedie SET roundID = ? WHERE idgame = ? AND dienumber = ? AND diecolor = ?";
-        params = new String[] {String.valueOf(roundID), String.valueOf(idGame), String.valueOf(number), color};
+        params = new String[] { String.valueOf(roundID), String.valueOf(idGame), String.valueOf(number), color };
 
         db.exec(sql, params);
 
@@ -54,9 +55,9 @@ public final class BoardDB {
     public static List<Map<String, String>> getBoard(final int idGame, final int idPlayer) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT DISTINCT pf.*, gd.eyes FROM playerframefield pf"
+        String sql = "SELECT DISTINCT pf.*, gd.* FROM playerframefield pf"
                 + " JOIN gamedie gd ON gd.dienumber = pf.dienumber AND gd.diecolor = pf.diecolor WHERE pf.idgame = ? AND pf.idplayer = ?";
-        String[] params = {String.valueOf(idGame), String.valueOf(idPlayer)};
+        String[] params = { String.valueOf(idGame), String.valueOf(idPlayer) };
 
         return db.exec(sql, params);
     }
@@ -65,7 +66,7 @@ public final class BoardDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM playerframefield WHERE idgame = ?";
-        String[] params = {String.valueOf(idGame)};
+        String[] params = { String.valueOf(idGame) };
 
         return db.exec(sql, params);
     }
