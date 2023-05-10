@@ -19,6 +19,7 @@ public class Player {
 
     private String privateObjCardColor;
     private Integer idPatternCard;
+    private int unassignedFavortokensLeft;
 
     private Game game;
     private Board board;
@@ -46,6 +47,8 @@ public class Player {
         for(int tokenNumber = 1; patternCardDifficulty >= tokenNumber; tokenNumber++) {
             GameFavorTokenDB.createGameFavorToken(tokenNumber + highestId, this.idGame, getId());
         }
+
+        unassignedFavortokensLeft = patternCardDifficulty;
     }
 
     public void addPlayerToDB() {
