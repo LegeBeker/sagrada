@@ -1,6 +1,7 @@
 package main.java.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -9,20 +10,27 @@ import main.java.pattern.Observable;
 
 public class Message extends Observable {
     private String message;
-    private String username;
-    private Timestamp time;
-    private boolean senderIsLoggedInPlayer;
+    private int idPlayer;
+    private String time;
 
     public String getMessage() {
         return message;
     }
 
-    public String getUsername() {
-        return username;
+    public Player getPlayer() {
+        return Player.get(idPlayer);
     }
 
-    public Timestamp getTime() {
-        return time;
+    public String getTime() {
+        String inputDateTime = time;
+
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+        LocalDateTime dateTime = LocalDateTime.parse(inputDateTime, inputFormatter);
+        String outputDateTime = dateTime.format(outputFormatter);
+
+        return outputDateTime;
     }
 
     public static ArrayList<Message> getChatMessages(final int idGame) {
@@ -31,8 +39,8 @@ public class Message extends Observable {
         for (Map<String, String> messageMap : MessageDB.getChatMessages(idGame)) {
             Message message = new Message();
             message.message = messageMap.get("message");
-            message.time = Timestamp.valueOf(messageMap.get("time"));
-            message.username = messageMap.get("username");
+            message.time = messageMap.get("time");
+            message.idPlayer = Integer.parseInt(messageMap.get("idplayer"));
             messages.add(message);
         }
 
