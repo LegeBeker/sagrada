@@ -107,7 +107,7 @@ public final class AccountDB {
         String sql = "SELECT diecolor, COUNT(*) AS 'most_placed_color' FROM playerframefield ";
         sql += "WHERE diecolor IS NOT NULL and idplayer IN (SELECT idplayer FROM player WHERE username = ?) ";
         sql += "GROUP BY diecolor ORDER BY most_placed_color;";
-        String[] params = { username };
+        String[] params = {username };
 
         Map<String, String> returnVal = null;
         // Added this check for nullReferences
