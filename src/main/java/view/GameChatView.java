@@ -70,7 +70,7 @@ public class GameChatView extends VBox implements Observer {
         chatInput.getChildren().addAll(textInput, sendButton);
         chatInput.setAlignment(Pos.CENTER_RIGHT);
 
-        this.getChildren().addAll(chatMessageBox, chatInput);
+        this.getChildren().addAll(chatMessageScrollPane, chatInput);
 
         update();
     }
