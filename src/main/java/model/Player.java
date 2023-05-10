@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import main.java.db.GameFavorTokenDB;
 import main.java.db.PatternCardDB;
 import main.java.db.PlayerDB;
 
@@ -37,6 +38,14 @@ public class Player {
         newPlayer.setId(Integer.parseInt(idplayer.get("idplayer")));
 
         return newPlayer;
+    }
+    
+    public void createGameFavorTokens() {
+        int patternCardDifficulty = Integer.parseInt(PatternCardDB.get(this.idPatternCard).get("difficulty"));
+        int highestId = GameFavorTokenDB.getHighestIdFromGame(this.idGame);
+        for(int tokenNumber = 1; patternCardDifficulty >= tokenNumber; tokenNumber++) {
+            GameFavorTokenDB.createGameFavorToken(tokenNumber + highestId, this.idGame, getId());
+        }
     }
 
     public void addPlayerToDB() {
