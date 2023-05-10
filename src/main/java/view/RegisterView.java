@@ -22,11 +22,11 @@ public class RegisterView extends VBox {
     private Button buttonSubmit;
     private Button buttonLoginPage;
 
-    private final int buttonHeight = 25;
-    private final int buttonWidth = 200;
+    private static final int BUTTONHEIGHT = 25;
+    private static final int BUTTONWIDTH = 200;
 
-    private final int padding = 200;
-    private final int spacing = 15;
+    private static final int PADDING = 200;
+    private static final int SPACING = 15;
 
     public RegisterView(final ViewController view) {
         this.view = view;
@@ -44,21 +44,21 @@ public class RegisterView extends VBox {
         this.fieldPasswordRepeat.setPromptText("Herhaal wachtwoord");
 
         this.buttonSubmit = new Button("Registeren");
-        this.buttonSubmit.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonSubmit.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonSubmit.setOnAction(e -> this.submit());
 
         this.buttonLoginPage = new Button("Login pagina");
-        this.buttonLoginPage.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonLoginPage.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonLoginPage.setOnAction(e -> this.openLoginView());
 
         this.boxButtons = new HBox();
         this.boxButtons.getChildren().addAll(this.buttonSubmit, this.buttonLoginPage);
 
         this.boxButtons.setAlignment(Pos.CENTER);
-        this.boxButtons.setSpacing(this.spacing);
+        this.boxButtons.setSpacing(SPACING);
 
-        this.setSpacing(this.spacing);
-        this.setPadding(new Insets(0, this.padding, 0, this.padding));
+        this.setSpacing(SPACING);
+        this.setPadding(new Insets(0, PADDING, 0, PADDING));
 
         this.getChildren().addAll(view.getLogo(), this.fieldUsername, this.fieldPassword,
                 this.fieldPasswordRepeat, this.boxButtons);

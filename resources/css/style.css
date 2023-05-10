@@ -18,9 +18,8 @@
     -fx-alignment: center;
 }
 
-.background {
+.patterncard {
     -fx-background-radius: 10;
-    -fx-background-color: black;
     -fx-border-radius: 10;
     -fx-border-width: 5;
 }

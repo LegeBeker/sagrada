@@ -1,5 +1,6 @@
 package main.java.view;
 
+import javafx.geometry.Insets;
 import javafx.scene.layout.FlowPane;
 import main.java.controller.ViewController;
 import main.java.model.Game;
@@ -7,7 +8,8 @@ import main.java.model.ToolCard;
 
 public class GameToolCardsView extends FlowPane {
 
-    private final int gap = 10;
+    private static final int GAP = 10;
+    private static final int PADDING = 5;
 
     public GameToolCardsView(final ViewController view, final Game game) {
 
@@ -15,6 +17,7 @@ public class GameToolCardsView extends FlowPane {
             this.getChildren().add(new GameToolCardView(view, toolCard));
         }
 
-        this.setHgap(gap);
+        this.setPadding(new Insets(0, 0, PADDING, PADDING));
+        this.setHgap(GAP);
     }
 }

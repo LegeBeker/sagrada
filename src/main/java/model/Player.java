@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
 import main.java.db.PatternCardDB;
 import main.java.db.PlayerDB;
 
@@ -16,14 +17,15 @@ public class Player {
     private String playStatus;
     private int seqnr;
 
+    private Color color;
+
     private String privateObjCardColor;
     private Integer idPatternCard;
 
     private Game game;
     private Board board;
 
-    private final int defaultScore = -20;
-    private int score = defaultScore;
+    private int score;
 
     public static Player createPlayer(final int gameID, final String username, final String playerStatus,
             final String privateColor) {
@@ -51,6 +53,14 @@ public class Player {
 
     public String getUsername() {
         return this.username;
+    }
+
+    public void setColor(final Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 
     public Game getGame() {
@@ -172,6 +182,7 @@ public class Player {
         player.username = playerMap.get("username");
         player.idGame = Integer.parseInt(playerMap.get("idgame"));
         player.playStatus = playerMap.get("playstatus");
+        player.score = Integer.parseInt(playerMap.get("score"));
         if (playerMap.get("seqnr") != null) {
             player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
         }
