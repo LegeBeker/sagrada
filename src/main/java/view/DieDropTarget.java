@@ -29,7 +29,7 @@ public class DieDropTarget extends StackPane {
         });
 
         this.setOnDragExited(event -> {
-            this.setStyle("-fx-border-color: black;");
+            this.setStyle("-fx-border-color: transparent;");
         });
 
         this.setOnDragDropped(event -> {

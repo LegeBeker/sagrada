@@ -20,8 +20,8 @@ public class InvitesView extends HBox {
 
     private TableView<Account> selectionTable;
     private ArrayList<Account> selectedAccounts = new ArrayList<Account>();
-    private final double selectionTableHeight = 120;
-    private final int maxSizeSelection = 3;
+    private static final double SELECTIONTABLEHEIGHT = 120;
+    private static final int MAXSIZESELECTION = 3;
 
     public InvitesView(final ViewController view) {
         this.view = view;
@@ -32,7 +32,7 @@ public class InvitesView extends HBox {
 
         this.selectionTable = new TableView<Account>();
         this.selectionTable.setPlaceholder(new Text("Geen accounts geselecteerd"));
-        this.selectionTable.setMaxHeight(selectionTableHeight);
+        this.selectionTable.setMaxHeight(SELECTIONTABLEHEIGHT);
 
         TableColumn<Account, String> idUsernameSelected = new TableColumn<>("Username");
         idUsernameSelected.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -49,7 +49,6 @@ public class InvitesView extends HBox {
                 if (acc == null) {
                     setStyle("");
                 } else if (!acc.getInviteable()) {
-                    setDisable(true);
                     setStyle("-fx-background-color: #9e9e9e;");
                 } else {
                     setStyle("");
@@ -66,11 +65,18 @@ public class InvitesView extends HBox {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Account acc = this.accountsView.getSelectionModel().getSelectedItem();
+                if (acc == null) {
+                    return;
+                }
+                if (!acc.getInviteable()) {
+                    this.view.displayError("Je wacht nog op een antwoord van deze speler");
+                    return;
+                }
                 if (this.view.getAccountController().getAccount().getUsername().equals(acc.getUsername())) {
                     this.view.displayError("Je kan jezelf niet uitnodigen");
                     return;
                 }
-                if (!selectedAccounts.contains(acc) && selectedAccounts.size() < maxSizeSelection) {
+                if (!selectedAccounts.contains(acc) && selectedAccounts.size() < MAXSIZESELECTION) {
                     selectedAccounts.add(acc);
                     this.selectionTable.getItems().add(acc);
                 }

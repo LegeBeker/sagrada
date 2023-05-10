@@ -12,13 +12,13 @@ import main.java.model.Account;
 public class AccountsView extends TableView<Account> {
     private ViewController view;
 
-    private final double tableHeight = 400;
+    private static final double TABLEHEIGHT = 400;
 
     public AccountsView(final ViewController view) {
         this.view = view;
 
         this.setPlaceholder(new Text("Geen accounts gevonden"));
-        this.setMaxHeight(tableHeight);
+        this.setMaxHeight(TABLEHEIGHT);
 
         TableColumn<Account, String> idUsername = new TableColumn<>("Username");
         idUsername.setCellValueFactory(new PropertyValueFactory<>("username"));

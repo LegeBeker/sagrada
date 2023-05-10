@@ -46,7 +46,7 @@ public class ViewController extends Scene {
     private final Background background;
     private final ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
 
-    private final int logoWidth = 300;
+    private static final int LOGOWIDTH = 300;
 
     private static final int REFRESHRATE = 3000;
 
@@ -104,7 +104,7 @@ public class ViewController extends Scene {
     }
 
     public ImageView getLogo() {
-        this.logo.setFitWidth(logoWidth);
+        this.logo.setFitWidth(LOGOWIDTH);
         this.logo.setPreserveRatio(true);
         return this.logo;
     }

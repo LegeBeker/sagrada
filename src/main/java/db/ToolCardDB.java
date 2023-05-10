@@ -16,4 +16,12 @@ public final class ToolCardDB {
         return db.exec(sql, params);
     }
 
+    public static boolean updateGameDieValue(final int idgame, final int value) {
+        Database db = Database.getInstance();
+        String sql = "UPDATE gamedie SET value = ? WHERE idgame = ?";
+        String[] params = {Integer.toString(value), Integer.toString(idgame)};
+        db.exec(sql, params);
+        return true;
+    }
+
 }
