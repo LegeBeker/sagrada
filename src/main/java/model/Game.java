@@ -187,13 +187,15 @@ public class Game extends Observable {
     }
 
     public Player getPlayer(final String username) {
+        Player foundPlayer = null;
         for (Player player : this.players) {
             if (player.getUsername().equals(username)) {
-                return player;
+                foundPlayer = player;
+                break;
             }
         }
 
-        return null;
+        return foundPlayer;
     }
 
     public void endTurn() {
