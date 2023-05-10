@@ -5,8 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -20,7 +18,6 @@ import main.java.pattern.Observer;
 
 public class GameChatView extends VBox implements Observer {
 
-    private final Background background = new Background(new BackgroundFill(Color.web("#B00322"), null, null));
 
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
@@ -29,7 +26,6 @@ public class GameChatView extends VBox implements Observer {
     private Game game;
 
     public GameChatView(final ViewController view, final Game game) {
-        this.setBackground(background);
         this.setAlignment(Pos.BOTTOM_CENTER);
 
         this.view = view;

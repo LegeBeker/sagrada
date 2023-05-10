@@ -19,11 +19,11 @@ public class MenuView extends VBox {
     private Button buttonStats;
     private Button buttonLogout;
 
-    private final int buttonHeight = 25;
-    private final int buttonWidth = 200;
+    private static final int BUTTONHEIGHT = 25;
+    private static final int BUTTONWIDTH = 200;
 
-    private final int padding = 200;
-    private final int spacing = 15;
+    private static final int PADDING = 200;
+    private static final int SPACING = 15;
 
     public MenuView(final ViewController view) {
         this.view = view;
@@ -33,24 +33,24 @@ public class MenuView extends VBox {
 
         this.textGreet = new Text("Welkom " + view.getAccountController().getAccount().getUsername() + "!");
         this.textGreet.setStyle("-fx-font-size: 20px;");
-        this.textGreet.setWrappingWidth(this.buttonWidth);
+        this.textGreet.setWrappingWidth(BUTTONWIDTH);
         this.textGreet.setTextAlignment(TextAlignment.CENTER);
         this.textGreet.setFill(Color.WHITE);
 
         this.buttonGames = new Button("Spellen");
-        this.buttonGames.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonGames.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonGames.setOnAction(e -> view.openGamesView());
 
         this.buttonStats = new Button("Statistieken");
-        this.buttonStats.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonStats.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonStats.setOnAction(e -> view.openStatsView());
 
         this.buttonLogout = new Button("Uitloggen");
-        this.buttonLogout.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonLogout.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonLogout.setOnAction(e -> this.logout());
 
-        this.setSpacing(this.spacing);
-        this.setPadding(new Insets(0, this.padding, 0, this.padding));
+        this.setSpacing(SPACING);
+        this.setPadding(new Insets(0, PADDING, 0, PADDING));
 
         this.getChildren().addAll(view.getLogo(), this.textGreet, this.buttonGames,
                 this.buttonStats,

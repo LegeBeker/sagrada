@@ -3,12 +3,14 @@ package main.java.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.paint.Color;
 import main.java.db.GameDB;
 import main.java.db.PatternCardDB;
 import main.java.enums.PlayStatusEnum;
@@ -23,7 +25,7 @@ public class Game extends Observable {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
-    private final int uniqueCardsPerPlayer = 4;
+    private static final int CARDSPERPLAYER = 4;
 
     private boolean helpFunction;
 
@@ -82,7 +84,7 @@ public class Game extends Observable {
 
     private void addPatternCards(final ArrayList<PatternCard> cards) {
         for (Player pl : players) {
-            for (int i = 0; i < uniqueCardsPerPlayer; i++) {
+            for (int i = 0; i < CARDSPERPLAYER; i++) {
                 PatternCardDB.setPatternCardOptions(cards.remove(0).getIdPatternCard(), pl.getId());
             }
         }
@@ -118,6 +120,24 @@ public class Game extends Observable {
 
     public ArrayList<Player> getPlayers() {
         return this.players;
+    }
+
+    public ArrayList<Player> getPlayers(final String currPlayerUsername) {
+        ArrayList<Player> players = this.players;
+        ArrayList<Color> colors = new ArrayList<>(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW));
+
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getUsername().equals(currPlayerUsername)) {
+                Player currentPlayer = players.remove(i);
+                players.add(0, currentPlayer);
+            }
+        }
+
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).setColor(colors.get(i));
+        }
+
+        return players;
     }
 
     public void setHelpFunction() {
