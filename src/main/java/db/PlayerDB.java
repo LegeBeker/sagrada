@@ -26,6 +26,14 @@ public final class PlayerDB {
         return db.exec(sql, null);
     }
 
+    public static List<Map<String, String>> getAll(final String username) {
+        Database db = Database.getInstance();
+        String sql = "SELECT * FROM player WHERE username = ?";
+        String[] params = {username};
+
+        return db.exec(sql, params);
+    }
+
     public static List<Map<String, String>> createPlayer(final String username, final int idGame,
             final String playStatus, final String color) {
         Database db = Database.getInstance();
@@ -66,6 +74,17 @@ public final class PlayerDB {
 
         String sql = "UPDATE player SET playstatus =  '" + PlayStatusEnum.REFUSED + "'  WHERE idgame = ? AND username = ?;";
         String[] params = {Integer.toString(gameId), playername};
+
+        db.exec(sql, params);
+
+        return true;
+    }
+
+    public static boolean updatePatternCard(final int patternCardId, final int gameId, final String playername) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET idpatterncard = ? WHERE idgame = ? AND username = ?;";
+        String[] params = {Integer.toString(patternCardId), Integer.toString(gameId), playername};
 
         db.exec(sql, params);
 

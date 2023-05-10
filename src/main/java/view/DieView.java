@@ -21,16 +21,19 @@ public class DieView extends Group {
     private static final int POSITIONMEDIUM = 25;
     private static final int POSITIONHIGH = 35;
 
+    private GameOfferView gameOfferView;
+
     private final int radius = 10;
     private final double scale = 0.8;
 
     private int value;
     private Color color;
+    private int number;
 
-    public DieView(final int value, final Color color, final Boolean isDraggable) {
+    public DieView(final int value, final Color color, final int number, final Boolean isDraggable) {
         this.value = value;
         this.color = color;
-
+        this.number = number;
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
         rectangle.setFill(Color.rgb(0, 0, 0, 0));
 
@@ -49,12 +52,22 @@ public class DieView extends Group {
             this.setOnDragDetected(event -> {
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
+                this.gameOfferView = (GameOfferView) this.getParent();
+                if (gameOfferView.getHelpFunction()) {
+                    gameOfferView.showPossibleMoves(this.value, this.color);
+                }
                 SnapshotParameters sp = new SnapshotParameters();
                 sp.setFill(Color.TRANSPARENT);
                 Image image = this.snapshot(sp, null);
                 content.putImage(image);
                 db.setContent(content);
                 event.consume();
+            });
+
+            this.setOnDragDone(event -> {
+                if (gameOfferView.getHelpFunction()) {
+                    gameOfferView.cleanTargets();
+                }
             });
         }
 
@@ -129,5 +142,9 @@ public class DieView extends Group {
 
     public Color getColor() {
         return this.color;
+    }
+
+    public int getNumber() {
+        return this.number;
     }
 }

@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Account;
+import main.java.model.Game;
 
 public class NewGameView extends HBox {
 
@@ -88,7 +89,8 @@ public class NewGameView extends HBox {
             view.displayError("Selecteer minder spelers");
             return;
         }
-        this.view.openGameView(view.getGameController().createGame(this.accounts, view.getAccountController().getAccount(), useDefaultCards));
+        Game game = view.getGameController().createGame(this.accounts, view.getAccountController().getAccount(), useDefaultCards);
+        this.view.openPatternCardSelectionView(game);
     }
 
     private void goBack() {

@@ -30,8 +30,12 @@ public class PatternCardField {
     public static PatternCardField mapToPatternCardField(final Map<String, String> map) {
         PatternCardField field = new PatternCardField();
 
-        field.setColor(map.get("color"));
-        field.setValue(map.get("value"));
+        if (map.get("color") != null) {
+            field.setColor(map.get("color"));
+        }
+        if (map.get("value") != null) {
+            field.setValue(map.get("value"));
+        }
 
         return field;
     }

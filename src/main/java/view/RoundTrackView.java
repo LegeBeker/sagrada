@@ -68,7 +68,8 @@ public class RoundTrackView extends GridPane implements Observer {
     @Override
     public void update() {
         for (Die die : game.getRoundTrack()) {
-            roundGroups.get(die.getRoundTrack() - 1).getChildren().add(new DieView(die.getEyes(), die.getColor(), false));
+            roundGroups.get(die.getRoundTrack() - 1).getChildren()
+                    .add(new DieView(die.getEyes(), die.getColor(), die.getNumber(), false));
         }
     }
 
