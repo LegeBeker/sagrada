@@ -48,4 +48,13 @@ public final class GameFavorTokenDB {
 
         return db.exec(sql, params);
     }
+
+    public static List<Map<String, String>> assignGameFavorToken(final int idFavorToken, final int idGame, final int idGameToolCard, final int roundID){
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE gamefavortoken SET gametoolcard = ?, roundID = ? WHERE idfavortoken = ? AND idgame = ?;";
+        String[] params = {Integer.toString(idGameToolCard), Integer.toString(roundID), Integer.toString(idFavorToken), Integer.toString(idGame)};
+
+        return db.exec(sql, params);
+    }
 }
