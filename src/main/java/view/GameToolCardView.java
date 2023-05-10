@@ -12,10 +12,10 @@ public class GameToolCardView extends StackPane {
 
     private static final int WIDTH = 150;
     private static final int HEIGHT = 200;
-  
+
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
-  
+
     private boolean isSelected = false;
     private static GameToolCardView selectedToolCardView = null;
 
@@ -67,12 +67,12 @@ public class GameToolCardView extends StackPane {
         return toolCard;
     }
 
-    private String getSelectedMethodName(ToolCard toolCard) {
+    private String getSelectedMethodName(final ToolCard toolCard) {
         String methodName = toolCard.getName().replaceAll("[^a-zA-Z0-9]", "");
         return Character.toLowerCase(methodName.charAt(0)) + methodName.substring(1);
     }
 
-    private String getDeselectedMethodName(ToolCard toolCard) {
+    private String getDeselectedMethodName(final ToolCard toolCard) {
         String deselectedMethodName = toolCard.getName().replaceAll("[^a-zA-Z0-9]", "");
         return Character.toLowerCase(deselectedMethodName.charAt(0)) + deselectedMethodName.substring(1);
     }
