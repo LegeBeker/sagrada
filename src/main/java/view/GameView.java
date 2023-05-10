@@ -13,10 +13,16 @@ public class GameView extends BorderPane {
         this.view = view;
         this.game = game;
 
-        this.setLeft(new GameScoreView(view, game));
-        this.setCenter(new GameCenterView(view, game));
-        this.setRight(new GameChatView(view, game));
+        BorderPane left = new BorderPane();
+        left.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
 
-        this.setBackground(view.getBackground());
+        left.setTop(new GameScoreView(view, game));
+        left.setBottom(new GameButtonsView(view, game));
+
+        this.setLeft(left);
+        this.setCenter(new GameCenterView(this.view, this.game));
+        this.setRight(new GameChatView(this.view, this.game));
+
+        this.setBackground(this.view.getBackground());
     }
 }

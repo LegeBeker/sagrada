@@ -32,8 +32,8 @@ public class GamesView extends VBox {
 
     private StackPane scrollBox;
 
-    private final int scrollBoxHeight = 300;
-    private final int scrollBoxWidth = 400;
+    private static final int SCROLLBOXHEIGHT = 300;
+    private static final int SCROLLBOXWIDTH = 400;
 
     private TableView<Game> table;
 
@@ -42,11 +42,11 @@ public class GamesView extends VBox {
     private Button buttonBack;
     private Button buttonNewGame;
 
-    private final int buttonHeight = 25;
-    private final int buttonWidth = 200;
+    private static final int BUTTONHEIGHT = 25;
+    private static final int BUTTONWIDTH = 200;
 
-    private final int padding = 200;
-    private final int spacing = 15;
+    private static final int PADDING = 200;
+    private static final int SPACING = 15;
 
     public GamesView(final ViewController view) {
         this.view = view;
@@ -60,7 +60,7 @@ public class GamesView extends VBox {
         text.setFill(Color.web("#ffffff"));
 
         this.textTitle = new StackPane(text);
-        this.textTitle.setPadding(new Insets(0, 0, this.spacing, 0));
+        this.textTitle.setPadding(new Insets(0, 0, SPACING, 0));
 
         this.table = new TableView<Game>();
 
@@ -117,7 +117,7 @@ public class GamesView extends VBox {
 
         this.scrollBox.getChildren().add(table);
 
-        this.scrollBox.setPrefSize(scrollBoxWidth, scrollBoxHeight);
+        this.scrollBox.setPrefSize(SCROLLBOXWIDTH, SCROLLBOXHEIGHT);
         this.scrollBox.setBackground(new Background(new BackgroundFill(Color.web("#ffffff"), null, null)));
 
         this.scrollBox.setPadding(new Insets(0, 0, 0, 0));
@@ -126,25 +126,21 @@ public class GamesView extends VBox {
         table.prefWidthProperty().bind(this.scrollBox.widthProperty());
 
         this.buttonBack = new Button("Terug");
-        this.buttonBack.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonBack.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonBack.setOnAction(e -> this.back());
 
         this.buttonNewGame = new Button("Nieuwe potje starten");
-        this.buttonNewGame.setPrefSize(this.buttonWidth, this.buttonHeight);
-        this.buttonNewGame.setOnAction(e -> this.openNewGameView());
-
-        this.buttonNewGame = new Button("Nieuwe potje starten");
-        this.buttonNewGame.setPrefSize(this.buttonWidth, this.buttonHeight);
+        this.buttonNewGame.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonNewGame.setOnAction(e -> this.openNewGameView());
 
         this.boxButtons = new HBox();
         this.boxButtons.getChildren().addAll(this.buttonBack, this.buttonNewGame);
 
         this.boxButtons.setAlignment(Pos.CENTER);
-        this.boxButtons.setSpacing(this.spacing);
-        this.boxButtons.setPadding(new Insets(this.spacing, 0, this.spacing, 0));
+        this.boxButtons.setSpacing(SPACING);
+        this.boxButtons.setPadding(new Insets(SPACING, 0, SPACING, 0));
 
-        this.setPadding(new Insets(0, this.padding, 0, this.padding));
+        this.setPadding(new Insets(0, PADDING, 0, PADDING));
 
         this.getChildren().addAll(this.textTitle, this.scrollBox, this.boxButtons);
     }
@@ -174,14 +170,15 @@ public class GamesView extends VBox {
         alert.getButtonTypes().setAll(acceptButton, refuseButton, closeButton);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent()) {
-            if (result.get() == acceptButton) {
-                System.out.println("accept");
-                player.acceptInvite();
-            } else if (result.get() == refuseButton) {
-                System.out.println("accept");
-                player.refuseInvite();
-            }
+
+        if (!result.isPresent()) {
+            return;
+        }
+
+        if (result.get() == acceptButton) {
+            player.acceptInvite();
+        } else if (result.get() == refuseButton) {
+            player.refuseInvite();
         }
     }
 

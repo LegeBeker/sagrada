@@ -3,13 +3,17 @@ package main.java.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.paint.Color;
 import main.java.db.GameDB;
+import main.java.db.PatternCardDB;
+import main.java.enums.PlayStatusEnum;
 import main.java.pattern.Observable;
 
 public class Game extends Observable {
@@ -21,38 +25,69 @@ public class Game extends Observable {
     private String creationDate;
 
     private ArrayList<Player> players = new ArrayList<>();
+    private static final int CARDSPERPLAYER = 4;
 
-    public static Game createGame(final ArrayList<Account> accounts, final boolean useDefaultCards) {
+    private boolean helpFunction;
+
+    public static Game createGame(final ArrayList<Account> accounts, final Account currAccount,
+            final boolean useDefaultCards) {
         Game newGame = new Game();
-        Player playerCreator = new Player();
-        final int thisGameID = newGame.getId();
-
-        for (Account ac : accounts) {
-            String username = ac.getUsername();
-            Player newPlayer = playerCreator.createPlayer(thisGameID, username);
-            // TODO colors and role (challenger or challengee)
-
-            newPlayer.addPlayerToDB();
-            newGame.addPlayer(newPlayer);
-        }
 
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedTime = dtf.format(time);
+        List<Map<String, String>> response = GameDB.createGame(formattedTime);
 
-        GameDB.createGame(formattedTime);
-        List<Map<String, String>> response = GameDB.getGameByTimestamp(formattedTime);
         newGame.idGame = Integer.parseInt(response.get(0).get("idgame"));
-        // TODO BUG HERE after adding a game to the db you can't restart the application
-        // without getting errors
+        final int thisGameID = newGame.getId();
 
-        // if (useDefaultCards) {
-        // TODO get default cards
-        // } else {
-        // TODO make random but valid cards
-        // }
+        List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
+
+        newGame.addPlayer(Player.createPlayer(
+                thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(),
+                colorList.remove(0).get("color")));
+        GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
+        newGame.setTurnPlayer(newGame.getPlayers().get(0).getId());
+
+        for (Account ac : accounts) {
+            newGame.addPlayer(Player.createPlayer(
+                    thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(),
+                    colorList.remove(0).get("color")));
+        }
+
+        for (int playerNr = 0; playerNr < newGame.getPlayers().size(); playerNr++) {
+            newGame.getPlayers().get(playerNr).setSeqnr(playerNr + 1);
+        }
+
+        if (useDefaultCards) {
+            newGame.addPatternCards();
+        } else {
+            newGame.addPatternCards();
+            // TODO create random (but valid) cards
+            // ArrayList<PatternCard> randomCards = new PatternCard().generateRandomCards();
+            // newGame.addPatternCards(randomCards);
+        }
+
+        GameDB.assignToolcards(thisGameID);
+        GameDB.assignPublicObjectivecards(thisGameID);
+
+        Die.createGameOffer(thisGameID);
+        Board.createBoards(newGame);
 
         return newGame;
+    }
+
+    private void addPatternCards() {
+        ArrayList<PatternCard> defaultCards = PatternCard.getDefaultCards();
+        addPatternCards(defaultCards);
+    }
+
+    private void addPatternCards(final ArrayList<PatternCard> cards) {
+        for (Player pl : players) {
+            for (int i = 0; i < CARDSPERPLAYER; i++) {
+                PatternCardDB.setPatternCardOptions(cards.remove(0).getIdPatternCard(), pl.getId());
+            }
+        }
     }
 
     public int getId() {
@@ -60,7 +95,7 @@ public class Game extends Observable {
     }
 
     public ArrayList<Die> getOffer() {
-        return Die.getOffer(idGame);
+        return Die.getOffer(idGame, currentRound);
     }
 
     public ArrayList<Die> getRoundTrack() {
@@ -69,6 +104,10 @@ public class Game extends Observable {
 
     public Player getTurnPlayer() {
         return Player.get(this.turnIdPlayer);
+    }
+
+    public void setTurnPlayer(final int idPlayer) {
+        this.turnIdPlayer = idPlayer;
     }
 
     public int getCurrentRound() {
@@ -81,6 +120,32 @@ public class Game extends Observable {
 
     public ArrayList<Player> getPlayers() {
         return this.players;
+    }
+
+    public ArrayList<Player> getPlayers(final String currPlayerUsername) {
+        ArrayList<Player> players = this.players;
+        ArrayList<Color> colors = new ArrayList<>(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW));
+
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getUsername().equals(currPlayerUsername)) {
+                Player currentPlayer = players.remove(i);
+                players.add(0, currentPlayer);
+            }
+        }
+
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).setColor(colors.get(i));
+        }
+
+        return players;
+    }
+
+    public void setHelpFunction() {
+        this.helpFunction = !this.helpFunction;
+    }
+
+    public boolean getHelpFunction() {
+        return this.helpFunction;
     }
 
     public Player getCurrentPlayer(final int id, final String username) {
@@ -111,6 +176,12 @@ public class Game extends Observable {
         return false;
     }
 
+    public boolean playerHasChoosenPatternCard(final String username) {
+        Player player = getCurrentPlayer(idGame, username);
+
+        return player.hasPatternCard();
+    }
+
     public void addPlayer(final Player player) {
         this.players.add(player);
     }
@@ -138,13 +209,27 @@ public class Game extends Observable {
         Game game = new Game();
 
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
-        game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
-        game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+        if (gameMap.get("turn_idplayer") != null) {
+            game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
+        }
+        if (gameMap.get("current_roundID") != null) {
+            game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+        }
         game.creationDate = gameMap.get("creationdate");
+        game.helpFunction = false;
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
             game.players.add(Player.mapToPlayer(map));
         }
+
+        return game;
+    }
+
+    public static Game update(final Game game) {
+        Map<String, String> values = GameDB.get(game.idGame);
+
+        game.turnIdPlayer = Integer.parseInt(values.get("turn_idplayer"));
+        game.currentRound = Integer.parseInt(values.get("current_roundID"));
 
         return game;
     }
@@ -159,7 +244,7 @@ public class Game extends Observable {
     }
 
     public void getNewOffer() {
-        Die.putOffer(idGame, players.size());
+        Die.getNewOffer(idGame, currentRound, players.size());
         notifyObservers();
     }
 

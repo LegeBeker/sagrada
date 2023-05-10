@@ -14,11 +14,11 @@ public class EffectsController {
     private static final int TRANSITION_DURATION = 300;
     private static final double PERSPECTIVE_RATIO = 0.2;
 
-    private final double messageTimeout = 2.5;
-    private final double messageAnimation = 0.5;
+    private static final double MESSAGETIMEOUT = 2.5;
+    private static final double MESSAGEANIMATION = 0.5;
 
     public void add3DHoverEffect(final Node node, final int width, final int height, final double scaleIncrease,
-            final int pixelOffset) {
+            final int pixelOffsetY, final int pixelOffsetX) {
         PerspectiveTransform perspectiveTransform = new PerspectiveTransform();
 
         resetPerspectiveTransform(perspectiveTransform, width, height);
@@ -50,7 +50,8 @@ public class EffectsController {
 
         node.setOnMouseEntered(event -> {
             TranslateTransition tt = new TranslateTransition(Duration.millis(TRANSITION_DURATION), node);
-            tt.setToY(-pixelOffset);
+            tt.setToY(-pixelOffsetY);
+            tt.setToX(-pixelOffsetX);
 
             ScaleTransition st = new ScaleTransition(Duration.millis(TRANSITION_DURATION), node);
             st.setToX(scaleIncrease);
@@ -63,6 +64,7 @@ public class EffectsController {
         node.setOnMouseExited(event -> {
             TranslateTransition tt = new TranslateTransition(Duration.millis(TRANSITION_DURATION), node);
             tt.setToY(0);
+            tt.setToX(0);
 
             ScaleTransition st = new ScaleTransition(Duration.millis(TRANSITION_DURATION), node);
             st.setToX(1);
@@ -77,27 +79,29 @@ public class EffectsController {
 
     public void displayMessageBox(final Label box, final String message, final Boolean error) {
         if (error) {
+            box.getStyleClass().remove("message-box");
             box.getStyleClass().add("error-box");
         } else {
+            box.getStyleClass().remove("error-box");
             box.getStyleClass().add("message-box");
         }
 
         box.setText(message);
         box.setVisible(true);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(this.messageTimeout));
+        PauseTransition pause = new PauseTransition(Duration.seconds(MESSAGETIMEOUT));
         pause.setOnFinished(e -> {
-            TranslateTransition transition = new TranslateTransition(Duration.seconds(this.messageAnimation), box);
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(MESSAGEANIMATION), box);
             transition.setFromY(0);
             transition.setToY(-box.getHeight());
 
-            PauseTransition fullAnimation = new PauseTransition(Duration.seconds(this.messageAnimation));
+            PauseTransition fullAnimation = new PauseTransition(Duration.seconds(MESSAGEANIMATION));
             fullAnimation.setOnFinished(ee -> box.setVisible(false));
 
             transition.play();
         });
 
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(this.messageAnimation), box);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(MESSAGEANIMATION), box);
         transition.setFromY(-box.getHeight());
         transition.setToY(0);
 

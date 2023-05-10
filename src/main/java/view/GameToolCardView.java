@@ -9,14 +9,15 @@ import main.java.model.ToolCard;
 public class GameToolCardView extends StackPane {
     private final ToolCard toolCard;
     private final Image imageToolCard;
-    private final int width = 150;
-    private final int height = 200;
-    private final double scaleIncrease = 1.75;
-    private final int offset = 100;
 
+    private static final int WIDTH = 150;
+    private static final int HEIGHT = 200;
+  
+    private static final double SCALEINCREASE = 1.75;
+    private static final int OFFSET = 100;
+  
     private boolean isSelected = false;
     private static GameToolCardView selectedToolCardView = null;
-
 
     public GameToolCardView(final ViewController view, final ToolCard toolCard) {
         ImageView imageView = new ImageView();
@@ -25,10 +26,10 @@ public class GameToolCardView extends StackPane {
                 "file:resources/img/toolcards/" + toolCard.getName().toLowerCase().replace(" ", "-") + ".png");
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
 
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
+        imageView.setFitWidth(WIDTH);
+        imageView.setFitHeight(HEIGHT);
         imageView.setImage(imageToolCard);
-        view.effects().add3DHoverEffect(this, width, height, scaleIncrease, offset);
+        view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, OFFSET, 0);
 
         this.getChildren().add(imageView);
 

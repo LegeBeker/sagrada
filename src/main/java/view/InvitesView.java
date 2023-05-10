@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -19,8 +20,8 @@ public class InvitesView extends HBox {
 
     private TableView<Account> selectionTable;
     private ArrayList<Account> selectedAccounts = new ArrayList<Account>();
-    private final double selectionTableHeight = 120;
-    private final int maxSizeSelection = 3;
+    private static final double SELECTIONTABLEHEIGHT = 120;
+    private static final int MAXSIZESELECTION = 3;
 
     public InvitesView(final ViewController view) {
         this.view = view;
@@ -31,15 +32,29 @@ public class InvitesView extends HBox {
 
         this.selectionTable = new TableView<Account>();
         this.selectionTable.setPlaceholder(new Text("Geen accounts geselecteerd"));
-        this.selectionTable.setMaxHeight(selectionTableHeight);
+        this.selectionTable.setMaxHeight(SELECTIONTABLEHEIGHT);
 
         TableColumn<Account, String> idUsernameSelected = new TableColumn<>("Username");
         idUsernameSelected.setCellValueFactory(new PropertyValueFactory<>("username"));
         Collections.addAll(this.selectionTable.getColumns(), idUsernameSelected);
 
         setTableClickEvent();
-
         this.getChildren().addAll(this.accountsView, this.selectionTable);
+
+        // Add custom logic to the fields
+        this.accountsView.setRowFactory(tv -> new TableRow<Account>() {
+            @Override
+            protected void updateItem(final Account acc, final boolean empty) {
+                super.updateItem(acc, empty);
+                if (acc == null) {
+                    setStyle("");
+                } else if (!acc.getInviteable()) {
+                    setStyle("-fx-background-color: #9e9e9e;");
+                } else {
+                    setStyle("");
+                }
+            }
+        });
     }
 
     public ArrayList<Account> getSelectedAccounts() {
@@ -50,7 +65,18 @@ public class InvitesView extends HBox {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Account acc = this.accountsView.getSelectionModel().getSelectedItem();
-                if (!selectedAccounts.contains(acc) && selectedAccounts.size() < maxSizeSelection) {
+                if (acc == null) {
+                    return;
+                }
+                if (!acc.getInviteable()) {
+                    this.view.displayError("Je wacht nog op een antwoord van deze speler");
+                    return;
+                }
+                if (this.view.getAccountController().getAccount().getUsername().equals(acc.getUsername())) {
+                    this.view.displayError("Je kan jezelf niet uitnodigen");
+                    return;
+                }
+                if (!selectedAccounts.contains(acc) && selectedAccounts.size() < MAXSIZESELECTION) {
                     selectedAccounts.add(acc);
                     this.selectionTable.getItems().add(acc);
                 }

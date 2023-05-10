@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Account;
+import main.java.model.Game;
 
 public class NewGameView extends HBox {
 
@@ -20,11 +21,10 @@ public class NewGameView extends HBox {
     private ToggleGroup cards;
     private ArrayList<Account> accounts;
     private InvitesView playerList;
-    // private final Game game;
 
-    private final int spacing = 10;
-    private final int maxPlayers = 4;
-    private final double minWidth = 400;
+    private static final int SPACING = 10;
+    private static final int MAXPLAYERS = 4;
+    private static final double MINWIDTH = 400;
 
     public NewGameView(final ViewController view) {
         this.view = view;
@@ -61,15 +61,15 @@ public class NewGameView extends HBox {
         buttonPane.getChildren().setAll(title, standardRb, randomRb, create, back);
 
         this.playerList = new InvitesView(this.view);
-        this.playerList.setMinWidth(minWidth);
+        this.playerList.setMinWidth(MINWIDTH);
 
-        buttonPane.setSpacing(spacing);
+        buttonPane.setSpacing(SPACING);
         buttonPane.setAlignment(Pos.CENTER);
 
         this.getChildren().addAll(buttonPane, this.playerList);
         this.setAlignment(Pos.CENTER_LEFT);
-        this.setPadding(new Insets(spacing));
-        this.setSpacing(spacing);
+        this.setPadding(new Insets(SPACING));
+        this.setSpacing(SPACING);
     }
 
     private void createGame() {
@@ -81,17 +81,17 @@ public class NewGameView extends HBox {
         if (settingText.equals("Willekeurig")) {
             useDefaultCards = false;
         }
-        if (accounts.size() <= 0) {
+        if (accounts.size() < 1) {
             view.displayError("Selecteer meer spelers");
             return;
         }
-        if (accounts.size() > maxPlayers - 1) {
+        if (accounts.size() > MAXPLAYERS - 1) {
             view.displayError("Selecteer minder spelers");
             return;
         }
-
-        view.getGameController().createGame(this.accounts, useDefaultCards);
-        // TODO go to the newly made game
+        Game game = view.getGameController().createGame(this.accounts, view.getAccountController().getAccount(),
+                useDefaultCards);
+        this.view.openPatternCardSelectionView(game);
     }
 
     private void goBack() {

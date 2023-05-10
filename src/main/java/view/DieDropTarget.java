@@ -3,10 +3,18 @@ package main.java.view;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import main.java.controller.ViewController;
+import main.java.model.PatternCard;
 
 public class DieDropTarget extends StackPane {
 
-    public DieDropTarget() {
+    private final ViewController view;
+    private final PatternCard patternCard;
+
+    public DieDropTarget(final ViewController view, final PatternCard patternCard) {
+        this.view = view;
+        this.patternCard = patternCard;
+
         this.setOnDragOver(event -> {
             if (event.getGestureSource() instanceof DieView) {
                 event.acceptTransferModes(TransferMode.MOVE);
@@ -16,22 +24,24 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragEntered(event -> {
             if (event.getGestureSource() instanceof DieView) {
-                GridPane gridPane = (GridPane) this.getParent();
-                System.out.println("Y: " + gridPane.getColumnIndex(this) + " X: " + gridPane.getRowIndex(this));
-
-                // fluorescent color blue
                 this.setStyle("-fx-border-color: #00FFBF;");
             }
         });
 
         this.setOnDragExited(event -> {
-            this.setStyle("-fx-border-color: black;");
+            this.setStyle("-fx-border-color: transparent;");
         });
 
         this.setOnDragDropped(event -> {
-            if (event.getGestureSource() instanceof DieView) {
-                DieView dieView = (DieView) event.getGestureSource();
-                this.getChildren().add(dieView);
+            DieView dieView = (DieView) event.getGestureSource();
+
+            Boolean placeDie = this.view.getPatternCardController().doMove(this.patternCard, dieView.getValue(),
+                    dieView.getColor(), dieView.getNumber(),
+                    GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+
+            if (!placeDie) {
+                this.view.displayError("Deze zet is niet geldig.");
+                return;
             }
 
             event.setDropCompleted(true);

@@ -1,5 +1,9 @@
 package main.java.controller;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,6 +26,7 @@ import main.java.view.GamesView;
 import main.java.view.LoginView;
 import main.java.view.MenuView;
 import main.java.view.NewGameView;
+import main.java.view.PatternCardSelectionView;
 import main.java.view.RegisterView;
 import main.java.view.StatView;
 import main.java.view.StatsView;
@@ -41,7 +46,9 @@ public class ViewController extends Scene {
     private final Background background;
     private final ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
 
-    private final int logoWidth = 300;
+    private static final int LOGOWIDTH = 300;
+
+    private static final int REFRESHRATE = 3000;
 
     public ViewController() {
         super(new Pane());
@@ -52,7 +59,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor) };
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -68,7 +75,7 @@ public class ViewController extends Scene {
 
         this.accountController = new AccountController();
         this.gameController = new GameController(this);
-        this.patternCardController = new PatternCardController();
+        this.patternCardController = new PatternCardController(this);
 
         this.effectsController = new EffectsController();
 
@@ -97,7 +104,7 @@ public class ViewController extends Scene {
     }
 
     public ImageView getLogo() {
-        this.logo.setFitWidth(logoWidth);
+        this.logo.setFitWidth(LOGOWIDTH);
         this.logo.setPreserveRatio(true);
         return this.logo;
     }
@@ -133,8 +140,28 @@ public class ViewController extends Scene {
     }
 
     public void openGameView(final Game game) {
-        GameView gameView = new GameView(this, game);
-        changeView(gameView);
+        getGameController().setGame(game);
+        if (game.playerHasChoosenPatternCard(getAccountController().getAccount().getUsername())) {
+            GameView gameView = new GameView(this, game);
+            changeView(gameView);
+
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                public void run() {
+                    Platform.runLater(() -> {
+                        game.notifyObservers();
+                    });
+                }
+            }, 0, REFRESHRATE);
+        } else {
+            openPatternCardSelectionView(game);
+        }
+    }
+
+    public void openPatternCardSelectionView(final Game game) {
+        PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this,
+                getGameController().getCurrentPlayer(game.getId()));
+        changeView(patternCardSelectionView);
     }
 
     public void openStatView(final Account account) {
