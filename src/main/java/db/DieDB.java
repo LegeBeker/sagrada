@@ -37,7 +37,7 @@ public final class DieDB {
                 + "WHERE idgame = ? AND roundtrack IS NULL AND roundID IS NULL ORDER BY RAND() LIMIT "
                 + Integer.toString(dieAmount);
 
-        String[] params = {Integer.toString(idGame), Integer.toString(idGame)};
+        String[] params = {Integer.toString(roundID), Integer.toString(idGame)};
 
         return db.exec(sql, params);
     }
