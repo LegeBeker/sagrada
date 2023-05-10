@@ -9,7 +9,7 @@ public final class MessageDB {
 
     private MessageDB() {
     }
-    // Create methods to add messages to the database
+
     public static boolean createMessage(final String message, final Player player,
             final String time) {
         Database db = Database.getInstance();
