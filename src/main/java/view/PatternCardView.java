@@ -98,6 +98,9 @@ public class PatternCardView extends BorderPane implements Observer {
             player.getGame().addObserver(this);
             Color playerColor = player.getColor().deriveColor(0, 1, 0.2, 1);
             this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
+            if (player.getUsername().equals(player.getGame().getTurnPlayer().getUsername())) {
+                this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 1px;" + this.getStyle());
+            }
         }
 
         grid.setHgap(PADDING);
