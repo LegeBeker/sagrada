@@ -14,63 +14,67 @@ import main.java.model.Account;
 
 public class StatView extends VBox {
 
-    private ViewController view;
-    private StackPane textTitle;
-    private HBox boxButtons;
-    private AccountController accountController;
+        private StackPane textTitle;
+        private HBox boxButtons;
+        private AccountController accountController;
 
-    private final Button buttonBack = new Button("Terug");
-    private final int textTitleInset = 10;
-    private final int padding = 200;
-    private final int spacing = 20;
-    private final Color textColor = Color.WHITE;
+        private final Button buttonBack = new Button("Terug");
+        private static final int TEXTTITLEINSET = 10;
+        private static final int SPACING = 20;
+        private static final Color TEXTCOLOR = Color.WHITE;
 
-    public StatView(final ViewController view, final Account account) {
-        this.view = view;
-        this.setBackground(view.getBackground());
-        this.setAlignment(Pos.CENTER);
-        this.accountController = new AccountController();
+        public StatView(final ViewController view, final Account account) {
+                this.setBackground(view.getBackground());
+                this.setAlignment(Pos.CENTER);
+                this.accountController = new AccountController();
 
-        Text text = new Text("Statistieken van " + account.getUsername());
-        text.setStyle("-fx-font-size: 40px");
-        text.setStroke(Color.web("#000000"));
-        text.setFill(Color.web("#ffffff"));
+                Text text = new Text("Statistieken van " + account.getUsername());
+                text.setStyle("-fx-font-size: 40px");
+                text.setStroke(Color.web("#000000"));
+                text.setFill(Color.web("#ffffff"));
 
-        this.textTitle = new StackPane(text);
-        this.textTitle.setPadding(new Insets(textTitleInset, 0, this.spacing, 0));
+                this.textTitle = new StackPane(text);
+                this.textTitle.setPadding(new Insets(TEXTTITLEINSET, 0, SPACING, 0));
 
-        Text winText = new Text(
-                "Aantal gewonnen potjes: " + accountController.getAmountWonGames(account.getUsername()));
-        Text loseText = new Text(
-                "Aantal verloren potjes: " + accountController.getAmountLostGames(account.getUsername()));
-        Text highestScore = new Text("Hoogste score: " + accountController.getHighestScore(account.getUsername()));
-        Text mostPlacedColor = new Text(
-                "Meest geplaatste kleur: " + accountController.getMostPlacedColor(account.getUsername()));
-        Text mostPlacedValue = new Text(
-                "Meest geplaatste waarde: " + accountController.getMostPlacedValue(account.getUsername()));
-        Text amountUniqueOpponents = new Text(
-                "Aantal verschillende tegenstanders: " + accountController.getAmountOpponents(account.getUsername()));
+                Text winText = new Text(
+                                "Aantal gewonnen potjes: "
+                                                + accountController.getAmountWonGames(account.getUsername()));
+                Text loseText = new Text(
+                                "Aantal verloren potjes: "
+                                                + accountController.getAmountLostGames(account.getUsername()));
+                Text highestScore = new Text(
+                                "Hoogste score: " + accountController.getHighestScore(account.getUsername()));
+                Text mostPlacedColor = new Text(
+                                "Meest geplaatste kleur: "
+                                                + accountController.getMostPlacedColor(account.getUsername()));
+                Text mostPlacedValue = new Text(
+                                "Meest geplaatste waarde: "
+                                                + accountController.getMostPlacedValue(account.getUsername()));
+                Text amountUniqueOpponents = new Text(
+                                "Aantal verschillende tegenstanders: "
+                                                + accountController.getAmountOpponents(account.getUsername()));
 
-        winText.setFill(textColor);
-        loseText.setFill(textColor);
-        highestScore.setFill(textColor);
-        mostPlacedColor.setFill(textColor);
-        mostPlacedValue.setFill(textColor);
-        amountUniqueOpponents.setFill(textColor);
+                winText.setFill(TEXTCOLOR);
+                loseText.setFill(TEXTCOLOR);
+                highestScore.setFill(TEXTCOLOR);
+                mostPlacedColor.setFill(TEXTCOLOR);
+                mostPlacedValue.setFill(TEXTCOLOR);
+                amountUniqueOpponents.setFill(TEXTCOLOR);
 
-        this.boxButtons = new HBox();
-        this.boxButtons.getChildren().addAll(this.buttonBack);
+                this.boxButtons = new HBox();
+                this.boxButtons.getChildren().addAll(this.buttonBack);
 
-        this.boxButtons.setAlignment(Pos.CENTER);
-        this.boxButtons.setSpacing(this.spacing);
-        this.boxButtons.setPadding(new Insets(this.spacing, 0, this.spacing, 0));
+                this.boxButtons.setAlignment(Pos.CENTER);
+                this.boxButtons.setSpacing(SPACING);
+                this.boxButtons.setPadding(new Insets(SPACING, 0, SPACING, 0));
 
-        this.buttonBack.setOnAction(e -> {
-            view.openStatsView();
-        });
+                this.buttonBack.setOnAction(e -> {
+                        view.openStatsView();
+                });
 
-        this.getChildren().addAll(this.textTitle, winText, loseText, highestScore, mostPlacedColor, mostPlacedValue,
-                amountUniqueOpponents, this.boxButtons);
-        this.setBackground(view.getBackground());
-    }
+                this.getChildren().addAll(this.textTitle, winText, loseText, highestScore, mostPlacedColor,
+                                mostPlacedValue,
+                                amountUniqueOpponents, this.boxButtons);
+                this.setBackground(view.getBackground());
+        }
 }
