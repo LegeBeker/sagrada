@@ -186,6 +186,13 @@ public class Game extends Observable {
         this.players.add(player);
     }
 
+    public Player getPlayer(final String username) {
+        return this.players.stream()
+                .filter(player -> player.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+    }
+
     public void endTurn() {
         // TODO: implement
     }
