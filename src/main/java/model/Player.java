@@ -203,4 +203,8 @@ public class Player {
         }
         return patternCardOptions;
     }
+
+    public String getPrivateObjectiveColor() {
+        return PlayerDB.getPrivateObjectiveColor(getId());
+    }
 }

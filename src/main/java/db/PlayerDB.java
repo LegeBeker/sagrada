@@ -104,4 +104,13 @@ public final class PlayerDB {
         return Integer.parseInt(db.exec(sql, null).get(0).get("seqnr"));
     }
 
+    public static String getPrivateObjectiveColor(final int playerId) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT private_objectivecard_color FROM player WHERE idplayer = " + Integer.toString(playerId)
+                + ";";
+
+        return db.exec(sql, null).get(0).get("private_objectivecard_color");
+    }
+
 }
