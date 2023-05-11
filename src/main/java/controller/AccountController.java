@@ -63,16 +63,26 @@ public class AccountController {
     }
 
     public String getHighestScore(final String username) {
-        // -- Note: This has to be a String sice there could be accounts in DB which did
-        // not play a game yet, hence they have no score to be shown
-        return Account.getHighestScore(username);
+        Integer score = Account.getHighestScore(username);
+        if (score == null) {
+            return "Geen scores gevonden";
+        }
+        return score.toString();
     }
 
     public String getMostPlacedValue(final String username) {
-        return Account.getMostPlacedValue(username);
+        Integer value = Account.getMostPlacedValue(username);
+        if (value == null) {
+            return "Geen dobbelsteen geplaatst";
+        }
+        return value.toString();
     }
 
     public String getMostPlacedColor(final String username) {
-        return Account.getMostPlacedColor(username);
+        String color = Account.getMostPlacedColor(username);
+        if (color == null) {
+            return "Geen dobbelsteen geplaatst";
+        }
+        return color;
     }
 }

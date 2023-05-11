@@ -39,7 +39,6 @@ public class GameChatView extends VBox implements Observer {
         chatMessageScrollPane.setMaxWidth(view.getWidth());
         chatMessageScrollPane.setStyle("-fx-background: transparent;");
 
-        // set background to transparent
         chatMessageScrollPane.setFitToWidth(true);
         chatMessageScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         chatMessageScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
