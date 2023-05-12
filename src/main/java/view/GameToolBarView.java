@@ -9,7 +9,7 @@ public class GameToolBarView extends HBox {
 
     public GameToolBarView(final ViewController view, final Game game) {
         this.getChildren().addAll(new GameToolCardsView(view, game),
-                new GameGoalCardsView(view),
+                new GameGoalCardsView(view, game),
                 new RoundTrackView(view, game));
 
         this.getChildren().forEach(child -> {
