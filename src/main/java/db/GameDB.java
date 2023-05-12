@@ -89,7 +89,7 @@ public final class GameDB {
         List<Map<String, String>> gametoolcardIDs = db.exec(sql, null);
 
         return gametoolcardIDs;
-    }   
+    }
 
     public static List<Map<String, String>> assignPublicObjectivecards(final int gameID) {
         Database db = Database.getInstance();

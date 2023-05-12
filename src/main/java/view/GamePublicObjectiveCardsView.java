@@ -4,7 +4,6 @@ import javafx.scene.layout.FlowPane;
 import main.java.controller.ViewController;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
-import main.java.model.ToolCard;
 
 public class GamePublicObjectiveCardsView extends FlowPane {
 

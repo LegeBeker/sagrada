@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import main.java.db.ObjectiveCardDB;
-import main.java.db.ToolCardDB;
 
 public class ObjectiveCard {
-    
     private int idObjectiveCard;
     private String name;
     private String description;
