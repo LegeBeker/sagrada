@@ -14,7 +14,7 @@ public class GameGoalCardView extends ImageView {
     private static final int OFFSET = 100;
 
     public GameGoalCardView(final ViewController view, final String goalCardColor) {
-        this.imageGoalCard = new Image("file:resources/img/goalcards/" + goalCardColor + "-goalcard.png");
+        this.imageGoalCard = new Image("file:resources/img/objectivecards/" + goalCardColor + "-objectivecard.png");
 
         this.setFitWidth(WIDTH);
         this.setFitHeight(HEIGHT);
