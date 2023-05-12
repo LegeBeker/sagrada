@@ -107,10 +107,10 @@ public final class PlayerDB {
     public static String getPrivateObjectiveColor(final int playerId) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT private_objectivecard_color FROM player WHERE idplayer = " + Integer.toString(playerId)
-                + ";";
+        String sql = "SELECT private_objectivecard_color FROM player WHERE idplayer = ?";
+        String[] params = {Integer.toString(playerId)};
 
-        return db.exec(sql, null).get(0).get("private_objectivecard_color");
+        return db.exec(sql, params).get(0).get("private_objectivecard_color");
     }
 
 }
