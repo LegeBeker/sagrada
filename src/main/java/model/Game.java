@@ -259,7 +259,7 @@ public class Game extends Observable {
         return ToolCard.getToolCards(idGame);
     }
 
-    public ArrayList<ObjectiveCard> getPublicToolcards(){
+    public ArrayList<ObjectiveCard> getPublicToolcards() {
         return ObjectiveCard.getObjectiveCards(idGame);
     }
 }
