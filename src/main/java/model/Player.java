@@ -108,6 +108,10 @@ public class Player {
         return PatternCard.get(this.idPatternCard);
     }
 
+    public int getFavorTokensLeft() {
+        return unassignedFavortokensLeft;
+    }
+
     public int getScore() {
         return this.score;
     }
