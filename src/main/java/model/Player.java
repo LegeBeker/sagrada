@@ -109,6 +109,12 @@ public class Player {
     }
 
     public int getFavorTokensLeft() {
+        unassignedFavortokensLeft = 0;
+        for(Map<String, String> token : GameFavorTokenDB.getFromPlayer(getId())){
+            if(token.get("gametoolcard") == null){
+                unassignedFavortokensLeft++;
+            }
+        }
         return unassignedFavortokensLeft;
     }
 
