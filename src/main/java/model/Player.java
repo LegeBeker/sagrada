@@ -226,7 +226,7 @@ public class Player {
         return patternCardOptions;
     }
 
-    public static Player update(Player player) {
+    public final static Player update(Player player) {
         Map<String, String> values = PlayerDB.get(player.getId());
 
         player.setIdPatternCard(Integer.parseInt(values.get("idpatterncard")));

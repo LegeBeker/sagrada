@@ -25,7 +25,7 @@ public final class GameFavorTokenDB {
         return db.exec(sql, params);
     }
 
-    public static int getHighestIdFromGame(final int idGame){
+    public static int getHighestIdFromGame(final int idGame) {
         Database db = Database.getInstance();
 
         String sql = "SELECT idfavortoken FROM gamefavortoken WHERE idgame = ? ORDER BY idfavortoken DESC;";
@@ -33,7 +33,7 @@ public final class GameFavorTokenDB {
 
         List<Map<String, String>> result = db.exec(sql, params);
 
-        if(result.size() == 0) {
+        if (result.size() == 0) {
             return 0;
         }
 
@@ -49,7 +49,8 @@ public final class GameFavorTokenDB {
         return db.exec(sql, params);
     }
 
-    public static List<Map<String, String>> assignGameFavorToken(final int idFavorToken, final int idGame, final int idGameToolCard, final int roundID){
+    public static List<Map<String, String>> assignGameFavorToken(final int idFavorToken,
+        final int idGame, final int idGameToolCard, final int roundID) {
         Database db = Database.getInstance();
 
         String sql = "UPDATE gamefavortoken SET gametoolcard = ?, roundID = ? WHERE idfavortoken = ? AND idgame = ?;";
