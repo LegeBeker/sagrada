@@ -35,4 +35,45 @@ public class ToolcardController {
 
         input.close();
     }
+
+    public void grindingStone() {
+        int dieValue = 6;
+        System.out.println("Starting value: " + dieValue);
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.print("Enter a command (flip to flip the die): ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("flip")) {
+                switch (dieValue) {
+                case 1:
+                    dieValue = 6;
+                    break;
+                case 2:
+                    dieValue = 5;
+                    break;
+                case 3:
+                    dieValue = 4;
+                    break;
+                case 4:
+                    dieValue = 3;
+                    break;
+                case 5:
+                    dieValue = 2;
+                    break;
+                case 6:
+                    dieValue = 1;
+                    break;
+                default:
+                    break;
+                }
+                ToolCardDB.updateGameDieValue(dieValue, 0);
+                System.out.println("Die flipped. New value: " + dieValue);
+            } else {
+                System.out.println("Invalid command.");
+            }
+        }
+    }
 }
