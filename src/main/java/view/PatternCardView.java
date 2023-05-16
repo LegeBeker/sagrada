@@ -36,6 +36,8 @@ public class PatternCardView extends BorderPane implements Observer {
 
     private final GridPane grid = new GridPane();
     private final Text cardTopText = new Text();
+    private final Text gameTokenText = new Text();
+    private final BorderPane topDisplay = new BorderPane();
 
     private final ViewController view;
     private final PatternCard patternCard;
@@ -54,9 +56,14 @@ public class PatternCardView extends BorderPane implements Observer {
         this.setCenter(grid);
 
         TextFlow cardTopTextFlow = new TextFlow(cardTopText);
+        TextFlow gameTokenTextFlow = new TextFlow(gameTokenText);
         cardTopTextFlow.setPadding(new Insets(PADDING, PADDING, 0, PADDING));
+        gameTokenTextFlow.setPadding(new Insets(PADDING, PADDING, 0, PADDING));
         cardTopText.setFill(Color.WHITE);
-        this.setTop(cardTopTextFlow);
+        gameTokenText.setFill(Color.WHITE);
+        topDisplay.setLeft(cardTopTextFlow);
+        topDisplay.setRight(gameTokenTextFlow);
+        this.setTop(topDisplay);
 
         if (player == null) {
             cardTopText.setText(patternCard.getName());
@@ -97,7 +104,10 @@ public class PatternCardView extends BorderPane implements Observer {
             this.setBottom(cardDifficultyFlow);
         } else {
             cardTopText.setText(player.getUsername());
+          
+            gameTokenText.setText(" Betaalstenen: " + Integer.toString(player.getFavorTokensLeft()));
             Observable.addObserver(Game.class, this);
+          
             Color playerColor = player.getColor().deriveColor(0, 1, 0.2, 1);
             this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
             if (player.getUsername().equals(player.getGame().getTurnPlayer().getUsername())) {

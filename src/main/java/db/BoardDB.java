@@ -18,7 +18,8 @@ public final class BoardDB {
 
         boards.forEach((player, board) -> {
             for (int[] field : board) {
-                sqlBuilder.append("(" + player.getId() + ", " + field[0] + ", " + field[1] + ", " + player.getGame().getId() + "),");
+                sqlBuilder.append("(" + player.getId() + ", " + field[0] + ", " + field[1] + ", "
+                        + player.getGame().getId() + "),");
             }
         });
 
@@ -54,7 +55,7 @@ public final class BoardDB {
     public static List<Map<String, String>> getBoard(final int idGame, final int idPlayer) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT DISTINCT pf.*, gd.eyes FROM playerframefield pf"
+        String sql = "SELECT DISTINCT pf.*, gd.* FROM playerframefield pf"
                 + " JOIN gamedie gd ON gd.dienumber = pf.dienumber AND gd.diecolor = pf.diecolor WHERE pf.idgame = ? AND pf.idplayer = ?";
         String[] params = {String.valueOf(idGame), String.valueOf(idPlayer)};
 

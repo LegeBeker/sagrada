@@ -26,7 +26,8 @@ public final class GameController {
         return this.game;
     }
 
-    public Game createGame(final ArrayList<Account> accounts, final Account currAccount, final boolean useDefaultCards) {
+    public Game createGame(final ArrayList<Account> accounts, final Account currAccount,
+            final boolean useDefaultCards) {
         return Game.createGame(accounts, currAccount, useDefaultCards);
     }
 
@@ -35,8 +36,14 @@ public final class GameController {
         return game.getCurrentPlayer(idGame, this.view.getAccountController().getAccount().getUsername());
     }
 
+    public String getPrivateObjectiveColor(final int idPlayer) {
+        Player player = Player.get(idPlayer);
+        return player.getPrivateObjectiveColor();
+    }
+
     public void choosePatternCard(final PatternCard patternCard) {
         getCurrentPlayer(this.game.getId()).choosePatternCard(patternCard, this.game.getId());
+        getCurrentPlayer(this.game.getId()).createGameFavorTokens();
         view.openGameView(this.game);
     }
 

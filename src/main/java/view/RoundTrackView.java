@@ -83,8 +83,6 @@ public class RoundTrackView extends StackPane implements Observer {
         this.getChildren().add(rectangle);
         this.getChildren().add(gridPane);
 
-        view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, BOTTOMANIMATEOFFSET, LEFTANIMATEOFFSET);
-
         Observable.addObserver(Game.class, this);
 
         update();
