@@ -104,10 +104,10 @@ public class PatternCardView extends BorderPane implements Observer {
             this.setBottom(cardDifficultyFlow);
         } else {
             cardTopText.setText(player.getUsername());
-          
+
             gameTokenText.setText(" Betaalstenen: " + Integer.toString(player.getFavorTokensLeft()));
             Observable.addObserver(Game.class, this);
-          
+
             Color playerColor = player.getColor().deriveColor(0, 1, 0.2, 1);
             this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
             if (player.getUsername().equals(player.getGame().getTurnPlayer().getUsername())) {
