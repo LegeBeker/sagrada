@@ -19,14 +19,4 @@ public class GoalCard {
     public String getDescription() {
         return description;
     }
-
-    public static GoalCard getGoalCard(final String name) {
-        GoalCard goalCard = new GoalCard();
-
-        goalCard.idGoalCard = idGoalCard;
-        goalCard.name = "Name";
-        goalCard.description = "Description";
-
-        return goalCard;
-    }
 }
