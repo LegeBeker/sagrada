@@ -161,6 +161,7 @@ public class ViewController extends Scene {
     }
 
     public void openPatternCardSelectionView(final Game game) {
+        getGameController().setGame(game);
         PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this,
                 getGameController().getCurrentPlayer(game.getId()));
         changeView(patternCardSelectionView);
