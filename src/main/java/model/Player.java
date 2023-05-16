@@ -24,7 +24,6 @@ public class Player {
     private Integer idPatternCard;
     private int unassignedFavortokensLeft;
 
-    private Game game;
     private Board board;
 
     private int score;
@@ -76,10 +75,7 @@ public class Player {
     }
 
     public Game getGame() {
-        if (this.game == null) {
-            this.game = Game.get(this.idGame);
-        }
-        return Game.update(this.game);
+        return Game.get(this.idGame);
     }
 
     public String getPlayStatus() {
