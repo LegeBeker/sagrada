@@ -21,6 +21,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import main.java.model.Account;
 import main.java.model.Game;
+import main.java.pattern.Observable;
 import main.java.view.GameView;
 import main.java.view.GamesView;
 import main.java.view.LoginView;
@@ -149,7 +150,7 @@ public class ViewController extends Scene {
             timer.schedule(new TimerTask() {
                 public void run() {
                     Platform.runLater(() -> {
-                        game.notifyObservers();
+                        Observable.notifyObservers(Game.class);
                     });
                 }
             }, 0, REFRESHRATE);

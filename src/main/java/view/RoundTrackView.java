@@ -16,6 +16,7 @@ import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.Die;
 import main.java.model.Game;
+import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
 public class RoundTrackView extends StackPane implements Observer {
@@ -84,7 +85,7 @@ public class RoundTrackView extends StackPane implements Observer {
 
         view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, BOTTOMANIMATEOFFSET, LEFTANIMATEOFFSET);
 
-        game.addObserver(this);
+        Observable.addObserver(Game.class, this);
 
         update();
     }

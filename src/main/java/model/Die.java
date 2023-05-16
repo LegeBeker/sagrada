@@ -7,6 +7,7 @@ import java.util.Map;
 import javafx.scene.paint.Color;
 import main.java.db.DieDB;
 import main.java.enums.ColorEnum;
+import main.java.pattern.Observable;
 
 public class Die {
     private int idGame;
@@ -48,7 +49,7 @@ public class Die {
 
     public Boolean putRoundTrack(final int roundID) {
         DieDB.putRoundTrack(this.idGame, roundID, this.number, this.colorString);
-        this.getGame().notifyObservers();
+        Observable.notifyObservers(Game.class);
         return true;
     }
 
