@@ -38,7 +38,7 @@ public final class GameController {
 
     public String getPrivateObjectiveColor(final int idPlayer) {
         Player player = Player.get(idPlayer);
-        return player.getPrivateObjectiveColor();
+        return player.getPrivateObjCardColor();
     }
 
     public void choosePatternCard(final PatternCard patternCard) {

@@ -231,8 +231,4 @@ public class Player {
 
         return player;
     }
-
-    public String getPrivateObjectiveColor() {
-        return PlayerDB.getPrivateObjectiveColor(getId());
-    }
 }
