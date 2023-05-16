@@ -65,7 +65,6 @@ public class PatternCardSelectionView extends BorderPane {
         Button button = new Button("Kiezen");
 
         button.setOnAction(event -> {
-            this.view.getGameController().setGame(player.getGame());
             this.view.getGameController().choosePatternCard(patternCard);
             this.view.openGameView(player.getGame());
         });
