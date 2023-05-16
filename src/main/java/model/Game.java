@@ -195,6 +195,7 @@ public class Game extends Observable {
 
     public void endTurn() {
         // check seqnr and compare to other players.
+        int nrOfPlayers = getPlayers().size();
         // if > max set all players seqnr to negative (* -1).
         // if == 0 do new round.
         // <new round>:
