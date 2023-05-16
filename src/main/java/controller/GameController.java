@@ -43,6 +43,7 @@ public final class GameController {
 
     public void choosePatternCard(final PatternCard patternCard) {
         getCurrentPlayer(this.game.getId()).choosePatternCard(patternCard, this.game.getId());
+        getCurrentPlayer(this.game.getId()).createGameFavorTokens();
         view.openGameView(this.game);
     }
 
