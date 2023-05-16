@@ -193,15 +193,40 @@ public class Game extends Observable {
                 .orElse(null);
     }
 
-    public void endTurn() {
-        // check seqnr and compare to other players.
-        int nrOfPlayers = getPlayers().size();
-        // if > max set all players seqnr to negative (* -1).
-        // if == 0 do new round.
-        // <new round>:
-        // revert seqnr to positive (* -1) and +1 to seqnr and players with seqnr max go to 1;
+    public boolean endTurn(final Player currentPlayer) {
+        if (!(currentPlayer.getId() == getTurnPlayer().getId())) {
+            return false;
+        }
+        int currentSeqnr = getTurnPlayer().getSeqnr();
+        if (currentSeqnr + 1 > getPlayers().size()) {
+            reverseSeqNr();
+        } else if (currentSeqnr + 1 == 0) {
+            endRound();
+        } else {
+            // else player with currSeqnr + 1's turn.
+            setTurnPlayer();
+        }
+
+        return true;
+    }
+
+    private void reverseSeqNr(){
+        for (Player player : getPlayers()) {
+            player.setSeqnr(player.getSeqnr() * -1);
+        }
+    }
+    
+    private void endRound() {
+        reverseSeqNr();
+        for (Player player : getPlayers()) {
+            if (player.getSeqnr() == getPlayers().size()) {
+                player.setSeqnr(1);
+            } else {
+                player.setSeqnr(player.getSeqnr() + 1);
+            }
+        }
         // add remaining die to roundtrack.
-        // else player with currSeqnr + 1's turn.
+        
     }
 
     public static Game get(final int idGame) {
