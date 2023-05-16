@@ -28,7 +28,7 @@ public final class GameFavorTokenDB {
     public static int getHighestIdFromGame(final int idGame) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT idfavortoken FROM gamefavortoken WHERE idgame = ? ORDER BY idfavortoken DESC;";
+        String sql = "SELECT idfavortoken FROM gamefavortoken WHERE idgame = ? ORDER BY idfavortoken ASC;";
         String[] params = {Integer.toString(idGame)};
 
         List<Map<String, String>> result = db.exec(sql, params);
