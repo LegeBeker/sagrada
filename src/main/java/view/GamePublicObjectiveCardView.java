@@ -29,6 +29,6 @@ public class GamePublicObjectiveCardView extends StackPane {
 
         this.getChildren().add(imageView);
 
-        view.effects().add3DHoverEffect((Node)this, width, height, scaleIncrease, offset, 0);
+        view.effects().add3DHoverEffect((Node) this, width, height, scaleIncrease, offset, 0);
     }
 }
