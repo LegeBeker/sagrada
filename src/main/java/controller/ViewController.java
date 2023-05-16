@@ -89,6 +89,10 @@ public class ViewController extends Scene {
         this.openLoginView();
     }
 
+    public String getUsername() {
+        return this.accountController.getUsername();
+    }
+
     public void changeView(final Pane pane) {
         if (this.timer != null) {
             this.timer.cancel();
@@ -159,8 +163,28 @@ public class ViewController extends Scene {
         return this.patternCardController.doMove(patternCard, eyes, dieColor, dieNumber, columnIndex, rowIndex);
     }
 
+    public Boolean isTurnPlayer() {
+        return this.gameController.isTurnPlayer(getUsername());
+    } 
+
     public ArrayList<Player> getPlayers() {
         return this.gameController.getPlayers(this.accountController.getAccount().getUsername());
+    }
+
+    public void getNewOffer() {
+        this.gameController.getNewOffer();
+    }
+
+    public void setHelpFunction(){
+        this.gameController.setHelpFunction();
+    }
+
+    public Boolean getHelpFunction(){
+        return this.gameController.getHelpFunction();
+    }
+
+    public void endTurn() {
+        this.gameController.endTurn();
     }
 
     public void openGameView(final Game game) {

@@ -11,6 +11,10 @@ public class AccountController {
         return this.curAccount;
     }
 
+    public String getUsername() {
+        return this.curAccount.getUsername();
+    }
+
     public Boolean loginAccount(final String username, final String password) {
         Account curAccount = new Account();
 

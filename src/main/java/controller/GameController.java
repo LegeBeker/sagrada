@@ -37,7 +37,27 @@ public final class GameController {
 
     public Player getCurrentPlayer(final int idGame) {
         Game game = Game.get(idGame);
-        return game.getCurrentPlayer(idGame, this.view.getAccountController().getAccount().getUsername());
+        return game.getCurrentPlayer(idGame, view.getUsername());
+    }
+
+    public Boolean isTurnPlayer(final String username) {
+        return this.game.getTurnPlayerUsername().equals(username);
+    }
+
+    public void setHelpFunction(){
+        this.game.setHelpFunction();
+    }
+
+    public boolean getHelpFunction(){
+        return this.game.getHelpFunction();
+    }
+
+    public void getNewOffer() {
+        game.getNewOffer();
+    }
+
+    public void endTurn() {
+        game.endTurn();
     }
 
     public void choosePatternCard(final PatternCard patternCard) {

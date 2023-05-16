@@ -29,22 +29,22 @@ public class GameButtonsView extends VBox {
 
         this.buttonGetDice = new Button("Pak dobbelstenen");
         this.buttonGetDice.setPrefWidth(BUTTONWIDTH);
-        this.buttonGetDice.setOnAction(e -> game.getNewOffer());
+        this.buttonGetDice.setOnAction(e -> view.getNewOffer());
 
         this.helpToggle = new ToggleButton("Help!");
         this.helpToggle.setPrefWidth(BUTTONWIDTH);
         this.helpToggle.setOnAction(e -> {
-            game.setHelpFunction();
-            this.view.displayMessage("Help functie is " + (game.getHelpFunction() ? "aan" : "uit"));
+            view.setHelpFunction();
+            this.view.displayMessage("Help functie is " + (view.getHelpFunction() ? "aan" : "uit"));
         });
 
         this.buttonEndTurn = new Button("Einde beurt");
         this.buttonEndTurn.setPrefWidth(BUTTONWIDTH);
-        this.buttonEndTurn.setOnAction(e -> game.endTurn());
+        this.buttonEndTurn.setOnAction(e -> view.endTurn());
 
         this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle);
 
-        if (game.getTurnPlayer().getUsername().equals(view.getAccountController().getAccount().getUsername())) {
+        if (view.isTurnPlayer()) {
             this.getChildren().addAll(buttonEndTurn);
         }
 

@@ -106,6 +106,10 @@ public class Game extends Observable {
         return Player.get(this.turnIdPlayer);
     }
 
+    public String getTurnPlayerUsername() {
+        return Player.get(this.turnIdPlayer).getUsername();
+    }
+
     public void setTurnPlayer(final int idPlayer) {
         this.turnIdPlayer = idPlayer;
     }
