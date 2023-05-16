@@ -41,7 +41,6 @@ public class InvitesView extends HBox {
         setTableClickEvent();
         this.getChildren().addAll(this.accountsView, this.selectionTable);
 
-        // Add custom logic to the fields
         this.accountsView.setRowFactory(tv -> new TableRow<Account>() {
             @Override
             protected void updateItem(final Account acc, final boolean empty) {
