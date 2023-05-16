@@ -38,6 +38,8 @@ public class ViewController extends Scene {
 
     private Label messageBox;
 
+    private Timer timer;
+
     private AccountController accountController;
     private GameController gameController;
     private PatternCardController patternCardController;
@@ -85,6 +87,10 @@ public class ViewController extends Scene {
     }
 
     public void changeView(final Pane pane) {
+        if (this.timer != null) {
+            this.timer.cancel();
+            this.timer = null;
+        }
         this.rootPane.getChildren().clear();
         this.rootPane.getChildren().addAll(pane, this.messageBox);
     }
@@ -147,8 +153,8 @@ public class ViewController extends Scene {
             GameView gameView = new GameView(this, game);
             changeView(gameView);
 
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
+            this.timer = new Timer();
+            this.timer.schedule(new TimerTask() {
                 public void run() {
                     Platform.runLater(() -> {
                         Observable.notifyObservers(Game.class);
