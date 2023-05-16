@@ -109,6 +109,7 @@ public class Game extends Observable {
 
     public void setTurnPlayer(final int idPlayer) {
         this.turnIdPlayer = idPlayer;
+        GameDB.setTurnPlayer(getId(), idPlayer);
     }
 
     public int getCurrentRound() {
