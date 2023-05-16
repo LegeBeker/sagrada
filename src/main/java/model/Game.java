@@ -232,10 +232,6 @@ public class Game extends Observable {
         return game;
     }
 
-    public static Game update(final Game game) {
-        return mapToGame(GameDB.get(game.getId()));
-    }
-
     public StringProperty turnPlayerUsernameProperty() {
         return new SimpleStringProperty(getTurnPlayer().getUsername());
     }
