@@ -16,6 +16,7 @@ import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.Die;
 import main.java.model.Game;
+import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
 public class RoundTrackView extends StackPane implements Observer {
@@ -82,7 +83,7 @@ public class RoundTrackView extends StackPane implements Observer {
         this.getChildren().add(rectangle);
         this.getChildren().add(gridPane);
 
-        game.addObserver(this);
+        Observable.addObserver(Game.class, this);
 
         update();
     }

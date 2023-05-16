@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Die;
 import main.java.model.Game;
+import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
 public class GameOfferView extends FlowPane implements Observer {
@@ -19,7 +20,7 @@ public class GameOfferView extends FlowPane implements Observer {
         this.view = view;
         this.game = game;
 
-        game.addObserver(this);
+        Observable.addObserver(Game.class, this);
 
         this.update();
     }

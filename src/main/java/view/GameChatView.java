@@ -14,6 +14,7 @@ import main.java.controller.ViewController;
 import main.java.model.Game;
 import main.java.model.Message;
 import main.java.model.Player;
+import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
 public class GameChatView extends VBox implements Observer {
@@ -43,7 +44,7 @@ public class GameChatView extends VBox implements Observer {
         chatMessageScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         chatMessageScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
-        game.addObserver(this);
+        Observable.addObserver(Game.class, this);
 
         TextField textInput = new TextField();
         textInput.setPromptText("Typ hier je bericht");
