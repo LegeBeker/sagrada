@@ -230,6 +230,7 @@ public class Game extends Observable {
                 player.setSeqnr(player.getSeqnr() + 1);
             }
         }
+
         for(Map<String, String> dieMap : DieDB.getOffer(getId(), getCurrentRound())) {
             DieDB.putRoundTrack(getId(), getCurrentRound(), Integer.parseInt(dieMap.get("dienumber")),
                 dieMap.get("diecolor"));
