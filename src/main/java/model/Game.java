@@ -227,6 +227,7 @@ public class Game extends Observable {
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == getPlayers().size()) {
                 player.setSeqnr(1);
+                setTurnPlayer(player.getId());
             } else {
                 player.setSeqnr(player.getSeqnr() + 1);
             }
