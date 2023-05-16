@@ -22,6 +22,6 @@ public class GamePrivateObjectiveCardView extends ImageView {
 
         this.setImage(this.imagePrivateObjectiveCard);
 
-        view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, OFFSET, 0);
+        view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, OFFSET, OFFSET);
     }
 }
