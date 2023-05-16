@@ -203,8 +203,12 @@ public class Game extends Observable {
         } else if (currentSeqnr + 1 == 0) {
             endRound();
         } else {
-            // else player with currSeqnr + 1's turn.
-            setTurnPlayer();
+            for (Player player : getPlayers()){
+                if (player.getSeqnr() == currentSeqnr + 1) {
+                    setTurnPlayer(player.getId());
+                    break;
+                }
+            }
         }
 
         return true;
