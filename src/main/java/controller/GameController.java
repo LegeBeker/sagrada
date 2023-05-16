@@ -26,6 +26,10 @@ public final class GameController {
         return this.game;
     }
 
+    public ArrayList<Player> getPlayers(final String username) {
+        return game.getPlayers(username);
+    }
+
     public Game createGame(final ArrayList<Account> accounts, final Account currAccount,
             final boolean useDefaultCards) {
         return Game.createGame(accounts, currAccount, useDefaultCards);

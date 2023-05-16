@@ -16,13 +16,11 @@ public class GameBoardsView extends HBox {
     private static final int MAXCOLS = 2;
 
     private ViewController view;
-    private Game game;
 
     private GridPane grid = new GridPane();
 
     public GameBoardsView(final ViewController view) {
         this.view = view;
-        this.game = game;
 
         showPlayerGameboards();
 
@@ -37,7 +35,7 @@ public class GameBoardsView extends HBox {
 
     private void showPlayerGameboards() {
         int cardCount = 0;
-        for (Player player : this.game.getPlayers(view.getAccountController().getAccount().getUsername())) {
+        for (Player player : view.getPlayers()) {
             if (player.getPatternCard() == null) {
                 continue; // skip players without a pattern card
             }

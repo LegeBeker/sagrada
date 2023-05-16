@@ -1,5 +1,6 @@
 package main.java.controller;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,6 +22,8 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import main.java.model.Account;
 import main.java.model.Game;
+import main.java.model.PatternCard;
+import main.java.model.Player;
 import main.java.pattern.Observable;
 import main.java.view.GameView;
 import main.java.view.GamesView;
@@ -61,7 +64,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -139,6 +142,19 @@ public class ViewController extends Scene {
     public void openNewGameView() {
         NewGameView newGameView = new NewGameView(this);
         changeView(newGameView);
+    }
+
+    public ArrayList<Account> getInviteableAccounts() {
+        return this.accountController.getInviteableAccounts();
+    }
+
+    public Boolean doMove(final PatternCard patternCard, final int eyes, final Color dieColor, final int dieNumber,
+            final int columnIndex, final int rowIndex) {
+        return this.patternCardController.doMove(patternCard, eyes, dieColor, dieNumber, columnIndex, rowIndex);
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return this.gameController.getPlayers(this.accountController.getAccount().getUsername());
     }
 
     public void openGameView(final Game game) {
