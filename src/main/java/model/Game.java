@@ -233,12 +233,7 @@ public class Game extends Observable {
     }
 
     public static Game update(final Game game) {
-        Map<String, String> values = GameDB.get(game.idGame);
-
-        game.turnIdPlayer = Integer.parseInt(values.get("turn_idplayer"));
-        game.currentRound = Integer.parseInt(values.get("current_roundID"));
-
-        return game;
+        return mapToGame(GameDB.get(game.getId()));
     }
 
     public StringProperty turnPlayerUsernameProperty() {
