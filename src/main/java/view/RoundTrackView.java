@@ -30,11 +30,6 @@ public class RoundTrackView extends StackPane implements Observer {
     private static final int WIDTH = 190;
     private static final int HEIGHT = 120;
 
-    private static final double SCALEINCREASE = 1.75;
-
-    private static final int LEFTANIMATEOFFSET = 200;
-    private static final int BOTTOMANIMATEOFFSET = 100;
-
     private Game game;
 
     private final ArrayList<Group> roundGroups;

@@ -8,9 +8,10 @@ import main.java.model.Game;
 public class GameToolBarView extends HBox {
 
     public GameToolBarView(final ViewController view, final Game game) {
-
         this.getChildren().addAll(new GameToolCardsView(view, game), new GamePublicObjectiveCardsView(view, game),
-                new GamePrivateObjectiveCardsView(view, game), new RoundTrackView(view, game));
+                new GamePrivateObjectiveCardView(view,
+                        view.getGameController().getCurrentPlayer(game.getId()).getPrivateObjCardColor()),
+                new RoundTrackView(view, game));
 
         this.getChildren().forEach(child -> {
             HBox.setHgrow(child, Priority.ALWAYS);
