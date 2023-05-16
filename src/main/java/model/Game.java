@@ -243,7 +243,7 @@ public class Game extends Observable {
 
     public void getNewOffer() {
         Die.getNewOffer(idGame, currentRound, players.size());
-        notifyObservers();
+        notifyObservers(Game.class);
     }
 
     public ArrayList<ToolCard> getToolCards() {

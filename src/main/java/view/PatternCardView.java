@@ -11,9 +11,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.Die;
+import main.java.model.Game;
 import main.java.model.PatternCard;
 import main.java.model.PatternCardField;
 import main.java.model.Player;
+import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
 public class PatternCardView extends BorderPane implements Observer {
@@ -102,8 +104,10 @@ public class PatternCardView extends BorderPane implements Observer {
             this.setBottom(cardDifficultyFlow);
         } else {
             cardTopText.setText(player.getUsername());
+
             gameTokenText.setText(" Betaalstenen: " + Integer.toString(player.getFavorTokensLeft()));
-            player.getGame().addObserver(this);
+            Observable.addObserver(Game.class, this);
+
             Color playerColor = player.getColor().deriveColor(0, 1, 0.2, 1);
             this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
             if (player.getUsername().equals(player.getGame().getTurnPlayer().getUsername())) {
