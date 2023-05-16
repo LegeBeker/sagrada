@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
+import main.java.db.DieDB;
 import main.java.db.GameDB;
 import main.java.db.PatternCardDB;
 import main.java.enums.PlayStatusEnum;
@@ -197,14 +198,14 @@ public class Game extends Observable {
         if (!(currentPlayer.getId() == getTurnPlayer().getId())) {
             return false;
         }
-        int currentSeqnr = getTurnPlayer().getSeqnr();
-        if (currentSeqnr + 1 > getPlayers().size()) {
+        int nextSeqnr = getTurnPlayer().getSeqnr() + 1;
+        if (nextSeqnr > getPlayers().size()) {
             reverseSeqNr();
-        } else if (currentSeqnr + 1 == 0) {
+        } else if (nextSeqnr == 0) {
             endRound();
         } else {
             for (Player player : getPlayers()){
-                if (player.getSeqnr() == currentSeqnr + 1) {
+                if (player.getSeqnr() == nextSeqnr) {
                     setTurnPlayer(player.getId());
                     break;
                 }
@@ -229,8 +230,10 @@ public class Game extends Observable {
                 player.setSeqnr(player.getSeqnr() + 1);
             }
         }
-        // add remaining die to roundtrack.
-        
+        for(Map<String, String> dieMap : DieDB.getOffer(getId(), getCurrentRound())) {
+            DieDB.putRoundTrack(getId(), getCurrentRound(), Integer.parseInt(dieMap.get("dienumber")),
+                dieMap.get("diecolor"));
+        }
     }
 
     public static Game get(final int idGame) {
