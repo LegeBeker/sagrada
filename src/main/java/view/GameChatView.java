@@ -27,7 +27,7 @@ public class GameChatView extends VBox implements Observer {
     private static final int WIDTHCHATVIEW = 300;
     private static final int WIDTHMESSAGEBOX = 200;
 
-    public GameChatView(final ViewController view, final Game game) {
+    public GameChatView(final ViewController view) {
         this.setAlignment(Pos.BOTTOM_CENTER);
         this.setMaxWidth(WIDTHCHATVIEW);
         this.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");

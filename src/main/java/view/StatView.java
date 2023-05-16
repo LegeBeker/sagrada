@@ -21,7 +21,7 @@ public class StatView extends VBox {
         private static final int SPACING = 20;
         private static final Color TEXTCOLOR = Color.WHITE;
 
-        public StatView(final ViewController view, final Account account) {
+        public StatView(final ViewController view) {
                 this.setBackground(view.getBackground());
                 this.setAlignment(Pos.CENTER);
 

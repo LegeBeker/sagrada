@@ -17,7 +17,7 @@ public class GamePublicObjectiveCardView extends StackPane {
     private final double scaleIncrease = 1.75;
     private final int offset = 100;
 
-    public GamePublicObjectiveCardView(final ViewController view, final ObjectiveCard objCard) {
+    public GamePublicObjectiveCardView(final ViewController view) {
         this.imageView = new ImageView();
         this.imageToolCard = new Image("file:resources/img/objectivecards/"
                 + objCard.getName().toLowerCase().replace(" ", "-") + "-objectivecard.png");

@@ -9,7 +9,7 @@ public class GameView extends BorderPane {
     private ViewController view;
     private Game game;
 
-    public GameView(final ViewController view, final Game game) {
+    public GameView(final ViewController view) {
         this.view = view;
         this.game = game;
 

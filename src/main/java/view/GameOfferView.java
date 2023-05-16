@@ -16,7 +16,7 @@ public class GameOfferView extends FlowPane implements Observer {
 
     private Game game;
 
-    public GameOfferView(final ViewController view, final Game game) {
+    public GameOfferView(final ViewController view) {
         this.view = view;
         this.game = game;
 

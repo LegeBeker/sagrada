@@ -43,7 +43,7 @@ public class PatternCardView extends BorderPane implements Observer {
     private final PatternCard patternCard;
     private final Player player;
 
-    public PatternCardView(final ViewController view, final PatternCard patternCard, final Player player) {
+    public PatternCardView(final ViewController view) {
         this.view = view;
         this.patternCard = patternCard;
         this.player = player;

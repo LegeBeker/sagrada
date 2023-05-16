@@ -26,7 +26,7 @@ public class PatternCardSelectionView extends BorderPane {
     private final ViewController view;
     private final Player player;
 
-    public PatternCardSelectionView(final ViewController view, final Player player) {
+    public PatternCardSelectionView(final ViewController view) {
         super();
         this.view = view;
         this.flowPane = new FlowPane();

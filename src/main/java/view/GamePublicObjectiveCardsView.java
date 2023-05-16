@@ -10,7 +10,7 @@ public class GamePublicObjectiveCardsView extends FlowPane {
     private static final int HGAP = 25;
     private static final int VGAP = 10;
 
-    public GamePublicObjectiveCardsView(final ViewController view, final Game game) {
+    public GamePublicObjectiveCardsView(final ViewController view) {
         for (ObjectiveCard publicObjectiveCard : game.getPublicToolcards()) {
             this.getChildren().add(new GamePublicObjectiveCardView(view, publicObjectiveCard));
         }

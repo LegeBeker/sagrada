@@ -19,7 +19,7 @@ public class GameToolCardView extends StackPane {
     private boolean isSelected = false;
     private static GameToolCardView selectedToolCardView = null;
 
-    public GameToolCardView(final ViewController view, final ToolCard toolCard) {
+    public GameToolCardView(final ViewController view) {
         ImageView imageView = new ImageView();
         this.toolCard = toolCard;
         this.imageToolCard = new Image(

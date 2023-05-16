@@ -11,7 +11,7 @@ public class DieDropTarget extends StackPane {
     private final ViewController view;
     private final PatternCard patternCard;
 
-    public DieDropTarget(final ViewController view, final PatternCard patternCard) {
+    public DieDropTarget(final ViewController view) {
         this.view = view;
         this.patternCard = patternCard;
 

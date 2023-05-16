@@ -20,7 +20,7 @@ public class GameButtonsView extends VBox {
 
     private static final int PADDING = 10;
 
-    public GameButtonsView(final ViewController view, final Game game) {
+    public GameButtonsView(final ViewController view) {
         this.view = view;
 
         this.buttonBack = new Button("Terug");

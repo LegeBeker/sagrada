@@ -34,7 +34,7 @@ public class RoundTrackView extends StackPane implements Observer {
 
     private final ArrayList<Group> roundGroups;
 
-    public RoundTrackView(final ViewController view, final Game game) {
+    public RoundTrackView(final ViewController view) {
         this.game = game;
         this.roundGroups = new ArrayList<>();
 

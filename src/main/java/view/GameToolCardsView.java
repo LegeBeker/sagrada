@@ -11,7 +11,7 @@ public class GameToolCardsView extends FlowPane {
     private static final int GAP = 10;
     private static final int PADDING = 5;
 
-    public GameToolCardsView(final ViewController view, final Game game) {
+    public GameToolCardsView(final ViewController view) {
 
         for (ToolCard toolCard : game.getToolCards()) {
             this.getChildren().add(new GameToolCardView(view, toolCard));

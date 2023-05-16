@@ -20,7 +20,7 @@ public class GameBoardsView extends HBox {
 
     private GridPane grid = new GridPane();
 
-    public GameBoardsView(final ViewController view, final Game game) {
+    public GameBoardsView(final ViewController view) {
         this.view = view;
         this.game = game;
 
@@ -57,7 +57,7 @@ public class GameBoardsView extends HBox {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
         moves.forEach((move) -> {
             patternCardView.getGrid().getChildren().forEach((cell) -> {
-                int[] location = {GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell)};
+                int[] location = { GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell) };
                 if (move[0] == location[0] && move[1] == location[1]) {
                     cell.setStyle("-fx-border-color: #00FFBF;");
                 }

@@ -13,7 +13,7 @@ import main.java.model.Game;
 public class GameScoreView extends VBox {
     private static final int PADDING = 10;
 
-    public GameScoreView(final ViewController view, final Game game) {
+    public GameScoreView(final ViewController view) {
         game.getPlayers(view.getAccountController().getAccount().getUsername()).forEach(player -> {
             StackPane playerScore = new StackPane();
 
