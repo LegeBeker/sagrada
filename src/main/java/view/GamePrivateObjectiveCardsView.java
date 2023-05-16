@@ -7,9 +7,9 @@ import main.java.model.Game;
 public class GamePrivateObjectiveCardsView extends FlowPane {
 
     public GamePrivateObjectiveCardsView(final ViewController view, final Game game) {
-        String goalcardcolor = view.getGameController()
+        String privateObjectiveCardColor = view.getGameController()
                 .getPrivateObjectiveColor(view.getGameController().getCurrentPlayer(game.getId()).getId());
-        this.getChildren().add(new GamePrivateObjectiveCardView(view, goalcardcolor));
+        this.getChildren().add(new GamePrivateObjectiveCardView(view, privateObjectiveCardColor));
     }
 
 }
