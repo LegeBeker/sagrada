@@ -194,7 +194,13 @@ public class Game extends Observable {
     }
 
     public void endTurn() {
-        // TODO: implement
+        // check seqnr and compare to other players.
+        // if > max set all players seqnr to negative (* -1).
+        // if == 0 do new round.
+        // <new round>:
+        // revert seqnr to positive (* -1) and +1 to seqnr and players with seqnr max go to 1;
+        // add remaining die to roundtrack.
+        // else player with currSeqnr + 1's turn.
     }
 
     public static Game get(final int idGame) {
