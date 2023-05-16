@@ -8,7 +8,6 @@ import main.java.model.Game;
 public class GameToolBarView extends HBox {
 
     public GameToolBarView(final ViewController view, final Game game) {
-        // this.setBackground(background);
 
         this.getChildren().addAll(new GameToolCardsView(view, game), new GamePublicObjectiveCardsView(view, game), new GameButtonsView(view, game));
 

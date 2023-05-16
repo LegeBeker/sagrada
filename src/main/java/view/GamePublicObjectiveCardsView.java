@@ -7,13 +7,13 @@ import main.java.model.ObjectiveCard;
 
 public class GamePublicObjectiveCardsView extends FlowPane {
 
-    private final int gap = 25;
+    private static final int GAP = 25;
 
     public GamePublicObjectiveCardsView(final ViewController view, final Game game) {
         for (ObjectiveCard publicObjectiveCard : game.getPublicToolcards()) {
             this.getChildren().add(new GamePublicObjectiveCardView(view, publicObjectiveCard));
         }
 
-        this.setHgap(gap);
+        this.setHgap(GAP);
     }
 }
