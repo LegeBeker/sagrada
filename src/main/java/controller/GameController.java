@@ -41,7 +41,7 @@ public final class GameController {
         getCurrentPlayer(this.game.getId()).createGameFavorTokens();
     }
 
-    public void requestEndTurn(){
+    public void requestEndTurn() {
         Player currentPlayer = getCurrentPlayer(getGame().getId());
         if (!getGame().endTurn(currentPlayer)) {
             view.displayError("Het is je beurt niet");

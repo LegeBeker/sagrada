@@ -205,7 +205,7 @@ public class Game extends Observable {
         } else if (nextSeqnr == 0) {
             endRound();
         } else {
-            for (Player player : getPlayers()){
+            for (Player player : getPlayers()) {
                 if (player.getSeqnr() == nextSeqnr) {
                     setTurnPlayer(player.getId());
                     break;
@@ -216,12 +216,12 @@ public class Game extends Observable {
         return true;
     }
 
-    private void reverseSeqNr(){
+    private void reverseSeqNr() {
         for (Player player : getPlayers()) {
             player.setSeqnr(player.getSeqnr() * -1);
         }
     }
-    
+
     private void endRound() {
         reverseSeqNr();
         for (Player player : getPlayers()) {
@@ -233,7 +233,7 @@ public class Game extends Observable {
             }
         }
 
-        for(Map<String, String> dieMap : DieDB.getOffer(getId(), getCurrentRound())) {
+        for (Map<String, String> dieMap : DieDB.getOffer(getId(), getCurrentRound())) {
             DieDB.putRoundTrack(getId(), getCurrentRound(), Integer.parseInt(dieMap.get("dienumber")),
                 dieMap.get("diecolor"));
         }
@@ -241,7 +241,7 @@ public class Game extends Observable {
         setCurrentRound(getCurrentRound() + 1);
     }
 
-    private void setCurrentRound(int roundID) {
+    private void setCurrentRound(final int roundID) {
         this.currentRound = roundID;
         GameDB.setRound(getId(), roundID);
     }
