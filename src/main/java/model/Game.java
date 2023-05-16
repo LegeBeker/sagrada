@@ -236,6 +236,13 @@ public class Game extends Observable {
             DieDB.putRoundTrack(getId(), getCurrentRound(), Integer.parseInt(dieMap.get("dienumber")),
                 dieMap.get("diecolor"));
         }
+
+        setCurrentRound(getCurrentRound() + 1);
+    }
+
+    private void setCurrentRound(int roundID) {
+        this.currentRound = roundID;
+        GameDB.setRound(getId(), roundID);
     }
 
     public static Game get(final int idGame) {
