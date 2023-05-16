@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.java.controller.ViewController;
 
-public class GameGoalCardView extends ImageView {
+public class GamePrivateObjectiveCardView extends ImageView {
     private Image imageGoalCard;
 
     private static final int WIDTH = 150;
@@ -13,7 +13,7 @@ public class GameGoalCardView extends ImageView {
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
 
-    public GameGoalCardView(final ViewController view, final String goalCardColor) {
+    public GamePrivateObjectiveCardView(final ViewController view, final String goalCardColor) {
         this.imageGoalCard = new Image("file:resources/img/objectivecards/" + goalCardColor + "-objectivecard.png");
 
         this.setFitWidth(WIDTH);

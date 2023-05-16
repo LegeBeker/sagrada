@@ -1,14 +1,14 @@
 package main.java.model;
 
-public class GoalCard {
+public class PrivateObjectiveCard {
     private int idGoalCard;
     private String name;
     private String description;
 
-    public GoalCard() {
+    public PrivateObjectiveCard() {
     }
 
-    public int getIdGoalCard() {
+    public int getIdPrivateObjectiveCard() {
         return idGoalCard;
     }
 
