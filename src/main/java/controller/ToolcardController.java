@@ -7,6 +7,12 @@ import main.java.db.ToolCardDB;
 public class ToolcardController {
 
     private static final int MAX_VALUE = 6;
+    private static final int ONE =1;
+    private static final int TWO =2;
+    private static final int THREE =3;
+    private static final int FOUR =4;
+    private static final int FIVE =5;
+    private static final int SIX =6;
 
     public void grozingPliers(final int dieValue) {
         Scanner input = new Scanner(System.in);
@@ -49,22 +55,22 @@ public class ToolcardController {
             if (input.equalsIgnoreCase("flip")) {
                 switch (Integer.toString(dieValue)) {
                 case "1":
-                    dieValue = 6;
+                    dieValue = SIX;
                     break;
                 case "2":
-                    dieValue = 5;
+                    dieValue = FIVE;
                     break;
                 case "3":
-                    dieValue = 4;
+                    dieValue = FOUR;
                     break;
                 case "4":
-                    dieValue = 3;
+                    dieValue = THREE;
                     break;
                 case "5":
-                    dieValue = 2;
+                    dieValue = TWO;
                     break;
                 case "6":
-                    dieValue = 1;
+                    dieValue = ONE;
                     break;
                 default:
                     break;
