@@ -2,8 +2,12 @@ package main.java.view;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import main.java.controller.ViewController;
+import main.java.model.FavorToken;
 import main.java.model.ToolCard;
 
 public class GameToolCardView extends StackPane {
@@ -11,7 +15,11 @@ public class GameToolCardView extends StackPane {
     private final Image imageToolCard;
 
     private static final int WIDTH = 150;
-    private static final int HEIGHT = 200;
+    private static final int CARDHEIGHT = 200;
+
+    private static final int prohibitedX = 40;
+    private static final int prohibitedY = 40;
+    private static final int circleRadius = 15;
 
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
@@ -27,11 +35,51 @@ public class GameToolCardView extends StackPane {
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
 
         imageView.setFitWidth(WIDTH);
-        imageView.setFitHeight(HEIGHT);
+        imageView.setFitHeight(CARDHEIGHT);
         imageView.setImage(imageToolCard);
-        view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, OFFSET, 0);
+        view.effects().add3DHoverEffect(this, WIDTH, CARDHEIGHT, SCALEINCREASE, OFFSET, 0);
 
-        this.getChildren().add(imageView);
+        Pane pane = new Pane();
+        pane.setPrefHeight(CARDHEIGHT);
+        pane.setPrefWidth(WIDTH);
+
+        //-- Start loop for each favortoken
+        for(FavorToken ft : view.getFavorTokenController().getFavorTokensForToolCard(toolCard.getIdToolCard(), view.getGameController().getGame().getId())){
+            int randX = 1 + (int)(Math.random()*WIDTH);
+            int randY = 1 + (int)(Math.random()*CARDHEIGHT);
+
+            if(randX <= prohibitedX){
+                randX += prohibitedX;
+            }
+            else if(randX > WIDTH - circleRadius){
+                randX -= circleRadius;
+            }
+
+            if(randY <= prohibitedY){
+                randY += prohibitedY;
+            }
+            else if(randY > WIDTH - circleRadius){
+                randY -= circleRadius;
+            }
+
+            System.out.println("Random X: " + randX);
+            System.out.println("Random Y: " + randY);
+
+            System.out.println();
+            System.out.println("------------------");
+            System.out.println();
+
+
+            Circle c = new Circle(randX,randY,circleRadius);
+            // ft.getIdPlayer();
+
+            c.setFill(Color.rgb(255, 0, 0, 0.6));
+            c.setStroke(Color.rgb(255, 0, 0).deriveColor(0, 1, 0.2, 1));
+            c.setStrokeWidth(2);
+            pane.getChildren().add(c);
+        }
+
+        this.getChildren().addAll(imageView, pane);
 
         this.setOnMouseClicked(event -> {
             if (!isSelected) {

@@ -44,6 +44,7 @@ public class ViewController extends Scene {
     private GameController gameController;
     private PatternCardController patternCardController;
     private MessageController messageController;
+    private FavorTokenController favorTokenController;
 
     private EffectsController effectsController;
 
@@ -82,6 +83,7 @@ public class ViewController extends Scene {
         this.patternCardController = new PatternCardController(this);
         this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
+        this.favorTokenController = new FavorTokenController(this);
 
         this.openLoginView();
     }
@@ -192,5 +194,9 @@ public class ViewController extends Scene {
 
     public MessageController getMessageController() {
         return messageController;
+    }
+
+    public FavorTokenController getFavorTokenController(){
+        return favorTokenController;
     }
 }
