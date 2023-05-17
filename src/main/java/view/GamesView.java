@@ -110,8 +110,8 @@ public class GamesView extends VBox {
                         showInviteAlert(game, view.getGameController().getCurrentPlayer(game.getId()));
                     } else {
                         Boolean valid = true;
-                        for(Player p : game.getPlayers()){
-                            if (game.playerHasNotReplied(p.getUsername())){
+                        for (Player p : game.getPlayers()) {
+                            if (game.playerHasNotReplied(p.getUsername())) {
                                 valid = false;
                                 break;
                             }
