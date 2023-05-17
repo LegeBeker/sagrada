@@ -1,5 +1,6 @@
 package main.java.db;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,4 +83,17 @@ public final class AccountDB {
         return new HashMap<String, String>();
     }
 
+    public static ArrayList<String> getAccountsUsernames() {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT username FROM account";
+        List<Map<String, String>> dbResult = db.exec(sql, null);
+
+        ArrayList<String> usernames = new ArrayList<String>();
+        for (Map<String, String> row : dbResult) {
+            usernames.add(row.get("username"));
+        }
+
+        return usernames;
+    }
 }

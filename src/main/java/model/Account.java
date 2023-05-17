@@ -60,4 +60,8 @@ public class Account {
     public static Map<String, String> getStats(final String username) {
         return AccountDB.getStats(username);
     }
+
+    public static ArrayList<String> getAccountsUsernames() {
+        return AccountDB.getAccountsUsernames();
+    }
 }

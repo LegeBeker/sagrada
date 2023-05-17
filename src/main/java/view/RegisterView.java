@@ -81,11 +81,18 @@ public class RegisterView extends VBox {
                 throw new RuntimeException("Wachtwoord is ongeldig");
             }
 
+            view.getAccountsUsernames().forEach(username -> {
+                if (username.equals(this.fieldUsername.getText())) {
+                    throw new RuntimeException("Gebruikersnaam is al in gebruik");
+                }
+            });
+
             if (!view.createAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
                 throw new RuntimeException("Aanmaken account is mislukt");
             }
         } catch (RuntimeException e) {
             view.displayError(e.getMessage());
+            return;
         }
 
         view.openMenuView();

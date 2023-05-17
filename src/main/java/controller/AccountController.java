@@ -58,4 +58,8 @@ public class AccountController {
     public Map<String, String> getStats(final String username) {
         return Account.getStats(username);
     }
+
+    public ArrayList<String> getAccountsUsernames() {
+        return Account.getAccountsUsernames();
+    }
 }

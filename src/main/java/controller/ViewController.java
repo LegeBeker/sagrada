@@ -372,4 +372,8 @@ public class ViewController extends Scene {
         Game game = Game.get(gameId);
         return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
     }
+
+    public ArrayList<String> getAccountsUsernames() {
+        return this.accountController.getAccountsUsernames();
+    }
 }
