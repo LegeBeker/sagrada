@@ -25,36 +25,25 @@ public final class GameFavorTokenDB {
         return db.exec(sql, params);
     }
 
-    public static int getHighestIdFromGame(final int idGame) {
+    public static List<Map<String, String>> createGameFavorToken(final int idGame,
+            final int idPlayer) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT idfavortoken FROM gamefavortoken WHERE idgame = ? ORDER BY idfavortoken DESC;";
-        String[] params = {Integer.toString(idGame)};
-
-        List<Map<String, String>> result = db.exec(sql, params);
-
-        if (result.size() == 0) {
-            return 0;
-        }
-
-        return Integer.parseInt(result.get(0).get("idfavortoken"));
-    }
-
-    public static List<Map<String, String>> createGameFavorToken(final int idFavorToken, final int idGame, final int idPlayer) {
-        Database db = Database.getInstance();
-
-        String sql = "INSERT INTO gamefavortoken (idfavortoken, idgame, idplayer) VALUE (?, ?, ?);";
-        String[] params = {Integer.toString(idFavorToken), Integer.toString(idGame), Integer.toString(idPlayer)};
+        String sql = "INSERT INTO gamefavortoken (idfavortoken, idgame, idplayer) "
+           + "SELECT temp.idfavortoken, ?, ? "
+           + "FROM (SELECT IFNULL(MAX(idfavortoken), 0) + 1 AS idfavortoken FROM gamefavortoken) AS temp;";
+        String[] params = {Integer.toString(idGame), Integer.toString(idPlayer)};
 
         return db.exec(sql, params);
     }
 
     public static List<Map<String, String>> assignGameFavorToken(final int idFavorToken,
-        final int idGame, final int idGameToolCard, final int roundID) {
+            final int idGame, final int idGameToolCard, final int roundID) {
         Database db = Database.getInstance();
 
         String sql = "UPDATE gamefavortoken SET gametoolcard = ?, roundID = ? WHERE idfavortoken = ? AND idgame = ?;";
-        String[] params = {Integer.toString(idGameToolCard), Integer.toString(roundID), Integer.toString(idFavorToken), Integer.toString(idGame)};
+        String[] params = {Integer.toString(idGameToolCard), Integer.toString(roundID), Integer.toString(idFavorToken),
+                Integer.toString(idGame)};
 
         return db.exec(sql, params);
     }

@@ -44,12 +44,11 @@ public class Player {
 
     public void createGameFavorTokens() {
         Integer patternCardDifficulty = getPatternCard().getDifficulty();
-        int highestId = GameFavorTokenDB.getHighestIdFromGame(this.idGame);
         for (int tokenNumber = 1; patternCardDifficulty >= tokenNumber; tokenNumber++) {
-            GameFavorTokenDB.createGameFavorToken(tokenNumber + highestId, this.idGame, getId());
+            GameFavorTokenDB.createGameFavorToken(this.idGame, this.idPlayer);
         }
 
-        unassignedFavortokensLeft = patternCardDifficulty;
+        this.unassignedFavortokensLeft = patternCardDifficulty;
     }
 
     public void addPlayerToDB() {
@@ -183,6 +182,7 @@ public class Player {
     }
 
     public boolean choosePatternCard(final int idPatternCard, final int idgame) {
+        setIdPatternCard(idPatternCard);
         return PlayerDB.updatePatternCard(idPatternCard, idgame, this.username);
     }
 
