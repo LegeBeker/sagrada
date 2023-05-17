@@ -48,8 +48,4 @@ public final class GameController {
     public Game getGame() {
         return this.game;
     }
-
-    public int getAmountOpenInvites(final int gameId) {
-        return Player.getAmountOpenInvites(gameId);
-    }
 }

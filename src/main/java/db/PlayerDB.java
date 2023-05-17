@@ -61,10 +61,8 @@ public final class PlayerDB {
     public static boolean acceptInvite(final int gameId, final String playername) {
         Database db = Database.getInstance();
 
-        String sql = "UPDATE player SET playstatus = '" + PlayStatusEnum.ACCEPTED
-                + "' WHERE idgame = ? AND username = ?;";
+        String sql = "UPDATE player SET playstatus = '" + PlayStatusEnum.ACCEPTED + "' WHERE idgame = ? AND username = ?;";
         String[] params = {Integer.toString(gameId), playername};
-
         db.exec(sql, params);
 
         return true;
@@ -73,8 +71,7 @@ public final class PlayerDB {
     public static boolean refuseInvite(final int gameId, final String playername) {
         Database db = Database.getInstance();
 
-        String sql = "UPDATE player SET playstatus =  '" + PlayStatusEnum.REFUSED
-                + "'  WHERE idgame = ? AND username = ?;";
+        String sql = "UPDATE player SET playstatus =  '" + PlayStatusEnum.REFUSED + "'  WHERE idgame = ? AND username = ?;";
         String[] params = {Integer.toString(gameId), playername};
 
         db.exec(sql, params);
@@ -104,21 +101,5 @@ public final class PlayerDB {
         sql = "SELECT seqnr FROM player WHERE idplayer = " + Integer.toString(playerId) + ";";
 
         return Integer.parseInt(db.exec(sql, null).get(0).get("seqnr"));
-    }
-
-    public static int getAmountOpenInvites(final int gameId) {
-        Database db = Database.getInstance();
-
-        String sql = "SELECT COUNT(*) AS amount FROM player ";
-        sql += "WHERE idgame = ? AND playstatus = ?;";
-        String[] params = {Integer.toString(gameId), PlayStatusEnum.CHALLENGEE.toString()};
-
-        List<Map<String, String>> dbresult = db.exec(sql, params);
-        if (dbresult.size() > 0) {
-            return Integer.parseInt(db.exec(sql, params).get(0).get(("amount")));
-        } else {
-            return 1; // -- Default value to make sure it's never going to pass the value
-        }
-
     }
 }

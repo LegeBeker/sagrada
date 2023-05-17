@@ -109,7 +109,15 @@ public class GamesView extends VBox {
                     if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
                         showInviteAlert(game, view.getGameController().getCurrentPlayer(game.getId()));
                     } else {
-                        if (this.view.getGameController().getAmountOpenInvites(game.getId()) != 0) {
+                        Boolean valid = true;
+                        for(Player p : game.getPlayers()){
+                            if (game.playerHasNotReplied(p.getUsername())){
+                                valid = false;
+                                break;
+                            }
+                        }
+
+                        if (!valid) {
                             view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd.");
                         } else {
                             this.view.openGameView(game);
