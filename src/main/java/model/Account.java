@@ -50,7 +50,7 @@ public class Account {
         ArrayList<String> accounts = new ArrayList<String>();
 
         for (Map<String, String> accountMap : AccountDB.getInviteableAccounts(username)) {
-            if (accountMap.get("inviteable") != null) {
+            if (accountMap.get("inviteable") != null && accountMap.get("inviteable").equals("1")) {
                 accounts.add(accountMap.get("username"));
             }
         }
