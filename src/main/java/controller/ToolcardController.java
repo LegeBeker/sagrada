@@ -47,23 +47,23 @@ public class ToolcardController {
             String input = scanner.nextLine().trim();
 
             if (input.equalsIgnoreCase("flip")) {
-                switch (dieValue) {
-                case 1:
+                switch (Integer.toString(dieValue)) {
+                case "1":
                     dieValue = 6;
                     break;
-                case 2:
+                case "2":
                     dieValue = 5;
                     break;
-                case 3:
+                case "3":
                     dieValue = 4;
                     break;
-                case 4:
+                case "4":
                     dieValue = 3;
                     break;
-                case 5:
+                case "5":
                     dieValue = 2;
                     break;
-                case 6:
+                case "6":
                     dieValue = 1;
                     break;
                 default:
