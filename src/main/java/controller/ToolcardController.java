@@ -43,7 +43,7 @@ public class ToolcardController {
     }
 
     public void grindingStone() {
-        int dieValue = 6;
+        int dieValue = SIX;
         System.out.println("Starting value: " + dieValue);
 
         Scanner scanner = new Scanner(System.in);
