@@ -10,7 +10,7 @@ public class PatternCard {
     private int idPatternCard;
 
     private String name;
-    private int difficulty;
+    private Integer difficulty;
 
     private Boolean standard;
 
@@ -58,7 +58,7 @@ public class PatternCard {
         return this.name;
     }
 
-    public int getDifficulty() {
+    public Integer getDifficulty() {
         return this.difficulty;
     }
 

@@ -13,9 +13,9 @@ public class GamePrivateObjectiveCardView extends ImageView {
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
 
-    public GamePrivateObjectiveCardView(final ViewController view, final String privateObjectiveCardColor) {
+    public GamePrivateObjectiveCardView(final ViewController view) {
         this.imagePrivateObjectiveCard = new Image(
-                "file:resources/img/objectivecards/" + privateObjectiveCardColor + "-objectivecard.png");
+                "file:resources/img/objectivecards/" + view.getPrivateObjCardColor() + "-objectivecard.png");
 
         this.setFitWidth(WIDTH);
         this.setFitHeight(HEIGHT);

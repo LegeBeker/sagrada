@@ -1,5 +1,7 @@
 package main.java.view;
 
+import java.util.Map;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -12,8 +14,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.Game;
-import main.java.model.Message;
-import main.java.model.Player;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
@@ -22,16 +22,16 @@ public class GameChatView extends VBox implements Observer {
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
 
-    private Game game;
-
     private static final int WIDTHCHATVIEW = 300;
     private static final int WIDTHMESSAGEBOX = 200;
 
-    public GameChatView(final ViewController view, final Game game) {
+    private final ViewController view;
+
+    public GameChatView(final ViewController view) {
+        this.view = view;
         this.setAlignment(Pos.BOTTOM_CENTER);
         this.setMaxWidth(WIDTHCHATVIEW);
         this.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
-        this.game = game;
 
         chatMessageBox.setMaxWidth(WIDTHMESSAGEBOX);
         chatMessageBox.setStyle("-fx-background-color: transparent;");
@@ -53,7 +53,7 @@ public class GameChatView extends VBox implements Observer {
 
         textInput.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                Boolean send = view.getMessageController().sendMessage(textInput.getText(), view, game);
+                Boolean send = view.sendMessage(textInput.getText());
                 if (send) {
                     textInput.setText("");
                     textInput.setStyle(null);
@@ -64,7 +64,7 @@ public class GameChatView extends VBox implements Observer {
         });
 
         sendButton.setOnAction(e -> {
-            Boolean send = view.getMessageController().sendMessage(textInput.getText(), view, game);
+            Boolean send = view.sendMessage(textInput.getText());
             if (send) {
                 textInput.setText("");
                 textInput.setStyle(null);
@@ -81,16 +81,16 @@ public class GameChatView extends VBox implements Observer {
         update();
     }
 
-    public void addMessage(final String message, final Player player, final String time) {
-        Text username = new Text(player.getUsername());
-        chatMessageBox.getChildren().add(new TextFlow(new Text("[" + time + "] "), username, new Text(": " + message)));
+    public void addMessage(final String message, final String playerUsername, final String time) {
+        chatMessageBox.getChildren()
+                .add(new TextFlow(new Text("[" + time + "] "), new Text(playerUsername), new Text(": " + message)));
     }
 
     @Override
     public void update() {
         chatMessageBox.getChildren().clear();
-        for (Message message : Message.getChatMessages(game.getId())) {
-            addMessage(message.getMessage(), message.getPlayer(), message.getTime());
+        for (Map<String, String> message : view.getMessages()) {
+            addMessage(message.get("message"), message.get("username"), message.get("time"));
         }
     }
 }

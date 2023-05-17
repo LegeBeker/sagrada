@@ -1,11 +1,11 @@
 package main.java.view;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
-import main.java.model.Die;
 import main.java.model.Game;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
@@ -14,11 +14,8 @@ public class GameOfferView extends FlowPane implements Observer {
 
     private ViewController view;
 
-    private Game game;
-
-    public GameOfferView(final ViewController view, final Game game) {
+    public GameOfferView(final ViewController view) {
         this.view = view;
-        this.game = game;
 
         Observable.addObserver(Game.class, this);
 
@@ -29,19 +26,16 @@ public class GameOfferView extends FlowPane implements Observer {
     public void update() {
         this.getChildren().clear();
 
-        for (Die die : game.getOffer()) {
-            DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), true);
+        for (Map<String, String> die : view.getOffer()) {
+            DieView dieView = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+                    Integer.parseInt(die.get("number")), true);
 
             this.getChildren().add(dieView);
         }
     }
 
-    public boolean getHelpFunction() {
-        return this.game.getHelpFunction();
-    }
-
     public void showPossibleMoves(final int eyes, final Color color) {
-        ArrayList<int[]> moves = this.view.getPatternCardController().getPossibleMoves(eyes, color);
+        ArrayList<int[]> moves = this.view.getPossibleMoves(eyes, color);
         GameCenterView gameCenterView = (GameCenterView) this.getParent();
         gameCenterView.showPossibleMoves(moves);
     }

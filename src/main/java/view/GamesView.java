@@ -1,8 +1,10 @@
 package main.java.view;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -12,7 +14,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -21,8 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
-import main.java.model.Game;
-import main.java.model.Player;
 
 public class GamesView extends VBox {
 
@@ -35,7 +34,7 @@ public class GamesView extends VBox {
     private static final int SCROLLBOXHEIGHT = 300;
     private static final int SCROLLBOXWIDTH = 400;
 
-    private TableView<Game> table;
+    private TableView<Map<String, String>> table;
 
     private HBox boxButtons;
 
@@ -62,39 +61,39 @@ public class GamesView extends VBox {
         this.textTitle = new StackPane(text);
         this.textTitle.setPadding(new Insets(0, 0, SPACING, 0));
 
-        this.table = new TableView<Game>();
+        this.table = new TableView<Map<String, String>>();
 
         this.table.setPlaceholder(new Text("Geen spellen gevonden"));
 
-        TableColumn<Game, Integer> idCol = new TableColumn<>("Id");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Map<String, String>, String> idCol = new TableColumn<>("Id");
+        idCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("id")));
 
-        TableColumn<Game, String> turnPlayerCol = new TableColumn<>("Beurt Speler");
-        turnPlayerCol.setCellValueFactory(new PropertyValueFactory<>("turnPlayerUsername"));
+        TableColumn<Map<String, String>, String> turnPlayerCol = new TableColumn<>("Beurt Speler");
+        turnPlayerCol.setCellValueFactory(
+                cellData -> new SimpleStringProperty(cellData.getValue().get("turnPlayerUsername")));
 
-        TableColumn<Game, Integer> roundCol = new TableColumn<>("Ronde");
-        roundCol.setCellValueFactory(new PropertyValueFactory<>("currentRound"));
+        TableColumn<Map<String, String>, String> roundCol = new TableColumn<>("Ronde");
+        roundCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("currentRound")));
 
-        TableColumn<Game, String> dateCol = new TableColumn<>("Datum");
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("creationDateShow"));
+        TableColumn<Map<String, String>, String> dateCol = new TableColumn<>("Datum");
+        dateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("creationDateShow")));
 
         Collections.addAll(this.table.getColumns(), idCol, turnPlayerCol, roundCol, dateCol);
 
-        for (Game game : view.getGameController().getGames()) {
+        for (Map<String, String> game : view.getGames()) {
             this.table.getItems().add(game);
         }
 
-        this.table.setRowFactory(tv -> new TableRow<Game>() {
+        this.table.setRowFactory(tv -> new TableRow<Map<String, String>>() {
             @Override
-            protected void updateItem(final Game game, final boolean empty) {
+            protected void updateItem(final Map<String, String> game, final boolean empty) {
                 super.updateItem(game, empty);
 
                 if (game == null) {
                     setStyle("");
-                } else if (game.getTurnPlayer().getUsername()
-                        .equals(view.getAccountController().getAccount().getUsername())) {
+                } else if (view.isTurnPlayer(Integer.parseInt(game.get("id")))) {
                     setStyle("-fx-background-color: lightblue;");
-                } else if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
+                } else if (view.hasOpenInvite(Integer.parseInt(game.get("id")), view.getUsername())) {
                     setStyle("-fx-background-color: orange;");
                 }
 
@@ -103,11 +102,11 @@ public class GamesView extends VBox {
 
         this.table.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                Game game = this.table.getSelectionModel().getSelectedItem();
+                Map<String, String> game = this.table.getSelectionModel().getSelectedItem();
 
                 if (game != null) {
-                    if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
-                        showInviteAlert(game, view.getGameController().getCurrentPlayer(game.getId()));
+                    if (view.hasOpenInvite(Integer.parseInt(game.get("id")), view.getUsername())) {
+                        showInviteAlert(Integer.parseInt(game.get("id")));
                     } else {
                         Boolean valid = true;
                         for (Player p : game.getPlayers()) {
@@ -120,7 +119,7 @@ public class GamesView extends VBox {
                         if (!valid) {
                             view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd.");
                         } else {
-                            this.view.openGameView(game);
+                        this.view.openGameView(Integer.parseInt(game.get("id")));
                         }
                     }
                 }
@@ -141,11 +140,11 @@ public class GamesView extends VBox {
 
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
-        this.buttonBack.setOnAction(e -> this.back());
+        this.buttonBack.setOnAction(e -> this.view.openMenuView());
 
         this.buttonNewGame = new Button("Nieuwe potje starten");
         this.buttonNewGame.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
-        this.buttonNewGame.setOnAction(e -> this.openNewGameView());
+        this.buttonNewGame.setOnAction(e -> this.view.openNewGameView());
 
         this.boxButtons = new HBox();
         this.boxButtons.getChildren().addAll(this.buttonBack, this.buttonNewGame);
@@ -159,19 +158,7 @@ public class GamesView extends VBox {
         this.getChildren().addAll(this.textTitle, this.scrollBox, this.boxButtons);
     }
 
-    private void back() {
-        this.view.openMenuView();
-    }
-
-    private void openNewGameView() {
-        this.view.openNewGameView();
-    }
-
-    private boolean hasOpenInvite(final Game game, final String playerName) {
-        return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
-    }
-
-    private void showInviteAlert(final Game game, final Player player) {
+    private void showInviteAlert(final int gameId) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uitnodiging");
         alert.setHeaderText("Bevestiging");
@@ -190,10 +177,9 @@ public class GamesView extends VBox {
         }
 
         if (result.get() == acceptButton) {
-            player.acceptInvite();
+            view.acceptInvite(gameId);
         } else if (result.get() == refuseButton) {
-            player.refuseInvite();
+            view.refuseInvite(gameId);
         }
     }
-
 }
