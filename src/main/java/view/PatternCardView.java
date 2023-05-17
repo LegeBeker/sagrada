@@ -130,7 +130,7 @@ public class PatternCardView extends BorderPane implements Observer {
     private void drawPatternCard(final PatternCard patternCard, final ViewController view, final Player player) {
         final boolean isCardOwner;
         if (player != null) {
-            isCardOwner = view.getAccountController().getAccount().getUsername().equals(player.getUsername());
+            isCardOwner = view.getUsername().equals(player.getUsername());
         } else {
             isCardOwner = false;
         }

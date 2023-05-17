@@ -39,9 +39,9 @@ public class PatternCardSelectionView extends BorderPane {
         textTitle.setPadding(new Insets(PADDING, 0, 0, 0));
         this.setTop(textTitle);
 
-        player.getPatternCardOptions().forEach(patternCard -> {
+        view.getPlayers().forEach((player) -> player.getPatternCardOptions().forEach(patternCard -> {
             flowPane.getChildren().add(patternCardSelect(patternCard));
-        });
+        }));
 
         this.flowPane.setHgap(10);
         this.flowPane.setVgap(10);

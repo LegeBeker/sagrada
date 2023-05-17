@@ -45,7 +45,7 @@ public final class GameController {
         return this.game.getToolCards();
     }
 
-    public Game createGame(final ArrayList<Account> accounts, final Account currAccount, final boolean useDefaultCards) {
+    public Game createGame(final ArrayList<Account> accounts, final String currAccount, final boolean useDefaultCards) {
         return Game.createGame(accounts, currAccount, useDefaultCards);
     }
 

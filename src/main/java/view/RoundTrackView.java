@@ -31,12 +31,9 @@ public class RoundTrackView extends StackPane implements Observer {
     private static final int WIDTH = 190;
     private static final int HEIGHT = 120;
 
-    private Game game;
-
     private final ArrayList<Group> roundGroups;
 
     public RoundTrackView(final ViewController view) {
-        this.game = game;
         this.roundGroups = new ArrayList<>();
 
         this.setMaxSize(WIDTH, HEIGHT);
