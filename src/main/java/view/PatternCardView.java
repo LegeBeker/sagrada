@@ -31,6 +31,9 @@ public class PatternCardView extends BorderPane implements Observer {
     private static final int HARD = 5;
     private static final int VERYHARD = 6;
 
+    private static final Double BRIGHTNESS = 0.2;
+
+
     private static final int WIDTH = 300;
     private static final int HEIGHT = 300;
 
@@ -45,9 +48,8 @@ public class PatternCardView extends BorderPane implements Observer {
 
     public PatternCardView(final ViewController view) {
         this.view = view;
-        this.patternCard = patternCard;
-        this.player = player;
-
+        this.patternCard = this.view.getPatternCard();
+        this.player = this.view.getCurrentPlayer();
         this.setPrefSize(WIDTH, HEIGHT);
         this.getStyleClass().add("patterncard");
 
@@ -108,7 +110,7 @@ public class PatternCardView extends BorderPane implements Observer {
             gameTokenText.setText(" Betaalstenen: " + Integer.toString(player.getFavorTokensLeft()));
             Observable.addObserver(Game.class, this);
 
-            Color playerColor = player.getColor().deriveColor(0, 1, 0.2, 1);
+            Color playerColor = player.getColor().deriveColor(0, 1, BRIGHTNESS, 1);
             this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
             if (player.getUsername().equals(player.getGame().getTurnPlayer().getUsername())) {
                 this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 1px;" + this.getStyle());

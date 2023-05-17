@@ -21,9 +21,12 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import main.java.model.Account;
+import main.java.model.Die;
 import main.java.model.Game;
+import main.java.model.ObjectiveCard;
 import main.java.model.PatternCard;
 import main.java.model.Player;
+import main.java.model.ToolCard;
 import main.java.pattern.Observable;
 import main.java.view.GameView;
 import main.java.view.GamesView;
@@ -66,7 +69,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -91,6 +94,10 @@ public class ViewController extends Scene {
 
     public String getUsername() {
         return this.accountController.getUsername();
+    }
+
+    public Game getGame() {
+        return this.gameController.getGame();
     }
 
     public void changeView(final Pane pane) {
@@ -165,32 +172,80 @@ public class ViewController extends Scene {
 
     public Boolean isTurnPlayer() {
         return this.gameController.isTurnPlayer(getUsername());
-    } 
+    }
 
     public ArrayList<Player> getPlayers() {
-        return this.gameController.getPlayers(this.accountController.getAccount().getUsername());
+        return this.gameController.getPlayers(getUsername());
+    }
+
+    public Player getCurrentPlayer() {
+        return this.gameController.getCurrentPlayer(getGame().getId());
+    }
+
+    public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
+        return this.patternCardController.getPossibleMoves(eyes, color);
     }
 
     public void getNewOffer() {
         this.gameController.getNewOffer();
     }
 
-    public void setHelpFunction(){
+    public void setHelpFunction() {
         this.gameController.setHelpFunction();
     }
 
-    public Boolean getHelpFunction(){
+    public boolean sendMessage(final String message) {
+        return this.messageController.sendMessage(message);
+    }
+
+    public Boolean getHelpFunction() {
         return this.gameController.getHelpFunction();
+    }
+
+    public ArrayList<ObjectiveCard> getObjectiveCards() {
+        return this.gameController.getObjectiveCards();
+    }
+
+    public String getPrivateObjCardColor() {
+        return getCurrentPlayer().getPrivateObjCardColor();
+    }
+
+    public ArrayList<Game> getGames() {
+        return this.gameController.getGames();
+    }
+
+    public PatternCard getPatternCard() {
+        return getCurrentPlayer().getPatternCard();
+    }
+
+    public ArrayList<Die> getOffer() {
+        return this.gameController.getOffer();
+    }
+
+    public ArrayList<ToolCard> getToolCards() {
+        return this.gameController.getToolCards();
+    }
+
+    public Boolean loginAccount(final String username, final String password) {
+        return this.accountController.loginAccount(username, password);
+    }
+
+    public void logoutAccount() {
+        this.accountController.logoutAccount();
     }
 
     public void endTurn() {
         this.gameController.endTurn();
     }
 
+    public Game createGame(final ArrayList<Account> accounts, final Boolean useDefaultCards) {
+        return this.gameController.createGame(accounts, getUsername(), useDefaultCards);
+    }
+
     public void openGameView(final Game game) {
-        getGameController().setGame(game);
-        if (game.playerHasChoosenPatternCard(getAccountController().getAccount().getUsername())) {
-            GameView gameView = new GameView(this, game);
+        this.gameController.setGame(game);
+        if (game.playerHasChoosenPatternCard(getUsername())) {
+            GameView gameView = new GameView(this);
             changeView(gameView);
 
             this.timer = new Timer();
@@ -207,14 +262,13 @@ public class ViewController extends Scene {
     }
 
     public void openPatternCardSelectionView(final Game game) {
-        getGameController().setGame(game);
-        PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this,
-                getGameController().getCurrentPlayer(game.getId()));
+        this.gameController.setGame(game);
+        PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this);
         changeView(patternCardSelectionView);
     }
 
     public void openStatView(final Account account) {
-        StatView statView = new StatView(this, account);
+        StatView statView = new StatView(this);
         changeView(statView);
     }
 }

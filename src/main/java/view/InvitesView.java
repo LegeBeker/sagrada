@@ -71,7 +71,7 @@ public class InvitesView extends HBox {
                     this.view.displayError("Je wacht nog op een antwoord van deze speler");
                     return;
                 }
-                if (this.view.getAccountController().getAccount().getUsername().equals(acc.getUsername())) {
+                if (this.view.getUsername().equals(acc.getUsername())) {
                     this.view.displayError("Je kan jezelf niet uitnodigen");
                     return;
                 }

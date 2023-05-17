@@ -89,8 +89,7 @@ public class NewGameView extends HBox {
             view.displayError("Selecteer minder spelers");
             return;
         }
-        Game game = view.getGameController().createGame(this.accounts, view.getAccountController().getAccount(),
-                useDefaultCards);
+        Game game = view.createGame(this.accounts, useDefaultCards);
         this.view.openPatternCardSelectionView(game);
     }
 

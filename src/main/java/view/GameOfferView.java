@@ -18,7 +18,6 @@ public class GameOfferView extends FlowPane implements Observer {
 
     public GameOfferView(final ViewController view) {
         this.view = view;
-        this.game = game;
 
         Observable.addObserver(Game.class, this);
 
@@ -29,7 +28,7 @@ public class GameOfferView extends FlowPane implements Observer {
     public void update() {
         this.getChildren().clear();
 
-        for (Die die : game.getOffer()) {
+        for (Die die : view.getOffer()) {
             DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), true);
 
             this.getChildren().add(dieView);
@@ -41,7 +40,7 @@ public class GameOfferView extends FlowPane implements Observer {
     }
 
     public void showPossibleMoves(final int eyes, final Color color) {
-        ArrayList<int[]> moves = this.view.getPatternCardController().getPossibleMoves(eyes, color);
+        ArrayList<int[]> moves = this.view.getPossibleMoves(eyes, color);
         GameCenterView gameCenterView = (GameCenterView) this.getParent();
         gameCenterView.showPossibleMoves(moves);
     }

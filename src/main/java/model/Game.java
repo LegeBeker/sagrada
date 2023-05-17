@@ -29,7 +29,7 @@ public class Game extends Observable {
 
     private boolean helpFunction;
 
-    public static Game createGame(final ArrayList<Account> accounts, final Account currAccount,
+    public static Game createGame(final ArrayList<Account> accounts, final String username,
             final boolean useDefaultCards) {
         Game newGame = new Game();
 
@@ -44,7 +44,7 @@ public class Game extends Observable {
         List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
 
         newGame.addPlayer(Player.createPlayer(
-                thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(),
+                thisGameID, username, PlayStatusEnum.CHALLENGER.toString(),
                 colorList.remove(0).get("color")));
         GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
         newGame.setTurnPlayer(newGame.getPlayers().get(0).getId());
@@ -254,7 +254,7 @@ public class Game extends Observable {
         return ToolCard.getToolCards(idGame);
     }
 
-    public ArrayList<ObjectiveCard> getPublicToolcards() {
+    public ArrayList<ObjectiveCard> getObjectiveCards() {
         return ObjectiveCard.getObjectiveCards(idGame);
     }
 }

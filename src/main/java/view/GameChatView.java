@@ -31,7 +31,6 @@ public class GameChatView extends VBox implements Observer {
         this.setAlignment(Pos.BOTTOM_CENTER);
         this.setMaxWidth(WIDTHCHATVIEW);
         this.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
-        this.game = game;
 
         chatMessageBox.setMaxWidth(WIDTHMESSAGEBOX);
         chatMessageBox.setStyle("-fx-background-color: transparent;");
@@ -53,7 +52,7 @@ public class GameChatView extends VBox implements Observer {
 
         textInput.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                Boolean send = view.getMessageController().sendMessage(textInput.getText(), view, game);
+                Boolean send = view.sendMessage(textInput.getText());
                 if (send) {
                     textInput.setText("");
                     textInput.setStyle(null);
@@ -64,7 +63,7 @@ public class GameChatView extends VBox implements Observer {
         });
 
         sendButton.setOnAction(e -> {
-            Boolean send = view.getMessageController().sendMessage(textInput.getText(), view, game);
+            Boolean send = view.sendMessage(textInput.getText());
             if (send) {
                 textInput.setText("");
                 textInput.setStyle(null);

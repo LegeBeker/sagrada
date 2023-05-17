@@ -26,6 +26,7 @@ public class RoundTrackView extends StackPane implements Observer {
     private static final int ROUNDS = 10;
     private static final int ROWAMOUNT = 5;
     private static final int ROUNDING = 20;
+    private static final Double OPACITY = 0.5;
 
     private static final int WIDTH = 190;
     private static final int HEIGHT = 120;
@@ -72,7 +73,7 @@ public class RoundTrackView extends StackPane implements Observer {
 
         Rectangle rectangle = new Rectangle(WIDTH, HEIGHT);
         rectangle.setFill(Color.RED);
-        rectangle.setOpacity(0.5);
+        rectangle.setOpacity(OPACITY);
         rectangle.setArcHeight(ROUNDING);
         rectangle.setArcWidth(ROUNDING);
         this.getChildren().add(rectangle);

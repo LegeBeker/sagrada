@@ -3,9 +3,12 @@ package main.java.controller;
 import java.util.ArrayList;
 
 import main.java.model.Account;
+import main.java.model.Die;
 import main.java.model.Game;
+import main.java.model.ObjectiveCard;
 import main.java.model.PatternCard;
 import main.java.model.Player;
+import main.java.model.ToolCard;
 
 public final class GameController {
 
@@ -30,8 +33,19 @@ public final class GameController {
         return game.getPlayers(username);
     }
 
-    public Game createGame(final ArrayList<Account> accounts, final Account currAccount,
-            final boolean useDefaultCards) {
+    public ArrayList<Die> getOffer() {
+        return this.game.getOffer();
+    }
+
+    public ArrayList<ObjectiveCard> getObjectiveCards() {
+        return this.game.getObjectiveCards();
+    }
+
+    public ArrayList<ToolCard> getToolCards() {
+        return this.game.getToolCards();
+    }
+
+    public Game createGame(final ArrayList<Account> accounts, final Account currAccount, final boolean useDefaultCards) {
         return Game.createGame(accounts, currAccount, useDefaultCards);
     }
 
@@ -44,11 +58,11 @@ public final class GameController {
         return this.game.getTurnPlayerUsername().equals(username);
     }
 
-    public void setHelpFunction(){
+    public void setHelpFunction() {
         this.game.setHelpFunction();
     }
 
-    public boolean getHelpFunction(){
+    public boolean getHelpFunction() {
         return this.game.getHelpFunction();
     }
 

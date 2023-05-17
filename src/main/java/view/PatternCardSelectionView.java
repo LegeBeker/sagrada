@@ -30,7 +30,6 @@ public class PatternCardSelectionView extends BorderPane {
         super();
         this.view = view;
         this.flowPane = new FlowPane();
-        this.player = player;
 
         Text text = new Text("Patroonkaart kiezen");
         text.setStyle("-fx-font-size: 40px");
@@ -61,11 +60,11 @@ public class PatternCardSelectionView extends BorderPane {
 
     private VBox patternCardSelect(final PatternCard patternCard) {
         this.vbox = new VBox();
-        this.vbox.getChildren().add(new PatternCardView(this.view, patternCard, null));
+        this.vbox.getChildren().add(new PatternCardView(this.view));
         Button button = new Button("Kiezen");
 
         button.setOnAction(event -> {
-            this.view.getGameController().choosePatternCard(patternCard);
+            this.view.choosePatternCard(patternCard);
             this.view.openGameView(player.getGame());
         });
 

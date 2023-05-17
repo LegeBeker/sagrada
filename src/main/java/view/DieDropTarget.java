@@ -13,7 +13,7 @@ public class DieDropTarget extends StackPane {
 
     public DieDropTarget(final ViewController view) {
         this.view = view;
-        this.patternCard = patternCard;
+        this.patternCard = view.getCurrentPlayer().getPatternCard();
 
         this.setOnDragOver(event -> {
             if (event.getGestureSource() instanceof DieView) {

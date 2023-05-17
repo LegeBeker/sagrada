@@ -80,7 +80,7 @@ public class GamesView extends VBox {
 
         Collections.addAll(this.table.getColumns(), idCol, turnPlayerCol, roundCol, dateCol);
 
-        for (Game game : view.getGameController().getGames()) {
+        for (Game game : view.getGames()) {
             this.table.getItems().add(game);
         }
 
@@ -92,9 +92,9 @@ public class GamesView extends VBox {
                 if (game == null) {
                     setStyle("");
                 } else if (game.getTurnPlayer().getUsername()
-                        .equals(view.getAccountController().getAccount().getUsername())) {
+                        .equals(view.getUsername())) {
                     setStyle("-fx-background-color: lightblue;");
-                } else if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
+                } else if (hasOpenInvite(game, view.getUsername())) {
                     setStyle("-fx-background-color: orange;");
                 }
 
@@ -106,8 +106,8 @@ public class GamesView extends VBox {
                 Game game = this.table.getSelectionModel().getSelectedItem();
 
                 if (game != null) {
-                    if (hasOpenInvite(game, view.getAccountController().getAccount().getUsername())) {
-                        showInviteAlert(game, view.getGameController().getCurrentPlayer(game.getId()));
+                    if (hasOpenInvite(game, view.getUsername())) {
+                        showInviteAlert(game, view.getCurrentPlayer());
                     } else {
                         this.view.openGameView(game);
                     }

@@ -20,8 +20,8 @@ public class PatternCardController {
 
     public boolean doMove(final PatternCard patternCard, final int eyes, final Color dieColor, final int dieNumber,
             final int columnIndex, final int rowIndex) {
-        GameController gameController = view.getGameController();
-        Player player = gameController.getCurrentPlayer(gameController.getGame().getId());
+
+        Player player = view.getCurrentPlayer();
 
         boolean valid = patternCard.validateMove(player.getBoard(), eyes, dieColor, columnIndex, rowIndex);
 
@@ -33,8 +33,7 @@ public class PatternCardController {
     }
 
     public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
-        GameController gameController = view.getGameController();
-        Player player = gameController.getCurrentPlayer(gameController.getGame().getId());
+        Player player = view.getCurrentPlayer();
 
         return player.getPatternCard().getPossibleMoves(player.getBoard(), eyes, color);
     }
