@@ -1,8 +1,10 @@
 package main.java.view;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -12,7 +14,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -21,7 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
-import main.java.model.Game;
 
 public class GamesView extends VBox {
 
@@ -34,7 +34,7 @@ public class GamesView extends VBox {
     private static final int SCROLLBOXHEIGHT = 300;
     private static final int SCROLLBOXWIDTH = 400;
 
-    private TableView<Game> table;
+    private TableView<Map<String, String>> table;
 
     private HBox boxButtons;
 
@@ -61,38 +61,39 @@ public class GamesView extends VBox {
         this.textTitle = new StackPane(text);
         this.textTitle.setPadding(new Insets(0, 0, SPACING, 0));
 
-        this.table = new TableView<Game>();
+        this.table = new TableView<Map<String, String>>();
 
         this.table.setPlaceholder(new Text("Geen spellen gevonden"));
 
-        TableColumn<Game, Integer> idCol = new TableColumn<>("Id");
-        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Map<String, String>, String> idCol = new TableColumn<>("Id");
+        idCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("id")));
 
-        TableColumn<Game, String> turnPlayerCol = new TableColumn<>("Beurt Speler");
-        turnPlayerCol.setCellValueFactory(new PropertyValueFactory<>("turnPlayerUsername"));
+        TableColumn<Map<String, String>, String> turnPlayerCol = new TableColumn<>("Beurt Speler");
+        turnPlayerCol.setCellValueFactory(
+                cellData -> new SimpleStringProperty(cellData.getValue().get("turnPlayerUsername")));
 
-        TableColumn<Game, Integer> roundCol = new TableColumn<>("Ronde");
-        roundCol.setCellValueFactory(new PropertyValueFactory<>("currentRound"));
+        TableColumn<Map<String, String>, String> roundCol = new TableColumn<>("Ronde");
+        roundCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("currentRound")));
 
-        TableColumn<Game, String> dateCol = new TableColumn<>("Datum");
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("creationDateShow"));
+        TableColumn<Map<String, String>, String> dateCol = new TableColumn<>("Datum");
+        dateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("creationDateShow")));
 
         Collections.addAll(this.table.getColumns(), idCol, turnPlayerCol, roundCol, dateCol);
 
-        for (Game game : view.getGames()) {
+        for (Map<String, String> game : view.getGames()) {
             this.table.getItems().add(game);
         }
 
-        this.table.setRowFactory(tv -> new TableRow<Game>() {
+        this.table.setRowFactory(tv -> new TableRow<Map<String, String>>() {
             @Override
-            protected void updateItem(final Game game, final boolean empty) {
+            protected void updateItem(final Map<String, String> game, final boolean empty) {
                 super.updateItem(game, empty);
 
                 if (game == null) {
                     setStyle("");
-                } else if (view.isTurnPlayer(game.getId())) {
+                } else if (view.isTurnPlayer(Integer.parseInt(game.get("id")))) {
                     setStyle("-fx-background-color: lightblue;");
-                } else if (view.hasOpenInvite(game.getId(), view.getUsername())) {
+                } else if (view.hasOpenInvite(Integer.parseInt(game.get("id")), view.getUsername())) {
                     setStyle("-fx-background-color: orange;");
                 }
 
@@ -101,13 +102,13 @@ public class GamesView extends VBox {
 
         this.table.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                Game game = this.table.getSelectionModel().getSelectedItem();
+                Map<String, String> game = this.table.getSelectionModel().getSelectedItem();
 
                 if (game != null) {
-                    if (view.hasOpenInvite(game.getId(), view.getUsername())) {
-                        showInviteAlert(game.getId());
+                    if (view.hasOpenInvite(Integer.parseInt(game.get("id")), view.getUsername())) {
+                        showInviteAlert(Integer.parseInt(game.get("id")));
                     } else {
-                        this.view.openGameView(game);
+                        this.view.openGameView(Integer.parseInt(game.get("id")));
                     }
                 }
             }

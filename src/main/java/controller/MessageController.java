@@ -3,6 +3,8 @@ package main.java.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import main.java.model.Message;
 import main.java.model.Player;
@@ -34,7 +36,18 @@ public class MessageController {
         return messageSent;
     }
 
-    public ArrayList<Message> getMessages(final int idGame) {
-        return Message.getChatMessages(idGame);
+    public ArrayList<Map<String, String>> getMessages(final int idGame) {
+        ArrayList<Message> messages = Message.getChatMessages(idGame);
+        ArrayList<Map<String, String>> messageList = new ArrayList<>();
+
+        for (Message message : messages) {
+            Map<String, String> messageMap = new HashMap<>();
+            messageMap.put("username", message.getPlayerUsername());
+            messageMap.put("message", message.getMessage());
+            messageMap.put("time", message.getTime());
+            messageList.add(messageMap);
+        }
+
+        return messageList;
     }
 }

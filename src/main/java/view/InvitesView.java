@@ -3,11 +3,11 @@ package main.java.view;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
@@ -34,7 +34,7 @@ public class InvitesView extends HBox {
         this.selectionTable.setMaxHeight(SELECTIONTABLEHEIGHT);
 
         TableColumn<String, String> idUsernameSelected = new TableColumn<>("Username");
-        idUsernameSelected.setCellValueFactory(new PropertyValueFactory<>("username"));
+        idUsernameSelected.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
         Collections.addAll(this.selectionTable.getColumns(), idUsernameSelected);
 
         setTableClickEvent();

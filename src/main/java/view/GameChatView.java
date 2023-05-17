@@ -1,5 +1,7 @@
 package main.java.view;
 
+import java.util.Map;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -12,7 +14,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.Game;
-import main.java.model.Message;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
@@ -88,8 +89,8 @@ public class GameChatView extends VBox implements Observer {
     @Override
     public void update() {
         chatMessageBox.getChildren().clear();
-        for (Message message : view.getMessages()) {
-            addMessage(message.getMessage(), message.getPlayerUsername(), message.getTime());
+        for (Map<String, String> message : view.getMessages()) {
+            addMessage(message.get("message"), message.get("username"), message.get("time"));
         }
     }
 }

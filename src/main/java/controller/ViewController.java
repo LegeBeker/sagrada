@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,7 +24,6 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import main.java.model.Die;
 import main.java.model.Game;
-import main.java.model.Message;
 import main.java.model.PatternCardField;
 import main.java.model.Player;
 import main.java.pattern.Observable;
@@ -246,7 +246,7 @@ public class ViewController extends Scene {
         return getCurrentPlayer().getPrivateObjCardColor();
     }
 
-    public ArrayList<Game> getGames() {
+    public ArrayList<Map<String, String>> getGames() {
         return this.gameController.getGames();
     }
 
@@ -280,10 +280,11 @@ public class ViewController extends Scene {
 
     public void choosePatternCard(final int idPatternCard) {
         this.gameController.choosePatternCard(idPatternCard);
-        openGameView(this.gameController.getGame());
+        openGameView(this.gameController.getGame().getId());
     }
 
-    public void openGameView(final Game game) {
+    public void openGameView(final int gameId) {
+        Game game = this.gameController.getGame(gameId);
         this.gameController.setGame(game);
         if (game.playerHasChoosenPatternCard(getUsername())) {
             GameView gameView = new GameView(this);
@@ -342,7 +343,7 @@ public class ViewController extends Scene {
         return player.getBoard().getField(row, col);
     }
 
-    public ArrayList<Message> getMessages() {
+    public ArrayList<Map<String, String>> getMessages() {
         return this.messageController.getMessages(gameController.getGame().getId());
     }
 

@@ -2,9 +2,9 @@ package main.java.view;
 
 import java.util.Collections;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 
@@ -20,7 +20,7 @@ public class AccountsView extends TableView<String> {
         this.setMaxHeight(TABLEHEIGHT);
 
         TableColumn<String, String> idUsername = new TableColumn<>("Username");
-        idUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        idUsername.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
 
         Collections.addAll(this.getColumns(), idUsername);
 

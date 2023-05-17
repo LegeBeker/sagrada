@@ -3,6 +3,7 @@ package main.java.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import main.java.model.Die;
 import main.java.model.Game;
@@ -19,8 +20,20 @@ public final class GameController {
         this.view = view;
     }
 
-    public ArrayList<Game> getGames() {
-        return Game.getAll();
+    public ArrayList<Map<String, String>> getGames() {
+        ArrayList<Game> games = Game.getAll();
+        ArrayList<Map<String, String>> gamesMap = new ArrayList<Map<String, String>>();
+
+        for (Game game : games) {
+            Map<String, String> gameMap = new HashMap<String, String>();
+            gameMap.put("id", Integer.toString(game.getId()));
+            gameMap.put("turnPlayerUsername", game.getTurnPlayerUsername());
+            gameMap.put("currentRound", Integer.toString(game.getCurrentRound()));
+            gameMap.put("creationDateShow", game.getCreationDate());
+            gamesMap.add(gameMap);
+        }
+
+        return gamesMap;
     }
 
     public Game getGame(final int gameId) {
