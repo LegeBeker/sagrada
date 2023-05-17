@@ -10,7 +10,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
-import main.java.model.PatternCard;
 
 public class PatternCardSelectionView extends BorderPane {
 
@@ -37,9 +36,9 @@ public class PatternCardSelectionView extends BorderPane {
         textTitle.setPadding(new Insets(PADDING, 0, 0, 0));
         this.setTop(textTitle);
 
-        view.getPlayers().forEach((player) -> player.getPatternCardOptions().forEach(patternCard -> {
-            flowPane.getChildren().add(patternCardSelect(patternCard));
-        }));
+        view.getPatternCardOptions().forEach(idPatternCard -> {
+            flowPane.getChildren().add(patternCardSelect(idPatternCard));
+        });
 
         this.flowPane.setHgap(10);
         this.flowPane.setVgap(10);
@@ -56,13 +55,13 @@ public class PatternCardSelectionView extends BorderPane {
         this.setBackground(view.getBackground());
     }
 
-    private VBox patternCardSelect(final PatternCard patternCard) {
+    private VBox patternCardSelect(final int idPatternCard) {
         this.vbox = new VBox();
         this.vbox.getChildren().add(new PatternCardView(this.view));
         Button button = new Button("Kiezen");
 
         button.setOnAction(event -> {
-            this.view.choosePatternCard(patternCard);
+            this.view.choosePatternCard(idPatternCard);
             this.view.openGameView(view.getGame());
         });
 

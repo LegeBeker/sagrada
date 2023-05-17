@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -243,8 +244,8 @@ public class ViewController extends Scene {
         return this.gameController.createGame(accounts, getUsername(), useDefaultCards);
     }
 
-    public void choosePatternCard(final PatternCard patternCard) {
-        this.gameController.choosePatternCard(patternCard);
+    public void choosePatternCard(final int idPatternCard) {
+        this.gameController.choosePatternCard(idPatternCard);
     }
 
     public void openGameView(final Game game) {
@@ -283,5 +284,9 @@ public class ViewController extends Scene {
 
     public ArrayList<Die> getRoundTrack() {
         return this.gameController.getRoundTrack();
+    }
+
+    public List<Integer> getPatternCardOptions() {
+        return this.gameController.getPatternCardOptions();
     }
 }

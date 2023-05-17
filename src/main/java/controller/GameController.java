@@ -1,12 +1,12 @@
 package main.java.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import main.java.model.Account;
 import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
-import main.java.model.PatternCard;
 import main.java.model.Player;
 import main.java.model.ToolCard;
 
@@ -74,8 +74,8 @@ public final class GameController {
         game.endTurn();
     }
 
-    public void choosePatternCard(final PatternCard patternCard) {
-        getCurrentPlayer(this.game.getId()).choosePatternCard(patternCard, this.game.getId());
+    public void choosePatternCard(final int idPatternCard) {
+        getCurrentPlayer(this.game.getId()).choosePatternCard(idPatternCard, this.game.getId());
         getCurrentPlayer(this.game.getId()).createGameFavorTokens();
     }
 
@@ -89,5 +89,9 @@ public final class GameController {
 
     public ArrayList<Die> getRoundTrack() {
         return Game.getRoundTrack(this.game.getId());
+    }
+
+    public List<Integer> getPatternCardOptions() {
+        return getCurrentPlayer(this.game.getId()).getPatternCardOptions();
     }
 }

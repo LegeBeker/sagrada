@@ -178,8 +178,8 @@ public class Player {
         return this.idPatternCard != null;
     }
 
-    public boolean choosePatternCard(final PatternCard patternCard, final int idgame) {
-        return PlayerDB.updatePatternCard(patternCard.getIdPatternCard(), idgame, this.username);
+    public boolean choosePatternCard(final int idPatternCard, final int idgame) {
+        return PlayerDB.updatePatternCard(idPatternCard, idgame, this.username);
     }
 
     public static ArrayList<Player> getAll() {
@@ -211,13 +211,12 @@ public class Player {
         return player;
     }
 
-    public List<PatternCard> getPatternCardOptions() {
+    public List<Integer> getPatternCardOptions() {
         List<Map<String, String>> patternCardNumbers = PatternCardDB.getPatternCardOptions(getId());
 
-        ArrayList<PatternCard> patternCardOptions = new ArrayList<PatternCard>();
+        ArrayList<Integer> patternCardOptions = new ArrayList<Integer>();
         for (Map<String, String> patternCardMap : patternCardNumbers) {
-            PatternCard patternCard = PatternCard.get(Integer.parseInt(patternCardMap.get("idpatterncard")));
-            patternCardOptions.add(patternCard);
+            patternCardOptions.add(Integer.parseInt(patternCardMap.get("idpatterncard")));
         }
         return patternCardOptions;
     }
