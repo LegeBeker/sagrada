@@ -33,7 +33,6 @@ public class PatternCardView extends BorderPane implements Observer {
 
     private static final Double BRIGHTNESS = 0.2;
 
-
     private static final int WIDTH = 300;
     private static final int HEIGHT = 300;
 
@@ -43,13 +42,9 @@ public class PatternCardView extends BorderPane implements Observer {
     private final BorderPane topDisplay = new BorderPane();
 
     private final ViewController view;
-    private final PatternCard patternCard;
-    private final Player player;
 
-    public PatternCardView(final ViewController view) {
+    public PatternCardView(final ViewController view, final int patternCardId, final Integer playerId) {
         this.view = view;
-        this.patternCard = this.view.getPatternCard();
-        this.player = this.view.getCurrentPlayer();
         this.setPrefSize(WIDTH, HEIGHT);
         this.getStyleClass().add("patterncard");
 
@@ -67,12 +62,12 @@ public class PatternCardView extends BorderPane implements Observer {
         topDisplay.setRight(gameTokenTextFlow);
         this.setTop(topDisplay);
 
-        if (player == null) {
-            cardTopText.setText(patternCard.getName());
+        if (playerId == null) {
+            cardTopText.setText(view.getPatternCardName(patternCardId));
 
             Text cardDifficulty = new Text("Moeilijkheid: ");
             cardDifficulty.setFill(Color.WHITE);
-
+ 
             String dots = "";
             for (int i = 0; i < patternCard.getDifficulty(); i++) {
                 dots += " • ";
@@ -105,14 +100,14 @@ public class PatternCardView extends BorderPane implements Observer {
 
             this.setBottom(cardDifficultyFlow);
         } else {
-            cardTopText.setText(player.getUsername());
+            cardTopText.setText(view.getPlayerUsername(playerId));
 
-            gameTokenText.setText(" Betaalstenen: " + Integer.toString(player.getFavorTokensLeft()));
+            gameTokenText.setText(" Betaalstenen: " + Integer.toString(view.getPlayerGameTokens(playerId)));
             Observable.addObserver(Game.class, this);
 
-            Color playerColor = player.getColor().deriveColor(0, 1, BRIGHTNESS, 1);
+            Color playerColor = view.getPlayerColor(playerId).deriveColor(0, 1, BRIGHTNESS, 1);
             this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
-            if (player.getUsername().equals(player.getGame().getTurnPlayer().getUsername())) {
+            if (view.isTurnPlayer()) {
                 this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 1px;" + this.getStyle());
             }
         }
@@ -127,7 +122,7 @@ public class PatternCardView extends BorderPane implements Observer {
         drawPatternCard(patternCard, view, player);
     }
 
-    private void drawPatternCard(final PatternCard patternCard, final ViewController view, final Player player) {
+    private void drawPatternCard(final ViewController view, final int patternCardId, final int playerId) {
         final boolean isCardOwner;
         if (player != null) {
             isCardOwner = view.getUsername().equals(player.getUsername());
@@ -157,7 +152,7 @@ public class PatternCardView extends BorderPane implements Observer {
         StackPane stackPane;
 
         if (isCardOwner) {
-            stackPane = new DieDropTarget(this.view, patternCard);
+            stackPane = new DieDropTarget(this.view);
         } else {
             stackPane = new StackPane();
         }
