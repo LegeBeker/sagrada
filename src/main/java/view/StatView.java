@@ -1,5 +1,7 @@
 package main.java.view;
 
+import java.util.Map;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,12 +17,14 @@ public class StatView extends VBox {
         private StackPane textTitle;
         private HBox boxButtons;
 
+        private Map<String, String> stats;
+
         private final Button buttonBack = new Button("Terug");
         private static final int TEXTTITLEINSET = 10;
         private static final int SPACING = 20;
         private static final Color TEXTCOLOR = Color.WHITE;
 
-        public StatView(final ViewController view) {
+        public StatView(final ViewController view, final String username) {
                 this.setBackground(view.getBackground());
                 this.setAlignment(Pos.CENTER);
 
@@ -32,25 +36,28 @@ public class StatView extends VBox {
                 this.textTitle = new StackPane(text);
                 this.textTitle.setPadding(new Insets(TEXTTITLEINSET, 0, SPACING, 0));
 
-                // Text winText = new Text("Aantal gewonnen potjes: "
-                //                 + view.getAccountController().getAmountWonGames(account.getUsername()));
-                // Text loseText = new Text("Aantal verloren potjes: "
-                //                 + view.getAccountController().getAmountLostGames(account.getUsername()));
-                // Text highestScore = new Text("Hoogste score: "
-                //                 + view.getAccountController().getHighestScore(account.getUsername()));
-                // Text mostPlacedColor = new Text("Meest geplaatste kleur: "
-                //                 + view.getAccountController().getMostPlacedColor(account.getUsername()));
-                // Text mostPlacedValue = new Text("Meest geplaatste waarde: "
-                //                 + view.getAccountController().getMostPlacedValue(account.getUsername()));
-                // Text amountUniqueOpponents = new Text("Aantal verschillende tegenstanders: "
-                //                 + view.getAccountController().getAmountOpponents(account.getUsername()));
+                this.stats = view.getStats(username);
 
-                // winText.setFill(TEXTCOLOR);
-                // loseText.setFill(TEXTCOLOR);
-                // highestScore.setFill(TEXTCOLOR);
-                // mostPlacedColor.setFill(TEXTCOLOR);
-                // mostPlacedValue.setFill(TEXTCOLOR);
-                // amountUniqueOpponents.setFill(TEXTCOLOR);
+                Text winText = new Text("Aantal gewonnen potjes: " + this.stats.get("wonGames"));
+                Text loseText = new Text("Aantal verloren potjes: " + this.stats.get("lostGames"));
+                Text highestScore = new Text("Hoogste score: "
+                                + ((this.stats.get("highestScore") != null ? this.stats.get("highestScore")
+                                                : "Geen scores gevonden")));
+                Text mostPlacedColor = new Text("Meest geplaatste kleur: "
+                                + ((this.stats.get("mostPlacedColor") != null ? this.stats.get("mostPlacedColor")
+                                                : "Geen dobbelsteen geplaatst")));
+                Text mostPlacedValue = new Text("Meest geplaatste waarde: "
+                                + ((this.stats.get("mostPlacedValue") != null ? this.stats.get("mostPlacedValue")
+                                                : "Geen dobbelsteen geplaatst")));
+                Text amountUniqueOpponents = new Text(
+                                "Aantal verschillende tegenstanders: " + this.stats.get("amountUniqueOpponents"));
+
+                winText.setFill(TEXTCOLOR);
+                loseText.setFill(TEXTCOLOR);
+                highestScore.setFill(TEXTCOLOR);
+                mostPlacedColor.setFill(TEXTCOLOR);
+                mostPlacedValue.setFill(TEXTCOLOR);
+                amountUniqueOpponents.setFill(TEXTCOLOR);
 
                 this.boxButtons = new HBox();
                 this.boxButtons.getChildren().addAll(this.buttonBack);
@@ -63,9 +70,10 @@ public class StatView extends VBox {
                         view.openStatsView();
                 });
 
-                // this.getChildren().addAll(this.textTitle, winText, loseText, highestScore, mostPlacedColor,
-                //                 mostPlacedValue,
-                //                 amountUniqueOpponents, this.boxButtons);
+                this.getChildren().addAll(this.textTitle, winText, loseText, highestScore,
+                                mostPlacedColor,
+                                mostPlacedValue,
+                                amountUniqueOpponents, this.boxButtons);
                 this.setBackground(view.getBackground());
         }
 }

@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -271,8 +272,12 @@ public class ViewController extends Scene {
         changeView(patternCardSelectionView);
     }
 
-    public void openStatView(final Account account) {
-        StatView statView = new StatView(this);
+    public void openStatView(final String username) {
+        StatView statView = new StatView(this, username);
         changeView(statView);
+    }
+
+    public Map<String, String> getStats(final String username) {
+        return this.accountController.getStats(username);
     }
 }

@@ -36,7 +36,7 @@ public class AccountsView extends TableView<Account> {
         this.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Account acc = this.getSelectionModel().getSelectedItem();
-                this.view.openStatView(acc);
+                this.view.openStatView(acc.getUsername());
             }
         });
     }
