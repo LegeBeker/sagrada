@@ -1,11 +1,11 @@
 package main.java.view;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
-import main.java.model.Die;
 import main.java.model.Game;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
@@ -26,8 +26,9 @@ public class GameOfferView extends FlowPane implements Observer {
     public void update() {
         this.getChildren().clear();
 
-        for (Die die : view.getOffer()) {
-            DieView dieView = new DieView(this.view, die.getEyes(), die.getColor(), die.getNumber(), true);
+        for (Map<String, String> die : view.getOffer()) {
+            DieView dieView = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+                    Integer.parseInt(die.get("number")), true);
 
             this.getChildren().add(dieView);
         }

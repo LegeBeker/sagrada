@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -253,12 +254,26 @@ public class ViewController extends Scene {
         return getCurrentPlayer().getPatternCard().getIdPatternCard();
     }
 
-    public ArrayList<Die> getOffer() {
+    public ArrayList<Map<String, String>> getOffer() {
         return this.gameController.getOffer();
     }
 
-    public ArrayList<Die> getRoundTrack() {
+    public ArrayList<Map<String, String>> getRoundTrack() {
         return this.gameController.getRoundTrack();
+    }
+
+    public Map<String, String> getPlayerBoardField(final Integer playerId, final int row, final int col) {
+        Player player = this.gameController.getPlayer(playerId);
+        Die die = player.getBoard().getField(row, col);
+
+        if (die != null) {
+            Map<String, String> dieMap = new HashMap<>();
+            dieMap.put("color", die.getColor().toString());
+            dieMap.put("eyes", Integer.toString(die.getEyes()));
+            dieMap.put("number", Integer.toString(die.getNumber()));
+            return dieMap;
+        }
+        return null;
     }
 
     public ArrayList<String> getToolCardsNames() {
@@ -339,11 +354,6 @@ public class ViewController extends Scene {
 
     public Color getPatternCardFieldColor(final int patternCardId, final int col, final int row) {
         return this.patternCardController.getPatternCardField(patternCardId, row, col).getColor();
-    }
-
-    public Die getPlayerBoardField(final Integer playerId, final int row, final int col) {
-        Player player = this.gameController.getPlayer(playerId);
-        return player.getBoard().getField(row, col);
     }
 
     public ArrayList<Map<String, String>> getMessages() {

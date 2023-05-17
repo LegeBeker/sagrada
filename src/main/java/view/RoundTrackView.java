@@ -1,6 +1,7 @@
 package main.java.view;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,7 +15,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
-import main.java.model.Die;
 import main.java.model.Game;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
@@ -85,9 +85,10 @@ public class RoundTrackView extends StackPane implements Observer {
 
     @Override
     public void update() {
-        for (Die die : view.getRoundTrack()) {
-            roundGroups.get(die.getRoundTrack() - 1).getChildren()
-                    .add(new DieView(this.view, die.getEyes(), die.getColor(), die.getNumber(), false));
+        for (Map<String, String> die : view.getRoundTrack()) {
+            roundGroups.get(Integer.parseInt(die.get("roundtrack")) - 1).getChildren()
+                    .add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+                            Integer.parseInt(die.get("number")), false));
         }
     }
 }

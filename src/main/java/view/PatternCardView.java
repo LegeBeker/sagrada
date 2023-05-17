@@ -1,5 +1,7 @@
 package main.java.view;
 
+import java.util.Map;
+
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -10,7 +12,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
-import main.java.model.Die;
 import main.java.model.Game;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
@@ -164,8 +165,9 @@ public class PatternCardView extends BorderPane implements Observer {
         node.setStyle("-fx-border-color: transparent;");
 
         if (this.playerId != null && view.getPlayerBoardField(this.playerId, row, col) != null) {
-            Die die = view.getPlayerBoardField(this.playerId, row, col);
-            DieView dieView = new DieView(this.view, die.getEyes(), die.getColor(), die.getNumber(), false);
+            Map<String, String> die = view.getPlayerBoardField(this.playerId, row, col);
+            DieView dieView = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+                    Integer.parseInt(die.get("number")), false);
             stackPane.getChildren().add(dieView);
         }
 
