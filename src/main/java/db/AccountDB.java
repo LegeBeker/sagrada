@@ -14,7 +14,7 @@ public final class AccountDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM account WHERE BINARY username = ? AND password = ?";
-        String[] params = { username, password };
+        String[] params = {username, password};
 
         return !db.exec(sql, params).isEmpty();
     }
@@ -23,7 +23,7 @@ public final class AccountDB {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO account VALUES (?, ?)";
-        String[] params = { username, password };
+        String[] params = {username, password};
 
         db.exec(sql, params);
 
@@ -42,8 +42,8 @@ public final class AccountDB {
         sql += "LEFT JOIN player ON player.username = account.username AND player.playstatus = ? AND player.username != ? ";
         sql += "AND player.idGame IN (SELECT idGame FROM player WHERE username = ? AND playstatus = ?) GROUP BY account.username;";
 
-        String[] params = { PlayStatusEnum.CHALLENGEE.toString(), username, username,
-                PlayStatusEnum.CHALLENGER.toString() };
+        String[] params = {PlayStatusEnum.CHALLENGEE.toString(), username, username,
+                PlayStatusEnum.CHALLENGER.toString()};
         return db.exec(sql, params);
 
     }
@@ -71,8 +71,8 @@ public final class AccountDB {
                 + "(SELECT diecolor FROM playerframefield "
                 + "WHERE idplayer IN (SELECT idplayer FROM player WHERE username = ?) AND diecolor IS NOT NULL "
                 + "GROUP BY diecolor ORDER BY COUNT(*) DESC LIMIT 1) AS 'mostPlacedColor';";
-        String[] params = { username, username, username, username, PlayStatusEnum.FINISHED.toString(), username,
-                username, PlayStatusEnum.FINISHED.toString(), username, username, username };
+        String[] params = {username, username, username, username, PlayStatusEnum.FINISHED.toString(), username,
+                username, PlayStatusEnum.FINISHED.toString(), username, username, username};
 
         List<Map<String, String>> dbResult = db.exec(sql, params);
         if (dbResult.size() > 0) {
