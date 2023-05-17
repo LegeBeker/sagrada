@@ -32,9 +32,11 @@ public class RoundTrackView extends StackPane implements Observer {
     private static final int HEIGHT = 120;
 
     private final ArrayList<Group> roundGroups;
+    private final ViewController view;
 
     public RoundTrackView(final ViewController view) {
         this.roundGroups = new ArrayList<>();
+        this.view = view;
 
         this.setMaxSize(WIDTH, HEIGHT);
         this.setPadding(new Insets(PADDING));
@@ -83,7 +85,7 @@ public class RoundTrackView extends StackPane implements Observer {
 
     @Override
     public void update() {
-        for (Die die : game.getRoundTrack()) {
+        for (Die die : view.getRoundTrack()) {
             roundGroups.get(die.getRoundTrack() - 1).getChildren()
                     .add(new DieView(die.getEyes(), die.getColor(), die.getNumber(), false));
         }

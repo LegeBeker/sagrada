@@ -86,4 +86,8 @@ public final class GameController {
     public Game getGame() {
         return this.game;
     }
+
+    public ArrayList<Die> getRoundTrack() {
+        return Game.getRoundTrack(this.game.getId());
+    }
 }

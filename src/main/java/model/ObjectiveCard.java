@@ -23,6 +23,10 @@ public class ObjectiveCard {
         return description;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
     public static ArrayList<ObjectiveCard> getObjectiveCards(final int idGame) {
         ArrayList<ObjectiveCard> objectiveCards = new ArrayList<>();
 

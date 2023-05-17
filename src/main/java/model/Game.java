@@ -98,7 +98,7 @@ public class Game extends Observable {
         return Die.getOffer(idGame, currentRound);
     }
 
-    public ArrayList<Die> getRoundTrack() {
+    public static ArrayList<Die> getRoundTrack(final int idGame) {
         return Die.getRoundTrack(idGame);
     }
 
