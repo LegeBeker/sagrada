@@ -49,7 +49,7 @@ public class StatsView extends VBox {
         text2.setFill(Color.web("#ffffff"));
         text2.setY(YVALUETEXT);
 
-        this.accountsView = new AccountsView(view);
+        this.accountsView = new AccountsView(view, false);
 
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);

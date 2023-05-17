@@ -1,6 +1,7 @@
 package main.java.view;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,7 +15,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
-import main.java.model.Die;
 import main.java.model.Game;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
@@ -26,17 +26,17 @@ public class RoundTrackView extends StackPane implements Observer {
     private static final int ROUNDS = 10;
     private static final int ROWAMOUNT = 5;
     private static final int ROUNDING = 20;
+    private static final Double OPACITY = 0.5;
 
     private static final int WIDTH = 190;
     private static final int HEIGHT = 120;
 
-    private Game game;
-
     private final ArrayList<Group> roundGroups;
+    private final ViewController view;
 
-    public RoundTrackView(final ViewController view, final Game game) {
-        this.game = game;
+    public RoundTrackView(final ViewController view) {
         this.roundGroups = new ArrayList<>();
+        this.view = view;
 
         this.setMaxSize(WIDTH, HEIGHT);
         this.setPadding(new Insets(PADDING));
@@ -72,7 +72,7 @@ public class RoundTrackView extends StackPane implements Observer {
 
         Rectangle rectangle = new Rectangle(WIDTH, HEIGHT);
         rectangle.setFill(Color.RED);
-        rectangle.setOpacity(0.5);
+        rectangle.setOpacity(OPACITY);
         rectangle.setArcHeight(ROUNDING);
         rectangle.setArcWidth(ROUNDING);
         this.getChildren().add(rectangle);
@@ -85,9 +85,10 @@ public class RoundTrackView extends StackPane implements Observer {
 
     @Override
     public void update() {
-        for (Die die : game.getRoundTrack()) {
-            roundGroups.get(die.getRoundTrack() - 1).getChildren()
-                    .add(new DieView(die.getEyes(), die.getColor(), die.getNumber(), false));
+        for (Map<String, String> die : view.getRoundTrack()) {
+            roundGroups.get(Integer.parseInt(die.get("roundtrack")) - 1).getChildren()
+                    .add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+                            Integer.parseInt(die.get("number")), false));
         }
     }
 }

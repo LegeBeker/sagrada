@@ -74,7 +74,7 @@ public class LoginView extends VBox {
                 throw new RuntimeException("Wachtwoord is ongeldig");
             }
 
-            if (!view.getAccountController().loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
+            if (!view.loginAccount(this.fieldUsername.getText(), this.fieldPassword.getText())) {
                 throw new RuntimeException("Gebruikersnaam of wachtwoord is onjuist");
             }
 

@@ -18,4 +18,11 @@ public final class ObjectiveCardDB {
         return db.exec(sql, params);
     }
 
+    public static Map<String, String> getObjectiveCard(final int idObjectiveCard) {
+        Database db = Database.getInstance();
+        String sql = "SELECT * FROM public_objectivecard WHERE idpublic_objectivecard = ?;";
+        String[] params = {Integer.toString(idObjectiveCard)};
+
+        return db.exec(sql, params).get(0);
+    }
 }
