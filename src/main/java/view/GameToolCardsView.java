@@ -3,7 +3,6 @@ package main.java.view;
 import javafx.geometry.Insets;
 import javafx.scene.layout.FlowPane;
 import main.java.controller.ViewController;
-import main.java.model.ToolCard;
 
 public class GameToolCardsView extends FlowPane {
 
@@ -12,8 +11,8 @@ public class GameToolCardsView extends FlowPane {
 
     public GameToolCardsView(final ViewController view) {
 
-        for (ToolCard toolCard : view.getToolCards()) {
-            this.getChildren().add(new GameToolCardView(view, toolCard));
+        for (String toolCardName : view.getToolCardsNames()) {
+            this.getChildren().add(new GameToolCardView(view, toolCardName));
         }
 
         this.setPadding(new Insets(0, 0, PADDING, PADDING));

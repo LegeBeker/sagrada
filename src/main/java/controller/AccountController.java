@@ -51,8 +51,8 @@ public class AccountController {
         return Account.getAll();
     }
 
-    public ArrayList<Account> getInviteableAccounts() {
-        return Account.getInviteableAccounts(this.getAccount().getUsername());
+    public ArrayList<String> getInviteableAccountsUsernames() {
+        return Account.getInviteableAccountsUsernames(this.getAccount().getUsername());
     }
 
     public Map<String, String> getStats(final String username) {

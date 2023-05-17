@@ -24,7 +24,6 @@ public class PatternCardSelectionView extends BorderPane {
     private final ViewController view;
 
     public PatternCardSelectionView(final ViewController view) {
-        super();
         this.view = view;
         this.flowPane = new FlowPane();
 
@@ -37,12 +36,8 @@ public class PatternCardSelectionView extends BorderPane {
         this.setTop(textTitle);
 
         view.getPatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
-            patternCardSelect(patternCard);
+            flowPane.getChildren().add(patternCardSelect(patternCard));
         });
-
-        // forEach(idPatternCard -> {
-        //     flowPane.getChildren().add(patternCardSelect(idPatternCard));
-        // });
 
         this.flowPane.setHgap(10);
         this.flowPane.setVgap(10);
@@ -66,7 +61,6 @@ public class PatternCardSelectionView extends BorderPane {
 
         button.setOnAction(event -> {
             this.view.choosePatternCard(idPatternCard);
-            this.view.openGameView(view.getGame());
         });
 
         this.vbox.getChildren().add(button);

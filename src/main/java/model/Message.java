@@ -17,8 +17,8 @@ public class Message extends Observable {
         return message;
     }
 
-    public Player getPlayer() {
-        return Player.get(idPlayer);
+    public String getPlayerUsername() {
+        return Player.get(idPlayer).getUsername();
     }
 
     public String getTime() {
@@ -47,8 +47,8 @@ public class Message extends Observable {
         return messages;
     }
 
-    public static boolean createMessage(final String message, final Player player, final String time) {
-        return MessageDB.createMessage(message, player, time);
+    public static boolean createMessage(final String message, final int playerId, final String time) {
+        return MessageDB.createMessage(message, playerId, time);
     }
 
 }

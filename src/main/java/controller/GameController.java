@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import main.java.model.Account;
 import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
 import main.java.model.Player;
-import main.java.model.ToolCard;
 
 public final class GameController {
 
@@ -34,19 +32,27 @@ public final class GameController {
         return game.getPlayers(username);
     }
 
+    public ArrayList<Integer> getPlayerIds() {
+        return game.getPlayerIds();
+    }
+
     public ArrayList<Die> getOffer() {
         return this.game.getOffer();
     }
 
-    public ArrayList<ObjectiveCard> getObjectiveCards() {
-        return this.game.getObjectiveCards();
+    public ArrayList<Integer> getObjectiveCardsIds() {
+        return this.game.getObjectiveCardsIds();
     }
 
-    public ArrayList<ToolCard> getToolCards() {
-        return this.game.getToolCards();
+    public ObjectiveCard getObjectiveCard(final int id) {
+        return ObjectiveCard.get(id);
     }
 
-    public Game createGame(final ArrayList<Account> accounts, final String currAccount, final boolean useDefaultCards) {
+    public ArrayList<String> getToolCardsNames() {
+        return this.game.getToolCardsNames();
+    }
+
+    public Game createGame(final ArrayList<String> accounts, final String currAccount, final boolean useDefaultCards) {
         return Game.createGame(accounts, currAccount, useDefaultCards);
     }
 
@@ -56,6 +62,10 @@ public final class GameController {
 
     public Boolean isTurnPlayer(final String username) {
         return this.game.getTurnPlayerUsername().equals(username);
+    }
+
+    public Boolean isTurnPlayer(final int gameId, final String username) {
+        return Game.get(gameId).getTurnPlayerUsername().equals(username);
     }
 
     public void setHelpFunction() {
@@ -102,5 +112,13 @@ public final class GameController {
                 getCurrentPlayer().getPatternCardOptions());
 
         return patternCardOptions;
+    }
+
+    public void acceptInvite(final int gameId) {
+        Player.acceptInvite(gameId, view.getUsername());
+    }
+
+    public void refuseInvite(final int gameId) {
+        Player.refuseInvite(gameId, view.getUsername());
     }
 }

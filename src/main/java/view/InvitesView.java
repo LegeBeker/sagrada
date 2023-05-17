@@ -11,15 +11,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
-import main.java.model.Account;
 
 public class InvitesView extends HBox {
     private ViewController view;
 
     private AccountsView accountsView;
 
-    private TableView<Account> selectionTable;
-    private ArrayList<Account> selectedAccounts = new ArrayList<Account>();
+    private TableView<String> selectionTable;
+    private ArrayList<String> selectedAccountsUsernames = new ArrayList<String>();
     private static final double SELECTIONTABLEHEIGHT = 120;
     private static final int MAXSIZESELECTION = 3;
 
@@ -30,61 +29,60 @@ public class InvitesView extends HBox {
 
         this.alignmentProperty().set(Pos.CENTER);
 
-        this.selectionTable = new TableView<Account>();
+        this.selectionTable = new TableView<String>();
         this.selectionTable.setPlaceholder(new Text("Geen accounts geselecteerd"));
         this.selectionTable.setMaxHeight(SELECTIONTABLEHEIGHT);
 
-        TableColumn<Account, String> idUsernameSelected = new TableColumn<>("Username");
+        TableColumn<String, String> idUsernameSelected = new TableColumn<>("Username");
         idUsernameSelected.setCellValueFactory(new PropertyValueFactory<>("username"));
         Collections.addAll(this.selectionTable.getColumns(), idUsernameSelected);
 
         setTableClickEvent();
         this.getChildren().addAll(this.accountsView, this.selectionTable);
 
-        this.accountsView.setRowFactory(tv -> new TableRow<Account>() {
+        this.accountsView.setRowFactory(tv -> new TableRow<String>() {
             @Override
-            protected void updateItem(final Account acc, final boolean empty) {
+            protected void updateItem(final String acc, final boolean empty) {
                 super.updateItem(acc, empty);
                 if (acc == null) {
-                    setStyle("");
-                } else if (!acc.getInviteable()) {
-                    setStyle("-fx-background-color: #9e9e9e;");
+                    return;
+                }
+                if (selectedAccountsUsernames.contains(acc)) {
+                    this.setVisible(false);
+                    this.setManaged(false);
                 } else {
-                    setStyle("");
+                    this.setVisible(true);
+                    this.setManaged(true);
                 }
             }
         });
     }
 
-    public ArrayList<Account> getSelectedAccounts() {
-        return this.selectedAccounts;
+    public ArrayList<String> getSelectedAccountsUsernames() {
+        return this.selectedAccountsUsernames;
     }
 
     private void setTableClickEvent() {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                Account acc = this.accountsView.getSelectionModel().getSelectedItem();
+                String acc = this.accountsView.getSelectionModel().getSelectedItem();
                 if (acc == null) {
                     return;
                 }
-                if (!acc.getInviteable()) {
-                    this.view.displayError("Je wacht nog op een antwoord van deze speler");
-                    return;
-                }
-                if (this.view.getUsername().equals(acc.getUsername())) {
+                if (this.view.getUsername().equals(acc)) {
                     this.view.displayError("Je kan jezelf niet uitnodigen");
                     return;
                 }
-                if (!selectedAccounts.contains(acc) && selectedAccounts.size() < MAXSIZESELECTION) {
-                    selectedAccounts.add(acc);
+                if (!selectedAccountsUsernames.contains(acc) && selectedAccountsUsernames.size() < MAXSIZESELECTION) {
+                    selectedAccountsUsernames.add(acc);
                     this.selectionTable.getItems().add(acc);
                 }
             }
         });
         this.selectionTable.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                Account acc = this.selectionTable.getSelectionModel().getSelectedItem();
-                selectedAccounts.remove(acc);
+                String acc = this.selectionTable.getSelectionModel().getSelectedItem();
+                selectedAccountsUsernames.remove(acc);
                 this.selectionTable.getItems().remove(acc);
             }
         });

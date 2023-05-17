@@ -165,7 +165,7 @@ public class PatternCardView extends BorderPane implements Observer {
 
         if (this.playerId != null && view.getPlayerBoardField(this.playerId, row, col) != null) {
             Die die = view.getPlayerBoardField(this.playerId, row, col);
-            DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), false);
+            DieView dieView = new DieView(this.view, die.getEyes(), die.getColor(), die.getNumber(), false);
             stackPane.getChildren().add(dieView);
         }
 

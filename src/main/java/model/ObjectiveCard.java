@@ -43,4 +43,17 @@ public class ObjectiveCard {
 
         return objectiveCards;
     }
+
+    public static ObjectiveCard get(final int idObjectiveCard) {
+        ObjectiveCard objectiveCard = new ObjectiveCard();
+
+        Map<String, String> row = ObjectiveCardDB.getObjectiveCard(idObjectiveCard);
+
+        objectiveCard.idObjectiveCard = Integer.parseInt(row.get("idpublic_objectivecard"));
+        objectiveCard.name = row.get("name");
+        objectiveCard.description = row.get("description");
+        objectiveCard.points = Integer.parseInt(row.get("points"));
+
+        return objectiveCard;
+    }
 }

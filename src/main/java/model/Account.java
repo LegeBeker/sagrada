@@ -46,16 +46,13 @@ public class Account {
         return accounts;
     }
 
-    public static ArrayList<Account> getInviteableAccounts(final String username) {
-        ArrayList<Account> accounts = new ArrayList<Account>();
+    public static ArrayList<String> getInviteableAccountsUsernames(final String username) {
+        ArrayList<String> accounts = new ArrayList<String>();
 
         for (Map<String, String> accountMap : AccountDB.getInviteableAccounts(username)) {
-            Account acc = new Account();
-            acc.username = accountMap.get("username");
             if (accountMap.get("inviteable") != null) {
-                acc.inviteable = (Integer.parseInt(accountMap.get("inviteable")) != 0);
+                accounts.add(accountMap.get("username"));
             }
-            accounts.add(acc);
         }
         return accounts;
     }

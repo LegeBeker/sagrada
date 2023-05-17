@@ -22,7 +22,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.Game;
-import main.java.model.Player;
 
 public class GamesView extends VBox {
 
@@ -91,10 +90,9 @@ public class GamesView extends VBox {
 
                 if (game == null) {
                     setStyle("");
-                } else if (game.getTurnPlayer().getUsername()
-                        .equals(view.getUsername())) {
+                } else if (view.isTurnPlayer(game.getId())) {
                     setStyle("-fx-background-color: lightblue;");
-                } else if (hasOpenInvite(game, view.getUsername())) {
+                } else if (view.hasOpenInvite(game.getId(), view.getUsername())) {
                     setStyle("-fx-background-color: orange;");
                 }
 
@@ -106,8 +104,8 @@ public class GamesView extends VBox {
                 Game game = this.table.getSelectionModel().getSelectedItem();
 
                 if (game != null) {
-                    if (hasOpenInvite(game, view.getUsername())) {
-                        showInviteAlert(game, view.getCurrentPlayer());
+                    if (view.hasOpenInvite(game.getId(), view.getUsername())) {
+                        showInviteAlert(game.getId());
                     } else {
                         this.view.openGameView(game);
                     }
@@ -129,11 +127,11 @@ public class GamesView extends VBox {
 
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
-        this.buttonBack.setOnAction(e -> this.back());
+        this.buttonBack.setOnAction(e -> this.view.openMenuView());
 
         this.buttonNewGame = new Button("Nieuwe potje starten");
         this.buttonNewGame.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
-        this.buttonNewGame.setOnAction(e -> this.openNewGameView());
+        this.buttonNewGame.setOnAction(e -> this.view.openNewGameView());
 
         this.boxButtons = new HBox();
         this.boxButtons.getChildren().addAll(this.buttonBack, this.buttonNewGame);
@@ -147,19 +145,7 @@ public class GamesView extends VBox {
         this.getChildren().addAll(this.textTitle, this.scrollBox, this.boxButtons);
     }
 
-    private void back() {
-        this.view.openMenuView();
-    }
-
-    private void openNewGameView() {
-        this.view.openNewGameView();
-    }
-
-    private boolean hasOpenInvite(final Game game, final String playerName) {
-        return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
-    }
-
-    private void showInviteAlert(final Game game, final Player player) {
+    private void showInviteAlert(final int gameId) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uitnodiging");
         alert.setHeaderText("Bevestiging");
@@ -178,10 +164,9 @@ public class GamesView extends VBox {
         }
 
         if (result.get() == acceptButton) {
-            player.acceptInvite();
+            view.acceptInvite(gameId);
         } else if (result.get() == refuseButton) {
-            player.refuseInvite();
+            view.refuseInvite(gameId);
         }
     }
-
 }

@@ -27,7 +27,7 @@ public class MessageController {
         String formattedDateTime = currentDateTime.format(formatter);
 
         if (!this.prefTimestamp.equals(formattedDateTime)) {
-            messageSent = Message.createMessage(message, player, formattedDateTime);
+            messageSent = Message.createMessage(message, player.getId(), formattedDateTime);
         }
 
         this.prefTimestamp = formattedDateTime;

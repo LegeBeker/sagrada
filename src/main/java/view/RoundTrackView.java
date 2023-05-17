@@ -87,7 +87,7 @@ public class RoundTrackView extends StackPane implements Observer {
     public void update() {
         for (Die die : view.getRoundTrack()) {
             roundGroups.get(die.getRoundTrack() - 1).getChildren()
-                    .add(new DieView(die.getEyes(), die.getColor(), die.getNumber(), false));
+                    .add(new DieView(this.view, die.getEyes(), die.getColor(), die.getNumber(), false));
         }
     }
 }

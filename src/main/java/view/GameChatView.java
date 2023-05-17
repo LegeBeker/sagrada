@@ -13,7 +13,6 @@ import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.Game;
 import main.java.model.Message;
-import main.java.model.Player;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
@@ -81,16 +80,16 @@ public class GameChatView extends VBox implements Observer {
         update();
     }
 
-    public void addMessage(final String message, final Player player, final String time) {
-        Text username = new Text(player.getUsername());
-        chatMessageBox.getChildren().add(new TextFlow(new Text("[" + time + "] "), username, new Text(": " + message)));
+    public void addMessage(final String message, final String playerUsername, final String time) {
+        chatMessageBox.getChildren()
+                .add(new TextFlow(new Text("[" + time + "] "), new Text(playerUsername), new Text(": " + message)));
     }
 
     @Override
     public void update() {
         chatMessageBox.getChildren().clear();
         for (Message message : view.getMessages()) {
-            addMessage(message.getMessage(), message.getPlayer(), message.getTime());
+            addMessage(message.getMessage(), message.getPlayerUsername(), message.getTime());
         }
     }
 }

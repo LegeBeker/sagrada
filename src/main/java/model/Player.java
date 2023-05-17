@@ -97,7 +97,7 @@ public class Player {
         return this.privateObjCardColor;
     }
 
-    public int getPatternCardId() {
+    public Integer getPatternCardId() {
         return this.idPatternCard;
     }
 
@@ -170,12 +170,12 @@ public class Player {
         return players;
     }
 
-    public boolean acceptInvite() {
-        return PlayerDB.acceptInvite(this.idGame, this.username);
+    public static boolean acceptInvite(final int idGame, final String username) {
+        return PlayerDB.acceptInvite(idGame, username);
     }
 
-    public boolean refuseInvite() {
-        return PlayerDB.refuseInvite(this.idGame, this.username);
+    public static boolean refuseInvite(final int idGame, final String username) {
+        return PlayerDB.refuseInvite(idGame, username);
     }
 
     public boolean hasPatternCard() {

@@ -21,15 +21,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import main.java.model.Account;
 import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.Message;
-import main.java.model.ObjectiveCard;
-import main.java.model.PatternCard;
 import main.java.model.PatternCardField;
 import main.java.model.Player;
-import main.java.model.ToolCard;
 import main.java.pattern.Observable;
 import main.java.view.GameView;
 import main.java.view.GamesView;
@@ -72,7 +68,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -102,10 +98,6 @@ public class ViewController extends Scene {
     public int getPlayerId() {
         Player player = this.gameController.getCurrentPlayer();
         return player.getId();
-    }
-
-    public Game getGame() {
-        return this.gameController.getGame();
     }
 
     public void changeView(final Pane pane) {
@@ -169,21 +161,29 @@ public class ViewController extends Scene {
         changeView(newGameView);
     }
 
-    public ArrayList<Account> getInviteableAccounts() {
-        return this.accountController.getInviteableAccounts();
+    public ArrayList<String> getInviteableAccountsUsernames() {
+        return this.accountController.getInviteableAccountsUsernames();
     }
 
-    public Boolean doMove(final PatternCard patternCard, final int eyes, final Color dieColor, final int dieNumber,
+    public Boolean doMove(final int patternCardId, final int eyes, final Color dieColor, final int dieNumber,
             final int columnIndex, final int rowIndex) {
-        return this.patternCardController.doMove(patternCard, eyes, dieColor, dieNumber, columnIndex, rowIndex);
+        return this.patternCardController.doMove(patternCardId, eyes, dieColor, dieNumber, columnIndex, rowIndex);
     }
 
     public Boolean isTurnPlayer() {
         return this.gameController.isTurnPlayer(getUsername());
     }
 
+    public Boolean isTurnPlayer(final int gameId) {
+        return this.gameController.isTurnPlayer(gameId, getUsername());
+    }
+
     public ArrayList<Player> getPlayers() {
         return this.gameController.getPlayers(getUsername());
+    }
+
+    public ArrayList<Integer> getPlayerIds() {
+        return this.gameController.getPlayerIds();
     }
 
     public Player getCurrentPlayer() {
@@ -207,19 +207,23 @@ public class ViewController extends Scene {
     }
 
     public String getPatternCardName(final int id) {
-        return "tset";
+        return this.patternCardController.getPatternCard(id).getName();
     }
 
     public int getPatternCardDifficulty(final int id) {
-        return 7;
+        return this.patternCardController.getPatternCard(id).getDifficulty();
+    }
+
+    public Integer getPlayerPatternCardId(final int playerId) {
+        return this.gameController.getPlayer(playerId).getPatternCardId();
     }
 
     public String getPlayerUsername(final int id) {
-        return "Test";
+        return this.gameController.getPlayer(id).getUsername();
     }
 
     public int getPlayerGameTokens(final int id) {
-        return 6;
+        return this.gameController.getPlayer(id).getFavorTokensLeft();
     }
 
     public Color getPlayerColor(final int id) {
@@ -230,8 +234,12 @@ public class ViewController extends Scene {
         return this.gameController.getHelpFunction();
     }
 
-    public ArrayList<ObjectiveCard> getObjectiveCards() {
-        return this.gameController.getObjectiveCards();
+    public ArrayList<Integer> getObjectiveCardsIds() {
+        return this.gameController.getObjectiveCardsIds();
+    }
+
+    public String getObjectiveCardName(final int id) {
+        return this.gameController.getObjectiveCard(id).getName();
     }
 
     public String getPrivateObjCardColor() {
@@ -242,16 +250,16 @@ public class ViewController extends Scene {
         return this.gameController.getGames();
     }
 
-    public PatternCard getPatternCard() {
-        return getCurrentPlayer().getPatternCard();
+    public int getPatternCardId() {
+        return getCurrentPlayer().getPatternCard().getIdPatternCard();
     }
 
     public ArrayList<Die> getOffer() {
         return this.gameController.getOffer();
     }
 
-    public ArrayList<ToolCard> getToolCards() {
-        return this.gameController.getToolCards();
+    public ArrayList<String> getToolCardsNames() {
+        return this.gameController.getToolCardsNames();
     }
 
     public Boolean loginAccount(final String username, final String password) {
@@ -266,12 +274,13 @@ public class ViewController extends Scene {
         this.gameController.endTurn();
     }
 
-    public Game createGame(final ArrayList<Account> accounts, final Boolean useDefaultCards) {
-        return this.gameController.createGame(accounts, getUsername(), useDefaultCards);
+    public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
+        openPatternCardSelectionView(this.gameController.createGame(accounts, getUsername(), useDefaultCards));
     }
 
     public void choosePatternCard(final int idPatternCard) {
         this.gameController.choosePatternCard(idPatternCard);
+        openGameView(this.gameController.getGame());
     }
 
     public void openGameView(final Game game) {
@@ -334,6 +343,19 @@ public class ViewController extends Scene {
     }
 
     public ArrayList<Message> getMessages() {
-        return this.messageController.getMessages(getGame().getId());
+        return this.messageController.getMessages(gameController.getGame().getId());
+    }
+
+    public void acceptInvite(final int gameId) {
+        this.gameController.acceptInvite(gameId);
+    }
+
+    public void refuseInvite(final int gameId) {
+        this.gameController.refuseInvite(gameId);
+    }
+
+    public boolean hasOpenInvite(final int gameId, final String playerName) {
+        Game game = Game.get(gameId);
+        return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
     }
 }

@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import main.java.controller.ViewController;
-import main.java.model.Game;
 
 public class GameButtonsView extends VBox {
 
@@ -52,9 +51,9 @@ public class GameButtonsView extends VBox {
         this.setSpacing(PADDING);
     }
 
-    public void getDice(final Game game) {
+    public void getDice() {
         try {
-            game.getNewOffer();
+            view.getNewOffer();
         } catch (RuntimeException e) {
             this.view.displayError(e.getMessage());
         }
