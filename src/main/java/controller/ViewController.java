@@ -21,6 +21,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import main.java.model.Account;
 import main.java.model.Game;
+import main.java.pattern.Observable;
 import main.java.view.GameView;
 import main.java.view.GamesView;
 import main.java.view.LoginView;
@@ -37,9 +38,12 @@ public class ViewController extends Scene {
 
     private Label messageBox;
 
+    private Timer timer;
+
     private AccountController accountController;
     private GameController gameController;
     private PatternCardController patternCardController;
+    private MessageController messageController;
 
     private EffectsController effectsController;
 
@@ -76,13 +80,17 @@ public class ViewController extends Scene {
         this.accountController = new AccountController();
         this.gameController = new GameController(this);
         this.patternCardController = new PatternCardController(this);
-
+        this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
 
         this.openLoginView();
     }
 
     public void changeView(final Pane pane) {
+        if (this.timer != null) {
+            this.timer.cancel();
+            this.timer = null;
+        }
         this.rootPane.getChildren().clear();
         this.rootPane.getChildren().addAll(pane, this.messageBox);
     }
@@ -145,11 +153,11 @@ public class ViewController extends Scene {
             GameView gameView = new GameView(this, game);
             changeView(gameView);
 
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
+            this.timer = new Timer();
+            this.timer.schedule(new TimerTask() {
                 public void run() {
                     Platform.runLater(() -> {
-                        game.notifyObservers();
+                        Observable.notifyObservers(Game.class);
                     });
                 }
             }, 0, REFRESHRATE);
@@ -159,6 +167,7 @@ public class ViewController extends Scene {
     }
 
     public void openPatternCardSelectionView(final Game game) {
+        getGameController().setGame(game);
         PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this,
                 getGameController().getCurrentPlayer(game.getId()));
         changeView(patternCardSelectionView);
@@ -179,5 +188,9 @@ public class ViewController extends Scene {
 
     public PatternCardController getPatternCardController() {
         return patternCardController;
+    }
+
+    public MessageController getMessageController() {
+        return messageController;
     }
 }

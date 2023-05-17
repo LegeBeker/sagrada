@@ -103,5 +103,4 @@ public final class PlayerDB {
 
         return Integer.parseInt(db.exec(sql, null).get(0).get("seqnr"));
     }
-
 }

@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
 import main.java.model.Die;
 import main.java.model.Game;
+import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
 public class GameOfferView extends FlowPane implements Observer {
@@ -19,7 +20,7 @@ public class GameOfferView extends FlowPane implements Observer {
         this.view = view;
         this.game = game;
 
-        game.addObserver(this);
+        Observable.addObserver(Game.class, this);
 
         this.update();
     }
@@ -39,8 +40,8 @@ public class GameOfferView extends FlowPane implements Observer {
         return this.game.getHelpFunction();
     }
 
-    public void showPossibleMoves(final int value, final Color color) {
-        ArrayList<int[]> moves = this.view.getPatternCardController().getPossibleMoves(value, color);
+    public void showPossibleMoves(final int eyes, final Color color) {
+        ArrayList<int[]> moves = this.view.getPatternCardController().getPossibleMoves(eyes, color);
         GameCenterView gameCenterView = (GameCenterView) this.getParent();
         gameCenterView.showPossibleMoves(moves);
     }

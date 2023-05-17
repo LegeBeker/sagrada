@@ -8,6 +8,7 @@ import java.util.Map;
 import javafx.scene.paint.Color;
 import main.java.db.BoardDB;
 import main.java.enums.ColorEnum;
+import main.java.pattern.Observable;
 
 public class Board {
 
@@ -46,7 +47,7 @@ public class Board {
             return false;
         }
 
-        this.player.getGame().notifyObservers();
+        Observable.notifyObservers(Game.class);
         return true;
     }
 
