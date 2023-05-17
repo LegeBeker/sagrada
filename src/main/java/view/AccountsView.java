@@ -1,5 +1,6 @@
 package main.java.view;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -11,9 +12,11 @@ import main.java.controller.ViewController;
 public class AccountsView extends TableView<String> {
     private ViewController view;
 
+    private ArrayList<String> accountUsernames;
+
     private static final double TABLEHEIGHT = 400;
 
-    public AccountsView(final ViewController view) {
+    public AccountsView(final ViewController view, final Boolean isInvite) {
         this.view = view;
 
         this.setPlaceholder(new Text("Geen accounts gevonden"));
@@ -24,7 +27,13 @@ public class AccountsView extends TableView<String> {
 
         Collections.addAll(this.getColumns(), idUsername);
 
-        for (String acc : view.getInviteableAccountsUsernames()) {
+        if (isInvite) {
+            this.accountUsernames = this.view.getInviteableAccountsUsernames();
+        } else {
+            this.accountUsernames = this.view.getAccountsUsernames();
+        }
+
+        for (String acc : this.accountUsernames) {
             this.getItems().add(acc);
         }
 

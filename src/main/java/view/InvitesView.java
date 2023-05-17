@@ -25,7 +25,7 @@ public class InvitesView extends HBox {
     public InvitesView(final ViewController view) {
         this.view = view;
 
-        this.accountsView = new AccountsView(view);
+        this.accountsView = new AccountsView(view, true);
 
         this.alignmentProperty().set(Pos.CENTER);
 
