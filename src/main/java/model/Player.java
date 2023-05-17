@@ -231,4 +231,8 @@ public class Player {
 
         return player;
     }
+
+    public static int getAmountOpenInvites (final int gameId){
+       return PlayerDB.getAmountOpenInvites(gameId);        
+    }
 }

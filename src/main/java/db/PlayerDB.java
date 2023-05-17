@@ -103,4 +103,21 @@ public final class PlayerDB {
 
         return Integer.parseInt(db.exec(sql, null).get(0).get("seqnr"));
     }
+
+    public static int getAmountOpenInvites (final int gameId){
+        Database db = Database.getInstance();
+
+        String sql = "SELECT COUNT(*) AS amount FROM player ";
+        sql += "WHERE idgame = ? AND playstatus = ?;";
+        String[] params = {Integer.toString(gameId), PlayStatusEnum.CHALLENGEE.toString()};
+
+        List<Map<String, String>> dbresult = db.exec(sql, params);
+        if(dbresult.size() > 0){
+            return Integer.parseInt(db.exec(sql, params).get(0).get(("amount")));
+        }
+        else{
+            return 4; //-- Default value to make sure it's never going to pass the value
+        }
+        
+    }
 }

@@ -106,4 +106,5 @@ public final class GameDB {
         sql = "SELECT * FROM gameobjectivecard_public WHERE idgame = " + Integer.toString(gameID) + ";";
         return db.exec(sql, null);
     }
+
 }
