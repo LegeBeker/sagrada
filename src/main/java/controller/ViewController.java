@@ -373,6 +373,11 @@ public class ViewController extends Scene {
         return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
     }
 
+    public boolean gameHasOpenInvites(final int gameId) {
+        Game game = Game.get(gameId);
+        return game.hasOpenInvites();
+    }
+
     public ArrayList<String> getAccountsUsernames() {
         return this.accountController.getAccountsUsernames();
     }

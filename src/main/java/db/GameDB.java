@@ -106,4 +106,13 @@ public final class GameDB {
         sql = "SELECT * FROM gameobjectivecard_public WHERE idgame = " + Integer.toString(gameID) + ";";
         return db.exec(sql, null);
     }
+
+    public static boolean hasOpenInvites(final int idGame) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM player WHERE idgame = ? AND playstatus = 'challengee';";
+        String[] params = {Integer.toString(idGame)};
+
+        return db.exec(sql, params).size() > 0;
+    }
 }
