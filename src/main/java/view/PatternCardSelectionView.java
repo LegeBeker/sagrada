@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 import main.java.model.PatternCard;
-import main.java.model.Player;
 
 public class PatternCardSelectionView extends BorderPane {
 
@@ -24,7 +23,6 @@ public class PatternCardSelectionView extends BorderPane {
     private static final int SPACING = 10;
 
     private final ViewController view;
-    private final Player player;
 
     public PatternCardSelectionView(final ViewController view) {
         super();
@@ -65,7 +63,7 @@ public class PatternCardSelectionView extends BorderPane {
 
         button.setOnAction(event -> {
             this.view.choosePatternCard(patternCard);
-            this.view.openGameView(player.getGame());
+            this.view.openGameView(view.getGame());
         });
 
         this.vbox.getChildren().add(button);
