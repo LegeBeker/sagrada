@@ -49,7 +49,7 @@ public final class GameController {
         return this.game;
     }
 
-    public int getAmountOpenInvites(final int gameId){
+    public int getAmountOpenInvites(final int gameId) {
         return Player.getAmountOpenInvites(gameId);
     }
 }
