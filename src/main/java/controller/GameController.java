@@ -49,8 +49,35 @@ public final class GameController {
         return game.getPlayerIds();
     }
 
-    public ArrayList<Die> getOffer() {
-        return this.game.getOffer();
+    public ArrayList<Map<String, String>> getOffer() {
+        ArrayList<Die> dice = this.game.getOffer();
+        ArrayList<Map<String, String>> diceMap = new ArrayList<Map<String, String>>();
+
+        for (Die die : dice) {
+            Map<String, String> dieMap = new HashMap<String, String>();
+            dieMap.put("eyes", Integer.toString(die.getEyes()));
+            dieMap.put("color", die.getColor().toString());
+            dieMap.put("number", Integer.toString(die.getNumber()));
+            diceMap.add(dieMap);
+        }
+
+        return diceMap;
+    }
+
+    public ArrayList<Map<String, String>> getRoundTrack() {
+        ArrayList<Die> dice = Game.getRoundTrack(this.game.getId());
+        ArrayList<Map<String, String>> diceMap = new ArrayList<Map<String, String>>();
+
+        for (Die die : dice) {
+            Map<String, String> dieMap = new HashMap<String, String>();
+            dieMap.put("eyes", Integer.toString(die.getEyes()));
+            dieMap.put("color", die.getColor().toString());
+            dieMap.put("number", Integer.toString(die.getNumber()));
+            dieMap.put("roundtrack", Integer.toString(die.getRoundTrack()));
+            diceMap.add(dieMap);
+        }
+
+        return diceMap;
     }
 
     public ArrayList<Integer> getObjectiveCardsIds() {
@@ -108,10 +135,6 @@ public final class GameController {
 
     public Game getGame() {
         return this.game;
-    }
-
-    public ArrayList<Die> getRoundTrack() {
-        return Game.getRoundTrack(this.game.getId());
     }
 
     public Player getPlayer(final Integer playerId) {
