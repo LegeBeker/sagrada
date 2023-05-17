@@ -45,7 +45,6 @@ public class Message extends Observable {
         }
 
         return messages;
-
     }
 
     public static boolean createMessage(final String message, final Player player, final String time) {

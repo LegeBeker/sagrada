@@ -12,9 +12,7 @@ import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.Die;
 import main.java.model.Game;
-import main.java.model.PatternCard;
 import main.java.model.PatternCardField;
-import main.java.model.Player;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
@@ -43,10 +41,16 @@ public class PatternCardView extends BorderPane implements Observer {
 
     private final ViewController view;
 
+    private final int patternCardId;
+    private final Integer playerId;
+
     public PatternCardView(final ViewController view, final int patternCardId, final Integer playerId) {
         this.view = view;
         this.setPrefSize(WIDTH, HEIGHT);
         this.getStyleClass().add("patterncard");
+
+        this.patternCardId = patternCardId;
+        this.playerId = playerId;
 
         this.update();
         grid.setPadding(new Insets(0, PADDING, PADDING, 0));
@@ -67,15 +71,15 @@ public class PatternCardView extends BorderPane implements Observer {
 
             Text cardDifficulty = new Text("Moeilijkheid: ");
             cardDifficulty.setFill(Color.WHITE);
- 
+
             String dots = "";
-            for (int i = 0; i < patternCard.getDifficulty(); i++) {
+            for (int i = 0; i < view.getPatternCardDifficulty(patternCardId); i++) {
                 dots += " • ";
             }
             Text cardDifficultyDots = new Text(dots);
             cardDifficultyDots.setStyle("-fx-font-weight: bold;");
 
-            switch (patternCard.getDifficulty()) {
+            switch (view.getPatternCardDifficulty(patternCardId)) {
                 case EASY:
                     cardDifficultyDots.setFill(Color.GREEN);
                     break;
@@ -119,20 +123,20 @@ public class PatternCardView extends BorderPane implements Observer {
     @Override
     public void update() {
         grid.getChildren().clear();
-        drawPatternCard(patternCard, view, player);
+        drawPatternCard(view, patternCardId, playerId);
     }
 
-    private void drawPatternCard(final ViewController view, final int patternCardId, final int playerId) {
+    private void drawPatternCard(final ViewController view, final int patternCardId, final Integer playerId) {
         final boolean isCardOwner;
-        if (player != null) {
-            isCardOwner = view.getUsername().equals(player.getUsername());
+        if (playerId != null) {
+            isCardOwner = view.isCurrentPlayer(playerId);
         } else {
             isCardOwner = false;
         }
 
         for (int col = 1; col <= COLUMNS; col++) {
             for (int row = 1; row <= ROWS; row++) {
-                PatternCardField field = patternCard.getField(row, col);
+                PatternCardField field = view.getPatternCardField(patternCardId, col, row);
 
                 if (field.getValue() != null) {
                     createAndAddNode(isCardOwner, new DieView(field.getValue()), field.getColor(), col, row);
@@ -159,8 +163,8 @@ public class PatternCardView extends BorderPane implements Observer {
         stackPane.getChildren().add(node);
         node.setStyle("-fx-border-color: transparent;");
 
-        if (this.player != null && this.player.getBoard().getField(row, col) != null) {
-            Die die = this.player.getBoard().getField(row, col);
+        if (this.playerId != null && view.getPlayerBoardField(this.playerId, row, col) != null) {
+            Die die = view.getPlayerBoardField(this.playerId, row, col);
             DieView dieView = new DieView(die.getEyes(), die.getColor(), die.getNumber(), false);
             stackPane.getChildren().add(dieView);
         }

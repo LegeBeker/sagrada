@@ -36,9 +36,13 @@ public class PatternCardSelectionView extends BorderPane {
         textTitle.setPadding(new Insets(PADDING, 0, 0, 0));
         this.setTop(textTitle);
 
-        view.getPatternCardOptions().forEach(idPatternCard -> {
-            flowPane.getChildren().add(patternCardSelect(idPatternCard));
+        view.getPatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
+            patternCardSelect(patternCard);
         });
+
+        // forEach(idPatternCard -> {
+        //     flowPane.getChildren().add(patternCardSelect(idPatternCard));
+        // });
 
         this.flowPane.setHgap(10);
         this.flowPane.setVgap(10);
@@ -57,7 +61,7 @@ public class PatternCardSelectionView extends BorderPane {
 
     private VBox patternCardSelect(final int idPatternCard) {
         this.vbox = new VBox();
-        this.vbox.getChildren().add(new PatternCardView(this.view));
+        this.vbox.getChildren().add(new PatternCardView(this.view, idPatternCard, null));
         Button button = new Button("Kiezen");
 
         button.setOnAction(event -> {

@@ -22,12 +22,13 @@ public class GameChatView extends VBox implements Observer {
     private VBox chatMessageBox = new VBox();
     private HBox chatInput = new HBox();
 
-    private Game game;
-
     private static final int WIDTHCHATVIEW = 300;
     private static final int WIDTHMESSAGEBOX = 200;
 
+    private final ViewController view;
+
     public GameChatView(final ViewController view) {
+        this.view = view;
         this.setAlignment(Pos.BOTTOM_CENTER);
         this.setMaxWidth(WIDTHCHATVIEW);
         this.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
@@ -88,7 +89,7 @@ public class GameChatView extends VBox implements Observer {
     @Override
     public void update() {
         chatMessageBox.getChildren().clear();
-        for (Message message : Message.getChatMessages(game.getId())) {
+        for (Message message : view.getMessages()) {
             addMessage(message.getMessage(), message.getPlayer(), message.getTime());
         }
     }

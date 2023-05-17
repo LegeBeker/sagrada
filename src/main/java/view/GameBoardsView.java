@@ -43,7 +43,7 @@ public class GameBoardsView extends HBox {
                 break; // exit the loop once max grid size is reached
             }
 
-            PatternCardView patternCardView = new PatternCardView(this.view);
+            PatternCardView patternCardView = new PatternCardView(this.view, player.getPatternCardId(), player.getId());
 
             grid.add(patternCardView, cardCount % MAXCOLS, cardCount / MAXCOLS);
             cardCount++;
@@ -54,7 +54,7 @@ public class GameBoardsView extends HBox {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
         moves.forEach((move) -> {
             patternCardView.getGrid().getChildren().forEach((cell) -> {
-                int[] location = {GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell)};
+                int[] location = { GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell) };
                 if (move[0] == location[0] && move[1] == location[1]) {
                     cell.setStyle("-fx-border-color: #00FFBF;");
                 }

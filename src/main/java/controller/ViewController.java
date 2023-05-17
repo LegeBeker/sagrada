@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,8 +24,10 @@ import javafx.scene.paint.Stop;
 import main.java.model.Account;
 import main.java.model.Die;
 import main.java.model.Game;
+import main.java.model.Message;
 import main.java.model.ObjectiveCard;
 import main.java.model.PatternCard;
+import main.java.model.PatternCardField;
 import main.java.model.Player;
 import main.java.model.ToolCard;
 import main.java.pattern.Observable;
@@ -71,7 +72,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -96,6 +97,11 @@ public class ViewController extends Scene {
 
     public String getUsername() {
         return this.accountController.getUsername();
+    }
+
+    public int getPlayerId() {
+        Player player = this.gameController.getCurrentPlayer();
+        return player.getId();
     }
 
     public Game getGame() {
@@ -181,7 +187,7 @@ public class ViewController extends Scene {
     }
 
     public Player getCurrentPlayer() {
-        return this.gameController.getCurrentPlayer(getGame().getId());
+        return this.gameController.getCurrentPlayer();
     }
 
     public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
@@ -198,6 +204,26 @@ public class ViewController extends Scene {
 
     public boolean sendMessage(final String message) {
         return this.messageController.sendMessage(message);
+    }
+
+    public String getPatternCardName(final int id) {
+        return "tset";
+    }
+
+    public int getPatternCardDifficulty(final int id) {
+        return 7;
+    }
+
+    public String getPlayerUsername(final int id) {
+        return "Test";
+    }
+
+    public int getPlayerGameTokens(final int id) {
+        return 6;
+    }
+
+    public Color getPlayerColor(final int id) {
+        return Color.RED;
     }
 
     public Boolean getHelpFunction() {
@@ -286,11 +312,28 @@ public class ViewController extends Scene {
         return this.gameController.getRoundTrack();
     }
 
-    public List<Integer> getPatternCardOptions() {
+    public Map<Integer, List<Integer>> getPatternCardOptions() {
         return this.gameController.getPatternCardOptions();
     }
 
     public Boolean createAccount(final String username, final String password) {
         return this.accountController.createAccount(username, password);
+    }
+
+    public boolean isCurrentPlayer(final Integer playerId) {
+        return getCurrentPlayer().getId() == playerId;
+    }
+
+    public PatternCardField getPatternCardField(final int patternCardId, final int col, final int row) {
+        return this.patternCardController.getPatternCardField(patternCardId, row, col);
+    }
+
+    public Die getPlayerBoardField(final Integer playerId, final int row, final int col) {
+        Player player = this.gameController.getPlayer(playerId);
+        return player.getBoard().getField(row, col);
+    }
+
+    public ArrayList<Message> getMessages() {
+        return this.messageController.getMessages(getGame().getId());
     }
 }

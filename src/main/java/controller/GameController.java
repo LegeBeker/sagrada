@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import main.java.model.Account;
@@ -49,9 +50,8 @@ public final class GameController {
         return Game.createGame(accounts, currAccount, useDefaultCards);
     }
 
-    public Player getCurrentPlayer(final int idGame) {
-        Game game = Game.get(idGame);
-        return game.getCurrentPlayer(idGame, view.getUsername());
+    public Player getCurrentPlayer() {
+        return game.getCurrentPlayer(game.getId(), view.getUsername());
     }
 
     public Boolean isTurnPlayer(final String username) {
@@ -75,8 +75,8 @@ public final class GameController {
     }
 
     public void choosePatternCard(final int idPatternCard) {
-        getCurrentPlayer(this.game.getId()).choosePatternCard(idPatternCard, this.game.getId());
-        getCurrentPlayer(this.game.getId()).createGameFavorTokens();
+        getCurrentPlayer().choosePatternCard(idPatternCard, this.game.getId());
+        getCurrentPlayer().createGameFavorTokens();
     }
 
     public void setGame(final Game game) {
@@ -91,7 +91,16 @@ public final class GameController {
         return Game.getRoundTrack(this.game.getId());
     }
 
-    public List<Integer> getPatternCardOptions() {
-        return getCurrentPlayer(this.game.getId()).getPatternCardOptions();
+    public Player getPlayer(final Integer playerId) {
+        return Player.get(playerId);
+    }
+
+    public HashMap<Integer, List<Integer>> getPatternCardOptions() {
+        HashMap<Integer, List<Integer>> patternCardOptions = new HashMap<Integer, List<Integer>>();
+
+        patternCardOptions.put(getCurrentPlayer().getId(),
+                getCurrentPlayer().getPatternCardOptions());
+
+        return patternCardOptions;
     }
 }

@@ -97,6 +97,10 @@ public class Player {
         return this.privateObjCardColor;
     }
 
+    public int getPatternCardId() {
+        return this.idPatternCard;
+    }
+
     public PatternCard getPatternCard() {
         if (this.idPatternCard == null) {
             return null;

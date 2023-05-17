@@ -2,6 +2,7 @@ package main.java.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import main.java.model.Message;
 import main.java.model.Player;
@@ -31,5 +32,9 @@ public class MessageController {
 
         this.prefTimestamp = formattedDateTime;
         return messageSent;
+    }
+
+    public ArrayList<Message> getMessages(final int idGame) {
+        return Message.getChatMessages(idGame);
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
 import main.java.model.PatternCard;
+import main.java.model.PatternCardField;
 import main.java.model.Player;
 
 public class PatternCardController {
@@ -36,5 +37,9 @@ public class PatternCardController {
         Player player = view.getCurrentPlayer();
 
         return player.getPatternCard().getPossibleMoves(player.getBoard(), eyes, color);
+    }
+
+    public PatternCardField getPatternCardField(final int patternCardId, final int col, final int row) {
+        return PatternCard.get(patternCardId).getField(col, row);
     }
 }
