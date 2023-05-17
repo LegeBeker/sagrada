@@ -12,7 +12,6 @@ import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
 import main.java.model.Die;
 import main.java.model.Game;
-import main.java.model.PatternCardField;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
@@ -136,12 +135,13 @@ public class PatternCardView extends BorderPane implements Observer {
 
         for (int col = 1; col <= COLUMNS; col++) {
             for (int row = 1; row <= ROWS; row++) {
-                PatternCardField field = view.getPatternCardField(patternCardId, col, row);
+                Integer value = view.getPatternCardFieldValue(patternCardId, col, row);
+                Color color = view.getPatternCardFieldColor(patternCardId, col, row);
 
-                if (field.getValue() != null) {
-                    createAndAddNode(isCardOwner, new DieView(field.getValue()), field.getColor(), col, row);
+                if (value != null) {
+                    createAndAddNode(isCardOwner, new DieView(value), color, col, row);
                 } else {
-                    createAndAddNode(isCardOwner, new Rectangle(RECTANGLE, RECTANGLE), field.getColor(), col, row);
+                    createAndAddNode(isCardOwner, new Rectangle(RECTANGLE, RECTANGLE), color, col, row);
                 }
             }
         }

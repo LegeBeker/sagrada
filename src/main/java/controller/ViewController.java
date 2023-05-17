@@ -24,7 +24,6 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import main.java.model.Die;
 import main.java.model.Game;
-import main.java.model.PatternCardField;
 import main.java.model.Player;
 import main.java.pattern.Observable;
 import main.java.view.GameView;
@@ -258,6 +257,10 @@ public class ViewController extends Scene {
         return this.gameController.getOffer();
     }
 
+    public ArrayList<Die> getRoundTrack() {
+        return this.gameController.getRoundTrack();
+    }
+
     public ArrayList<String> getToolCardsNames() {
         return this.gameController.getToolCardsNames();
     }
@@ -318,10 +321,6 @@ public class ViewController extends Scene {
         return this.accountController.getStats(username);
     }
 
-    public ArrayList<Die> getRoundTrack() {
-        return this.gameController.getRoundTrack();
-    }
-
     public Map<Integer, List<Integer>> getPatternCardOptions() {
         return this.gameController.getPatternCardOptions();
     }
@@ -334,8 +333,12 @@ public class ViewController extends Scene {
         return getCurrentPlayer().getId() == playerId;
     }
 
-    public PatternCardField getPatternCardField(final int patternCardId, final int col, final int row) {
-        return this.patternCardController.getPatternCardField(patternCardId, row, col);
+    public Integer getPatternCardFieldValue(final int patternCardId, final int col, final int row) {
+        return this.patternCardController.getPatternCardField(patternCardId, row, col).getValue();
+    }
+
+    public Color getPatternCardFieldColor(final int patternCardId, final int col, final int row) {
+        return this.patternCardController.getPatternCardField(patternCardId, row, col).getColor();
     }
 
     public Die getPlayerBoardField(final Integer playerId, final int row, final int col) {

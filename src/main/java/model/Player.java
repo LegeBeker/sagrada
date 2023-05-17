@@ -43,7 +43,7 @@ public class Player {
     }
 
     public void createGameFavorTokens() {
-        int patternCardDifficulty = Integer.parseInt(PatternCardDB.get(this.idPatternCard).get("difficulty"));
+        Integer patternCardDifficulty = getPatternCard().getDifficulty();
         int highestId = GameFavorTokenDB.getHighestIdFromGame(this.idGame);
         for (int tokenNumber = 1; patternCardDifficulty >= tokenNumber; tokenNumber++) {
             GameFavorTokenDB.createGameFavorToken(tokenNumber + highestId, this.idGame, getId());
