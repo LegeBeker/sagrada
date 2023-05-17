@@ -7,12 +7,12 @@ import main.java.db.ToolCardDB;
 public class ToolcardController {
 
     private static final int MAX_VALUE = 6;
-    private static final int ONE =1;
-    private static final int TWO =2;
-    private static final int THREE =3;
-    private static final int FOUR =4;
-    private static final int FIVE =5;
-    private static final int SIX =6;
+    private static final int ONE = 1;
+    private static final int TWO = 2;
+    private static final int THREE = 3;
+    private static final int FOUR = 4;
+    private static final int FIVE = 5;
+    private static final int SIX = 6;
 
     public void grozingPliers(final int dieValue) {
         Scanner input = new Scanner(System.in);
