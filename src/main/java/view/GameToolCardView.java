@@ -17,9 +17,14 @@ public class GameToolCardView extends StackPane {
     private static final int WIDTH = 150;
     private static final int CARDHEIGHT = 200;
 
-    private static final int prohibitedX = 40;
-    private static final int prohibitedY = 40;
-    private static final int circleRadius = 15;
+    private static final int PROHIBITEDX = 40;
+    private static final int PROHIBITEDY = 40;
+    private static final int CIRCLERADIUS = 15;
+    private static final double OPACITY = 0.6;
+
+    private static final int INNERCIRCLEY = 6;
+    private static final int INNERCIRCLEX = 6;
+    private static final int INNERCIRCLERADIUS = 5;
 
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
@@ -48,18 +53,18 @@ public class GameToolCardView extends StackPane {
             int randX = 1 + (int)(Math.random()*WIDTH);
             int randY = 1 + (int)(Math.random()*CARDHEIGHT);
 
-            if(randX <= prohibitedX){
-                randX += prohibitedX;
+            if(randX <= PROHIBITEDX){
+                randX += PROHIBITEDX;
             }
-            else if(randX > WIDTH - circleRadius){
-                randX -= circleRadius;
+            else if(randX > WIDTH - CIRCLERADIUS){
+                randX -= CIRCLERADIUS;
             }
 
-            if(randY <= prohibitedY){
-                randY += prohibitedY;
+            if(randY <= PROHIBITEDY){
+                randY += PROHIBITEDY;
             }
-            else if(randY > WIDTH - circleRadius){
-                randY -= circleRadius;
+            else if(randY > WIDTH - CIRCLERADIUS){
+                randY -= CIRCLERADIUS;
             }
 
             System.out.println("Random X: " + randX);
@@ -70,13 +75,19 @@ public class GameToolCardView extends StackPane {
             System.out.println();
 
 
-            Circle c = new Circle(randX,randY,circleRadius);
+            Circle c = new Circle(randX,randY,CIRCLERADIUS);
             // ft.getIdPlayer();
 
-            c.setFill(Color.rgb(255, 0, 0, 0.6));
+            c.setFill(Color.rgb(255, 0, 0, OPACITY));
             c.setStroke(Color.rgb(255, 0, 0).deriveColor(0, 1, 0.2, 1));
             c.setStrokeWidth(2);
-            pane.getChildren().add(c);
+
+
+            Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
+            innerCircle.setFill(Color.rgb(255, 255, 255, OPACITY));
+
+
+            pane.getChildren().addAll(c,innerCircle);
         }
 
         this.getChildren().addAll(imageView, pane);
