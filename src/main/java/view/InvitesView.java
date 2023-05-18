@@ -53,20 +53,20 @@ public class InvitesView extends HBox {
                 if (acc == null) {
                     return;
                 } else {
-                    String username = acc.get("username");
-                    if (this.view.getUsername().equals(username)) {
-                        this.view.displayError("Je kan jezelf niet uitnodigen");
-                        return;
-                    }
-                    if (!selectedAccountsUsernames.contains(username)
-                            && selectedAccountsUsernames.size() < MAXSIZESELECTION) {
-                        selectedAccountsUsernames.add(username);
-                        this.selectionTable.getItems().add(username);
-                    }
+                String username = acc.get("username");
+                if (this.view.getUsername().equals(username)) {
+                    this.view.displayError("Je kan jezelf niet uitnodigen");
+                    return;
                 }
+                if (!selectedAccountsUsernames.contains(username)
+                        && selectedAccountsUsernames.size() < MAXSIZESELECTION) {
+                    selectedAccountsUsernames.add(username);
+                    this.selectionTable.getItems().add(username);
                 }
             }
+            }
         });
+
         this.selectionTable.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 String acc = this.selectionTable.getSelectionModel().getSelectedItem();
