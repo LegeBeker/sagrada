@@ -136,6 +136,10 @@ public class Game extends Observable {
         return playerIds;
     }
 
+    public boolean hasOpenInvites() {
+        return GameDB.hasOpenInvites(this.idGame);
+    }
+
     public ArrayList<Player> getPlayers(final String currPlayerUsername) {
         ArrayList<Player> players = this.players;
         ArrayList<Color> colors = new ArrayList<>(Arrays.asList(Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW));
@@ -190,7 +194,7 @@ public class Game extends Observable {
         return false;
     }
 
-    public boolean playerHasChoosenPatternCard(final String username) {
+    public boolean playerHasChosenPatternCard(final String username) {
         Player player = getCurrentPlayer(idGame, username);
 
         return player.hasPatternCard();

@@ -107,6 +107,9 @@ public class GamesView extends VBox {
                 if (game != null) {
                     if (view.hasOpenInvite(Integer.parseInt(game.get("id")), view.getUsername())) {
                         showInviteAlert(Integer.parseInt(game.get("id")));
+                    } else if (view.gameHasOpenInvites(Integer.parseInt(game.get("id")))
+                            && view.playerHasChosenPatternCard(Integer.parseInt(game.get("id")), view.getUsername())) {
+                        view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");
                     } else {
                         this.view.openGameView(Integer.parseInt(game.get("id")));
                     }
@@ -144,6 +147,7 @@ public class GamesView extends VBox {
         this.setPadding(new Insets(0, PADDING, 0, PADDING));
 
         this.getChildren().addAll(this.textTitle, this.scrollBox, this.boxButtons);
+
     }
 
     private void showInviteAlert(final int gameId) {
