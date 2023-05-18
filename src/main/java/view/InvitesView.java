@@ -6,7 +6,6 @@ import java.util.Collections;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -40,22 +39,7 @@ public class InvitesView extends HBox {
         setTableClickEvent();
         this.getChildren().addAll(this.accountsView, this.selectionTable);
 
-        this.accountsView.setRowFactory(tv -> new TableRow<String>() {
-            @Override
-            protected void updateItem(final String acc, final boolean empty) {
-                super.updateItem(acc, empty);
-                if (acc == null) {
-                    return;
-                }
-                if (selectedAccountsUsernames.contains(acc)) {
-                    this.setVisible(false);
-                    this.setManaged(false);
-                } else {
-                    this.setVisible(true);
-                    this.setManaged(true);
-                }
-            }
-        });
+        this.accountsView.setPlaceholder(new Text("Er is niemand om uit te nodigen"));
     }
 
     public ArrayList<String> getSelectedAccountsUsernames() {
@@ -67,10 +51,6 @@ public class InvitesView extends HBox {
             if (e.getClickCount() == 2) {
                 String acc = this.accountsView.getSelectionModel().getSelectedItem();
                 if (acc == null) {
-                    return;
-                }
-                if (this.view.getUsername().equals(acc)) {
-                    this.view.displayError("Je kan jezelf niet uitnodigen");
                     return;
                 }
                 if (!selectedAccountsUsernames.contains(acc) && selectedAccountsUsernames.size() < MAXSIZESELECTION) {
