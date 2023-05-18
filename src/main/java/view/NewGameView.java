@@ -12,14 +12,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import main.java.controller.ViewController;
-import main.java.model.Account;
-import main.java.model.Game;
 
 public class NewGameView extends HBox {
 
     private ViewController view;
     private ToggleGroup cards;
-    private ArrayList<Account> accounts;
+    private ArrayList<String> accountsUsernames;
     private InvitesView playerList;
 
     private static final int SPACING = 10;
@@ -55,7 +53,7 @@ public class NewGameView extends HBox {
 
         Button back = new Button("Terug");
         back.setStyle(textStyle);
-        back.setOnAction(e -> goBack());
+        back.setOnAction(e -> this.view.openGamesView());
 
         VBox buttonPane = new VBox();
         buttonPane.getChildren().setAll(title, standardRb, randomRb, create, back);
@@ -76,25 +74,19 @@ public class NewGameView extends HBox {
         RadioButton setting = (RadioButton) this.cards.getSelectedToggle();
         String settingText = setting.getText();
 
-        accounts = playerList.getSelectedAccounts();
+        accountsUsernames = playerList.getSelectedAccountsUsernames();
         boolean useDefaultCards = true;
         if (settingText.equals("Willekeurig")) {
             useDefaultCards = false;
         }
-        if (accounts.size() < 1) {
+        if (accountsUsernames.size() < 1) {
             view.displayError("Selecteer meer spelers");
             return;
         }
-        if (accounts.size() > MAXPLAYERS - 1) {
+        if (accountsUsernames.size() > MAXPLAYERS - 1) {
             view.displayError("Selecteer minder spelers");
             return;
         }
-        Game game = view.getGameController().createGame(this.accounts, view.getAccountController().getAccount(),
-                useDefaultCards);
-        this.view.openPatternCardSelectionView(game);
-    }
-
-    private void goBack() {
-        this.view.openGamesView();
+        view.createGame(this.accountsUsernames, useDefaultCards);
     }
 }

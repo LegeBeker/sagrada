@@ -11,6 +11,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import main.java.controller.ViewController;
 
 public class DieView extends Group {
 
@@ -30,7 +31,8 @@ public class DieView extends Group {
     private Color color;
     private int number;
 
-    public DieView(final int eyes, final Color color, final int number, final Boolean isDraggable) {
+    public DieView(final ViewController view, final int eyes, final Color color, final int number,
+            final Boolean isDraggable) {
         this.eyes = eyes;
         this.color = color;
         this.number = number;
@@ -53,7 +55,7 @@ public class DieView extends Group {
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
                 this.gameOfferView = (GameOfferView) this.getParent();
-                if (gameOfferView.getHelpFunction()) {
+                if (view.getHelpFunction()) {
                     gameOfferView.showPossibleMoves(this.eyes, this.color);
                 }
                 SnapshotParameters sp = new SnapshotParameters();
@@ -65,7 +67,7 @@ public class DieView extends Group {
             });
 
             this.setOnDragDone(event -> {
-                if (gameOfferView.getHelpFunction()) {
+                if (view.getHelpFunction()) {
                     gameOfferView.cleanTargets();
                 }
             });

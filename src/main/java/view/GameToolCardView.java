@@ -4,10 +4,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import main.java.controller.ViewController;
-import main.java.model.ToolCard;
 
 public class GameToolCardView extends StackPane {
-    private final ToolCard toolCard;
     private final Image imageToolCard;
 
     private static final int WIDTH = 150;
@@ -16,14 +14,19 @@ public class GameToolCardView extends StackPane {
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
 
+    private String toolCardName;
+
     private boolean isSelected = false;
     private static GameToolCardView selectedToolCardView = null;
 
-    public GameToolCardView(final ViewController view, final ToolCard toolCard) {
+    public GameToolCardView(final ViewController view, final String toolCardName) {
         ImageView imageView = new ImageView();
-        this.toolCard = toolCard;
+
+        this.toolCardName = toolCardName;
+
         this.imageToolCard = new Image(
-                "file:resources/img/toolcards/" + toolCard.getName().toLowerCase().replace(" ", "-") + ".png");
+                "file:resources/img/toolcards/" + toolCardName.toLowerCase().replace(" ", "-")
+                        + ".png");
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
 
         imageView.setFitWidth(WIDTH);
@@ -37,17 +40,17 @@ public class GameToolCardView extends StackPane {
             if (!isSelected) {
                 if (selectedToolCardView != null) {
                     selectedToolCardView.removeSelection();
-                    String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCard());
+                    String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCardName());
                     System.out.println(deselectedMethodName + "() has been deselected.");
                 }
                 this.addSelection();
                 selectedToolCardView = this;
-                String methodName = getSelectedMethodName(toolCard);
+                String methodName = getSelectedMethodName(toolCardName);
                 System.out.println(methodName + "() has been selected.");
             } else {
                 removeSelection();
                 selectedToolCardView = null;
-                String deselectedMethodName = getDeselectedMethodName(toolCard);
+                String deselectedMethodName = getDeselectedMethodName(toolCardName);
                 System.out.println(deselectedMethodName + "() has been deselected.");
             }
         });
@@ -63,17 +66,17 @@ public class GameToolCardView extends StackPane {
         isSelected = false;
     }
 
-    public ToolCard getToolCard() {
-        return toolCard;
+    public String getToolCardName() {
+        return this.toolCardName;
     }
 
-    private String getSelectedMethodName(final ToolCard toolCard) {
-        String methodName = toolCard.getName().replaceAll("[^a-zA-Z0-9]", "");
+    private String getSelectedMethodName(final String toolCardName) {
+        String methodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
         return Character.toLowerCase(methodName.charAt(0)) + methodName.substring(1);
     }
 
-    private String getDeselectedMethodName(final ToolCard toolCard) {
-        String deselectedMethodName = toolCard.getName().replaceAll("[^a-zA-Z0-9]", "");
+    private String getDeselectedMethodName(final String toolCardName) {
+        String deselectedMethodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
         return Character.toLowerCase(deselectedMethodName.charAt(0)) + deselectedMethodName.substring(1);
     }
 }

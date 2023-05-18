@@ -31,7 +31,7 @@ public class MenuView extends VBox {
 
         this.setAlignment(Pos.CENTER);
 
-        this.textGreet = new Text("Welkom " + view.getAccountController().getAccount().getUsername() + "!");
+        this.textGreet = new Text("Welkom " + view.getUsername() + "!");
         this.textGreet.setStyle("-fx-font-size: 20px;");
         this.textGreet.setWrappingWidth(BUTTONWIDTH);
         this.textGreet.setTextAlignment(TextAlignment.CENTER);
@@ -58,7 +58,7 @@ public class MenuView extends VBox {
     }
 
     private void logout() {
-        view.getAccountController().logoutAccount();
+        view.logoutAccount();
         view.openLoginView();
     }
 }

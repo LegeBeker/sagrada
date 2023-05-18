@@ -43,13 +43,12 @@ public class Player {
     }
 
     public void createGameFavorTokens() {
-        int patternCardDifficulty = Integer.parseInt(PatternCardDB.get(this.idPatternCard).get("difficulty"));
-        int highestId = GameFavorTokenDB.getHighestIdFromGame(this.idGame);
+        Integer patternCardDifficulty = getPatternCard().getDifficulty();
         for (int tokenNumber = 1; patternCardDifficulty >= tokenNumber; tokenNumber++) {
-            GameFavorTokenDB.createGameFavorToken(tokenNumber + highestId, this.idGame, getId());
+            GameFavorTokenDB.createGameFavorToken(this.idGame, this.idPlayer);
         }
 
-        unassignedFavortokensLeft = patternCardDifficulty;
+        this.unassignedFavortokensLeft = patternCardDifficulty;
     }
 
     public void addPlayerToDB() {
@@ -95,6 +94,10 @@ public class Player {
 
     public String getPrivateObjCardColor() {
         return this.privateObjCardColor;
+    }
+
+    public Integer getPatternCardId() {
+        return this.idPatternCard;
     }
 
     public PatternCard getPatternCard() {
@@ -166,20 +169,21 @@ public class Player {
         return players;
     }
 
-    public boolean acceptInvite() {
-        return PlayerDB.acceptInvite(this.idGame, this.username);
+    public static boolean acceptInvite(final int idGame, final String username) {
+        return PlayerDB.acceptInvite(idGame, username);
     }
 
-    public boolean refuseInvite() {
-        return PlayerDB.refuseInvite(this.idGame, this.username);
+    public static boolean refuseInvite(final int idGame, final String username) {
+        return PlayerDB.refuseInvite(idGame, username);
     }
 
     public boolean hasPatternCard() {
         return this.idPatternCard != null;
     }
 
-    public boolean choosePatternCard(final PatternCard patternCard, final int idgame) {
-        return PlayerDB.updatePatternCard(patternCard.getIdPatternCard(), idgame, this.username);
+    public boolean choosePatternCard(final int idPatternCard, final int idgame) {
+        setIdPatternCard(idPatternCard);
+        return PlayerDB.updatePatternCard(idPatternCard, idgame, this.username);
     }
 
     public static ArrayList<Player> getAll() {
@@ -211,13 +215,12 @@ public class Player {
         return player;
     }
 
-    public List<PatternCard> getPatternCardOptions() {
+    public List<Integer> getPatternCardOptions() {
         List<Map<String, String>> patternCardNumbers = PatternCardDB.getPatternCardOptions(getId());
 
-        ArrayList<PatternCard> patternCardOptions = new ArrayList<PatternCard>();
+        ArrayList<Integer> patternCardOptions = new ArrayList<Integer>();
         for (Map<String, String> patternCardMap : patternCardNumbers) {
-            PatternCard patternCard = PatternCard.get(Integer.parseInt(patternCardMap.get("idpatterncard")));
-            patternCardOptions.add(patternCard);
+            patternCardOptions.add(Integer.parseInt(patternCardMap.get("idpatterncard")));
         }
         return patternCardOptions;
     }
