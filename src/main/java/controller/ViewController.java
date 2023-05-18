@@ -227,7 +227,7 @@ public class ViewController extends Scene {
     }
 
     public Color getPlayerColor(final int id) {
-        return Color.RED;
+        return this.gameController.getPlayerColor(id, getUsername());
     }
 
     public Boolean getHelpFunction() {
@@ -375,5 +375,9 @@ public class ViewController extends Scene {
 
     public ArrayList<String> getAccountsUsernames() {
         return this.accountController.getAccountsUsernames();
+    }
+
+    public ArrayList<Map<String, String>> getAccounts() {
+        return this.accountController.getAccounts();
     }
 }

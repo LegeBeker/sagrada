@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
 import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
@@ -98,6 +99,10 @@ public final class GameController {
 
     public Player getCurrentPlayer() {
         return game.getCurrentPlayer(game.getId(), view.getUsername());
+    }
+
+    public Color getPlayerColor(final int playerId, final String username) {
+        return game.getPlayerColor(playerId, username);
     }
 
     public Boolean isTurnPlayer(final String username) {
