@@ -51,6 +51,18 @@ public class Board {
         return true;
     }
 
+    public int getAmountOfDice() {
+        int dice = 0;
+        for (int row = 1; row <= ROWS; row++) {
+            for (int col = 1; col <= COLUMNS; col++) {
+                if (board[row - 1][col - 1] != null) {
+                    dice++;
+                }
+            }
+        }
+        return dice;
+    }
+
     public static Board get(final Player player) {
         Board board = new Board();
         board.setPlayer(player);
@@ -86,7 +98,7 @@ public class Board {
             boards.put(player, new ArrayList<>());
             for (int row = 1; row <= ROWS; row++) {
                 for (int col = 1; col <= COLUMNS; col++) {
-                    boards.get(player).add(new int[] {col, row});
+                    boards.get(player).add(new int[] { col, row });
                 }
             }
         });
