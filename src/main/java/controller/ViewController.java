@@ -380,5 +380,4 @@ public class ViewController extends Scene {
     public ArrayList<Map<String, String>> getAccounts() {
         return this.accountController.getAccounts();
     }
-    
 }
