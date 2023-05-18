@@ -227,7 +227,7 @@ public class ViewController extends Scene {
     }
 
     public Color getPlayerColor(final int id) {
-        return Color.RED;
+        return this.gameController.getPlayerColor(id, getUsername());
     }
 
     public Boolean getHelpFunction() {
