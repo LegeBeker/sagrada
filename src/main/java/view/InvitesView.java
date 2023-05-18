@@ -39,6 +39,7 @@ public class InvitesView extends HBox {
 
         setTableClickEvent();
         this.getChildren().addAll(this.accountsView, this.selectionTable);
+        this.accountsView.setPlaceholder(new Text("Er is niemand om uit te nodigen"));
     }
 
     public ArrayList<String> getSelectedAccountsUsernames() {
@@ -62,6 +63,7 @@ public class InvitesView extends HBox {
                         selectedAccountsUsernames.add(username);
                         this.selectionTable.getItems().add(username);
                     }
+                }
                 }
             }
         });
