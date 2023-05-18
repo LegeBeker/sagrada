@@ -16,7 +16,6 @@ import main.java.db.GameDB;
 import main.java.db.PatternCardDB;
 import main.java.enums.PlayStatusEnum;
 import main.java.pattern.Observable;
-import main.java.view.GameButtonsView;
 
 public class Game extends Observable {
     private int idGame;

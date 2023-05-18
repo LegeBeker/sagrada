@@ -9,7 +9,7 @@ import main.java.model.Game;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
-public class GameButtonsView extends VBox implements Observer{
+public class GameButtonsView extends VBox implements Observer {
 
     private ViewController view;
 
