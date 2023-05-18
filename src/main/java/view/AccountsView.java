@@ -26,15 +26,18 @@ public class AccountsView extends TableView<Map<String, String>> {
         TableColumn<Map<String, String>, String> idUsername = new TableColumn<>("Gebruikersnaam");
         idUsername.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("username")));
 
-        TableColumn<Map<String, String>, String> idAmountGamesWon = new TableColumn<>("Aantal gewonnen spellen");
-        idAmountGamesWon.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("amount_won_games")));
-
-        Collections.addAll(this.getColumns(), idUsername, idAmountGamesWon);
+        Collections.addAll(this.getColumns(), idUsername);
 
         if (isInvite) {
             this.accountUsernames = this.view.getInviteableAccountsUsernames();
         } else {
             this.accountUsernames = this.view.getAccountsUsernames();
+
+            TableColumn<Map<String, String>, String> idAmountGamesWon = new TableColumn<>("Aantal gewonnen spellen");
+            idAmountGamesWon.setCellValueFactory(
+                    cellData -> new SimpleStringProperty(cellData.getValue().get("amount_won_games")));
+
+            this.getColumns().add(idAmountGamesWon);
         }
 
         for (Map<String, String> acc : view.getAccounts()) {
