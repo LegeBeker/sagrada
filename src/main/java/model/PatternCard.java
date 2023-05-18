@@ -96,8 +96,8 @@ public class PatternCard {
 
         if (this.getField(rowIndex, columnIndex).getColor() == null
                 && this.getField(rowIndex, columnIndex).getValue() == null) {
-            if (!neighborsEmpty(rowIndex, columnIndex, board)
-                    && !validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue,
+            if (neighborsEmpty(rowIndex, columnIndex, board)
+                    && validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue,
                             dieColor, board)
                     && !board.isEmpty()) {
 
