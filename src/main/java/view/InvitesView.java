@@ -7,7 +7,6 @@ import java.util.Map;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -40,23 +39,6 @@ public class InvitesView extends HBox {
 
         setTableClickEvent();
         this.getChildren().addAll(this.accountsView, this.selectionTable);
-
-        // this.accountsView.setRowFactory(tv -> new TableRow<Map<String, String>>() {
-        //     @Override
-        //     protected void updateItem(final String acc, final boolean empty) {
-        //         super.updateItem(acc, empty);
-        //         if (acc == null) {
-        //             return;
-        //         }
-        //         if (selectedAccountsUsernames.contains(acc)) {
-        //             this.setVisible(false);
-        //             this.setManaged(false);
-        //         } else {
-        //             this.setVisible(true);
-        //             this.setManaged(true);
-        //         }
-        //     }
-        // });
     }
 
     public ArrayList<String> getSelectedAccountsUsernames() {
@@ -67,17 +49,19 @@ public class InvitesView extends HBox {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Map<String, String> acc = this.accountsView.getSelectionModel().getSelectedItem();
-                String username = acc.get("username");
-                if (username == null) {
+                if (acc == null) {
                     return;
-                }
-                if (this.view.getUsername().equals(username)) {
-                    this.view.displayError("Je kan jezelf niet uitnodigen");
-                    return;
-                }
-                if (!selectedAccountsUsernames.contains(username) && selectedAccountsUsernames.size() < MAXSIZESELECTION) {
-                    selectedAccountsUsernames.add(username);
-                    this.selectionTable.getItems().add(username);
+                } else {
+                    String username = acc.get("username");
+                    if (this.view.getUsername().equals(username)) {
+                        this.view.displayError("Je kan jezelf niet uitnodigen");
+                        return;
+                    }
+                    if (!selectedAccountsUsernames.contains(username)
+                            && selectedAccountsUsernames.size() < MAXSIZESELECTION) {
+                        selectedAccountsUsernames.add(username);
+                        this.selectionTable.getItems().add(username);
+                    }
                 }
             }
         });
