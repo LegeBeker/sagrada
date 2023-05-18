@@ -63,6 +63,40 @@ public class Board {
         return dice;
     }
 
+    public int getPrivateObjectiveCardScore(final String color) {
+        int privateObjectiveScore = 0;
+        for (int row = 1; row <= ROWS; row++) {
+            for (int col = 1; col <= COLUMNS; col++) {
+                if (board[row - 1][col - 1] != null) {
+                    ColorEnum colorEnum = ColorEnum.fromString(color);
+                    if (ColorEnum.fromString(board[row - 1][col - 1].getColor().toString()).toString().equals(color)) {
+                        privateObjectiveScore++;
+                    }
+                }
+            }
+        }
+        return privateObjectiveScore;
+    }
+
+    public int getPublicObjectiveCardScore(final ArrayList<Integer> id) {
+        int privateObjectiveScore = 0;
+        for (int i = 0; i < id.size(); i++) {
+
+        }
+
+        for (int row = 1; row <= ROWS; row++) {
+            for (int col = 1; col <= COLUMNS; col++) {
+                if (board[row - 1][col - 1] != null) {
+                    ColorEnum colorEnum = ColorEnum.fromString(color);
+                    if (ColorEnum.fromString(board[row - 1][col - 1].getColor().toString()).toString().equals(color)) {
+                        privateObjectiveScore++;
+                    }
+                }
+            }
+        }
+        return privateObjectiveScore;
+    }
+
     public static Board get(final Player player) {
         Board board = new Board();
         board.setPlayer(player);
