@@ -13,6 +13,7 @@ public class GameButtonsView extends VBox {
     private Button buttonBack;
     private Button buttonEndTurn;
     private Button buttonGetDice;
+    private Button buttonCalculateScore;
     private ToggleButton helpToggle;
 
     private static final int BUTTONWIDTH = 150;
@@ -41,7 +42,11 @@ public class GameButtonsView extends VBox {
         this.buttonEndTurn.setPrefWidth(BUTTONWIDTH);
         this.buttonEndTurn.setOnAction(e -> view.endTurn());
 
-        this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle);
+        this.buttonCalculateScore = new Button("Bereken score");
+        this.buttonCalculateScore.setPrefWidth(BUTTONWIDTH);
+        this.buttonCalculateScore.setOnAction(e -> view.calculateScore());
+
+        this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle, this.buttonCalculateScore);
 
         if (view.isTurnPlayer()) {
             this.getChildren().addAll(buttonEndTurn);
