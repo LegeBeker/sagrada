@@ -130,12 +130,8 @@ public final class GameController {
         getCurrentPlayer().createGameFavorTokens();
     }
 
-    public void requestEndTurn() {
-        if ((getCurrentPlayer().getId() == getGame().getTurnPlayer().getId())) {
-            getGame().endTurn();
-        } else {
-            view.displayError("Het is je beurt niet");
-        }
+    public void endTurn() {
+        getGame().endTurn();
     }
 
     public void setGame(final Game game) {

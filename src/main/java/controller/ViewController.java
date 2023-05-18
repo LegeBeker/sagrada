@@ -289,11 +289,15 @@ public class ViewController extends Scene {
     }
 
     public void endTurn() {
-        this.gameController.requestEndTurn();
+        this.gameController.endTurn();
     }
 
     public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
         openPatternCardSelectionView(this.gameController.createGame(accounts, getUsername(), useDefaultCards));
+    }
+
+    public Game getGame() {
+        return gameController.getGame();
     }
 
     public void choosePatternCard(final int idPatternCard) {
