@@ -211,6 +211,14 @@ public class Game extends Observable {
                 .orElse(null);
     }
 
+    public Color getPlayerColor(final int idPlayer, final String username) {
+        return this.getPlayers(username).stream()
+                .filter(player -> player.getId() == idPlayer)
+                .findFirst()
+                .orElse(null)
+                .getColor();
+    }
+
     public void endTurn() {
         // TODO: implement
     }

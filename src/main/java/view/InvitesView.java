@@ -2,6 +2,7 @@ package main.java.view;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -38,7 +39,6 @@ public class InvitesView extends HBox {
 
         setTableClickEvent();
         this.getChildren().addAll(this.accountsView, this.selectionTable);
-
         this.accountsView.setPlaceholder(new Text("Er is niemand om uit te nodigen"));
     }
 
@@ -49,16 +49,15 @@ public class InvitesView extends HBox {
     private void setTableClickEvent() {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                String acc = this.accountsView.getSelectionModel().getSelectedItem();
-                if (acc == null) {
-                    return;
-                }
-                if (!selectedAccountsUsernames.contains(acc) && selectedAccountsUsernames.size() < MAXSIZESELECTION) {
-                    selectedAccountsUsernames.add(acc);
-                    this.selectionTable.getItems().add(acc);
+                Map<String, String> acc = this.accountsView.getSelectionModel().getSelectedItem();
+                if (acc != null && (!selectedAccountsUsernames.contains(acc.get("username"))
+                        && selectedAccountsUsernames.size() < MAXSIZESELECTION)) {
+                    selectedAccountsUsernames.add(acc.get("username"));
+                    this.selectionTable.getItems().add(acc.get("username"));
                 }
             }
         });
+
         this.selectionTable.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 String acc = this.selectionTable.getSelectionModel().getSelectedItem();
