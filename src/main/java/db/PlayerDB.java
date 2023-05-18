@@ -63,6 +63,7 @@ public final class PlayerDB {
 
         String sql = "UPDATE player SET playstatus = '" + PlayStatusEnum.ACCEPTED + "' WHERE idgame = ? AND username = ?;";
         String[] params = {Integer.toString(gameId), playername};
+
         db.exec(sql, params);
 
         return true;
