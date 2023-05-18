@@ -75,7 +75,7 @@ public class PatternCard {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 if (validateMove(board, dieValue, dieColor, col, row)) {
-                    possibleMoves.add(new int[]{row, col});
+                    possibleMoves.add(new int[] { row, col });
                 }
             }
         }
@@ -87,11 +87,24 @@ public class PatternCard {
             final int rowIndex) {
 
         if (board.getField(rowIndex, columnIndex) != null) {
+            System.out.println("Field is not empty");
             return false;
         }
 
         if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
             return false;
+        }
+
+        if (this.getField(rowIndex, columnIndex).getColor() == null
+                && this.getField(rowIndex, columnIndex).getValue() == null) {
+            if (!neighborsEmpty(rowIndex, columnIndex, board)
+                    && !validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue,
+                            dieColor, board)
+                    && !board.isEmpty()) {
+
+                return false;
+            }
+            return true;
         }
 
         if (!board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
@@ -128,24 +141,28 @@ public class PatternCard {
             final Color dieColor,
             final Board board) {
         ArrayList<int[]> neighbors = getNeighbors(rowIndex, columnIndex, false);
-
+        System.out.println("Neighbors: " + neighbors.size());
         for (int[] neighbor : neighbors) {
             PatternCardField neighborField = this.getField(neighbor[0], neighbor[1]);
             Die neighborDie = board.getField(neighbor[0], neighbor[1]);
 
             if (neighborField.getColor() != null && dieColor.equals(neighborField.getColor())) {
+                System.out.println("Color is equal1");
                 return false;
             }
 
             if (neighborDie != null && dieColor.equals(neighborDie.getColor())) {
+                System.out.println("Color is equal2");
                 return false;
             }
 
-            if (neighborField.getValue() != null && dieValue == neighborField.getValue()) {
-                return false;
-            }
+            // if (neighborField.getValue() != null) {
+            // System.out.println("Value is equal1");
+            // return false;
+            // }
 
             if (neighborDie != null && dieValue == neighborDie.getEyes()) {
+                System.out.println("Value is equal2");
                 return false;
             }
         }
@@ -170,9 +187,10 @@ public class PatternCard {
         int[][] offsets;
 
         if (includeDiagonals) {
-            offsets = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+            offsets = new int[][] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, -1 }, { -1, 1 }, { 1, -1 },
+                    { 1, 1 } };
         } else {
-            offsets = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1 }};
+            offsets = new int[][] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
         }
 
         for (int[] offset : offsets) {
@@ -180,7 +198,7 @@ public class PatternCard {
             int neighborCol = col + offset[1];
 
             if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] {neighborRow, neighborCol});
+                neighbors.add(new int[] { neighborRow, neighborCol });
             }
         }
 
