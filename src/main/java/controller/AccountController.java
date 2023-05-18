@@ -1,6 +1,8 @@
 package main.java.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import main.java.model.Account;
 
@@ -9,6 +11,10 @@ public class AccountController {
 
     public Account getAccount() {
         return this.curAccount;
+    }
+
+    public String getUsername() {
+        return this.curAccount.getUsername();
     }
 
     public Boolean loginAccount(final String username, final String password) {
@@ -42,47 +48,29 @@ public class AccountController {
         return true;
     }
 
-    public ArrayList<Account> getAccounts() {
-        return Account.getAll();
-    }
+    public ArrayList<Map<String, String>> getAccounts() {
+        ArrayList<Account> accounts = Account.getAll();
+        ArrayList<Map<String, String>> accountsMap = new ArrayList<Map<String, String>>();
 
-    public ArrayList<Account> getInviteableAccounts() {
-        return Account.getInviteableAccounts(this.getAccount().getUsername());
-    }
-
-    public int getAmountOpponents(final String username) {
-        return Account.getAmountOpponents(username);
-    }
-
-    public int getAmountWonGames(final String username) {
-        return Account.getAmountWonGames(username);
-    }
-
-    public int getAmountLostGames(final String username) {
-        return Account.getAmountLostGames(username);
-    }
-
-    public String getHighestScore(final String username) {
-        Integer score = Account.getHighestScore(username);
-        if (score == null) {
-            return "Geen scores gevonden";
+        for (Account acc : accounts) {
+            Map<String, String> accountMap = new HashMap<String, String>();
+            accountMap.put("username", acc.getUsername());
+            accountMap.put("amount_won_games", Integer.toString(acc.getAmountWonGames()));
+            accountsMap.add(accountMap);
         }
-        return score.toString();
+
+        return accountsMap;
     }
 
-    public String getMostPlacedValue(final String username) {
-        Integer value = Account.getMostPlacedValue(username);
-        if (value == null) {
-            return "Geen dobbelsteen geplaatst";
-        }
-        return value.toString();
+    public ArrayList<String> getInviteableAccountsUsernames() {
+        return Account.getInviteableAccountsUsernames(this.getAccount().getUsername());
     }
 
-    public String getMostPlacedColor(final String username) {
-        String color = Account.getMostPlacedColor(username);
-        if (color == null) {
-            return "Geen dobbelsteen geplaatst";
-        }
-        return color;
+    public Map<String, String> getStats(final String username) {
+        return Account.getStats(username);
+    }
+
+    public ArrayList<String> getAccountsUsernames() {
+        return Account.getAccountsUsernames();
     }
 }

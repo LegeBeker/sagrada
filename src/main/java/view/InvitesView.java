@@ -2,89 +2,66 @@ package main.java.view;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
-import main.java.model.Account;
 
 public class InvitesView extends HBox {
     private ViewController view;
 
     private AccountsView accountsView;
 
-    private TableView<Account> selectionTable;
-    private ArrayList<Account> selectedAccounts = new ArrayList<Account>();
+    private TableView<String> selectionTable;
+    private ArrayList<String> selectedAccountsUsernames = new ArrayList<String>();
     private static final double SELECTIONTABLEHEIGHT = 120;
     private static final int MAXSIZESELECTION = 3;
 
     public InvitesView(final ViewController view) {
         this.view = view;
 
-        this.accountsView = new AccountsView(view);
+        this.accountsView = new AccountsView(view, true);
 
         this.alignmentProperty().set(Pos.CENTER);
 
-        this.selectionTable = new TableView<Account>();
+        this.selectionTable = new TableView<String>();
         this.selectionTable.setPlaceholder(new Text("Geen accounts geselecteerd"));
         this.selectionTable.setMaxHeight(SELECTIONTABLEHEIGHT);
 
-        TableColumn<Account, String> idUsernameSelected = new TableColumn<>("Username");
-        idUsernameSelected.setCellValueFactory(new PropertyValueFactory<>("username"));
+        TableColumn<String, String> idUsernameSelected = new TableColumn<>("Username");
+        idUsernameSelected.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
         Collections.addAll(this.selectionTable.getColumns(), idUsernameSelected);
 
         setTableClickEvent();
         this.getChildren().addAll(this.accountsView, this.selectionTable);
-
-        this.accountsView.setRowFactory(tv -> new TableRow<Account>() {
-            @Override
-            protected void updateItem(final Account acc, final boolean empty) {
-                super.updateItem(acc, empty);
-                if (acc == null) {
-                    setStyle("");
-                } else if (!acc.getInviteable()) {
-                    setStyle("-fx-background-color: #9e9e9e;");
-                } else {
-                    setStyle("");
-                }
-            }
-        });
+        this.accountsView.setPlaceholder(new Text("Er is niemand om uit te nodigen"));
     }
 
-    public ArrayList<Account> getSelectedAccounts() {
-        return this.selectedAccounts;
+    public ArrayList<String> getSelectedAccountsUsernames() {
+        return this.selectedAccountsUsernames;
     }
 
     private void setTableClickEvent() {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                Account acc = this.accountsView.getSelectionModel().getSelectedItem();
-                if (acc == null) {
-                    return;
-                }
-                if (!acc.getInviteable()) {
-                    this.view.displayError("Je wacht nog op een antwoord van deze speler");
-                    return;
-                }
-                if (this.view.getAccountController().getAccount().getUsername().equals(acc.getUsername())) {
-                    this.view.displayError("Je kan jezelf niet uitnodigen");
-                    return;
-                }
-                if (!selectedAccounts.contains(acc) && selectedAccounts.size() < MAXSIZESELECTION) {
-                    selectedAccounts.add(acc);
-                    this.selectionTable.getItems().add(acc);
+                Map<String, String> acc = this.accountsView.getSelectionModel().getSelectedItem();
+                if (acc != null && (!selectedAccountsUsernames.contains(acc.get("username"))
+                        && selectedAccountsUsernames.size() < MAXSIZESELECTION)) {
+                    selectedAccountsUsernames.add(acc.get("username"));
+                    this.selectionTable.getItems().add(acc.get("username"));
                 }
             }
         });
+
         this.selectionTable.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                Account acc = this.selectionTable.getSelectionModel().getSelectedItem();
-                selectedAccounts.remove(acc);
+                String acc = this.selectionTable.getSelectionModel().getSelectedItem();
+                selectedAccountsUsernames.remove(acc);
                 this.selectionTable.getItems().remove(acc);
             }
         });

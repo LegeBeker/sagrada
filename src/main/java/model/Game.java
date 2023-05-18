@@ -27,9 +27,9 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
 
-    private boolean helpFunction;
+    private boolean helpFunction = false;
 
-    public static Game createGame(final ArrayList<Account> accounts, final Account currAccount,
+    public static Game createGame(final ArrayList<String> accounts, final String username,
             final boolean useDefaultCards) {
         Game newGame = new Game();
 
@@ -44,14 +44,14 @@ public class Game extends Observable {
         List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
 
         newGame.addPlayer(Player.createPlayer(
-                thisGameID, currAccount.getUsername(), PlayStatusEnum.CHALLENGER.toString(),
+                thisGameID, username, PlayStatusEnum.CHALLENGER.toString(),
                 colorList.remove(0).get("color")));
         GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
         newGame.setTurnPlayer(newGame.getPlayers().get(0).getId());
 
-        for (Account ac : accounts) {
+        for (String account : accounts) {
             newGame.addPlayer(Player.createPlayer(
-                    thisGameID, ac.getUsername(), PlayStatusEnum.CHALLENGEE.toString(),
+                    thisGameID, account, PlayStatusEnum.CHALLENGEE.toString(),
                     colorList.remove(0).get("color")));
         }
 
@@ -98,12 +98,16 @@ public class Game extends Observable {
         return Die.getOffer(idGame, currentRound);
     }
 
-    public ArrayList<Die> getRoundTrack() {
+    public static ArrayList<Die> getRoundTrack(final int idGame) {
         return Die.getRoundTrack(idGame);
     }
 
     public Player getTurnPlayer() {
         return Player.get(this.turnIdPlayer);
+    }
+
+    public String getTurnPlayerUsername() {
+        return Player.get(this.turnIdPlayer).getUsername();
     }
 
     public void setTurnPlayer(final int idPlayer) {
@@ -120,6 +124,16 @@ public class Game extends Observable {
 
     public ArrayList<Player> getPlayers() {
         return this.players;
+    }
+
+    public ArrayList<Integer> getPlayerIds() {
+        ArrayList<Integer> playerIds = new ArrayList<>();
+
+        for (Player player : this.players) {
+            playerIds.add(player.getId());
+        }
+
+        return playerIds;
     }
 
     public ArrayList<Player> getPlayers(final String currPlayerUsername) {
@@ -193,6 +207,14 @@ public class Game extends Observable {
                 .orElse(null);
     }
 
+    public Color getPlayerColor(final int idPlayer, final String username) {
+        return this.getPlayers(username).stream()
+                .filter(player -> player.getId() == idPlayer)
+                .findFirst()
+                .orElse(null)
+                .getColor();
+    }
+
     public void endTurn() {
         // TODO: implement
     }
@@ -246,11 +268,25 @@ public class Game extends Observable {
         notifyObservers(Game.class);
     }
 
-    public ArrayList<ToolCard> getToolCards() {
-        return ToolCard.getToolCards(idGame);
+    public ArrayList<String> getToolCardsNames() {
+        ArrayList<ToolCard> toolCards = ToolCard.getToolCards(idGame);
+        ArrayList<String> toolCardNames = new ArrayList<>();
+
+        for (ToolCard toolCard : toolCards) {
+            toolCardNames.add(toolCard.getName());
+        }
+
+        return toolCardNames;
     }
 
-    public ArrayList<ObjectiveCard> getPublicToolcards() {
-        return ObjectiveCard.getObjectiveCards(idGame);
+    public ArrayList<Integer> getObjectiveCardsIds() {
+        ArrayList<ObjectiveCard> objectiveCards = ObjectiveCard.getObjectiveCards(idGame);
+        ArrayList<Integer> objectiveCardIds = new ArrayList<>();
+
+        for (ObjectiveCard objectiveCard : objectiveCards) {
+            objectiveCardIds.add(objectiveCard.getIdObjectiveCard());
+        }
+
+        return objectiveCardIds;
     }
 }
