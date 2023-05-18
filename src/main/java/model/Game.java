@@ -195,10 +195,7 @@ public class Game extends Observable {
                 .orElse(null);
     }
 
-    public boolean endTurn(final Player currentPlayer) {
-        if (!(currentPlayer.getId() == getTurnPlayer().getId())) {
-            return false;
-        }
+    public void endTurn() {
         int nextSeqnr = getTurnPlayer().getSeqnr() + 1;
         if (nextSeqnr > getPlayers().size()) {
             reverseSeqNr();
@@ -212,8 +209,6 @@ public class Game extends Observable {
                 }
             }
         }
-
-        return true;
     }
 
     private void reverseSeqNr() {

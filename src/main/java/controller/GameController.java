@@ -42,8 +42,9 @@ public final class GameController {
     }
 
     public void requestEndTurn() {
-        Player currentPlayer = getCurrentPlayer(getGame().getId());
-        if (!getGame().endTurn(currentPlayer)) {
+        if ((getCurrentPlayer(getGame().getId()).getId() == getGame().getTurnPlayer().getId())) {
+            getGame().endTurn();
+        } else {
             view.displayError("Het is je beurt niet");
         }
     }
