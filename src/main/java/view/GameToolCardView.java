@@ -76,18 +76,21 @@ public class GameToolCardView extends StackPane {
 
 
             Circle c = new Circle(randX,randY,CIRCLERADIUS);
-            // ft.getIdPlayer();
-
-            c.setFill(Color.rgb(255, 0, 0, OPACITY));
-            c.setStroke(Color.rgb(255, 0, 0).deriveColor(0, 1, 0.2, 1));
-            c.setStrokeWidth(2);
-
-
-            Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
-            innerCircle.setFill(Color.rgb(255, 255, 255, OPACITY));
-
-
-            pane.getChildren().addAll(c,innerCircle);
+            
+            Color playerColor = view.getGameController().getPlayer(ft.getIdGame(), ft.getIdPlayer()).getColor();
+            if(playerColor != null){
+                c.setFill(Color.rgb((int) playerColor.getRed(), (int) playerColor.getGreen(), (int) playerColor.getBlue(), OPACITY));
+                c.setStroke(Color.rgb((int) playerColor.getRed(), (int) playerColor.getGreen(), (int) playerColor.getBlue()).deriveColor(0, 1, 0.2, 1));
+                c.setStrokeWidth(2);
+    
+    
+                Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
+                innerCircle.setFill(Color.rgb(255, 255, 255, OPACITY));
+    
+    
+                pane.getChildren().addAll(c,innerCircle);
+            }
+            
         }
 
         this.getChildren().addAll(imageView, pane);

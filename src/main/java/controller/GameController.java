@@ -36,6 +36,12 @@ public final class GameController {
         return game.getCurrentPlayer(idGame, this.view.getAccountController().getAccount().getUsername());
     }
 
+    public Player getPlayer(final int idGame, final int idPlayer){
+        Game game = Game.get(idGame);
+        Player player = Player.get(idPlayer);
+        return game.getCurrentPlayer(idGame, player.getUsername());
+    }
+
     public void choosePatternCard(final PatternCard patternCard) {
         getCurrentPlayer(this.game.getId()).choosePatternCard(patternCard, this.game.getId());
         getCurrentPlayer(this.game.getId()).createGameFavorTokens();
