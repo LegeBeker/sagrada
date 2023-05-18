@@ -24,7 +24,7 @@ public final class GameFavorTokenDB {
 
         return db.exec(sql, params);
     }
-  
+
   public static int getHighestIdFromGame(final int idGame) {
         Database db = Database.getInstance();
 
