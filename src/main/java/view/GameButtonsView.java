@@ -39,7 +39,7 @@ public class GameButtonsView extends VBox {
 
         this.buttonEndTurn = new Button("Einde beurt");
         this.buttonEndTurn.setPrefWidth(BUTTONWIDTH);
-        this.buttonEndTurn.setOnAction(e -> view.getGameController().requestEndTurn());
+        this.buttonEndTurn.setOnAction(e -> view.endTurn());
 
         this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle);
 

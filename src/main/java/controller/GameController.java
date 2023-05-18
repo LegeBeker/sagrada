@@ -125,17 +125,13 @@ public final class GameController {
         game.getNewOffer();
     }
 
-    public void endTurn() {
-        game.endTurn();
-    }
-
     public void choosePatternCard(final int idPatternCard) {
         getCurrentPlayer().choosePatternCard(idPatternCard, this.game.getId());
         getCurrentPlayer().createGameFavorTokens();
     }
 
     public void requestEndTurn() {
-        if ((getCurrentPlayer(getGame().getId()).getId() == getGame().getTurnPlayer().getId())) {
+        if ((getCurrentPlayer().getId() == getGame().getTurnPlayer().getId())) {
             getGame().endTurn();
         } else {
             view.displayError("Het is je beurt niet");
