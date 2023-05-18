@@ -49,6 +49,7 @@ public class ViewController extends Scene {
     private GameController gameController;
     private PatternCardController patternCardController;
     private MessageController messageController;
+    private ScoreController scoreController;
 
     private EffectsController effectsController;
 
@@ -87,6 +88,7 @@ public class ViewController extends Scene {
         this.patternCardController = new PatternCardController(this);
         this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
+        this.scoreController = new ScoreController();
 
         this.openLoginView();
     }
@@ -379,5 +381,13 @@ public class ViewController extends Scene {
 
     public ArrayList<Map<String, String>> getAccounts() {
         return this.accountController.getAccounts();
+    }
+
+    public void calculateScore() {
+        String privObjCardColor = getPrivateObjCardColor();
+        int favorTokens = getPlayerGameTokens(getPlayerId());
+        Game game = gameController.getGame();
+        Player player = gameController.getCurrentPlayer();
+        this.scoreController.calculateScore(player, game, privObjCardColor, favorTokens);
     }
 }
