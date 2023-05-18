@@ -9,6 +9,7 @@ public class Account {
     private String username;
     private String password;
     private Boolean inviteable;
+    private int amountGamesWon; //-- Field is used for sorting the table
 
     public void setUsername(final String username) {
         this.username = username;
@@ -20,6 +21,10 @@ public class Account {
 
     public boolean getInviteable() {
         return this.inviteable;
+    }
+
+    public int getAmountWonGames() {
+        return this.amountGamesWon;
     }
 
     public void setPassword(final String password) {
@@ -41,6 +46,7 @@ public class Account {
         for (Map<String, String> accountMap : AccountDB.getAll()) {
             Account acc = new Account();
             acc.username = accountMap.get("username");
+            acc.amountGamesWon = Integer.parseInt(AccountDB.getStats(acc.username).get("wonGames"));
             accounts.add(acc);
         }
         return accounts;
@@ -50,7 +56,8 @@ public class Account {
         ArrayList<String> accounts = new ArrayList<String>();
 
         for (Map<String, String> accountMap : AccountDB.getInviteableAccounts(username)) {
-            if (accountMap.get("inviteable") != null && accountMap.get("inviteable").equals("1")) {
+            if (accountMap.get("inviteable") != null && accountMap.get("inviteable").equals("1")
+                    && !accountMap.get("username").equals(username)) {
                 accounts.add(accountMap.get("username"));
             }
         }

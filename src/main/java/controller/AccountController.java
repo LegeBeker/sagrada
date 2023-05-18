@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import main.java.model.Account;
@@ -47,8 +48,18 @@ public class AccountController {
         return true;
     }
 
-    public ArrayList<Account> getAccounts() {
-        return Account.getAll();
+    public ArrayList<Map<String, String>> getAccounts() {
+        ArrayList<Account> accounts = Account.getAll();
+        ArrayList<Map<String, String>> accountsMap = new ArrayList<Map<String, String>>();
+
+        for (Account acc : accounts) {
+            Map<String, String> accountMap = new HashMap<String, String>();
+            accountMap.put("username", acc.getUsername());
+            accountMap.put("amount_won_games", Integer.toString(acc.getAmountWonGames()));
+            accountsMap.add(accountMap);
+        }
+
+        return accountsMap;
     }
 
     public ArrayList<String> getInviteableAccountsUsernames() {
