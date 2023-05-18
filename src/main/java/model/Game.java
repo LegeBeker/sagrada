@@ -194,7 +194,7 @@ public class Game extends Observable {
         return false;
     }
 
-    public boolean playerHasChoosenPatternCard(final String username) {
+    public boolean playerHasChosenPatternCard(final String username) {
         Player player = getCurrentPlayer(idGame, username);
 
         return player.hasPatternCard();

@@ -9,7 +9,7 @@ public class Account {
     private String username;
     private String password;
     private Boolean inviteable;
-    private int amountGamesWon; //-- Field is used for sorting the table
+    private int amountGamesWon;
 
     public void setUsername(final String username) {
         this.username = username;

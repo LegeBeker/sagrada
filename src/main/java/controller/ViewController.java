@@ -298,13 +298,13 @@ public class ViewController extends Scene {
 
     public void choosePatternCard(final int idPatternCard) {
         this.gameController.choosePatternCard(idPatternCard);
-        openGameView(this.gameController.getGame().getId());
+        openGamesView();
     }
 
     public void openGameView(final int gameId) {
         Game game = this.gameController.getGame(gameId);
         this.gameController.setGame(game);
-        if (game.playerHasChoosenPatternCard(getUsername())) {
+        if (game.playerHasChosenPatternCard(getUsername())) {
             GameView gameView = new GameView(this);
             changeView(gameView);
 
@@ -382,7 +382,11 @@ public class ViewController extends Scene {
         return this.accountController.getAccountsUsernames();
     }
 
-    public ArrayList<Map<String, String>> getAccounts() {
-        return this.accountController.getAccounts();
+    public String getAccountWonGames(final String username) {
+        return this.accountController.getAccountWonGames(username);
+    }
+
+    public boolean playerHasChosenPatternCard(final int gameId, final String username) {
+        return this.gameController.playerHasChosenPatternCard(gameId, username);
     }
 }

@@ -162,4 +162,9 @@ public final class GameController {
     public void refuseInvite(final int gameId) {
         Player.refuseInvite(gameId, view.getUsername());
     }
+
+    public boolean playerHasChosenPatternCard(final int gameId, final String username) {
+        Game game = Game.get(gameId);
+        return game.playerHasChosenPatternCard(username);
+    }
 }
