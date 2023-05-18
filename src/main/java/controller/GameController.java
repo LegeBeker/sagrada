@@ -125,13 +125,13 @@ public final class GameController {
         game.getNewOffer();
     }
 
-    public void endTurn() {
-        game.endTurn();
-    }
-
     public void choosePatternCard(final int idPatternCard) {
         getCurrentPlayer().choosePatternCard(idPatternCard, this.game.getId());
         getCurrentPlayer().createGameFavorTokens();
+    }
+
+    public void endTurn() {
+        getGame().endTurn();
     }
 
     public void setGame(final Game game) {

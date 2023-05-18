@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
+import main.java.db.DieDB;
 import main.java.db.GameDB;
 import main.java.db.PatternCardDB;
 import main.java.enums.PlayStatusEnum;
@@ -112,6 +113,7 @@ public class Game extends Observable {
 
     public void setTurnPlayer(final int idPlayer) {
         this.turnIdPlayer = idPlayer;
+        GameDB.setTurnPlayer(getId(), idPlayer);
     }
 
     public int getCurrentRound() {
@@ -220,7 +222,50 @@ public class Game extends Observable {
     }
 
     public void endTurn() {
-        // TODO: implement
+        Observable.notifyObservers(Game.class);
+        int nextSeqnr = getTurnPlayer().getSeqnr() + 1;
+        if (nextSeqnr > getPlayers().size()) {
+            reverseSeqNr();
+        } else if (nextSeqnr == 0) {
+            endRound();
+        } else {
+            for (Player player : getPlayers()) {
+                if (player.getSeqnr() == nextSeqnr) {
+                    setTurnPlayer(player.getId());
+                    break;
+                }
+            }
+        }
+    }
+
+    private void reverseSeqNr() {
+        for (Player player : getPlayers()) {
+            player.setSeqnr(player.getSeqnr() * -1);
+        }
+    }
+
+    private void endRound() {
+        reverseSeqNr();
+        for (Player player : getPlayers()) {
+            if (player.getSeqnr() == getPlayers().size()) {
+                player.setSeqnr(1);
+                setTurnPlayer(player.getId());
+            } else {
+                player.setSeqnr(player.getSeqnr() + 1);
+            }
+        }
+
+        for (Map<String, String> dieMap : DieDB.getOffer(getId(), getCurrentRound())) {
+            DieDB.putRoundTrack(getId(), getCurrentRound(), Integer.parseInt(dieMap.get("dienumber")),
+                dieMap.get("diecolor"));
+        }
+
+        setCurrentRound(getCurrentRound() + 1);
+    }
+
+    private void setCurrentRound(final int roundID) {
+        this.currentRound = roundID;
+        GameDB.setRound(getId(), roundID);
     }
 
     public static Game get(final int idGame) {
