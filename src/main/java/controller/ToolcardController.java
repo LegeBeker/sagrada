@@ -1,7 +1,7 @@
 package main.java.controller;
 
+import java.util.Random;
 import java.util.Scanner;
-
 import main.java.db.ToolCardDB;
 
 public class ToolcardController {
@@ -13,6 +13,7 @@ public class ToolcardController {
     private static final int FOUR = 4;
     private static final int FIVE = 5;
     private static final int SIX = 6;
+    private Random random;
 
     public void grozingPliers(final int dieValue) {
         Scanner input = new Scanner(System.in);
@@ -81,5 +82,19 @@ public class ToolcardController {
                 System.out.println("Invalid command.");
             }
         }
+    }
+
+    public void fluxBrush(int dieValue) {
+        int currentValue = dieValue;
+        int newValue;
+
+        do {
+            newValue = random.nextInt(SIX) + 1;
+        } while (newValue == currentValue);
+
+        System.out.println("Starting value: " + currentValue);
+        System.out.println("New value: " + newValue);
+
+        ToolCardDB.updateGameDieValue(newValue, 0);
     }
 }
