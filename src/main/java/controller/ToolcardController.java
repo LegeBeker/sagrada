@@ -84,7 +84,7 @@ public class ToolcardController {
         }
     }
 
-    public void fluxBrush(int dieValue) {
+    public void fluxBrush(final int dieValue) {
         int currentValue = dieValue;
         int newValue;
 
