@@ -376,4 +376,9 @@ public class ViewController extends Scene {
     public ArrayList<String> getAccountsUsernames() {
         return this.accountController.getAccountsUsernames();
     }
+
+    public ArrayList<Map<String, String>> getAccounts() {
+        return this.accountController.getAccounts();
+    }
+    
 }

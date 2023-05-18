@@ -28,7 +28,7 @@ public class StatView extends VBox {
                 this.setBackground(view.getBackground());
                 this.setAlignment(Pos.CENTER);
 
-                Text text = new Text("Statistieken van " + view.getUsername());
+                Text text = new Text("Statistieken van " + username);
                 text.setStyle("-fx-font-size: 40px");
                 text.setStroke(Color.web("#000000"));
                 text.setFill(Color.web("#ffffff"));

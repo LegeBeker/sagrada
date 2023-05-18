@@ -2,6 +2,7 @@ package main.java.view;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -40,22 +41,22 @@ public class InvitesView extends HBox {
         setTableClickEvent();
         this.getChildren().addAll(this.accountsView, this.selectionTable);
 
-        this.accountsView.setRowFactory(tv -> new TableRow<String>() {
-            @Override
-            protected void updateItem(final String acc, final boolean empty) {
-                super.updateItem(acc, empty);
-                if (acc == null) {
-                    return;
-                }
-                if (selectedAccountsUsernames.contains(acc)) {
-                    this.setVisible(false);
-                    this.setManaged(false);
-                } else {
-                    this.setVisible(true);
-                    this.setManaged(true);
-                }
-            }
-        });
+        // this.accountsView.setRowFactory(tv -> new TableRow<Map<String, String>>() {
+        //     @Override
+        //     protected void updateItem(final String acc, final boolean empty) {
+        //         super.updateItem(acc, empty);
+        //         if (acc == null) {
+        //             return;
+        //         }
+        //         if (selectedAccountsUsernames.contains(acc)) {
+        //             this.setVisible(false);
+        //             this.setManaged(false);
+        //         } else {
+        //             this.setVisible(true);
+        //             this.setManaged(true);
+        //         }
+        //     }
+        // });
     }
 
     public ArrayList<String> getSelectedAccountsUsernames() {
@@ -65,17 +66,18 @@ public class InvitesView extends HBox {
     private void setTableClickEvent() {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                String acc = this.accountsView.getSelectionModel().getSelectedItem();
-                if (acc == null) {
+                Map<String, String> acc = this.accountsView.getSelectionModel().getSelectedItem();
+                String username = acc.get("username");
+                if (username == null) {
                     return;
                 }
-                if (this.view.getUsername().equals(acc)) {
+                if (this.view.getUsername().equals(username)) {
                     this.view.displayError("Je kan jezelf niet uitnodigen");
                     return;
                 }
-                if (!selectedAccountsUsernames.contains(acc) && selectedAccountsUsernames.size() < MAXSIZESELECTION) {
-                    selectedAccountsUsernames.add(acc);
-                    this.selectionTable.getItems().add(acc);
+                if (!selectedAccountsUsernames.contains(username) && selectedAccountsUsernames.size() < MAXSIZESELECTION) {
+                    selectedAccountsUsernames.add(username);
+                    this.selectionTable.getItems().add(username);
                 }
             }
         });
