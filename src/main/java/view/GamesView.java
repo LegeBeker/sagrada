@@ -106,9 +106,7 @@ public class GamesView extends VBox {
             }
         });
 
-        this.table.setOnMouseClicked(e ->
-
-        {
+        this.table.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 Map<String, String> game = this.table.getSelectionModel().getSelectedItem();
 
