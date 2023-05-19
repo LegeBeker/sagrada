@@ -52,8 +52,8 @@ public class GameBoardsView extends HBox {
 
     public void showPossibleMoves(final ArrayList<int[]> moves) {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
-        moves.forEach((move) -> {
-            patternCardView.getGrid().getChildren().forEach((cell) -> {
+        patternCardView.getGrid().getChildren().forEach((cell) -> {
+            moves.forEach((move) -> {
                 int[] location = {GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell) };
                 if (move[0] == location[0] && move[1] == location[1]) {
                     cell.setStyle("-fx-border-color: #00FFBF;");
