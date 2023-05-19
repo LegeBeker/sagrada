@@ -21,7 +21,7 @@ public class Player {
     private Color color;
 
     private String privateObjCardColor;
-    private Integer idPatternCard;
+    private PatternCard patternCard;
     private int unassignedFavortokensLeft;
 
     private Board board;
@@ -97,14 +97,14 @@ public class Player {
     }
 
     public Integer getPatternCardId() {
-        return this.idPatternCard;
+        if (this.patternCard != null) {
+            return this.patternCard.getIdPatternCard();
+        }
+        return null;
     }
 
     public PatternCard getPatternCard() {
-        if (this.idPatternCard == null) {
-            return null;
-        }
-        return PatternCard.get(this.idPatternCard);
+        return this.patternCard;
     }
 
     public int getFavorTokensLeft() {
@@ -146,8 +146,8 @@ public class Player {
         this.privateObjCardColor = privateObjCardColor;
     }
 
-    public void setIdPatternCard(final int idPatternCard) {
-        this.idPatternCard = idPatternCard;
+    public void setPatternCard(final int idPatternCard) {
+        this.patternCard = PatternCard.get(idPatternCard);
     }
 
     public void setScore(final int score) {
@@ -178,11 +178,11 @@ public class Player {
     }
 
     public boolean hasPatternCard() {
-        return this.idPatternCard != null;
+        return this.patternCard != null;
     }
 
     public boolean choosePatternCard(final int idPatternCard, final int idgame) {
-        setIdPatternCard(idPatternCard);
+        setPatternCard(idPatternCard);
         return PlayerDB.updatePatternCard(idPatternCard, idgame, this.username);
     }
 
@@ -210,7 +210,7 @@ public class Player {
         }
         player.privateObjCardColor = playerMap.get("private_objectivecard_color");
         if (playerMap.get("idpatterncard") != null) {
-            player.idPatternCard = Integer.parseInt(playerMap.get("idpatterncard"));
+            player.patternCard = PatternCard.get(Integer.parseInt(playerMap.get("idpatterncard")));
         }
         return player;
     }
@@ -228,7 +228,7 @@ public class Player {
     public Player update(final Player player) {
         Map<String, String> values = PlayerDB.get(player.getId());
 
-        player.setIdPatternCard(Integer.parseInt(values.get("idpatterncard")));
+        player.setPatternCard(Integer.parseInt(values.get("idpatterncard")));
         player.setScore(Integer.parseInt(values.get("score")));
         player.setSeqnr(Integer.parseInt(values.get("seqnr")));
 

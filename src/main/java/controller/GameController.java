@@ -135,7 +135,7 @@ public final class GameController {
     }
 
     public Player getPlayer(final Integer playerId) {
-        return Player.get(playerId);
+        return game.getPlayer(playerId);
     }
 
     public HashMap<Integer, List<Integer>> getPatternCardOptions() {
@@ -163,7 +163,7 @@ public final class GameController {
     public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return Game.getGamesWithOpenInvites(view.getUsername());
     }
-  
+
     public void updateGame() {
         this.game = Game.get(this.game.getId());
     }
