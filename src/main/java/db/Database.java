@@ -18,6 +18,9 @@ public final class Database {
 
     private static final int SECONDS = 1000000000;
 
+    private static final int IGNORESTACKTRACE = 3;
+    private static final int MAXSTACKTRACE = 6;
+
     private String host;
     private String name;
     private String username;
@@ -139,7 +142,7 @@ public final class Database {
                 fw.write("[" + new java.sql.Time(System.currentTimeMillis()) + "] " + m + "\n");
             }
             StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-            for (int i = 3; i < 6; i++) {
+            for (int i = IGNORESTACKTRACE; i < MAXSTACKTRACE; i++) {
                 fw.write("\t" + stackTraceElements[i].toString() + "\n");
             }
             fw.write("--------------------\n");
