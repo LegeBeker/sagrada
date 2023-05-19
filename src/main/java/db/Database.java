@@ -1,5 +1,7 @@
 package main.java.db;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +16,8 @@ public final class Database {
 
     private static final Database INSTANCE = new Database();
 
+    private static final int SECONDS = 1000000000;
+
     private String host;
     private String name;
     private String username;
@@ -21,8 +25,14 @@ public final class Database {
 
     private Connection conn;
 
+    private boolean debug = false;
+
     public static Database getInstance() {
         return INSTANCE;
+    }
+
+    public void setDebug(final boolean debug) {
+        this.debug = debug;
     }
 
     public Database() {
@@ -55,6 +65,13 @@ public final class Database {
     }
 
     public List<Map<String, String>> exec(final String query, final String[] params) {
+        long startTime = 0;
+        long endTime = 0;
+
+        if (this.debug) {
+            startTime = System.nanoTime();
+        }
+
         List<Map<String, String>> result = new ArrayList<>();
 
         try {
@@ -82,10 +99,33 @@ public final class Database {
                 rs.close();
             }
 
+            if (this.debug) {
+                endTime = System.nanoTime();
+                long timeElapsed = endTime - startTime;
+
+                System.out.println("--------------------");
+                System.out.println(stmt.toString().substring(stmt.toString().indexOf(":") + 2));
+                System.out.println("Execution time in seconds: " + (timeElapsed / SECONDS));
+                System.out.println("--------------------");
+
+                try {
+                    FileWriter fw = new FileWriter("debug.log", true);
+                    fw.write("--------------------\n");
+                    fw.write(stmt.toString().substring(stmt.toString().indexOf(":") + 2) + "\n");
+                    fw.write("Execution time in seconds: " + (timeElapsed / SECONDS) + "\n");
+                    fw.write("--------------------\n");
+
+                    fw.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
             stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return result;
     }
 }
