@@ -27,6 +27,8 @@ public final class Database {
 
     private boolean debug = false;
 
+    private int queryCount = 1;
+
     public static Database getInstance() {
         return INSTANCE;
     }
@@ -117,7 +119,8 @@ public final class Database {
             if (this.debug) {
                 endTime = System.nanoTime();
                 double timeElapsed = endTime - startTime;
-                writeToDebugLog("Query: " + stmt.toString().substring(stmt.toString().indexOf(":") + 2),
+                writeToDebugLog("Query " + this.queryCount++ + ": "
+                        + stmt.toString().substring(stmt.toString().indexOf(":") + 2),
                         "Execution time in seconds: " + timeElapsed / SECONDS);
             }
 
@@ -134,6 +137,10 @@ public final class Database {
             FileWriter fw = new FileWriter("debug.log", true);
             for (String m : message) {
                 fw.write("[" + new java.sql.Time(System.currentTimeMillis()) + "] " + m + "\n");
+            }
+            StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+            for (int i = 3; i < 6; i++) {
+                fw.write("\t" + stackTraceElements[i].toString() + "\n");
             }
             fw.write("--------------------\n");
             fw.close();
