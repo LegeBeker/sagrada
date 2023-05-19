@@ -20,7 +20,7 @@ import main.java.pattern.Observable;
 public class Game extends Observable {
     private int idGame;
 
-    private int turnIdPlayer;
+    private Player turnPlayer;
     private int currentRound;
 
     private String creationDate;
@@ -47,8 +47,7 @@ public class Game extends Observable {
         newGame.addPlayer(Player.createPlayer(
                 thisGameID, username, PlayStatusEnum.CHALLENGER.toString(),
                 colorList.remove(0).get("color")));
-        GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
-        newGame.setTurnPlayer(newGame.getPlayers().get(0).getId());
+        newGame.setTurnPlayer(newGame.getPlayers().get(0));
 
         for (String account : accounts) {
             newGame.addPlayer(Player.createPlayer(
@@ -104,20 +103,20 @@ public class Game extends Observable {
     }
 
     public Player getTurnPlayer() {
-        return Player.get(this.turnIdPlayer);
+        return this.turnPlayer;
     }
 
     public String getTurnPlayerUsername() {
-        return Player.get(this.turnIdPlayer).getUsername();
+        return this.turnPlayer.getUsername();
     }
 
     public int getTurnPlayerId() {
-        return Player.get(this.turnIdPlayer).getId();
+        return this.turnPlayer.getId();
     }
 
-    public void setTurnPlayer(final int idPlayer) {
-        this.turnIdPlayer = idPlayer;
-        GameDB.setTurnPlayer(getId(), idPlayer);
+    public void setTurnPlayer(final Player player) {
+        this.turnPlayer = player;
+        GameDB.setTurnPlayer(getId(), player.getId());
     }
 
     public int getCurrentRound() {
@@ -217,6 +216,13 @@ public class Game extends Observable {
                 .orElse(null);
     }
 
+    public Player getPlayer(final int playerId) {
+        return this.players.stream()
+                .filter(player -> player.getId() == playerId)
+                .findFirst()
+                .orElse(null);
+    }
+
     public Color getPlayerColor(final int idPlayer, final String username) {
         return this.getPlayers(username).stream()
                 .filter(player -> player.getId() == idPlayer)
@@ -234,7 +240,7 @@ public class Game extends Observable {
         } else {
             for (Player player : getPlayers()) {
                 if (player.getSeqnr() == nextSeqnr) {
-                    setTurnPlayer(player.getId());
+                    setTurnPlayer(player);
                     break;
                 }
             }
@@ -253,7 +259,7 @@ public class Game extends Observable {
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == getPlayers().size()) {
                 player.setSeqnr(1);
-                setTurnPlayer(player.getId());
+                setTurnPlayer(player);
             } else {
                 player.setSeqnr(player.getSeqnr() + 1);
             }
@@ -284,9 +290,7 @@ public class Game extends Observable {
         Game game = new Game();
 
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
-        if (gameMap.get("turn_idplayer") != null) {
-            game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
-        }
+
         if (gameMap.get("current_roundID") != null) {
             game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
         }
@@ -295,6 +299,10 @@ public class Game extends Observable {
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
             game.players.add(Player.mapToPlayer(map));
+        }
+
+        if (gameMap.get("turn_idplayer") != null) {
+            game.turnPlayer = game.getPlayer(Integer.parseInt(gameMap.get("turn_idplayer")));
         }
 
         return game;
