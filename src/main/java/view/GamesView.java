@@ -1,6 +1,5 @@
 package main.java.view;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -37,7 +36,7 @@ public class GamesView extends VBox {
 
     private TableView<Map<String, String>> table;
 
-    private ArrayList<Integer> gamesWithOpenInvites;
+    private Map<Integer, Boolean> gamesWithOpenInvites;
 
     private HBox boxButtons;
 
@@ -99,21 +98,25 @@ public class GamesView extends VBox {
                     setStyle("");
                 } else if (view.getUsername().equals(game.get("username"))) {
                     setStyle("-fx-background-color: lightblue;");
-                } else if (gamesWithOpenInvites.contains(Integer.parseInt(game.get("idgame")))) {
+                } else if (gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
+                        && gamesWithOpenInvites.get(Integer.parseInt(game.get("idgame")))) {
                     setStyle("-fx-background-color: orange;");
                 }
 
             }
         });
 
-        this.table.setOnMouseClicked(e -> {
+        this.table.setOnMouseClicked(e ->
+
+        {
             if (e.getClickCount() == 2) {
                 Map<String, String> game = this.table.getSelectionModel().getSelectedItem();
 
                 if (game != null) {
-                    if (view.hasOpenInvite(Integer.parseInt(game.get("idgame")), view.getUsername())) {
+                    if (gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
+                            && gamesWithOpenInvites.get(Integer.parseInt(game.get("idgame")))) {
                         showInviteAlert(Integer.parseInt(game.get("idgame")));
-                    } else if (view.gameHasOpenInvites(Integer.parseInt(game.get("idgame")))
+                    } else if (gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
                             && view.playerHasChosenPatternCard(Integer.parseInt(game.get("idgame")),
                                     view.getUsername())) {
                         view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");

@@ -390,7 +390,7 @@ public class ViewController extends Scene {
         return this.gameController.playerHasChosenPatternCard(gameId, username);
     }
 
-    public ArrayList<Integer> getGamesWithOpenInvites() {
+    public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return this.gameController.getGamesWithOpenInvites();
     }
 }

@@ -156,7 +156,7 @@ public final class GameController {
         return game.playerHasChosenPatternCard(username);
     }
 
-    public ArrayList<Integer> getGamesWithOpenInvites() {
+    public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return Game.getGamesWithOpenInvites(view.getUsername());
     }
 }

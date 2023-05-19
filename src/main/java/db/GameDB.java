@@ -1,6 +1,5 @@
 package main.java.db;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -120,19 +119,25 @@ public final class GameDB {
         return db.exec(sql, params).size() > 0;
     }
 
-    public static ArrayList<Integer> getGamesWithOpenInvites(final String username) {
+    public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT idgame FROM player WHERE username = ? AND playstatus = ?;";
-        String[] params = {username, PlayStatusEnum.CHALLENGEE.toString()};
+        String sql = "SELECT game.idgame, player.idplayer, CASE WHEN player.username IS NULL THEN FALSE ELSE TRUE END AS hasOpenInvite "
+                + "FROM game "
+                + "LEFT JOIN player ON game.idgame = player.idgame AND player.username = ? "
+                + "WHERE player.playstatus = ? OR player.username IS NULL;";
 
+        String[] params = {username, PlayStatusEnum.CHALLENGEE.toString()};
         List<Map<String, String>> games = db.exec(sql, params);
 
-        ArrayList<Integer> gameIDs = new ArrayList<Integer>();
+        Map<Integer, Boolean> gamesWithOpenInvites = new java.util.HashMap<Integer, Boolean>();
+
         for (Map<String, String> game : games) {
-            gameIDs.add(Integer.parseInt(game.get("idgame")));
+            gamesWithOpenInvites.put(Integer.parseInt(game.get("idgame")),
+                    Boolean.parseBoolean(game.get("hasOpenInvite")));
         }
 
-        return gameIDs;
+        return gamesWithOpenInvites;
     }
+
 }

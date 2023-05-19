@@ -332,7 +332,7 @@ public class Game extends Observable {
         return objectiveCardIds;
     }
 
-    public static ArrayList<Integer> getGamesWithOpenInvites(final String username) {
+    public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
         return GameDB.getGamesWithOpenInvites(username);
     }
 }
