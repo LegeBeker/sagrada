@@ -111,6 +111,10 @@ public class Game extends Observable {
         return Player.get(this.turnIdPlayer).getUsername();
     }
 
+    public int getTurnPlayerId() {
+        return Player.get(this.turnIdPlayer).getId();
+    }
+
     public void setTurnPlayer(final int idPlayer) {
         this.turnIdPlayer = idPlayer;
         GameDB.setTurnPlayer(getId(), idPlayer);
@@ -222,7 +226,6 @@ public class Game extends Observable {
     }
 
     public void endTurn() {
-        Observable.notifyObservers(Game.class);
         int nextSeqnr = getTurnPlayer().getSeqnr() + 1;
         if (nextSeqnr > getPlayers().size()) {
             reverseSeqNr();
@@ -236,6 +239,7 @@ public class Game extends Observable {
                 }
             }
         }
+        notifyObservers(Game.class);
     }
 
     private void reverseSeqNr() {

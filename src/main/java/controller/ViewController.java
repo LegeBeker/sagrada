@@ -178,6 +178,10 @@ public class ViewController extends Scene {
         return this.gameController.isTurnPlayer(gameId, getUsername());
     }
 
+    public Boolean isCardOwnerTurnPlayer(final int playerId) {
+        return this.gameController.isTurnPlayer(playerId);
+    }
+
     public ArrayList<Player> getPlayers() {
         return this.gameController.getPlayers(getUsername());
     }
@@ -312,6 +316,7 @@ public class ViewController extends Scene {
             this.timer.schedule(new TimerTask() {
                 public void run() {
                     Platform.runLater(() -> {
+                        gameController.updateGame();
                         Observable.notifyObservers(Game.class);
                     });
                 }

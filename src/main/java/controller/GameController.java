@@ -101,6 +101,10 @@ public final class GameController {
         return Game.get(gameId).getTurnPlayerUsername().equals(username);
     }
 
+    public Boolean isTurnPlayer(final int playerId) {
+        return this.game.getTurnPlayerId() == playerId;
+    }
+
     public void setHelpFunction() {
         this.game.setHelpFunction();
     }
@@ -158,5 +162,9 @@ public final class GameController {
 
     public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return Game.getGamesWithOpenInvites(view.getUsername());
+    }
+  
+    public void updateGame() {
+        this.game = Game.get(this.game.getId());
     }
 }
