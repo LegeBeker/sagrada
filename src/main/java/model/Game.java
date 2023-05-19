@@ -221,7 +221,6 @@ public class Game extends Observable {
     }
 
     public void endTurn() {
-        Observable.notifyObservers(Game.class);
         int nextSeqnr = getTurnPlayer().getSeqnr() + 1;
         if (nextSeqnr > getPlayers().size()) {
             reverseSeqNr();
@@ -235,6 +234,7 @@ public class Game extends Observable {
                 }
             }
         }
+        notifyObservers(Game.class);
     }
 
     private void reverseSeqNr() {
