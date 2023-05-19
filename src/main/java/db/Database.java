@@ -47,12 +47,6 @@ public final class Database {
         this.username = env.get("DB_USERNAME");
         this.password = env.get("DB_PASSWORD");
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         if (this.debug) {
             writeToDebugLog("Database initialized");
         }
