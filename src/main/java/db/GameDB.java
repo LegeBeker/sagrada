@@ -13,12 +13,12 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM game WHERE idgame = ? LIMIT 1";
-        String[] params = { Integer.toString(idGame) };
+        String[] params = {Integer.toString(idGame)};
 
         return db.exec(sql, params).get(0);
     }
 
-    public static List<Map<String, String>> getAll() {
+    public static List<Map<String, String>> getGamesList() {
         Database db = Database.getInstance();
 
         String sql = "SELECT game.*, DATE_FORMAT(game.creationdate, '%d-%m-%Y %H:%i:%s') AS formatted_creationdate, player.username"
@@ -31,7 +31,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM player WHERE idgame = ?";
-        String[] params = { Integer.toString(idGame) };
+        String[] params = {Integer.toString(idGame)};
 
         return db.exec(sql, params);
     }
@@ -40,7 +40,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO game (creationDate, current_roundID) VALUE(?, 1);";
-        String[] params = { time };
+        String[] params = {time};
 
         db.exec(sql, params);
 
@@ -61,7 +61,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "UPDATE game SET turn_idplayer = ? WHERE idgame = " + Integer.toString(gameID) + ";";
-        String[] params = { Integer.toString(playerID) };
+        String[] params = {Integer.toString(playerID)};
 
         return db.exec(sql, params);
     }
@@ -70,7 +70,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "UPDATE game SET current_roundID = ? WHERE idgame = " + Integer.toString(gameID) + ";";
-        String[] params = { Integer.toString(round) };
+        String[] params = {Integer.toString(round)};
 
         return db.exec(sql, params);
     }
@@ -114,7 +114,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM player WHERE idgame = ? AND playstatus = ?;";
-        String[] params = { Integer.toString(idGame), PlayStatusEnum.CHALLENGEE.toString() };
+        String[] params = {Integer.toString(idGame), PlayStatusEnum.CHALLENGEE.toString()};
 
         return db.exec(sql, params).size() > 0;
     }

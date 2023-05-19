@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -258,7 +257,7 @@ public class Game extends Observable {
 
         for (Map<String, String> dieMap : DieDB.getOffer(getId(), getCurrentRound())) {
             DieDB.putRoundTrack(getId(), getCurrentRound(), Integer.parseInt(dieMap.get("dienumber")),
-                dieMap.get("diecolor"));
+                    dieMap.get("diecolor"));
         }
 
         setCurrentRound(getCurrentRound() + 1);
@@ -274,7 +273,7 @@ public class Game extends Observable {
     }
 
     public static List<Map<String, String>> getGamesList() {
-        return GameDB.getAll();
+        return GameDB.getGamesList();
     }
 
     public static Game mapToGame(final Map<String, String> gameMap) {
