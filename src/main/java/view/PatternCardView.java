@@ -111,7 +111,7 @@ public class PatternCardView extends BorderPane implements Observer {
 
             Color playerColor = view.getPlayerColor(playerId).deriveColor(0, 1, BRIGHTNESS, 1);
             this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
-            if (view.isTurnPlayer()) {
+            if (view.isCardOwnerTurnPlayer(playerId)) {
                 this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 1px;" + this.getStyle());
             }
         }
