@@ -10,8 +10,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
-import main.java.model.PatternCard;
-import main.java.model.Player;
 
 public class PatternCardSelectionView extends BorderPane {
 
@@ -24,13 +22,10 @@ public class PatternCardSelectionView extends BorderPane {
     private static final int SPACING = 10;
 
     private final ViewController view;
-    private final Player player;
 
-    public PatternCardSelectionView(final ViewController view, final Player player) {
-        super();
+    public PatternCardSelectionView(final ViewController view) {
         this.view = view;
         this.flowPane = new FlowPane();
-        this.player = player;
 
         Text text = new Text("Patroonkaart kiezen");
         text.setStyle("-fx-font-size: 40px");
@@ -40,7 +35,7 @@ public class PatternCardSelectionView extends BorderPane {
         textTitle.setPadding(new Insets(PADDING, 0, 0, 0));
         this.setTop(textTitle);
 
-        player.getPatternCardOptions().forEach(patternCard -> {
+        view.getPatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
             flowPane.getChildren().add(patternCardSelect(patternCard));
         });
 
@@ -59,14 +54,13 @@ public class PatternCardSelectionView extends BorderPane {
         this.setBackground(view.getBackground());
     }
 
-    private VBox patternCardSelect(final PatternCard patternCard) {
+    private VBox patternCardSelect(final int idPatternCard) {
         this.vbox = new VBox();
-        this.vbox.getChildren().add(new PatternCardView(this.view, patternCard, null));
+        this.vbox.getChildren().add(new PatternCardView(this.view, idPatternCard, null));
         Button button = new Button("Kiezen");
 
         button.setOnAction(event -> {
-            this.view.getGameController().choosePatternCard(patternCard);
-            this.view.openGameView(player.getGame());
+            this.view.choosePatternCard(idPatternCard);
         });
 
         this.vbox.getChildren().add(button);

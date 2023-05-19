@@ -1,32 +1,46 @@
 package main.java.view;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import main.java.controller.ViewController;
-import main.java.model.Account;
 
-public class AccountsView extends TableView<Account> {
+public class AccountsView extends TableView<String> {
     private ViewController view;
+
+    private ArrayList<String> accountUsernames;
 
     private static final double TABLEHEIGHT = 400;
 
-    public AccountsView(final ViewController view) {
+    public AccountsView(final ViewController view, final Boolean isInvite) {
         this.view = view;
 
         this.setPlaceholder(new Text("Geen accounts gevonden"));
         this.setMaxHeight(TABLEHEIGHT);
 
-        TableColumn<Account, String> idUsername = new TableColumn<>("Username");
-        idUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
+        TableColumn<String, String> idUsername = new TableColumn<>("Gebruikersnaam");
+        idUsername.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
 
         Collections.addAll(this.getColumns(), idUsername);
 
-        for (Account acc : view.getAccountController().getInviteableAccounts()) {
-            this.getItems().add(acc);
+        if (isInvite) {
+            this.accountUsernames = this.view.getInviteableAccountsUsernames();
+        } else {
+            this.accountUsernames = this.view.getAccountsUsernames();
+
+            TableColumn<String, String> idAmountGamesWon = new TableColumn<>("Aantal gewonnen spellen");
+            idAmountGamesWon.setCellValueFactory(
+                    cellData -> new SimpleStringProperty(view.getAccountWonGames(cellData.getValue())));
+
+            this.getColumns().add(idAmountGamesWon);
+        }
+
+        for (String username : this.accountUsernames) {
+            this.getItems().add(username);
         }
 
         setTableClickEvent();
@@ -35,8 +49,8 @@ public class AccountsView extends TableView<Account> {
     private void setTableClickEvent() {
         this.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                Account acc = this.getSelectionModel().getSelectedItem();
-                this.view.openStatView(acc);
+                String username = this.getSelectionModel().getSelectedItem();
+                this.view.openStatView(username);
             }
         });
     }

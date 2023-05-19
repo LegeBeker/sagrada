@@ -46,53 +46,23 @@ public class Account {
         return accounts;
     }
 
-    public static ArrayList<Account> getInviteableAccounts(final String username) {
-        ArrayList<Account> accounts = new ArrayList<Account>();
+    public static ArrayList<String> getInviteableAccountsUsernames(final String username) {
+        ArrayList<String> accounts = new ArrayList<String>();
 
         for (Map<String, String> accountMap : AccountDB.getInviteableAccounts(username)) {
-            Account acc = new Account();
-            acc.username = accountMap.get("username");
-            if (accountMap.get("inviteable") != null) {
-                acc.inviteable = (Integer.parseInt(accountMap.get("inviteable")) != 0);
+            if (accountMap.get("inviteable") != null && accountMap.get("inviteable").equals("1")
+                    && !accountMap.get("username").equals(username)) {
+                accounts.add(accountMap.get("username"));
             }
-            accounts.add(acc);
         }
         return accounts;
     }
 
-    public static int getAmountOpponents(final String username) {
-        return Integer.parseInt(AccountDB.getAmountOpponents(username));
+    public static Map<String, String> getStats(final String username) {
+        return AccountDB.getStats(username);
     }
 
-    public static int getAmountWonGames(final String username) {
-        return Integer.parseInt(AccountDB.getAmountWonGames(username));
-    }
-
-    public static int getAmountLostGames(final String username) {
-        return Integer.parseInt(AccountDB.getAmountLostGames(username));
-    }
-
-    public static Integer getHighestScore(final String username) {
-        String highscore = AccountDB.getHighestScore(username);
-        if (highscore != null) {
-            return Integer.parseInt(highscore);
-        }
-        return null;
-    }
-
-    public static Integer getMostPlacedValue(final String username) {
-        String dienumber = AccountDB.getMostPlacedValue(username);
-        if (dienumber != null) {
-            return Integer.parseInt(dienumber);
-        }
-        return null;
-    }
-
-    public static String getMostPlacedColor(final String username) {
-        String diecolor = AccountDB.getMostPlacedColor(username);
-        if (diecolor != null) {
-            return diecolor;
-        }
-        return null;
+    public static ArrayList<String> getAccountsUsernames() {
+        return AccountDB.getAccountsUsernames();
     }
 }

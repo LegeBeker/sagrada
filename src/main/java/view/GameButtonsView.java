@@ -6,8 +6,10 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import main.java.controller.ViewController;
 import main.java.model.Game;
+import main.java.pattern.Observable;
+import main.java.pattern.Observer;
 
-public class GameButtonsView extends VBox {
+public class GameButtonsView extends VBox implements Observer {
 
     private ViewController view;
 
@@ -20,7 +22,7 @@ public class GameButtonsView extends VBox {
 
     private static final int PADDING = 10;
 
-    public GameButtonsView(final ViewController view, final Game game) {
+    public GameButtonsView(final ViewController view) {
         this.view = view;
 
         this.buttonBack = new Button("Terug");
@@ -29,22 +31,23 @@ public class GameButtonsView extends VBox {
 
         this.buttonGetDice = new Button("Pak dobbelstenen");
         this.buttonGetDice.setPrefWidth(BUTTONWIDTH);
-        this.buttonGetDice.setOnAction(e -> game.getNewOffer());
+        this.buttonGetDice.setOnAction(e -> view.getNewOffer());
 
         this.helpToggle = new ToggleButton("Help!");
         this.helpToggle.setPrefWidth(BUTTONWIDTH);
         this.helpToggle.setOnAction(e -> {
-            game.setHelpFunction();
-            this.view.displayMessage("Help functie is " + (game.getHelpFunction() ? "aan" : "uit"));
+            view.setHelpFunction();
+            this.view.displayMessage("Help functie is " + (view.getHelpFunction() ? "aan" : "uit"));
         });
 
         this.buttonEndTurn = new Button("Einde beurt");
         this.buttonEndTurn.setPrefWidth(BUTTONWIDTH);
-        this.buttonEndTurn.setOnAction(e -> game.endTurn());
+        this.buttonEndTurn.setOnAction(e -> endTurn());
 
         this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle);
+        Observable.addObserver(Game.class, this);
 
-        if (game.getTurnPlayer().getUsername().equals(view.getAccountController().getAccount().getUsername())) {
+        if (view.isTurnPlayer()) {
             this.getChildren().addAll(buttonEndTurn);
         }
 
@@ -52,11 +55,25 @@ public class GameButtonsView extends VBox {
         this.setSpacing(PADDING);
     }
 
-    public void getDice(final Game game) {
+    public void getDice() {
         try {
-            game.getNewOffer();
+            view.getNewOffer();
         } catch (RuntimeException e) {
             this.view.displayError(e.getMessage());
+        }
+    }
+
+    private void endTurn() {
+        this.buttonEndTurn.setDisable(true);
+        view.endTurn();
+    }
+
+    @Override
+    public void update() {
+        this.getChildren().remove(buttonEndTurn);
+        if (view.isTurnPlayer()) {
+            this.getChildren().addAll(buttonEndTurn);
+            this.buttonEndTurn.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
         }
     }
 

@@ -57,7 +57,7 @@ public final class DieDB {
             final String dieColor) {
         Database db = Database.getInstance();
 
-        String sql = "UPDATE gamedie SET roundtrack = ? WHERE idgame = ? AND dienumber = ?, diecolor = ?";
+        String sql = "UPDATE gamedie SET roundtrack = ? WHERE idgame = ? AND dienumber = ? AND diecolor = ?;";
 
         String[] params = {Integer.toString(roundID), Integer.toString(idGame), Integer.toString(dieNumber), dieColor};
 

@@ -56,8 +56,9 @@ public final class BoardDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT DISTINCT pf.*, gd.* FROM playerframefield pf"
-                + " JOIN gamedie gd ON gd.dienumber = pf.dienumber AND gd.diecolor = pf.diecolor WHERE pf.idgame = ? AND pf.idplayer = ?";
-        String[] params = {String.valueOf(idGame), String.valueOf(idPlayer)};
+                + " JOIN gamedie gd ON gd.dienumber = pf.dienumber AND gd.diecolor = pf.diecolor"
+                + " WHERE pf.idgame = ? and gd.idgame = ? AND pf.idplayer = ?";
+        String[] params = {String.valueOf(idGame), String.valueOf(idGame), String.valueOf(idPlayer)};
 
         return db.exec(sql, params);
     }

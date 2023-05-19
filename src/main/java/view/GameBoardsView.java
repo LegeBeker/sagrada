@@ -6,8 +6,6 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import main.java.controller.ViewController;
-import main.java.model.Game;
-import main.java.model.Player;
 
 public class GameBoardsView extends HBox {
 
@@ -16,13 +14,11 @@ public class GameBoardsView extends HBox {
     private static final int MAXCOLS = 2;
 
     private ViewController view;
-    private Game game;
 
     private GridPane grid = new GridPane();
 
-    public GameBoardsView(final ViewController view, final Game game) {
+    public GameBoardsView(final ViewController view) {
         this.view = view;
-        this.game = game;
 
         showPlayerGameboards();
 
@@ -37,8 +33,8 @@ public class GameBoardsView extends HBox {
 
     private void showPlayerGameboards() {
         int cardCount = 0;
-        for (Player player : this.game.getPlayers(view.getAccountController().getAccount().getUsername())) {
-            if (player.getPatternCard() == null) {
+        for (Integer playerId : view.getPlayerIds()) {
+            if (view.getPlayerPatternCardId(playerId) == null) {
                 continue; // skip players without a pattern card
             }
 
@@ -46,7 +42,8 @@ public class GameBoardsView extends HBox {
                 break; // exit the loop once max grid size is reached
             }
 
-            PatternCardView patternCardView = new PatternCardView(this.view, player.getPatternCard(), player);
+            PatternCardView patternCardView = new PatternCardView(this.view,
+                    view.getPlayerPatternCardId(playerId), playerId);
 
             grid.add(patternCardView, cardCount % MAXCOLS, cardCount / MAXCOLS);
             cardCount++;
@@ -57,7 +54,7 @@ public class GameBoardsView extends HBox {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
         moves.forEach((move) -> {
             patternCardView.getGrid().getChildren().forEach((cell) -> {
-                int[] location = {GridPane.getColumnIndex(cell), GridPane.getRowIndex(cell)};
+                int[] location = {GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell) };
                 if (move[0] == location[0] && move[1] == location[1]) {
                     cell.setStyle("-fx-border-color: #00FFBF;");
                 }

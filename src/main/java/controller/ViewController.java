@@ -1,5 +1,9 @@
 package main.java.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,8 +23,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-import main.java.model.Account;
+import main.java.model.Die;
 import main.java.model.Game;
+import main.java.model.Player;
 import main.java.pattern.Observable;
 import main.java.view.GameView;
 import main.java.view.GamesView;
@@ -88,6 +93,15 @@ public class ViewController extends Scene {
         this.openLoginView();
     }
 
+    public String getUsername() {
+        return this.accountController.getUsername();
+    }
+
+    public int getPlayerId() {
+        Player player = this.gameController.getCurrentPlayer();
+        return player.getId();
+    }
+
     public void changeView(final Pane pane) {
         if (this.timer != null) {
             this.timer.cancel();
@@ -149,10 +163,151 @@ public class ViewController extends Scene {
         changeView(newGameView);
     }
 
-    public void openGameView(final Game game) {
-        getGameController().setGame(game);
-        if (game.playerHasChoosenPatternCard(getAccountController().getAccount().getUsername())) {
-            GameView gameView = new GameView(this, game);
+    public ArrayList<String> getInviteableAccountsUsernames() {
+        return this.accountController.getInviteableAccountsUsernames();
+    }
+
+    public Boolean doMove(final int patternCardId, final int eyes, final Color dieColor, final int dieNumber,
+            final int columnIndex, final int rowIndex) {
+        return this.patternCardController.doMove(patternCardId, eyes, dieColor, dieNumber, columnIndex, rowIndex);
+    }
+
+    public Boolean isTurnPlayer() {
+        return this.gameController.isTurnPlayer(getUsername());
+    }
+
+    public Boolean isTurnPlayer(final int gameId) {
+        return this.gameController.isTurnPlayer(gameId, getUsername());
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return this.gameController.getPlayers(getUsername());
+    }
+
+    public ArrayList<Integer> getPlayerIds() {
+        return this.gameController.getPlayerIds();
+    }
+
+    public Player getCurrentPlayer() {
+        return this.gameController.getCurrentPlayer();
+    }
+
+    public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
+        return this.patternCardController.getPossibleMoves(eyes, color);
+    }
+
+    public void getNewOffer() {
+        this.gameController.getNewOffer();
+    }
+
+    public void setHelpFunction() {
+        this.gameController.setHelpFunction();
+    }
+
+    public boolean sendMessage(final String message) {
+        return this.messageController.sendMessage(message);
+    }
+
+    public String getPatternCardName(final int id) {
+        return this.patternCardController.getPatternCard(id).getName();
+    }
+
+    public int getPatternCardDifficulty(final int id) {
+        return this.patternCardController.getPatternCard(id).getDifficulty();
+    }
+
+    public Integer getPlayerPatternCardId(final int playerId) {
+        return this.gameController.getPlayer(playerId).getPatternCardId();
+    }
+
+    public String getPlayerUsername(final int id) {
+        return this.gameController.getPlayer(id).getUsername();
+    }
+
+    public int getPlayerGameTokens(final int id) {
+        return this.gameController.getPlayer(id).getFavorTokensLeft();
+    }
+
+    public Color getPlayerColor(final int id) {
+        return this.gameController.getPlayerColor(id, getUsername());
+    }
+
+    public Boolean getHelpFunction() {
+        return this.gameController.getHelpFunction();
+    }
+
+    public ArrayList<Integer> getObjectiveCardsIds() {
+        return this.gameController.getObjectiveCardsIds();
+    }
+
+    public String getObjectiveCardName(final int id) {
+        return this.gameController.getObjectiveCard(id).getName();
+    }
+
+    public String getPrivateObjCardColor() {
+        return getCurrentPlayer().getPrivateObjCardColor();
+    }
+
+    public ArrayList<Map<String, String>> getGames() {
+        return this.gameController.getGames();
+    }
+
+    public int getPatternCardId() {
+        return getCurrentPlayer().getPatternCard().getIdPatternCard();
+    }
+
+    public ArrayList<Map<String, String>> getOffer() {
+        return this.gameController.getOffer();
+    }
+
+    public ArrayList<Map<String, String>> getRoundTrack() {
+        return this.gameController.getRoundTrack();
+    }
+
+    public Map<String, String> getPlayerBoardField(final Integer playerId, final int row, final int col) {
+        Player player = this.gameController.getPlayer(playerId);
+        Die die = player.getBoard().getField(row, col);
+
+        if (die != null) {
+            Map<String, String> dieMap = new HashMap<>();
+            dieMap.put("color", die.getColor().toString());
+            dieMap.put("eyes", Integer.toString(die.getEyes()));
+            dieMap.put("number", Integer.toString(die.getNumber()));
+            return dieMap;
+        }
+        return null;
+    }
+
+    public ArrayList<String> getToolCardsNames() {
+        return this.gameController.getToolCardsNames();
+    }
+
+    public Boolean loginAccount(final String username, final String password) {
+        return this.accountController.loginAccount(username, password);
+    }
+
+    public void logoutAccount() {
+        this.accountController.logoutAccount();
+    }
+
+    public void endTurn() {
+        this.gameController.endTurn();
+    }
+
+    public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
+        openPatternCardSelectionView(this.gameController.createGame(accounts, getUsername(), useDefaultCards));
+    }
+
+    public void choosePatternCard(final int idPatternCard) {
+        this.gameController.choosePatternCard(idPatternCard);
+        openGamesView();
+    }
+
+    public void openGameView(final int gameId) {
+        Game game = this.gameController.getGame(gameId);
+        this.gameController.setGame(game);
+        if (game.playerHasChosenPatternCard(getUsername())) {
+            GameView gameView = new GameView(this);
             changeView(gameView);
 
             this.timer = new Timer();
@@ -169,31 +324,72 @@ public class ViewController extends Scene {
     }
 
     public void openPatternCardSelectionView(final Game game) {
-        getGameController().setGame(game);
-        PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this,
-                getGameController().getCurrentPlayer(game.getId()));
+        this.gameController.setGame(game);
+        PatternCardSelectionView patternCardSelectionView = new PatternCardSelectionView(this);
         changeView(patternCardSelectionView);
     }
 
-    public void openStatView(final Account account) {
-        StatView statView = new StatView(this, account);
+    public void openStatView(final String username) {
+        StatView statView = new StatView(this, username);
         changeView(statView);
     }
 
-    public AccountController getAccountController() {
-        return accountController;
+    public Map<String, String> getStats(final String username) {
+        return this.accountController.getStats(username);
     }
 
-    public GameController getGameController() {
-        return gameController;
+    public Map<Integer, List<Integer>> getPatternCardOptions() {
+        return this.gameController.getPatternCardOptions();
     }
 
-    public PatternCardController getPatternCardController() {
-        return patternCardController;
+    public Boolean createAccount(final String username, final String password) {
+        return this.accountController.createAccount(username, password);
     }
 
-    public MessageController getMessageController() {
-        return messageController;
+    public boolean isCurrentPlayer(final Integer playerId) {
+        return getCurrentPlayer().getId() == playerId;
+    }
+
+    public Integer getPatternCardFieldValue(final int patternCardId, final int col, final int row) {
+        return this.patternCardController.getPatternCardField(patternCardId, row, col).getValue();
+    }
+
+    public Color getPatternCardFieldColor(final int patternCardId, final int col, final int row) {
+        return this.patternCardController.getPatternCardField(patternCardId, row, col).getColor();
+    }
+
+    public ArrayList<Map<String, String>> getMessages() {
+        return this.messageController.getMessages(gameController.getGame().getId());
+    }
+
+    public void acceptInvite(final int gameId) {
+        this.gameController.acceptInvite(gameId);
+    }
+
+    public void refuseInvite(final int gameId) {
+        this.gameController.refuseInvite(gameId);
+    }
+
+    public boolean hasOpenInvite(final int gameId, final String playerName) {
+        Game game = Game.get(gameId);
+        return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
+    }
+
+    public boolean gameHasOpenInvites(final int gameId) {
+        Game game = Game.get(gameId);
+        return game.hasOpenInvites();
+    }
+
+    public ArrayList<String> getAccountsUsernames() {
+        return this.accountController.getAccountsUsernames();
+    }
+
+    public String getAccountWonGames(final String username) {
+        return this.accountController.getAccountWonGames(username);
+    }
+
+    public boolean playerHasChosenPatternCard(final int gameId, final String username) {
+        return this.gameController.playerHasChosenPatternCard(gameId, username);
     }
 
     public FavorTokenController getFavorTokenController(){
