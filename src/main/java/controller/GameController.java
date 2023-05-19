@@ -171,4 +171,8 @@ public final class GameController {
         Game game = Game.get(gameId);
         return game.playerHasChosenPatternCard(username);
     }
+
+    public void updateGame() {
+        this.game = Game.get(this.game.getId());
+    }
 }
