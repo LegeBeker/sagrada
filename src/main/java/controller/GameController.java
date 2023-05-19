@@ -21,20 +21,8 @@ public final class GameController {
         this.view = view;
     }
 
-    public ArrayList<Map<String, String>> getGames() {
-        ArrayList<Game> games = Game.getAll();
-        ArrayList<Map<String, String>> gamesMap = new ArrayList<Map<String, String>>();
-
-        for (Game game : games) {
-            Map<String, String> gameMap = new HashMap<String, String>();
-            gameMap.put("id", Integer.toString(game.getId()));
-            gameMap.put("turnPlayerUsername", game.getTurnPlayerUsername());
-            gameMap.put("currentRound", Integer.toString(game.getCurrentRound()));
-            gameMap.put("creationDateShow", game.getCreationDate());
-            gamesMap.add(gameMap);
-        }
-
-        return gamesMap;
+    public List<Map<String, String>> getGamesList() {
+        return Game.getGamesList();
     }
 
     public Game getGame(final int gameId) {

@@ -246,8 +246,8 @@ public class ViewController extends Scene {
         return getCurrentPlayer().getPrivateObjCardColor();
     }
 
-    public ArrayList<Map<String, String>> getGames() {
-        return this.gameController.getGames();
+    public List<Map<String, String>> getGamesList() {
+        return this.gameController.getGamesList();
     }
 
     public int getPatternCardId() {

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -272,15 +273,8 @@ public class Game extends Observable {
         return mapToGame(GameDB.get(idGame));
     }
 
-    public static ArrayList<Game> getAll() {
-        ArrayList<Game> games = new ArrayList<Game>();
-
-        for (Map<String, String> gameMap : GameDB.getAll()) {
-            Game game = mapToGame(gameMap);
-            games.add(game);
-        }
-
-        return games;
+    public static List<Map<String, String>> getGamesList() {
+        return GameDB.getAll();
     }
 
     public static Game mapToGame(final Map<String, String> gameMap) {

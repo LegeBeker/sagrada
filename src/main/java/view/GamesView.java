@@ -66,21 +66,22 @@ public class GamesView extends VBox {
         this.table.setPlaceholder(new Text("Geen spellen gevonden"));
 
         TableColumn<Map<String, String>, String> idCol = new TableColumn<>("Id");
-        idCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("id")));
+        idCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("idgame")));
 
         TableColumn<Map<String, String>, String> turnPlayerCol = new TableColumn<>("Beurt Speler");
         turnPlayerCol.setCellValueFactory(
-                cellData -> new SimpleStringProperty(cellData.getValue().get("turnPlayerUsername")));
+                cellData -> new SimpleStringProperty(cellData.getValue().get("username")));
 
         TableColumn<Map<String, String>, String> roundCol = new TableColumn<>("Ronde");
-        roundCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("currentRound")));
+        roundCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("current_roundID")));
 
         TableColumn<Map<String, String>, String> dateCol = new TableColumn<>("Datum");
-        dateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("creationDateShow")));
+        dateCol.setCellValueFactory(
+                cellData -> new SimpleStringProperty(cellData.getValue().get("formatted_creationdate")));
 
         Collections.addAll(this.table.getColumns(), idCol, turnPlayerCol, roundCol, dateCol);
 
-        for (Map<String, String> game : view.getGames()) {
+        for (Map<String, String> game : view.getGamesList()) {
             this.table.getItems().add(game);
         }
 
@@ -90,11 +91,12 @@ public class GamesView extends VBox {
                 super.updateItem(game, empty);
 
                 if (game == null) {
-                    setStyle("");
-                } else if (view.isTurnPlayer(Integer.parseInt(game.get("id")))) {
-                    setStyle("-fx-background-color: lightblue;");
-                } else if (view.hasOpenInvite(Integer.parseInt(game.get("id")), view.getUsername())) {
-                    setStyle("-fx-background-color: orange;");
+                setStyle("");
+                } else if (view.isTurnPlayer(Integer.parseInt(game.get("idgame")))) {
+                setStyle("-fx-background-color: lightblue;");
+                } else if (view.hasOpenInvite(Integer.parseInt(game.get("idgame")),
+                view.getUsername())) {
+                setStyle("-fx-background-color: orange;");
                 }
 
             }
@@ -105,13 +107,13 @@ public class GamesView extends VBox {
                 Map<String, String> game = this.table.getSelectionModel().getSelectedItem();
 
                 if (game != null) {
-                    if (view.hasOpenInvite(Integer.parseInt(game.get("id")), view.getUsername())) {
-                        showInviteAlert(Integer.parseInt(game.get("id")));
-                    } else if (view.gameHasOpenInvites(Integer.parseInt(game.get("id")))
-                            && view.playerHasChosenPatternCard(Integer.parseInt(game.get("id")), view.getUsername())) {
+                    if (view.hasOpenInvite(Integer.parseInt(game.get("idgame")), view.getUsername())) {
+                        showInviteAlert(Integer.parseInt(game.get("idgame")));
+                    } else if (view.gameHasOpenInvites(Integer.parseInt(game.get("idgame")))
+                            && view.playerHasChosenPatternCard(Integer.parseInt(game.get("idgame")), view.getUsername())) {
                         view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");
                     } else {
-                        this.view.openGameView(Integer.parseInt(game.get("id")));
+                        this.view.openGameView(Integer.parseInt(game.get("idgame")));
                     }
                 }
             }
