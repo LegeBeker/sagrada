@@ -1,5 +1,7 @@
 package main.java.view;
 
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -8,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import main.java.controller.ViewController;
 import main.java.model.FavorToken;
+import main.java.model.Player;
 import main.java.model.ToolCard;
 
 public class GameToolCardView extends StackPane {
@@ -48,51 +51,42 @@ public class GameToolCardView extends StackPane {
         pane.setPrefHeight(CARDHEIGHT);
         pane.setPrefWidth(WIDTH);
 
-        //-- Start loop for each favortoken
-        for(FavorToken ft : view.getFavorTokenController().getFavorTokensForToolCard(toolCard.getIdToolCard(), view.getGameController().getGame().getId())){
-            int randX = 1 + (int)(Math.random()*WIDTH);
-            int randY = 1 + (int)(Math.random()*CARDHEIGHT);
+        ArrayList<Player> players = view.getGameController().getGame()
+                .getPlayers(view.getAccountController().getAccount().getUsername());
+        for (FavorToken ft : view.getFavorTokenController().getFavorTokensForToolCard(toolCard.getIdToolCard(),
+                view.getGameController().getGame().getId())) {
+            int randX = 1 + (int) (Math.random() * WIDTH);
+            int randY = 1 + (int) (Math.random() * CARDHEIGHT);
 
-            if(randX <= PROHIBITEDX){
+            if (randX <= PROHIBITEDX) {
                 randX += PROHIBITEDX;
-            }
-            else if(randX > WIDTH - CIRCLERADIUS){
+            } else if (randX > WIDTH - CIRCLERADIUS) {
                 randX -= CIRCLERADIUS;
             }
 
-            if(randY <= PROHIBITEDY){
+            if (randY <= PROHIBITEDY) {
                 randY += PROHIBITEDY;
-            }
-            else if(randY > WIDTH - CIRCLERADIUS){
+            } else if (randY > WIDTH - CIRCLERADIUS) {
                 randY -= CIRCLERADIUS;
             }
+            for (Player p : players) {
+                if (p.getId() == ft.getIdPlayer()) {
+                    Circle c = new Circle(randX, randY, CIRCLERADIUS);
+                    Color playerColor = p.getColor();
+                    if (playerColor != null) {
+                        c.setFill(Color.rgb((int) (playerColor.getRed() * 255), (int) (playerColor.getGreen() * 255),
+                                (int) (playerColor.getBlue() * 255), OPACITY));
+                        c.setStroke(Color.rgb((int) (playerColor.getRed() * 255), (int) (playerColor.getGreen() * 255),
+                                (int) (playerColor.getBlue()) * 255).deriveColor(0, 1, 0.2, 1));
+                        c.setStrokeWidth(2);
 
-            System.out.println("Random X: " + randX);
-            System.out.println("Random Y: " + randY);
-
-            System.out.println();
-            System.out.println("------------------");
-            System.out.println();
-
-
-            Circle c = new Circle(randX,randY,CIRCLERADIUS);
-            
-            Color playerColor = view.getGameController().getPlayer(ft.getIdGame(), ft.getIdPlayer()).getColor();
-            if(playerColor != null){
-                c.setFill(Color.rgb((int) playerColor.getRed(), (int) playerColor.getGreen(), (int) playerColor.getBlue(), OPACITY));
-                c.setStroke(Color.rgb((int) playerColor.getRed(), (int) playerColor.getGreen(), (int) playerColor.getBlue()).deriveColor(0, 1, 0.2, 1));
-                c.setStrokeWidth(2);
-    
-    
-                Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
-                innerCircle.setFill(Color.rgb(255, 255, 255, OPACITY));
-    
-    
-                pane.getChildren().addAll(c,innerCircle);
+                        Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
+                        innerCircle.setFill(Color.rgb(255, 255, 255, OPACITY));
+                        pane.getChildren().addAll(c, innerCircle);
+                    }
+                }
             }
-            
         }
-
         this.getChildren().addAll(imageView, pane);
 
         this.setOnMouseClicked(event -> {

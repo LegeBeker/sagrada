@@ -132,7 +132,6 @@ public class Game extends Observable {
                 players.add(0, currentPlayer);
             }
         }
-
         for (int i = 0; i < players.size(); i++) {
             players.get(i).setColor(colors.get(i));
         }
@@ -149,12 +148,7 @@ public class Game extends Observable {
     }
 
     public Player getCurrentPlayer(final int id, final String username) {
-
-        System.out.println("getCurrentPlayer called");
-        System.out.println("ID: " + id);
-        System.out.println("Username: " + username);
         for (Player player : this.players) {
-            System.out.println("Looping through player " + player.getUsername());
             if (player.getId() == id || player.getUsername().equals(username)) {
                 return player;
             }
