@@ -36,20 +36,41 @@ public final class Database {
     }
 
     public Database() {
+        if (this.debug) {
+            writeToDebugLog("Initializing database...");
+        }
+
         Env env = new Env(".env");
 
         this.host = env.get("DB_HOST");
         this.name = env.get("DB_NAME");
         this.username = env.get("DB_USERNAME");
         this.password = env.get("DB_PASSWORD");
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (this.debug) {
+            writeToDebugLog("Database initialized");
+        }
     }
 
     private void connect() {
         try {
+            if (this.debug) {
+                writeToDebugLog("Connecting to database...");
+            }
             this.conn = DriverManager.getConnection("jdbc:mysql://" + this.host + "/" + this.name + "?user="
                     + this.username + "&password=" + this.password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+
+        if (this.debug) {
+            writeToDebugLog("Connected to database");
         }
     }
 
@@ -101,24 +122,9 @@ public final class Database {
 
             if (this.debug) {
                 endTime = System.nanoTime();
-                long timeElapsed = endTime - startTime;
-
-                System.out.println("--------------------");
-                System.out.println(stmt.toString().substring(stmt.toString().indexOf(":") + 2));
-                System.out.println("Execution time in seconds: " + (timeElapsed / SECONDS));
-                System.out.println("--------------------");
-
-                try {
-                    FileWriter fw = new FileWriter("debug.log", true);
-                    fw.write("--------------------\n");
-                    fw.write(stmt.toString().substring(stmt.toString().indexOf(":") + 2) + "\n");
-                    fw.write("Execution time in seconds: " + (timeElapsed / SECONDS) + "\n");
-                    fw.write("--------------------\n");
-
-                    fw.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                double timeElapsed = endTime - startTime;
+                writeToDebugLog("Query: " + stmt.toString().substring(stmt.toString().indexOf(":") + 2),
+                        "Execution time in seconds: " + timeElapsed / SECONDS);
             }
 
             stmt.close();
@@ -127,5 +133,18 @@ public final class Database {
         }
 
         return result;
+    }
+
+    private void writeToDebugLog(final String... message) {
+        try {
+            FileWriter fw = new FileWriter("debug.log", true);
+            for (String m : message) {
+                fw.write("[" + new java.sql.Time(System.currentTimeMillis()) + "] " + m + "\n");
+            }
+            fw.write("--------------------\n");
+            fw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
