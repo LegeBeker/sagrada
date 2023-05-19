@@ -47,9 +47,7 @@ public class GameButtonsView extends VBox implements Observer {
         this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle);
         Observable.addObserver(Game.class, this);
 
-        if (view.isTurnPlayer()) {
-            this.getChildren().addAll(buttonEndTurn);
-        }
+        this.update();
 
         this.setPadding(new Insets(PADDING));
         this.setSpacing(PADDING);
@@ -70,7 +68,9 @@ public class GameButtonsView extends VBox implements Observer {
 
     @Override
     public void update() {
-        this.getChildren().remove(buttonEndTurn);
+        if (this.getChildren().contains(buttonEndTurn)) {
+            this.getChildren().remove(buttonEndTurn);
+        }
         if (view.isTurnPlayer()) {
             this.getChildren().addAll(buttonEndTurn);
             this.buttonEndTurn.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
