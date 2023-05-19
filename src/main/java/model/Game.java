@@ -331,4 +331,8 @@ public class Game extends Observable {
 
         return objectiveCardIds;
     }
+
+    public static ArrayList<Integer> getGamesWithOpenInvites(final String username) {
+        return GameDB.getGamesWithOpenInvites(username);
+    }
 }

@@ -1,5 +1,6 @@
 package main.java.db;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -117,5 +118,21 @@ public final class GameDB {
         String[] params = {Integer.toString(idGame), PlayStatusEnum.CHALLENGEE.toString()};
 
         return db.exec(sql, params).size() > 0;
+    }
+
+    public static ArrayList<Integer> getGamesWithOpenInvites(final String username) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT idgame FROM player WHERE username = ? AND playstatus = ?;";
+        String[] params = {username, PlayStatusEnum.CHALLENGEE.toString()};
+
+        List<Map<String, String>> games = db.exec(sql, params);
+
+        ArrayList<Integer> gameIDs = new ArrayList<Integer>();
+        for (Map<String, String> game : games) {
+            gameIDs.add(Integer.parseInt(game.get("idgame")));
+        }
+
+        return gameIDs;
     }
 }

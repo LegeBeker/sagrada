@@ -1,5 +1,6 @@
 package main.java.view;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -36,6 +37,8 @@ public class GamesView extends VBox {
 
     private TableView<Map<String, String>> table;
 
+    private ArrayList<Integer> gamesWithOpenInvites;
+
     private HBox boxButtons;
 
     private Button buttonBack;
@@ -57,6 +60,8 @@ public class GamesView extends VBox {
         text.setStyle("-fx-font-size: 40px");
         text.setStroke(Color.web("#000000"));
         text.setFill(Color.web("#ffffff"));
+
+        this.gamesWithOpenInvites = view.getGamesWithOpenInvites();
 
         this.textTitle = new StackPane(text);
         this.textTitle.setPadding(new Insets(0, 0, SPACING, 0));
@@ -91,12 +96,11 @@ public class GamesView extends VBox {
                 super.updateItem(game, empty);
 
                 if (game == null) {
-                setStyle("");
-                } else if (view.isTurnPlayer(Integer.parseInt(game.get("idgame")))) {
-                setStyle("-fx-background-color: lightblue;");
-                } else if (view.hasOpenInvite(Integer.parseInt(game.get("idgame")),
-                view.getUsername())) {
-                setStyle("-fx-background-color: orange;");
+                    setStyle("");
+                } else if (view.getUsername().equals(game.get("username"))) {
+                    setStyle("-fx-background-color: lightblue;");
+                } else if (gamesWithOpenInvites.contains(Integer.parseInt(game.get("idgame")))) {
+                    setStyle("-fx-background-color: orange;");
                 }
 
             }
@@ -110,7 +114,8 @@ public class GamesView extends VBox {
                     if (view.hasOpenInvite(Integer.parseInt(game.get("idgame")), view.getUsername())) {
                         showInviteAlert(Integer.parseInt(game.get("idgame")));
                     } else if (view.gameHasOpenInvites(Integer.parseInt(game.get("idgame")))
-                            && view.playerHasChosenPatternCard(Integer.parseInt(game.get("idgame")), view.getUsername())) {
+                            && view.playerHasChosenPatternCard(Integer.parseInt(game.get("idgame")),
+                                    view.getUsername())) {
                         view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");
                     } else {
                         this.view.openGameView(Integer.parseInt(game.get("idgame")));
