@@ -316,7 +316,6 @@ public class ViewController extends Scene {
             this.timer.schedule(new TimerTask() {
                 public void run() {
                     Platform.runLater(() -> {
-                        gameController.updateGame();
                         Observable.notifyObservers(Game.class);
                     });
                 }

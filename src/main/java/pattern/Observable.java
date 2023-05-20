@@ -29,7 +29,14 @@ public abstract class Observable {
 
     public static void notifyObservers(final Class<?> objectClass) {
         for (Observer observer : observers.get(objectClass)) {
-            observer.update();
+            if (observer.getClass().getSimpleName().endsWith("Controller")) {
+                observer.update();
+            }
+        }
+        for (Observer observer : observers.get(objectClass)) {
+            if (!observer.getClass().getSimpleName().endsWith("Controller")) {
+                observer.update();
+            }
         }
     }
 }

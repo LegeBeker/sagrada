@@ -10,8 +10,9 @@ import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
 import main.java.model.Player;
+import main.java.pattern.Observer;
 
-public final class GameController {
+public final class GameController implements Observer {
 
     private final ViewController view;
 
@@ -164,7 +165,7 @@ public final class GameController {
         return Game.getGamesWithOpenInvites(view.getUsername());
     }
 
-    public void updateGame() {
+    public void update() {
         this.game = Game.get(this.game.getId());
     }
 }
