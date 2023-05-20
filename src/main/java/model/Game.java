@@ -48,13 +48,13 @@ public class Game extends Observable {
         List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
 
         newGame.addPlayer(Player.createPlayer(
-                thisGameID, username, PlayStatusEnum.CHALLENGER.toString(),
+                newGame, username, PlayStatusEnum.CHALLENGER.toString(),
                 colorList.remove(0).get("color")));
         newGame.setTurnPlayer(newGame.getPlayers().get(0));
 
         for (String account : accounts) {
             newGame.addPlayer(Player.createPlayer(
-                    thisGameID, account, PlayStatusEnum.CHALLENGEE.toString(),
+                    newGame, account, PlayStatusEnum.CHALLENGEE.toString(),
                     colorList.remove(0).get("color")));
         }
 
@@ -296,7 +296,7 @@ public class Game extends Observable {
         game.helpFunction = false;
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
-            game.players.add(Player.mapToPlayer(map));
+            game.players.add(Player.mapToPlayer(game, map));
         }
 
         if (gameMap.get("turn_idplayer") != null) {
