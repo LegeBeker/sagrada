@@ -55,7 +55,7 @@ public final class GameController implements Observer {
     }
 
     public ArrayList<Map<String, String>> getRoundTrack() {
-        ArrayList<Die> dice = Game.getRoundTrack(this.game.getId());
+        ArrayList<Die> dice = game.getRoundTrack();
         ArrayList<Map<String, String>> diceMap = new ArrayList<Map<String, String>>();
 
         for (Die die : dice) {
@@ -96,10 +96,6 @@ public final class GameController implements Observer {
 
     public Boolean isTurnPlayer(final String username) {
         return this.game.getTurnPlayerUsername().equals(username);
-    }
-
-    public Boolean isTurnPlayer(final int gameId, final String username) {
-        return Game.get(gameId).getTurnPlayerUsername().equals(username);
     }
 
     public Boolean isTurnPlayer(final int playerId) {
@@ -166,6 +162,6 @@ public final class GameController implements Observer {
     }
 
     public void update() {
-        this.game = Game.get(this.game.getId());
+        this.game.update();
     }
 }

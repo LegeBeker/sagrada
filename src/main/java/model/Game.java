@@ -25,6 +25,9 @@ public class Game extends Observable {
 
     private String creationDate;
 
+    private ArrayList<Die> offer;
+    private ArrayList<Die> roundTrack;
+
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
 
@@ -95,11 +98,11 @@ public class Game extends Observable {
     }
 
     public ArrayList<Die> getOffer() {
-        return Die.getOffer(idGame, currentRound);
+        return this.offer;
     }
 
-    public static ArrayList<Die> getRoundTrack(final int idGame) {
-        return Die.getRoundTrack(idGame);
+    public ArrayList<Die> getRoundTrack() {
+        return this.roundTrack;
     }
 
     public Player getTurnPlayer() {
@@ -274,25 +277,20 @@ public class Game extends Observable {
     }
 
     private void setCurrentRound(final int roundID) {
-        this.currentRound = roundID;
         GameDB.setRound(getId(), roundID);
+        notifyObservers(Game.class);
     }
 
     public static Game get(final int idGame) {
-        return mapToGame(GameDB.get(idGame));
-    }
+        Map<String, String> gameMap = GameDB.get(idGame);
 
-    public static List<Map<String, String>> getGamesList() {
-        return GameDB.getGamesList();
-    }
-
-    public static Game mapToGame(final Map<String, String> gameMap) {
         Game game = new Game();
 
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
 
         if (gameMap.get("current_roundID") != null) {
             game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+            game.offer = Die.getOffer(game.idGame, game.currentRound);
         }
         game.creationDate = gameMap.get("creationdate");
         game.helpFunction = false;
@@ -305,7 +303,33 @@ public class Game extends Observable {
             game.turnPlayer = game.getPlayer(Integer.parseInt(gameMap.get("turn_idplayer")));
         }
 
+        game.roundTrack = Die.getRoundTrack(game.idGame);
+
         return game;
+    }
+
+    public void update() {
+        Map<String, String> gameMap = GameDB.get(idGame);
+
+        if (gameMap.get("current_roundID") != null
+                && Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
+            this.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+            this.offer = Die.getOffer(this.idGame, this.currentRound);
+            this.roundTrack = Die.getRoundTrack(this.idGame);
+        }
+
+        for (Map<String, String> map : GameDB.getPlayers(this.idGame)) {
+            this.players.add(Player.mapToPlayer(map, this.getPlayer(map.get("username"))));
+        }
+
+        if (gameMap.get("turn_idplayer") != null
+                && Integer.parseInt(gameMap.get("turn_idplayer")) != turnPlayer.getId()) {
+            this.turnPlayer = this.getPlayer(Integer.parseInt(gameMap.get("turn_idplayer")));
+        }
+    }
+
+    public static List<Map<String, String>> getGamesList() {
+        return GameDB.getGamesList();
     }
 
     public StringProperty turnPlayerUsernameProperty() {

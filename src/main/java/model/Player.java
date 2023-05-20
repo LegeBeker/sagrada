@@ -215,6 +215,18 @@ public class Player {
         return player;
     }
 
+    public static Player mapToPlayer(final Map<String, String> playerMap, final Player player) {
+        player.playStatus = playerMap.get("playstatus");
+        player.score = Integer.parseInt(playerMap.get("score"));
+        if (playerMap.get("seqnr") != null) {
+            player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
+        }
+        if (playerMap.get("idpatterncard") != null && !player.hasPatternCard()) {
+            player.patternCard = PatternCard.get(Integer.parseInt(playerMap.get("idpatterncard")));
+        }
+        return player;
+    }
+
     public List<Integer> getPatternCardOptions() {
         List<Map<String, String>> patternCardNumbers = PatternCardDB.getPatternCardOptions(getId());
 

@@ -1,6 +1,7 @@
 package main.java.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
@@ -17,17 +18,26 @@ public class PatternCard {
     private static final int ROWS = 4;
     private static final int COLUMNS = 5;
 
+    private static Map<Integer, PatternCard> cachedCards = new HashMap<Integer, PatternCard>();
+
     private PatternCardField[][] fields = new PatternCardField[ROWS][COLUMNS];
 
     public static PatternCard get(final int idPatternCard) {
-        return mapToPatternCard(PatternCardDB.get(idPatternCard));
+        if (!cachedCards.containsKey(idPatternCard)) {
+            cachedCards.put(idPatternCard, mapToPatternCard(PatternCardDB.get(idPatternCard)));
+        }
+        return cachedCards.get(idPatternCard);
     }
 
     public static ArrayList<PatternCard> getDefaultCards() {
         ArrayList<PatternCard> defaultCards = new ArrayList<PatternCard>();
         for (Map<String, String> cardInfo : PatternCardDB.getAllStandard()) {
-            PatternCard card = mapToPatternCard(cardInfo);
-            defaultCards.add(card);
+            if (!cachedCards.containsKey(Integer.parseInt(cardInfo.get("idpatterncard")))) {
+                cachedCards.put(Integer.parseInt(cardInfo.get("idpatterncard")),
+                        mapToPatternCard(cardInfo));
+            }
+
+            defaultCards.add(cachedCards.get(Integer.parseInt(cardInfo.get("idpatterncard"))));
         }
         return defaultCards;
     }
@@ -75,7 +85,7 @@ public class PatternCard {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 if (validateMove(board, dieValue, dieColor, col, row)) {
-                    possibleMoves.add(new int[]{row, col});
+                    possibleMoves.add(new int[] {row, col});
                 }
             }
         }
