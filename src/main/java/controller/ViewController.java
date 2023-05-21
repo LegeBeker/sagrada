@@ -304,6 +304,7 @@ public class ViewController extends Scene {
     public void openGameView(final int gameId) {
         Game game = this.gameController.getGame(gameId);
         this.gameController.setGame(game);
+        Observable.removeAllObservers(Game.class);
         if (game.playerHasChosenPatternCard(getUsername())) {
             GameView gameView = new GameView(this);
             changeView(gameView);
