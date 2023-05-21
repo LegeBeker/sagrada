@@ -3,8 +3,6 @@ package main.java.controller;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
-import main.java.db.DieDB;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
 
@@ -109,7 +107,7 @@ public class ToolcardController {
             List<Die> gameOffer = Die.getOffer(gameId, roundId);
 
             for (Die die : gameOffer) {
-                int newValue = random.nextInt(6) + 1;
+                int newValue = random.nextInt(SIX) + 1;
 
                 ToolCardDB.updateGameDieValue(die.getNumber(), newValue);
 
