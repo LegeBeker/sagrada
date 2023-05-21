@@ -1,8 +1,10 @@
 package main.java.controller;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import main.java.db.ToolCardDB;
+import main.java.model.Die;
 
 public class ToolcardController {
 
@@ -13,6 +15,7 @@ public class ToolcardController {
     private static final int FOUR = 4;
     private static final int FIVE = 5;
     private static final int SIX = 6;
+    private static final int TURNCOUNT = 2;
     private Random random;
 
     public void grozingPliers(final int dieValue) {
@@ -96,5 +99,22 @@ public class ToolcardController {
         System.out.println("New value: " + newValue);
 
         ToolCardDB.updateGameDieValue(newValue, 0);
+    }
+
+    public void glazingHammer(final int turnCount, final int gameId, final int roundId) {
+        if (turnCount == TURNCOUNT) {
+
+            List<Die> gameOffer = Die.getOffer(gameId, roundId);
+
+            for (Die die : gameOffer) {
+                int newValue = random.nextInt(SIX) + 1;
+
+                ToolCardDB.updateGameDieValue(die.getNumber(), newValue);
+
+            }
+            System.out.println("Draft pool dice have been rerolled");
+        } else {
+            System.out.println("You can only reroll the draft pool when its ur second turn");
+        }
     }
 }
