@@ -311,11 +311,12 @@ public class Game extends Observable {
     public void update() {
         Map<String, String> gameMap = GameDB.get(idGame);
 
-        if (gameMap.get("current_roundID") != null
-                && Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
-            this.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+        if (gameMap.get("current_roundID") != null) {
             this.offer = Die.getOffer(this.idGame, this.currentRound);
-            this.roundTrack = Die.getRoundTrack(this.idGame);
+            if (Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
+                this.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+                this.roundTrack = Die.getRoundTrack(this.idGame);
+            }
         }
 
         for (Map<String, String> map : GameDB.getPlayers(this.idGame)) {
