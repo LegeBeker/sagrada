@@ -113,6 +113,10 @@ public final class GameController {
         return Game.get(gameId).getTurnPlayerUsername().equals(username);
     }
 
+    public Boolean isTurnPlayer(final int playerId) {
+        return this.game.getTurnPlayerId() == playerId;
+    }
+
     public void setHelpFunction() {
         this.game.setHelpFunction();
     }
@@ -125,13 +129,13 @@ public final class GameController {
         game.getNewOffer();
     }
 
-    public void endTurn() {
-        game.endTurn();
-    }
-
     public void choosePatternCard(final int idPatternCard) {
         getCurrentPlayer().choosePatternCard(idPatternCard, this.game.getId());
         getCurrentPlayer().createGameFavorTokens();
+    }
+
+    public void endTurn() {
+        getGame().endTurn();
     }
 
     public void setGame(final Game game) {
@@ -161,5 +165,14 @@ public final class GameController {
 
     public void refuseInvite(final int gameId) {
         Player.refuseInvite(gameId, view.getUsername());
+    }
+
+    public boolean playerHasChosenPatternCard(final int gameId, final String username) {
+        Game game = Game.get(gameId);
+        return game.playerHasChosenPatternCard(username);
+    }
+
+    public void updateGame() {
+        this.game = Game.get(this.game.getId());
     }
 }
