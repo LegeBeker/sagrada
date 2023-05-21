@@ -3,6 +3,8 @@ package main.java.db;
 import java.util.List;
 import java.util.Map;
 
+import main.java.enums.PlayStatusEnum;
+
 public final class GameDB {
     private GameDB() {
     }
@@ -105,5 +107,14 @@ public final class GameDB {
         }
         sql = "SELECT * FROM gameobjectivecard_public WHERE idgame = " + Integer.toString(gameID) + ";";
         return db.exec(sql, null);
+    }
+
+    public static boolean hasOpenInvites(final int idGame) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM player WHERE idgame = ? AND playstatus = ?;";
+        String[] params = {Integer.toString(idGame), PlayStatusEnum.CHALLENGEE.toString()};
+
+        return db.exec(sql, params).size() > 0;
     }
 }
