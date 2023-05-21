@@ -178,8 +178,10 @@ public class GamesView extends VBox {
 
         if (result.get() == acceptButton) {
             view.acceptInvite(gameId);
+            view.openGamesView();
         } else if (result.get() == refuseButton) {
             view.refuseInvite(gameId);
+            view.openGamesView();
         }
     }
 }
