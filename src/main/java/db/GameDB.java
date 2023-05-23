@@ -18,12 +18,18 @@ public final class GameDB {
         return db.exec(sql, params).get(0);
     }
 
-    public static List<Map<String, String>> getAll() {
+    public static List<Map<String, String>> getGamesList(final String username) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT * FROM game";
+        String sql = "SELECT game.*, DATE_FORMAT(game.creationdate, '%d-%m-%Y %H:%i:%s') AS formatted_creationdate, "
+                + "player.username, CASE WHEN pl2.username IS NOT NULL THEN 'TRUE' ELSE 'FALSE' END AS isPlayerInGame "
+                + "FROM game JOIN player ON game.turn_idplayer = player.idplayer "
+                + "LEFT JOIN player pl2 ON game.idgame = pl2.idgame AND pl2.username = ? "
+                + "GROUP BY game.idgame;";
 
-        return db.exec(sql, null);
+        String[] params = {username};
+
+        return db.exec(sql, params);
     }
 
     public static List<Map<String, String>> getPlayers(final int idGame) {
@@ -109,12 +115,25 @@ public final class GameDB {
         return db.exec(sql, null);
     }
 
-    public static boolean hasOpenInvites(final int idGame) {
+    public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT * FROM player WHERE idgame = ? AND playstatus = ?;";
-        String[] params = {Integer.toString(idGame), PlayStatusEnum.CHALLENGEE.toString()};
+        String sql = "SELECT game.idgame, player.idplayer, CASE WHEN player.username IS NULL THEN 'FALSE' ELSE 'TRUE' END AS hasOpenInvite "
+                + "FROM game "
+                + "LEFT JOIN player ON game.idgame = player.idgame AND player.username = ? "
+                + "WHERE player.playstatus = ? OR player.username IS NULL;";
 
-        return db.exec(sql, params).size() > 0;
+        String[] params = {username, PlayStatusEnum.CHALLENGEE.toString()};
+        List<Map<String, String>> games = db.exec(sql, params);
+
+        Map<Integer, Boolean> gamesWithOpenInvites = new java.util.HashMap<Integer, Boolean>();
+
+        for (Map<String, String> game : games) {
+            gamesWithOpenInvites.put(Integer.parseInt(game.get("idgame")),
+                    Boolean.parseBoolean(game.get("hasOpenInvite")));
+        }
+
+        return gamesWithOpenInvites;
     }
+
 }

@@ -20,10 +20,13 @@ import main.java.pattern.Observable;
 public class Game extends Observable {
     private int idGame;
 
-    private int turnIdPlayer;
+    private Player turnPlayer;
     private int currentRound;
 
     private String creationDate;
+
+    private ArrayList<Die> offer;
+    private ArrayList<Die> roundTrack;
 
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
@@ -45,14 +48,13 @@ public class Game extends Observable {
         List<Map<String, String>> colorList = GameDB.getColors(accounts.size() + 1);
 
         newGame.addPlayer(Player.createPlayer(
-                thisGameID, username, PlayStatusEnum.CHALLENGER.toString(),
+                newGame, username, PlayStatusEnum.CHALLENGER.toString(),
                 colorList.remove(0).get("color")));
-        GameDB.setTurnPlayer(thisGameID, newGame.getPlayers().get(0).getId());
-        newGame.setTurnPlayer(newGame.getPlayers().get(0).getId());
+        newGame.setTurnPlayer(newGame.getPlayers().get(0));
 
         for (String account : accounts) {
             newGame.addPlayer(Player.createPlayer(
-                    thisGameID, account, PlayStatusEnum.CHALLENGEE.toString(),
+                    newGame, account, PlayStatusEnum.CHALLENGEE.toString(),
                     colorList.remove(0).get("color")));
         }
 
@@ -96,28 +98,28 @@ public class Game extends Observable {
     }
 
     public ArrayList<Die> getOffer() {
-        return Die.getOffer(idGame, currentRound);
+        return this.offer;
     }
 
-    public static ArrayList<Die> getRoundTrack(final int idGame) {
-        return Die.getRoundTrack(idGame);
+    public ArrayList<Die> getRoundTrack() {
+        return this.roundTrack;
     }
 
     public Player getTurnPlayer() {
-        return Player.get(this.turnIdPlayer);
+        return this.turnPlayer;
     }
 
     public String getTurnPlayerUsername() {
-        return Player.get(this.turnIdPlayer).getUsername();
+        return this.turnPlayer.getUsername();
     }
 
     public int getTurnPlayerId() {
-        return Player.get(this.turnIdPlayer).getId();
+        return this.turnPlayer.getId();
     }
 
-    public void setTurnPlayer(final int idPlayer) {
-        this.turnIdPlayer = idPlayer;
-        GameDB.setTurnPlayer(getId(), idPlayer);
+    public void setTurnPlayer(final Player player) {
+        this.turnPlayer = player;
+        GameDB.setTurnPlayer(getId(), player.getId());
     }
 
     public int getCurrentRound() {
@@ -143,7 +145,8 @@ public class Game extends Observable {
     }
 
     public boolean hasOpenInvites() {
-        return GameDB.hasOpenInvites(this.idGame);
+        return this.players.stream()
+                .anyMatch(player -> player.getPlayStatus().equals(PlayStatusEnum.CHALLENGEE.toString()));
     }
 
     public ArrayList<Player> getPlayers(final String currPlayerUsername) {
@@ -182,22 +185,15 @@ public class Game extends Observable {
         return null;
     }
 
+    public boolean isPlayerInGame(final String username) {
+        return this.players.stream()
+                .anyMatch(player -> player.getUsername().equals(username));
+    }
+
     public ArrayList<String> getPlayerNames() {
         return (ArrayList<String>) players.stream()
                 .map(Player::getUsername)
                 .collect(Collectors.toList());
-    }
-
-    public boolean playerHasNotReplied(final String username) {
-        for (Player player : this.players) {
-            if (player.getUsername().equals(username)) {
-                if (player.getPlayStatus().equals("challengee")) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     public boolean playerHasChosenPatternCard(final String username) {
@@ -213,6 +209,13 @@ public class Game extends Observable {
     public Player getPlayer(final String username) {
         return this.players.stream()
                 .filter(player -> player.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Player getPlayer(final int playerId) {
+        return this.players.stream()
+                .filter(player -> player.getId() == playerId)
                 .findFirst()
                 .orElse(null);
     }
@@ -234,7 +237,7 @@ public class Game extends Observable {
         } else {
             for (Player player : getPlayers()) {
                 if (player.getSeqnr() == nextSeqnr) {
-                    setTurnPlayer(player.getId());
+                    setTurnPlayer(player);
                     break;
                 }
             }
@@ -253,7 +256,7 @@ public class Game extends Observable {
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == getPlayers().size()) {
                 player.setSeqnr(1);
-                setTurnPlayer(player.getId());
+                setTurnPlayer(player);
             } else {
                 player.setSeqnr(player.getSeqnr() + 1);
             }
@@ -261,50 +264,67 @@ public class Game extends Observable {
 
         for (Map<String, String> dieMap : DieDB.getOffer(getId(), getCurrentRound())) {
             DieDB.putRoundTrack(getId(), getCurrentRound(), Integer.parseInt(dieMap.get("dienumber")),
-                dieMap.get("diecolor"));
+                    dieMap.get("diecolor"));
         }
 
         setCurrentRound(getCurrentRound() + 1);
     }
 
     private void setCurrentRound(final int roundID) {
-        this.currentRound = roundID;
         GameDB.setRound(getId(), roundID);
+        notifyObservers(Game.class);
     }
 
     public static Game get(final int idGame) {
-        return mapToGame(GameDB.get(idGame));
-    }
+        Map<String, String> gameMap = GameDB.get(idGame);
 
-    public static ArrayList<Game> getAll() {
-        ArrayList<Game> games = new ArrayList<Game>();
-
-        for (Map<String, String> gameMap : GameDB.getAll()) {
-            Game game = mapToGame(gameMap);
-            games.add(game);
-        }
-
-        return games;
-    }
-
-    public static Game mapToGame(final Map<String, String> gameMap) {
         Game game = new Game();
 
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
-        if (gameMap.get("turn_idplayer") != null) {
-            game.turnIdPlayer = Integer.parseInt(gameMap.get("turn_idplayer"));
-        }
+
         if (gameMap.get("current_roundID") != null) {
             game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+            game.offer = Die.getOffer(game.idGame, game.currentRound);
         }
         game.creationDate = gameMap.get("creationdate");
         game.helpFunction = false;
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
-            game.players.add(Player.mapToPlayer(map));
+            game.players.add(Player.mapToPlayer(game, map));
         }
 
+        if (gameMap.get("turn_idplayer") != null) {
+            game.turnPlayer = game.getPlayer(Integer.parseInt(gameMap.get("turn_idplayer")));
+        }
+
+        game.roundTrack = Die.getRoundTrack(game.idGame);
+
         return game;
+    }
+
+    public void update() {
+        Map<String, String> gameMap = GameDB.get(idGame);
+
+        if (gameMap.get("current_roundID") != null) {
+            this.offer = Die.getOffer(this.idGame, this.currentRound);
+            if (Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
+                this.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+                this.roundTrack = Die.getRoundTrack(this.idGame);
+            }
+        }
+
+        for (Map<String, String> map : GameDB.getPlayers(this.idGame)) {
+            this.players.add(Player.mapToPlayer(map, this.getPlayer(map.get("username"))));
+        }
+
+        if (gameMap.get("turn_idplayer") != null
+                && Integer.parseInt(gameMap.get("turn_idplayer")) != turnPlayer.getId()) {
+            this.turnPlayer = this.getPlayer(Integer.parseInt(gameMap.get("turn_idplayer")));
+        }
+    }
+
+    public static List<Map<String, String>> getGamesList(final String username) {
+        return GameDB.getGamesList(username);
     }
 
     public StringProperty turnPlayerUsernameProperty() {
@@ -341,5 +361,9 @@ public class Game extends Observable {
         }
 
         return objectiveCardIds;
+    }
+
+    public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
+        return GameDB.getGamesWithOpenInvites(username);
     }
 }

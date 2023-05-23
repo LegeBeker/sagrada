@@ -15,7 +15,7 @@ public abstract class Observable {
         observers.get(objectClass).add(observer);
     }
 
-    public void removeObserver(final Class<?> objectClass, final Observer observer) {
+    public static void removeObserver(final Class<?> objectClass, final Observer observer) {
         if (!observers.containsKey(objectClass)) {
             return;
         }
@@ -27,9 +27,25 @@ public abstract class Observable {
         }
     }
 
+    public static void removeAllObservers(final Class<?> objectClass) {
+        if (!observers.containsKey(objectClass)) {
+            return;
+        }
+
+        observers.get(objectClass).clear();
+        observers.remove(objectClass);
+    }
+
     public static void notifyObservers(final Class<?> objectClass) {
         for (Observer observer : observers.get(objectClass)) {
-            observer.update();
+            if (observer.getClass().getSimpleName().endsWith("Controller")) {
+                observer.update();
+            }
+        }
+        for (Observer observer : observers.get(objectClass)) {
+            if (!observer.getClass().getSimpleName().endsWith("Controller")) {
+                observer.update();
+            }
         }
     }
 }
