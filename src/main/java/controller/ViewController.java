@@ -300,7 +300,6 @@ public class ViewController extends Scene {
         this.gameController.choosePatternCard(idPatternCard);
 
         if (this.gameController.gameHasOpenInvites()) {
-            System.out.println("Waiting for other players to choose their pattern card");
             openGamesView();
         } else {
             openGameView(this.gameController.getGameId());
@@ -311,6 +310,7 @@ public class ViewController extends Scene {
         Game game = this.gameController.getGame(gameId);
         this.gameController.setGame(game);
         Observable.removeAllObservers(Game.class);
+        Observable.addObserver(Game.class, this.gameController);
         if (game.playerHasChosenPatternCard(getUsername())) {
             GameView gameView = new GameView(this);
             changeView(gameView);

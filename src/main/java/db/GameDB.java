@@ -118,10 +118,12 @@ public final class GameDB {
     public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT game.idgame, player.idplayer, CASE WHEN player.username IS NULL THEN 'FALSE' ELSE 'TRUE' END AS hasOpenInvite "
+        String sql = "SELECT game.idgame, "
+                + "CASE WHEN player.username = ? THEN 'TRUE' ELSE 'FALSE' END AS hasOpenInvite "
                 + "FROM game "
-                + "LEFT JOIN player ON game.idgame = player.idgame AND player.username = ? "
-                + "WHERE player.playstatus = ? OR player.username IS NULL;";
+                + "JOIN player ON game.idgame = player.idgame "
+                + "WHERE player.playstatus = ? "
+                + "GROUP BY game.idgame, hasOpenInvite;";
 
         String[] params = {username, PlayStatusEnum.CHALLENGEE.toString()};
         List<Map<String, String>> games = db.exec(sql, params);

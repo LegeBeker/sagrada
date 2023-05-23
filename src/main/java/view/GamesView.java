@@ -120,7 +120,7 @@ public class GamesView extends VBox {
                         && view.playerHasChosenPatternCard(Integer.parseInt(game.get("idgame")),
                                 view.getUsername())) {
                     view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");
-                } else {
+                } else if (game != null) {
                     this.view.openGameView(Integer.parseInt(game.get("idgame")));
                 }
             }

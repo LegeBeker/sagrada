@@ -37,12 +37,13 @@ public abstract class Observable {
     }
 
     public static void notifyObservers(final Class<?> objectClass) {
-        for (Observer observer : observers.get(objectClass)) {
+        Map<Class<?>, List<Observer>> copyObservers = new HashMap<>(observers);
+        for (Observer observer : copyObservers.get(objectClass)) {
             if (observer.getClass().getSimpleName().endsWith("Controller")) {
                 observer.update();
             }
         }
-        for (Observer observer : observers.get(objectClass)) {
+        for (Observer observer : copyObservers.get(objectClass)) {
             if (!observer.getClass().getSimpleName().endsWith("Controller")) {
                 observer.update();
             }

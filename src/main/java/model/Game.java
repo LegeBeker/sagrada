@@ -197,9 +197,7 @@ public class Game extends Observable {
     }
 
     public boolean playerHasChosenPatternCard(final String username) {
-        Player player = getCurrentPlayer(idGame, username);
-
-        return player.hasPatternCard();
+        return getPlayer(username).hasPatternCard();
     }
 
     public void addPlayer(final Player player) {
@@ -313,9 +311,13 @@ public class Game extends Observable {
             }
         }
 
+        ArrayList<Player> tempPlayers = new ArrayList<>();
+
         for (Map<String, String> map : GameDB.getPlayers(this.idGame)) {
-            this.players.add(Player.mapToPlayer(map, this.getPlayer(map.get("username"))));
+            tempPlayers.add(Player.mapToPlayer(map, this.getPlayer(map.get("username"))));
         }
+
+        this.players = tempPlayers;
 
         if (gameMap.get("turn_idplayer") != null
                 && Integer.parseInt(gameMap.get("turn_idplayer")) != turnPlayer.getId()) {

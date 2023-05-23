@@ -201,8 +201,12 @@ public class Player {
     }
 
     public static Player mapToPlayer(final Map<String, String> playerMap, final Player player) {
-        player.playStatus = playerMap.get("playstatus");
-        player.score = Integer.parseInt(playerMap.get("score"));
+        if (playerMap.get("playstatus") != null) {
+            player.playStatus = playerMap.get("playstatus");
+        }
+        if (playerMap.get("score") != null) {
+            player.score = Integer.parseInt(playerMap.get("score"));
+        }
         if (playerMap.get("seqnr") != null) {
             player.seqnr = Integer.parseInt(playerMap.get("seqnr"));
         }

@@ -10,7 +10,6 @@ import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
 import main.java.model.Player;
-import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
 public final class GameController implements Observer {
@@ -21,7 +20,6 @@ public final class GameController implements Observer {
 
     public GameController(final ViewController view) {
         this.view = view;
-        Observable.addObserver(Game.class, this);
     }
 
     public List<Map<String, String>> getGamesList() {
