@@ -1,5 +1,6 @@
 package main.java.db;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 
@@ -16,12 +17,19 @@ public final class ToolCardDB {
         return db.exec(sql, params);
     }
 
-    public static boolean updateGameDieValue(final int idgame, final int value) {
+    public static boolean updateGameDieValue(final int idgame, final int eyes) {
         Database db = Database.getInstance();
-        String sql = "UPDATE gamedie SET value = ? WHERE idgame = ?";
-        String[] params = {Integer.toString(value), Integer.toString(idgame)};
+        String sql = "UPDATE gamedie SET eyes = ? WHERE idgame = ?";
+        String[] params = {Integer.toString(eyes), Integer.toString(idgame)};
         db.exec(sql, params);
         return true;
     }
-
+    
+    public static boolean updateGameDieColor(final int idgame, final String color) {
+        Database db = Database.getInstance();
+        String sql = "UPDATE gamedie SET diecolor = ? WHERE idgame = ?";
+        String[] params = {color.toString(), Integer.toString(idgame)};
+        db.exec(sql, params);
+        return true;
+    }
 }
