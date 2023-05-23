@@ -300,7 +300,6 @@ public class ViewController extends Scene {
         this.gameController.choosePatternCard(idPatternCard);
 
         if (this.gameController.gameHasOpenInvites()) {
-            System.out.println("Waiting for other players to choose their pattern card");
             openGamesView();
         } else {
             openGameView(this.gameController.getGameId());

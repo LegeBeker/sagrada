@@ -62,8 +62,6 @@ public class GamesView extends VBox {
 
         this.gamesWithOpenInvites = view.getGamesWithOpenInvites();
 
-        System.out.println(gamesWithOpenInvites);
-
         this.textTitle = new StackPane(text);
         this.textTitle.setPadding(new Insets(0, 0, SPACING, 0));
 
