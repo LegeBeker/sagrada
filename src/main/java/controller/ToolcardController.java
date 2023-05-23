@@ -22,7 +22,6 @@ public class ToolcardController {
 
     public void grozingPliers(final int dieValue) {
         Scanner input = new Scanner(System.in);
-
         System.out.println("Starting value: " + dieValue);
         System.out.print("Enter 1 to add or 2 to subtract: ");
         int choice = input.nextInt();
