@@ -18,13 +18,16 @@ public final class GameDB {
         return db.exec(sql, params).get(0);
     }
 
-    public static List<Map<String, String>> getGamesList() {
+    public static List<Map<String, String>> getGamesList(final String username) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT game.*, DATE_FORMAT(game.creationdate, '%d-%m-%Y %H:%i:%s') AS formatted_creationdate, player.username"
+        String sql = "SELECT game.*, DATE_FORMAT(game.creationdate, '%d-%m-%Y %H:%i:%s') AS formatted_creationdate, player.username," 
+                + " CASE WHEN player.username = ? THEN 'TRUE' ELSE 'FALSE' END AS isPlayerInGame"
                 + " FROM game JOIN player ON game.turn_idplayer = player.idplayer;";
 
-        return db.exec(sql, null);
+        String[] params = {username};
+
+        return db.exec(sql, params);
     }
 
     public static List<Map<String, String>> getPlayers(final int idGame) {

@@ -25,7 +25,7 @@ public final class GameController implements Observer {
     }
 
     public List<Map<String, String>> getGamesList() {
-        return Game.getGamesList();
+        return Game.getGamesList(view.getUsername());
     }
 
     public Game getGame(final int gameId) {
@@ -102,6 +102,10 @@ public final class GameController implements Observer {
 
     public Boolean isTurnPlayer(final int playerId) {
         return this.game.getTurnPlayerId() == playerId;
+    }
+
+    public Boolean isPlayerInGame(final String username){
+        return this.game.isPlayerInGame(username);
     }
 
     public boolean gameHasOpenInvites() {

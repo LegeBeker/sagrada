@@ -94,6 +94,13 @@ public class GamesView extends VBox {
             protected void updateItem(final Map<String, String> game, final boolean empty) {
                 super.updateItem(game, empty);
 
+                if (game != null) {
+                    System.out.println(
+                            "Parsed game(" + game.get("idgame") + ":) "
+                                    + Boolean.parseBoolean(game.get("isPlayerInGame")));
+                    System.out.println(game.get("isPlayerInGame"));
+                }
+
                 if (game == null) {
                     setStyle("");
                 } else if (view.getUsername().equals(game.get("username"))) {
@@ -101,6 +108,10 @@ public class GamesView extends VBox {
                 } else if (gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
                         && gamesWithOpenInvites.get(Integer.parseInt(game.get("idgame")))) {
                     setStyle("-fx-background-color: orange;");
+                } else if (!Boolean.parseBoolean(game.get("isPlayerInGame"))) {
+                    setDisable(true);
+                } else {
+                    setStyle("");
                 }
 
             }

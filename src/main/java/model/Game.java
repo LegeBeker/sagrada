@@ -185,6 +185,11 @@ public class Game extends Observable {
         return null;
     }
 
+    public boolean isPlayerInGame(final String username){
+        return this.players.stream()
+                .anyMatch(player -> player.getUsername().equals(username));
+    }
+
     public ArrayList<String> getPlayerNames() {
         return (ArrayList<String>) players.stream()
                 .map(Player::getUsername)
@@ -318,8 +323,8 @@ public class Game extends Observable {
         }
     }
 
-    public static List<Map<String, String>> getGamesList() {
-        return GameDB.getGamesList();
+    public static List<Map<String, String>> getGamesList(final String username) {
+        return GameDB.getGamesList(username);
     }
 
     public StringProperty turnPlayerUsernameProperty() {
