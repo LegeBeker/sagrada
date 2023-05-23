@@ -104,7 +104,7 @@ public final class GameController implements Observer {
         return this.game.getTurnPlayerId() == playerId;
     }
 
-    public boolean gameHasOpenInvites(){
+    public boolean gameHasOpenInvites() {
        return this.game.hasOpenInvites();
     }
 
