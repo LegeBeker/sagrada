@@ -10,7 +10,7 @@ import main.java.pattern.Observable;
 
 public class Message extends Observable {
     private String message;
-    private int idPlayer;
+    private String playerUsername;
     private String time;
 
     public String getMessage() {
@@ -18,7 +18,7 @@ public class Message extends Observable {
     }
 
     public String getPlayerUsername() {
-        return Player.get(idPlayer).getUsername();
+        return playerUsername;
     }
 
     public String getTime() {
@@ -40,7 +40,7 @@ public class Message extends Observable {
             Message message = new Message();
             message.message = messageMap.get("message");
             message.time = messageMap.get("time");
-            message.idPlayer = Integer.parseInt(messageMap.get("idplayer"));
+            message.playerUsername = messageMap.get("username");
             messages.add(message);
         }
 

@@ -13,11 +13,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
-import main.java.model.Game;
-import main.java.pattern.Observable;
-import main.java.pattern.Observer;
 
-public class PatternCardView extends BorderPane implements Observer {
+public class PatternCardView extends BorderPane {
 
     private static final int ROWS = 4;
     private static final int COLUMNS = 5;
@@ -108,7 +105,6 @@ public class PatternCardView extends BorderPane implements Observer {
             cardTopText.setText(view.getPlayerUsername(playerId));
 
             gameTokenText.setText(" Betaalstenen: " + Integer.toString(view.getPlayerGameTokens(playerId)));
-            Observable.addObserver(Game.class, this);
 
             Color playerColor = view.getPlayerColor(playerId).deriveColor(0, 1, BRIGHTNESS, 1);
             this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
@@ -121,7 +117,6 @@ public class PatternCardView extends BorderPane implements Observer {
         grid.setVgap(PADDING);
     }
 
-    @Override
     public void update() {
         ArrayList<int[]> locations = new ArrayList<int[]>();
         grid.getChildren().forEach((e) -> {
