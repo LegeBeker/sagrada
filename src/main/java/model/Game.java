@@ -185,7 +185,7 @@ public class Game extends Observable {
         return null;
     }
 
-    public boolean isPlayerInGame(final String username){
+    public boolean isPlayerInGame(final String username) {
         return this.players.stream()
                 .anyMatch(player -> player.getUsername().equals(username));
     }

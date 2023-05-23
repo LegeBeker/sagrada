@@ -94,26 +94,16 @@ public class GamesView extends VBox {
             protected void updateItem(final Map<String, String> game, final boolean empty) {
                 super.updateItem(game, empty);
 
-                if (game != null) {
-                    System.out.println(
-                            "Parsed game(" + game.get("idgame") + ":) "
-                                    + Boolean.parseBoolean(game.get("isPlayerInGame")));
-                    System.out.println(game.get("isPlayerInGame"));
-                }
+                setStyle("");
 
-                if (game == null) {
-                    setStyle("");
-                } else if (view.getUsername().equals(game.get("username"))) {
-                    setStyle("-fx-background-color: lightblue;");
-                } else if (gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
+                if (game != null && !Boolean.parseBoolean(game.get("isPlayerInGame"))) {
+                    setStyle("-fx-background-color: lightgrey;");
+                } else if (game != null && gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
                         && gamesWithOpenInvites.get(Integer.parseInt(game.get("idgame")))) {
                     setStyle("-fx-background-color: orange;");
-                } else if (!Boolean.parseBoolean(game.get("isPlayerInGame"))) {
-                    setDisable(true);
-                } else {
-                    setStyle("");
+                } else if (game != null && view.getUsername().equals(game.get("username"))) {
+                    setStyle("-fx-background-color: lightblue;");
                 }
-
             }
         });
 
@@ -121,17 +111,17 @@ public class GamesView extends VBox {
             if (e.getClickCount() == 2) {
                 Map<String, String> game = this.table.getSelectionModel().getSelectedItem();
 
-                if (game != null) {
-                    if (gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
-                            && gamesWithOpenInvites.get(Integer.parseInt(game.get("idgame")))) {
-                        showInviteAlert(Integer.parseInt(game.get("idgame")));
-                    } else if (gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
-                            && view.playerHasChosenPatternCard(Integer.parseInt(game.get("idgame")),
-                                    view.getUsername())) {
-                        view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");
-                    } else {
-                        this.view.openGameView(Integer.parseInt(game.get("idgame")));
-                    }
+                if (game != null && !Boolean.parseBoolean(game.get("isPlayerInGame"))) {
+                    view.displayError("Je bent niet uitgenodigd voor dit spel");
+                } else if (game != null && gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
+                        && gamesWithOpenInvites.get(Integer.parseInt(game.get("idgame")))) {
+                    showInviteAlert(Integer.parseInt(game.get("idgame")));
+                } else if (game != null && gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
+                        && view.playerHasChosenPatternCard(Integer.parseInt(game.get("idgame")),
+                                view.getUsername())) {
+                    view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");
+                } else {
+                    this.view.openGameView(Integer.parseInt(game.get("idgame")));
                 }
             }
         });

@@ -21,9 +21,11 @@ public final class GameDB {
     public static List<Map<String, String>> getGamesList(final String username) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT game.*, DATE_FORMAT(game.creationdate, '%d-%m-%Y %H:%i:%s') AS formatted_creationdate, player.username," 
-                + " CASE WHEN player.username = ? THEN 'TRUE' ELSE 'FALSE' END AS isPlayerInGame"
-                + " FROM game JOIN player ON game.turn_idplayer = player.idplayer;";
+        String sql = "SELECT game.*, DATE_FORMAT(game.creationdate, '%d-%m-%Y %H:%i:%s') AS formatted_creationdate, "
+                + "player.username, CASE WHEN pl2.username IS NOT NULL THEN 'TRUE' ELSE 'FALSE' END AS isPlayerInGame "
+                + "FROM game JOIN player ON game.turn_idplayer = player.idplayer "
+                + "LEFT JOIN player pl2 ON game.idgame = pl2.idgame AND pl2.username = ? "
+                + "GROUP BY game.idgame;";
 
         String[] params = {username};
 
