@@ -137,7 +137,7 @@ public final class GameController implements Observer {
         return this.game;
     }
 
-    public int getGameId(){
+    public int getGameId() {
         return this.game.getId();
     }
 
