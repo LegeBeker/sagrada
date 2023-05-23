@@ -83,7 +83,8 @@ public class ToolcardController {
                 }
                 ToolCardDB.updateGameDieValue(dieValue, 0);
                 System.out.println("Die flipped. New value: " + dieValue);
-            } else { System.out.println("Invalid command.");
+            } else {
+                System.out.println("Invalid command.");
             }
         }
     }
