@@ -6,8 +6,11 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import main.java.controller.ViewController;
+import main.java.model.Game;
+import main.java.pattern.Observable;
+import main.java.pattern.Observer;
 
-public class GameBoardsView extends HBox {
+public class GameBoardsView extends HBox implements Observer {
 
     private static final int GRIDGAP = 20;
     private static final int MAXROWS = 2;
@@ -27,6 +30,8 @@ public class GameBoardsView extends HBox {
 
         grid.setAlignment(Pos.CENTER);
         this.setAlignment(Pos.CENTER);
+
+        Observable.addObserver(Game.class, this);
 
         this.getChildren().add(grid);
     }
@@ -67,5 +72,11 @@ public class GameBoardsView extends HBox {
         patternCardView.getGrid().getChildren().forEach((cell) -> {
             cell.setStyle("-fx-border-color: transparent;");
         });
+    }
+
+    @Override
+    public void update() {
+        grid.getChildren().clear();
+        showPlayerGameboards();
     }
 }
