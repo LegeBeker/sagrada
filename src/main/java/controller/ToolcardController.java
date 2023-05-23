@@ -89,10 +89,9 @@ public class ToolcardController {
         }
     }
 
-    public void fluxBrush(final int dieValue) {
+    public void fluxBrush(final int dieValue){
         int currentValue = dieValue;
         int newValue;
-
         do {
             newValue = random.nextInt(SIX) + 1;
         } while (newValue == currentValue);
