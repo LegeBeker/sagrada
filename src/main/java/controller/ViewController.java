@@ -298,7 +298,13 @@ public class ViewController extends Scene {
 
     public void choosePatternCard(final int idPatternCard) {
         this.gameController.choosePatternCard(idPatternCard);
-        openGamesView();
+
+        if (this.gameController.gameHasOpenInvites()) {
+            System.out.println("Waiting for other players to choose their pattern card");
+            openGamesView();
+        } else {
+            openGameView(this.gameController.getGameId());
+        }
     }
 
     public void openGameView(final int gameId) {
@@ -367,16 +373,6 @@ public class ViewController extends Scene {
 
     public void refuseInvite(final int gameId) {
         this.gameController.refuseInvite(gameId);
-    }
-
-    public boolean hasOpenInvite(final int gameId, final String playerName) {
-        Game game = Game.get(gameId);
-        return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
-    }
-
-    public boolean gameHasOpenInvites(final int gameId) {
-        Game game = Game.get(gameId);
-        return game.hasOpenInvites();
     }
 
     public ArrayList<String> getAccountsUsernames() {

@@ -145,7 +145,8 @@ public class Game extends Observable {
     }
 
     public boolean hasOpenInvites() {
-        return GameDB.hasOpenInvites(this.idGame);
+        return this.players.stream()
+                .anyMatch(player -> player.getPlayStatus().equals(PlayStatusEnum.CHALLENGEE.toString()));
     }
 
     public ArrayList<Player> getPlayers(final String currPlayerUsername) {
@@ -188,18 +189,6 @@ public class Game extends Observable {
         return (ArrayList<String>) players.stream()
                 .map(Player::getUsername)
                 .collect(Collectors.toList());
-    }
-
-    public boolean playerHasNotReplied(final String username) {
-        for (Player player : this.players) {
-            if (player.getUsername().equals(username)) {
-                if (player.getPlayStatus().equals("challengee")) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     public boolean playerHasChosenPatternCard(final String username) {

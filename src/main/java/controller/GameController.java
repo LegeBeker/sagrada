@@ -104,6 +104,10 @@ public final class GameController implements Observer {
         return this.game.getTurnPlayerId() == playerId;
     }
 
+    public boolean gameHasOpenInvites(){
+       return this.game.hasOpenInvites();
+    }
+
     public void setHelpFunction() {
         this.game.setHelpFunction();
     }
@@ -131,6 +135,10 @@ public final class GameController implements Observer {
 
     public Game getGame() {
         return this.game;
+    }
+
+    public int getGameId(){
+        return this.game.getId();
     }
 
     public Player getPlayer(final Integer playerId) {

@@ -110,15 +110,6 @@ public final class GameDB {
         return db.exec(sql, null);
     }
 
-    public static boolean hasOpenInvites(final int idGame) {
-        Database db = Database.getInstance();
-
-        String sql = "SELECT * FROM player WHERE idgame = ? AND playstatus = ?;";
-        String[] params = {Integer.toString(idGame), PlayStatusEnum.CHALLENGEE.toString()};
-
-        return db.exec(sql, params).size() > 0;
-    }
-
     public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
         Database db = Database.getInstance();
 
