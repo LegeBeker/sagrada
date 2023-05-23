@@ -13,7 +13,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM game WHERE idgame = ? LIMIT 1";
-        String[] params = {Integer.toString(idGame)};
+        String[] params = { Integer.toString(idGame) };
 
         return db.exec(sql, params).get(0);
     }
@@ -27,7 +27,7 @@ public final class GameDB {
                 + "LEFT JOIN player pl2 ON game.idgame = pl2.idgame AND pl2.username = ? "
                 + "GROUP BY game.idgame;";
 
-        String[] params = {username};
+        String[] params = { username };
 
         return db.exec(sql, params);
     }
@@ -36,7 +36,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM player WHERE idgame = ?";
-        String[] params = {Integer.toString(idGame)};
+        String[] params = { Integer.toString(idGame) };
 
         return db.exec(sql, params);
     }
@@ -45,7 +45,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO game (creationDate, current_roundID) VALUE(?, 1);";
-        String[] params = {time};
+        String[] params = { time };
 
         db.exec(sql, params);
 
@@ -66,7 +66,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "UPDATE game SET turn_idplayer = ? WHERE idgame = " + Integer.toString(gameID) + ";";
-        String[] params = {Integer.toString(playerID)};
+        String[] params = { Integer.toString(playerID) };
 
         return db.exec(sql, params);
     }
@@ -75,7 +75,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "UPDATE game SET current_roundID = ? WHERE idgame = " + Integer.toString(gameID) + ";";
-        String[] params = {Integer.toString(round)};
+        String[] params = { Integer.toString(round) };
 
         return db.exec(sql, params);
     }
@@ -118,12 +118,14 @@ public final class GameDB {
     public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT game.idgame, player.idplayer, CASE WHEN player.username IS NULL THEN 'FALSE' ELSE 'TRUE' END AS hasOpenInvite "
+        String sql = "SELECT game.idgame, "
+                + "CASE WHEN player.username = ? THEN 'TRUE' ELSE 'FALSE' END AS hasOpenInvite "
                 + "FROM game "
-                + "LEFT JOIN player ON game.idgame = player.idgame AND player.username = ? "
-                + "WHERE player.playstatus = ? OR player.username IS NULL;";
+                + "JOIN player ON game.idgame = player.idgame "
+                + "WHERE player.playstatus = ? "
+                + "GROUP BY game.idgame, hasOpenInvite;";
 
-        String[] params = {username, PlayStatusEnum.CHALLENGEE.toString()};
+        String[] params = { username, PlayStatusEnum.CHALLENGEE.toString() };
         List<Map<String, String>> games = db.exec(sql, params);
 
         Map<Integer, Boolean> gamesWithOpenInvites = new java.util.HashMap<Integer, Boolean>();
