@@ -239,7 +239,7 @@ public class Game extends Observable {
 
     public void endTurn() {
         int nextSeqnr;
-        if(getClockwise()) {
+        if (getClockwise()) {
             nextSeqnr = getTurnPlayer().getSeqnr() + 1;
         } else {
             nextSeqnr = getTurnPlayer().getSeqnr() - 1;
@@ -291,8 +291,8 @@ public class Game extends Observable {
 
         if (gameMap.get("current_roundID") != null) {
             game.roundID = Integer.parseInt(gameMap.get("current_roundID"));
-            game.currentRound = Integer.parseInt(gameMap.get("roundnr")); 
-            game.clockwise = gameMap.get("clockwise").equals("1") ? true : false;
+            game.currentRound = Integer.parseInt(gameMap.get("roundnr"));
+            game.clockwise = gameMap.get("clockwise").equals("1");
 
             game.offer = Die.getOffer(game.getId(), game.getCurrentRound());
         }
@@ -319,9 +319,9 @@ public class Game extends Observable {
             this.offer = Die.getOffer(this.getId(), this.getCurrentRound());
             if (Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
                 this.roundID = Integer.parseInt(gameMap.get("current_roundID"));
-                this.currentRound = Integer.parseInt(gameMap.get("roundnr")); 
+                this.currentRound = Integer.parseInt(gameMap.get("roundnr"));
                 this.roundTrack = Die.getRoundTrack(this.idGame);
-                this.clockwise = gameMap.get("clockwise").equals("1") ? true : false;
+                this.clockwise = gameMap.get("clockwise").equals("1");
             }
         }
 
