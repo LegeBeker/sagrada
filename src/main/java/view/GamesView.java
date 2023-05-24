@@ -185,4 +185,16 @@ public class GamesView extends VBox {
             view.openGamesView();
         }
     }
+
+    public void update() {
+        this.gamesWithOpenInvites = view.getGamesWithOpenInvites();
+
+        this.table.getItems().clear();
+
+        for (Map<String, String> game : view.getGamesList()) {
+            this.table.getItems().add(game);
+        }
+
+        this.table.refresh();
+    }
 }

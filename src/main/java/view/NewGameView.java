@@ -89,4 +89,8 @@ public class NewGameView extends HBox {
         }
         view.createGame(this.accountsUsernames, useDefaultCards);
     }
+
+    public void updateInvites() {
+        this.playerList.update();
+    }
 }
