@@ -13,11 +13,13 @@ public class AccountsView extends TableView<String> {
     private ViewController view;
 
     private ArrayList<String> accountUsernames;
+    private Boolean isInvite = false;
 
     private static final double TABLEHEIGHT = 400;
 
     public AccountsView(final ViewController view, final Boolean isInvite) {
         this.view = view;
+        this.isInvite = isInvite;
 
         this.setPlaceholder(new Text("Geen accounts gevonden"));
         this.setMaxHeight(TABLEHEIGHT);
@@ -53,5 +55,20 @@ public class AccountsView extends TableView<String> {
                 this.view.openStatView(username);
             }
         });
+    }
+
+    public void update() {
+        if (isInvite) {
+            this.accountUsernames = this.view.getInviteableAccountsUsernames();
+        } else {
+            this.accountUsernames = this.view.getAccountsUsernames();
+        }
+        this.getItems().clear();
+
+        for (String username : this.accountUsernames) {
+            this.getItems().add(username);
+        }
+
+        this.refresh();
     }
 }

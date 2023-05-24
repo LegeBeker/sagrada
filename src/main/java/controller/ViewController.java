@@ -149,6 +149,15 @@ public class ViewController extends Scene {
     public void openGamesView() {
         GamesView gamesView = new GamesView(this);
         changeView(gamesView);
+
+        this.timer = new Timer();
+        this.timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(() -> {
+                    gamesView.update();
+                });
+            }
+        }, 0, REFRESHRATE);
     }
 
     public void openStatsView() {
@@ -159,6 +168,15 @@ public class ViewController extends Scene {
     public void openNewGameView() {
         NewGameView newGameView = new NewGameView(this);
         changeView(newGameView);
+
+        this.timer = new Timer();
+        this.timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(() -> {
+                    newGameView.updateInvites();
+                });
+            }
+        }, 0, REFRESHRATE);
     }
 
     public ArrayList<String> getInviteableAccountsUsernames() {
