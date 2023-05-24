@@ -15,7 +15,6 @@ public class GameButtonsView extends VBox implements Observer {
 
     private Button buttonBack;
     private Button buttonEndTurn;
-    private Button buttonGetDice;
     private ToggleButton helpToggle;
 
     private static final int BUTTONWIDTH = 150;
@@ -40,7 +39,7 @@ public class GameButtonsView extends VBox implements Observer {
         this.buttonEndTurn.setPrefWidth(BUTTONWIDTH);
         this.buttonEndTurn.setOnAction(e -> endTurn());
 
-        this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle);
+        this.getChildren().addAll(this.buttonBack, this.helpToggle);
         Observable.addObserver(Game.class, this);
 
         this.update();
