@@ -294,7 +294,7 @@ public class Game extends Observable {
             game.currentRound = Integer.parseInt(gameMap.get("roundnr")); 
             game.clockwise = gameMap.get("clockwise").equals("1") ? true : false;
 
-            game.offer = Die.getOffer(game.idGame, game.roundID);
+            game.offer = Die.getOffer(game.getId(), game.getCurrentRound());
         }
         game.creationDate = gameMap.get("creationdate");
         game.helpFunction = false;
@@ -316,7 +316,7 @@ public class Game extends Observable {
         Map<String, String> gameMap = GameDB.get(idGame);
 
         if (gameMap.get("current_roundID") != null) {
-            this.offer = Die.getOffer(this.idGame, this.currentRound);
+            this.offer = Die.getOffer(this.getId(), this.getCurrentRound());
             if (Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
                 this.roundID = Integer.parseInt(gameMap.get("current_roundID"));
                 this.currentRound = Integer.parseInt(gameMap.get("roundnr")); 
