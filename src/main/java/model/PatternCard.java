@@ -106,7 +106,6 @@ public class PatternCard {
 
         if (this.getField(rowIndex, columnIndex).getColor() == null
                 && this.getField(rowIndex, columnIndex).getValue() == null) {
-            System.out.println("Field is empty");
             
             if (!board.isEmpty()) {
                 return false;
