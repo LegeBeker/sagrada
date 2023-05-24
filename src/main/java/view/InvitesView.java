@@ -2,7 +2,6 @@ package main.java.view;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -13,7 +12,6 @@ import javafx.scene.text.Text;
 import main.java.controller.ViewController;
 
 public class InvitesView extends HBox {
-    private ViewController view;
 
     private AccountsView accountsView;
 
@@ -23,8 +21,6 @@ public class InvitesView extends HBox {
     private static final int MAXSIZESELECTION = 3;
 
     public InvitesView(final ViewController view) {
-        this.view = view;
-
         this.accountsView = new AccountsView(view, true);
 
         this.alignmentProperty().set(Pos.CENTER);
@@ -49,20 +45,20 @@ public class InvitesView extends HBox {
     private void setTableClickEvent() {
         this.accountsView.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                Map<String, String> acc = this.accountsView.getSelectionModel().getSelectedItem();
-                if (acc != null && (!selectedAccountsUsernames.contains(acc.get("username"))
+                String username = this.accountsView.getSelectionModel().getSelectedItem();
+                if (username != null && (!selectedAccountsUsernames.contains(username)
                         && selectedAccountsUsernames.size() < MAXSIZESELECTION)) {
-                    selectedAccountsUsernames.add(acc.get("username"));
-                    this.selectionTable.getItems().add(acc.get("username"));
+                    selectedAccountsUsernames.add(username);
+                    this.selectionTable.getItems().add(username);
                 }
             }
         });
 
         this.selectionTable.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                String acc = this.selectionTable.getSelectionModel().getSelectedItem();
-                selectedAccountsUsernames.remove(acc);
-                this.selectionTable.getItems().remove(acc);
+                String username = this.selectionTable.getSelectionModel().getSelectedItem();
+                selectedAccountsUsernames.remove(username);
+                this.selectionTable.getItems().remove(username);
             }
         });
     }

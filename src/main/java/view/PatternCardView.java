@@ -1,5 +1,6 @@
 package main.java.view;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javafx.geometry.Insets;
@@ -12,11 +13,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import main.java.controller.ViewController;
-import main.java.model.Game;
-import main.java.pattern.Observable;
-import main.java.pattern.Observer;
 
-public class PatternCardView extends BorderPane implements Observer {
+public class PatternCardView extends BorderPane {
 
     private static final int ROWS = 4;
     private static final int COLUMNS = 5;
@@ -107,11 +105,10 @@ public class PatternCardView extends BorderPane implements Observer {
             cardTopText.setText(view.getPlayerUsername(playerId));
 
             gameTokenText.setText(" Betaalstenen: " + Integer.toString(view.getPlayerGameTokens(playerId)));
-            Observable.addObserver(Game.class, this);
 
             Color playerColor = view.getPlayerColor(playerId).deriveColor(0, 1, BRIGHTNESS, 1);
             this.setStyle("-fx-background-color: " + playerColor.toString().replace("0x", "#") + ";");
-            if (view.isTurnPlayer()) {
+            if (view.isCardOwnerTurnPlayer(playerId)) {
                 this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 1px;" + this.getStyle());
             }
         }
@@ -120,10 +117,27 @@ public class PatternCardView extends BorderPane implements Observer {
         grid.setVgap(PADDING);
     }
 
-    @Override
     public void update() {
+        ArrayList<int[]> locations = new ArrayList<int[]>();
+        grid.getChildren().forEach((e) -> {
+            if (e.getStyle().contains("-fx-border-color: #00FFBF;")) {
+                int[] location = {GridPane.getRowIndex(e), GridPane.getColumnIndex(e)};
+                locations.add(location);
+            }
+        });
+
         grid.getChildren().clear();
+
         drawPatternCard(view, patternCardId, playerId);
+
+        grid.getChildren().forEach((cell) -> {
+            locations.forEach((cellLocation) -> {
+                int[] location = {GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)};
+                if (cellLocation[0] == location[0] && cellLocation[1] == location[1]) {
+                    cell.setStyle("-fx-border-color: #00FFBF;");
+                }
+            });
+        });
     }
 
     private void drawPatternCard(final ViewController view, final int patternCardId, final Integer playerId) {

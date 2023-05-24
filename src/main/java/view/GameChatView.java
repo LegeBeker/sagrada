@@ -71,6 +71,7 @@ public class GameChatView extends VBox implements Observer {
             } else {
                 textInput.setStyle("-fx-border-color: red;");
             }
+            Observable.notifyObservers(Game.class);
         });
 
         chatInput.getChildren().addAll(textInput, sendButton);

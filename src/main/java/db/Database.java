@@ -1,5 +1,7 @@
 package main.java.db;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +16,11 @@ public final class Database {
 
     private static final Database INSTANCE = new Database();
 
+    private static final int SECONDS = 1000000000;
+
+    private static final int IGNORESTACKTRACE = 3;
+    private static final int MAXSTACKTRACE = 6;
+
     private String host;
     private String name;
     private String username;
@@ -21,25 +28,48 @@ public final class Database {
 
     private Connection conn;
 
+    private boolean debug = false;
+
+    private int queryCount = 1;
+
     public static Database getInstance() {
         return INSTANCE;
     }
 
+    public void setDebug(final boolean debug) {
+        this.debug = debug;
+    }
+
     public Database() {
+        if (this.debug) {
+            writeToDebugLog("Initializing database...");
+        }
+
         Env env = new Env(".env");
 
         this.host = env.get("DB_HOST");
         this.name = env.get("DB_NAME");
         this.username = env.get("DB_USERNAME");
         this.password = env.get("DB_PASSWORD");
+
+        if (this.debug) {
+            writeToDebugLog("Database initialized");
+        }
     }
 
     private void connect() {
         try {
+            if (this.debug) {
+                writeToDebugLog("Connecting to database...");
+            }
             this.conn = DriverManager.getConnection("jdbc:mysql://" + this.host + "/" + this.name + "?user="
                     + this.username + "&password=" + this.password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+
+        if (this.debug) {
+            writeToDebugLog("Connected to database");
         }
     }
 
@@ -55,6 +85,13 @@ public final class Database {
     }
 
     public List<Map<String, String>> exec(final String query, final String[] params) {
+        long startTime = 0;
+        long endTime = 0;
+
+        if (this.debug) {
+            startTime = System.nanoTime();
+        }
+
         List<Map<String, String>> result = new ArrayList<>();
 
         try {
@@ -82,10 +119,36 @@ public final class Database {
                 rs.close();
             }
 
+            if (this.debug) {
+                endTime = System.nanoTime();
+                double timeElapsed = endTime - startTime;
+                writeToDebugLog("Query " + this.queryCount++ + ": "
+                        + stmt.toString().substring(stmt.toString().indexOf(":") + 2),
+                        "Execution time in seconds: " + timeElapsed / SECONDS);
+            }
+
             stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return result;
+    }
+
+    private void writeToDebugLog(final String... message) {
+        try {
+            FileWriter fw = new FileWriter("debug.log", true);
+            for (String m : message) {
+                fw.write("[" + new java.sql.Time(System.currentTimeMillis()) + "] " + m + "\n");
+            }
+            StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+            for (int i = IGNORESTACKTRACE; i < MAXSTACKTRACE; i++) {
+                fw.write("\t" + stackTraceElements[i].toString() + "\n");
+            }
+            fw.write("--------------------\n");
+            fw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

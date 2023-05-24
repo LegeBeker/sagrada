@@ -5,8 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import main.java.controller.ViewController;
+import main.java.model.Game;
+import main.java.pattern.Observable;
+import main.java.pattern.Observer;
 
-public class GameButtonsView extends VBox {
+public class GameButtonsView extends VBox implements Observer {
 
     private ViewController view;
 
@@ -40,17 +43,19 @@ public class GameButtonsView extends VBox {
 
         this.buttonEndTurn = new Button("Einde beurt");
         this.buttonEndTurn.setPrefWidth(BUTTONWIDTH);
-        this.buttonEndTurn.setOnAction(e -> view.endTurn());
+        this.buttonEndTurn.setOnAction(e -> endTurn());
 
         this.buttonCalculateScore = new Button("Bereken score");
         this.buttonCalculateScore.setPrefWidth(BUTTONWIDTH);
         this.buttonCalculateScore.setOnAction(e -> view.calculateScore());
+        Observable.addObserver(Game.class, this);
 
         this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle, this.buttonCalculateScore);
 
         if (view.isTurnPlayer()) {
             this.getChildren().addAll(buttonEndTurn);
         }
+        this.update();
 
         this.setPadding(new Insets(PADDING));
         this.setSpacing(PADDING);
@@ -61,6 +66,22 @@ public class GameButtonsView extends VBox {
             view.getNewOffer();
         } catch (RuntimeException e) {
             this.view.displayError(e.getMessage());
+        }
+    }
+
+    private void endTurn() {
+        this.buttonEndTurn.setDisable(true);
+        view.endTurn();
+    }
+
+    @Override
+    public void update() {
+        if (this.getChildren().contains(buttonEndTurn)) {
+            this.getChildren().remove(buttonEndTurn);
+        }
+        if (view.isTurnPlayer()) {
+            this.getChildren().addAll(buttonEndTurn);
+            this.buttonEndTurn.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
         }
     }
 
