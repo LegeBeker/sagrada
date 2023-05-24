@@ -1,8 +1,12 @@
 package main.java.controller;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+
+import javafx.scene.paint.Color;
 import main.java.db.ToolCardDB;
+import main.java.model.Die;
 
 public class ToolcardController {
 
@@ -13,11 +17,11 @@ public class ToolcardController {
     private static final int FOUR = 4;
     private static final int FIVE = 5;
     private static final int SIX = 6;
+    private static final int TURNCOUNT = 2;
     private Random random;
 
     public void grozingPliers(final int dieValue) {
         Scanner input = new Scanner(System.in);
-
         System.out.println("Starting value: " + dieValue);
         System.out.print("Enter 1 to add or 2 to subtract: ");
         int choice = input.nextInt();
@@ -87,14 +91,50 @@ public class ToolcardController {
     public void fluxBrush(final int dieValue) {
         int currentValue = dieValue;
         int newValue;
-
         do {
             newValue = random.nextInt(SIX) + 1;
         } while (newValue == currentValue);
-
         System.out.println("Starting value: " + currentValue);
         System.out.println("New value: " + newValue);
-
         ToolCardDB.updateGameDieValue(newValue, 0);
+    }
+
+    public void glazingHammer(final int turnCount, final int gameId, final int roundId) {
+        if (turnCount == TURNCOUNT) {
+            List<Die> gameOffer = Die.getOffer(gameId, roundId);
+            for (Die die : gameOffer) {
+                int newValue = random.nextInt(SIX) + 1;
+                ToolCardDB.updateGameDieValue(die.getNumber(), newValue);
+            }
+            System.out.println("Draft pool dice have been rerolled");
+        } else {
+            System.out.println("You can only reroll the draft pool when its ur second turn");
+        }
+    }
+
+    public void lensCutter(final int gameId, final int roundId) {
+        Scanner input = new Scanner(System.in);
+        List<Die> gameOffer = Die.getOffer(gameId, roundId);
+        List<Die> roundTrack = Die.getRoundTrack(gameId);
+
+        System.out.print("Enter which die you want to swap from the game offer: ");
+        int choice = input.nextInt();
+        Die selectedDie = gameOffer.get(choice - 1);
+
+        System.out.print("Enter which die you want to swap from the round track: ");
+        int roundTrackChoice = input.nextInt();
+        Die selectedRoundtrack = roundTrack.get(roundTrackChoice - 1);
+
+        Die temp = selectedDie;
+        selectedDie = selectedRoundtrack;
+        selectedRoundtrack = temp;
+
+        Color color = selectedDie.getColor();
+        String colorString = color.toString();
+
+        ToolCardDB.updateGameDieColor(gameId, colorString);
+        ToolCardDB.updateGameDieValue(gameId, selectedDie.getEyes());
+
+        input.close();
     }
 }

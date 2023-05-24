@@ -10,8 +10,9 @@ import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
 import main.java.model.Player;
+import main.java.pattern.Observer;
 
-public final class GameController {
+public final class GameController implements Observer {
 
     private final ViewController view;
 
@@ -21,20 +22,8 @@ public final class GameController {
         this.view = view;
     }
 
-    public ArrayList<Map<String, String>> getGames() {
-        ArrayList<Game> games = Game.getAll();
-        ArrayList<Map<String, String>> gamesMap = new ArrayList<Map<String, String>>();
-
-        for (Game game : games) {
-            Map<String, String> gameMap = new HashMap<String, String>();
-            gameMap.put("id", Integer.toString(game.getId()));
-            gameMap.put("turnPlayerUsername", game.getTurnPlayerUsername());
-            gameMap.put("currentRound", Integer.toString(game.getCurrentRound()));
-            gameMap.put("creationDateShow", game.getCreationDate());
-            gamesMap.add(gameMap);
-        }
-
-        return gamesMap;
+    public List<Map<String, String>> getGamesList() {
+        return Game.getGamesList(view.getUsername());
     }
 
     public Game getGame(final int gameId) {
@@ -66,7 +55,7 @@ public final class GameController {
     }
 
     public ArrayList<Map<String, String>> getRoundTrack() {
-        ArrayList<Die> dice = Game.getRoundTrack(this.game.getId());
+        ArrayList<Die> dice = game.getRoundTrack();
         ArrayList<Map<String, String>> diceMap = new ArrayList<Map<String, String>>();
 
         for (Die die : dice) {
@@ -109,12 +98,16 @@ public final class GameController {
         return this.game.getTurnPlayerUsername().equals(username);
     }
 
-    public Boolean isTurnPlayer(final int gameId, final String username) {
-        return Game.get(gameId).getTurnPlayerUsername().equals(username);
-    }
-
     public Boolean isTurnPlayer(final int playerId) {
         return this.game.getTurnPlayerId() == playerId;
+    }
+
+    public Boolean isPlayerInGame(final String username) {
+        return this.game.isPlayerInGame(username);
+    }
+
+    public boolean gameHasOpenInvites() {
+        return this.game.hasOpenInvites();
     }
 
     public void setHelpFunction() {
@@ -151,8 +144,12 @@ public final class GameController {
         return this.game;
     }
 
+    public int getGameId() {
+        return this.game.getId();
+    }
+
     public Player getPlayer(final Integer playerId) {
-        return Player.get(playerId);
+        return game.getPlayer(playerId);
     }
 
     public HashMap<Integer, List<Integer>> getPatternCardOptions() {
@@ -177,7 +174,11 @@ public final class GameController {
         return game.playerHasChosenPatternCard(username);
     }
 
-    public void updateGame() {
-        this.game = Game.get(this.game.getId());
+    public Map<Integer, Boolean> getGamesWithOpenInvites() {
+        return Game.getGamesWithOpenInvites(view.getUsername());
+    }
+
+    public void update() {
+        this.game.update();
     }
 }

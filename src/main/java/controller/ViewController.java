@@ -176,10 +176,6 @@ public class ViewController extends Scene {
         return this.gameController.isTurnPlayer(getUsername());
     }
 
-    public Boolean isTurnPlayer(final int gameId) {
-        return this.gameController.isTurnPlayer(gameId, getUsername());
-    }
-
     public Boolean isCardOwnerTurnPlayer(final int playerId) {
         return this.gameController.isTurnPlayer(playerId);
     }
@@ -252,8 +248,8 @@ public class ViewController extends Scene {
         return getCurrentPlayer().getPrivateObjCardColor();
     }
 
-    public ArrayList<Map<String, String>> getGames() {
-        return this.gameController.getGames();
+    public List<Map<String, String>> getGamesList() {
+        return this.gameController.getGamesList();
     }
 
     public int getPatternCardId() {
@@ -304,12 +300,19 @@ public class ViewController extends Scene {
 
     public void choosePatternCard(final int idPatternCard) {
         this.gameController.choosePatternCard(idPatternCard);
-        openGamesView();
+
+        if (this.gameController.gameHasOpenInvites()) {
+            openGamesView();
+        } else {
+            openGameView(this.gameController.getGameId());
+        }
     }
 
     public void openGameView(final int gameId) {
         Game game = this.gameController.getGame(gameId);
         this.gameController.setGame(game);
+        Observable.removeAllObservers(Game.class);
+        Observable.addObserver(Game.class, this.gameController);
         if (game.playerHasChosenPatternCard(getUsername())) {
             GameView gameView = new GameView(this);
             changeView(gameView);
@@ -318,7 +321,6 @@ public class ViewController extends Scene {
             this.timer.schedule(new TimerTask() {
                 public void run() {
                     Platform.runLater(() -> {
-                        gameController.updateGame();
                         Observable.notifyObservers(Game.class);
                     });
                 }
@@ -375,16 +377,6 @@ public class ViewController extends Scene {
         this.gameController.refuseInvite(gameId);
     }
 
-    public boolean hasOpenInvite(final int gameId, final String playerName) {
-        Game game = Game.get(gameId);
-        return game.getPlayerNames().contains(playerName) && game.playerHasNotReplied(playerName);
-    }
-
-    public boolean gameHasOpenInvites(final int gameId) {
-        Game game = Game.get(gameId);
-        return game.hasOpenInvites();
-    }
-
     public ArrayList<String> getAccountsUsernames() {
         return this.accountController.getAccountsUsernames();
     }
@@ -395,6 +387,10 @@ public class ViewController extends Scene {
 
     public boolean playerHasChosenPatternCard(final int gameId, final String username) {
         return this.gameController.playerHasChosenPatternCard(gameId, username);
+    }
+
+    public Map<Integer, Boolean> getGamesWithOpenInvites() {
+        return this.gameController.getGamesWithOpenInvites();
     }
 
     public FavorTokenController getFavorTokenController(){
