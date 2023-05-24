@@ -212,10 +212,6 @@ public class ViewController extends Scene {
         return this.patternCardController.getPossibleMoves(eyes, color);
     }
 
-    public void getNewOffer() {
-        this.gameController.getNewOffer();
-    }
-
     public void setHelpFunction() {
         this.gameController.setHelpFunction();
     }

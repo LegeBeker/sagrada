@@ -29,10 +29,6 @@ public class GameButtonsView extends VBox implements Observer {
         this.buttonBack.setPrefWidth(BUTTONWIDTH);
         this.buttonBack.setOnAction(e -> view.openGamesView());
 
-        this.buttonGetDice = new Button("Pak dobbelstenen");
-        this.buttonGetDice.setPrefWidth(BUTTONWIDTH);
-        this.buttonGetDice.setOnAction(e -> view.getNewOffer());
-
         this.helpToggle = new ToggleButton("Help!");
         this.helpToggle.setPrefWidth(BUTTONWIDTH);
         this.helpToggle.setOnAction(e -> {
@@ -51,14 +47,6 @@ public class GameButtonsView extends VBox implements Observer {
 
         this.setPadding(new Insets(PADDING));
         this.setSpacing(PADDING);
-    }
-
-    public void getDice() {
-        try {
-            view.getNewOffer();
-        } catch (RuntimeException e) {
-            this.view.displayError(e.getMessage());
-        }
     }
 
     private void endTurn() {
