@@ -53,7 +53,13 @@ public class Die {
     }
 
     public static ArrayList<Die> getOffer(final int idGame, final int roundID) {
-        List<Map<String, String>> offer = DieDB.getOffer(idGame, roundID);
+        List<Map<String, String>> offer;
+        if (roundID % 2 == 0) {
+            offer = DieDB.getOffer(idGame, roundID - 1);
+        } else {
+            offer = DieDB.getOffer(idGame, roundID);
+        }
+
         ArrayList<Die> dice = new ArrayList<Die>();
 
         for (Map<String, String> dieMap : offer) {

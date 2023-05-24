@@ -78,6 +78,8 @@ public class Game extends Observable {
         GameDB.assignPublicObjectivecards(thisGameID);
 
         Die.createGameOffer(thisGameID);
+        Die.getNewOffer(newGame.getId(), 1, newGame.players.size());
+
         Board.createBoards(newGame);
 
         return newGame;
@@ -275,6 +277,9 @@ public class Game extends Observable {
         }
 
         setCurrentRoundID(getRoundID() + 1);
+        
+        Die.getNewOffer(getId(), getRoundID(), players.size());
+        notifyObservers(Game.class);
     }
 
     private void setCurrentRoundID(final int roundID) {
@@ -294,7 +299,7 @@ public class Game extends Observable {
             game.currentRound = Integer.parseInt(gameMap.get("roundnr"));
             game.clockwise = gameMap.get("clockwise").equals("1");
 
-            game.offer = Die.getOffer(game.getId(), game.getCurrentRound());
+            game.offer = Die.getOffer(game.getId(), game.getRoundID());
         }
         game.creationDate = gameMap.get("creationdate");
         game.helpFunction = false;
@@ -316,7 +321,7 @@ public class Game extends Observable {
         Map<String, String> gameMap = GameDB.get(idGame);
 
         if (gameMap.get("current_roundID") != null) {
-            this.offer = Die.getOffer(this.getId(), this.getCurrentRound());
+            this.offer = Die.getOffer(this.getId(), this.getRoundID());
             if (Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
                 this.roundID = Integer.parseInt(gameMap.get("current_roundID"));
                 this.currentRound = Integer.parseInt(gameMap.get("roundnr"));
@@ -350,11 +355,6 @@ public class Game extends Observable {
     public StringProperty creationDateShowProperty() {
         final int year = 5;
         return new SimpleStringProperty(getCreationDate().substring(year));
-    }
-
-    public void getNewOffer() {
-        Die.getNewOffer(idGame, currentRound, players.size());
-        notifyObservers(Game.class);
     }
 
     public ArrayList<String> getToolCardsNames() {
