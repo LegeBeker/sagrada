@@ -129,6 +129,14 @@ public class Game extends Observable {
         return this.currentRound;
     }
 
+    public int getRoundID() {
+        return this.roundID;
+    }
+
+    public boolean getClockwise() {
+        return this.clockwise;
+    }
+
     public String getCreationDate() {
         return this.creationDate;
     }
@@ -231,13 +239,13 @@ public class Game extends Observable {
 
     public void endTurn() {
         int nextSeqnr;
-        if(getCurrentRound() % 2 == 1) {
+        if(getClockwise()) {
             nextSeqnr = getTurnPlayer().getSeqnr() + 1;
         } else {
             nextSeqnr = getTurnPlayer().getSeqnr() - 1;
         }
         if (nextSeqnr > getPlayers().size()) {
-            setCurrentRound(getCurrentRound() + 1);
+            setCurrentRoundID(getRoundID() + 1);
         } else if (nextSeqnr == 0) {
             endRound();
         } else {
@@ -266,10 +274,10 @@ public class Game extends Observable {
                     dieMap.get("diecolor"));
         }
 
-        setCurrentRound(getCurrentRound() + 1);
+        setCurrentRoundID(getRoundID() + 1);
     }
 
-    private void setCurrentRound(final int roundID) {
+    private void setCurrentRoundID(final int roundID) {
         GameDB.setRound(getId(), roundID);
         notifyObservers(Game.class);
     }
@@ -284,7 +292,7 @@ public class Game extends Observable {
         if (gameMap.get("current_roundID") != null) {
             game.roundID = Integer.parseInt(gameMap.get("current_roundID"));
             game.currentRound = Integer.parseInt(gameMap.get("roundnr")); 
-            game.clockwise = gameMap.get("clockwise") == "1" ? true : false;
+            game.clockwise = gameMap.get("clockwise").equals("1") ? true : false;
 
             game.offer = Die.getOffer(game.idGame, game.roundID);
         }
@@ -311,9 +319,9 @@ public class Game extends Observable {
             this.offer = Die.getOffer(this.idGame, this.currentRound);
             if (Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
                 this.roundID = Integer.parseInt(gameMap.get("current_roundID"));
-                this.currentRound = Integer.parseInt(gameMap.get("roundnumber")); 
+                this.currentRound = Integer.parseInt(gameMap.get("roundnr")); 
                 this.roundTrack = Die.getRoundTrack(this.idGame);
-                this.clockwise = gameMap.get("clockwise") == "1" ? true : false;
+                this.clockwise = gameMap.get("clockwise").equals("1") ? true : false;
             }
         }
 
