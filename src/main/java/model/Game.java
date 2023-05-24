@@ -21,7 +21,10 @@ public class Game extends Observable {
     private int idGame;
 
     private Player turnPlayer;
+
+    private int roundID;
     private int currentRound;
+    private boolean clockwise;
 
     private String creationDate;
 
@@ -279,8 +282,11 @@ public class Game extends Observable {
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
 
         if (gameMap.get("current_roundID") != null) {
-            game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
-            game.offer = Die.getOffer(game.idGame, game.currentRound);
+            game.roundID = Integer.parseInt(gameMap.get("current_roundID"));
+            game.currentRound = Integer.parseInt(gameMap.get("roundnr")); 
+            game.clockwise = gameMap.get("clockwise") == "1" ? true : false;
+
+            game.offer = Die.getOffer(game.idGame, game.roundID);
         }
         game.creationDate = gameMap.get("creationdate");
         game.helpFunction = false;
@@ -304,8 +310,10 @@ public class Game extends Observable {
         if (gameMap.get("current_roundID") != null) {
             this.offer = Die.getOffer(this.idGame, this.currentRound);
             if (Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
-                this.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+                this.roundID = Integer.parseInt(gameMap.get("current_roundID"));
+                this.currentRound = Integer.parseInt(gameMap.get("roundnumber")); 
                 this.roundTrack = Die.getRoundTrack(this.idGame);
+                this.clockwise = gameMap.get("clockwise") == "1" ? true : false;
             }
         }
 
