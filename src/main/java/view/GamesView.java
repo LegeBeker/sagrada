@@ -77,7 +77,7 @@ public class GamesView extends VBox {
                 cellData -> new SimpleStringProperty(cellData.getValue().get("username")));
 
         TableColumn<Map<String, String>, String> roundCol = new TableColumn<>("Ronde");
-        roundCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("current_roundID")));
+        roundCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get("roundnr")));
 
         TableColumn<Map<String, String>, String> dateCol = new TableColumn<>("Datum");
         dateCol.setCellValueFactory(
