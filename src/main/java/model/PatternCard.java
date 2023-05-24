@@ -85,7 +85,7 @@ public class PatternCard {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 if (validateMove(board, dieValue, dieColor, col, row)) {
-                    possibleMoves.add(new int[] { row, col });
+                    possibleMoves.add(new int[] {row, col });
                 }
             }
         }
@@ -106,19 +106,19 @@ public class PatternCard {
 
         if (this.getField(rowIndex, columnIndex).getColor() == null
                 && this.getField(rowIndex, columnIndex).getValue() == null) {
-            
+
             if (!board.isEmpty()) {
                 return false;
             }
 
-            if (neighborsEmpty(rowIndex, columnIndex, board) ) {
-                return false;
-            } 
-            
-            if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue, dieColor, board)){
+            if (neighborsEmpty(rowIndex, columnIndex, board)) {
                 return false;
             }
-        
+
+            if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue, dieColor, board)) {
+                return false;
+            }
+
             return true;
         }
 
@@ -134,7 +134,6 @@ public class PatternCard {
 
         if (this.getField(rowIndex, columnIndex).getValue() != null
                 && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
-
 
             return false;
         }
@@ -191,10 +190,9 @@ public class PatternCard {
         int[][] offsets;
 
         if (includeDiagonals) {
-            offsets = new int[][] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, -1 }, { -1, 1 }, { 1, -1 },
-                    { 1, 1 } };
+            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1 }};
         } else {
-            offsets = new int[][] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+            offsets = new int[][] {{-1, 0 }, {1, 0}, {0, -1}, {0, 1}};
         }
 
         for (int[] offset : offsets) {
@@ -202,7 +200,7 @@ public class PatternCard {
             int neighborCol = col + offset[1];
 
             if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] { neighborRow, neighborCol });
+                neighbors.add(new int[] {neighborRow, neighborCol});
             }
         }
 
