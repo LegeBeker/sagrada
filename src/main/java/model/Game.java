@@ -277,7 +277,7 @@ public class Game extends Observable {
         }
 
         setCurrentRoundID(getRoundID() + 1);
-        
+
         Die.getNewOffer(getId(), getRoundID(), players.size());
         notifyObservers(Game.class);
     }
