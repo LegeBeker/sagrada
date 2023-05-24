@@ -227,9 +227,14 @@ public class Game extends Observable {
     }
 
     public void endTurn() {
-        int nextSeqnr = getTurnPlayer().getSeqnr() + 1;
+        int nextSeqnr;
+        if(getCurrentRound() % 2 == 1) {
+            nextSeqnr = getTurnPlayer().getSeqnr() + 1;
+        } else {
+            nextSeqnr = getTurnPlayer().getSeqnr() - 1;
+        }
         if (nextSeqnr > getPlayers().size()) {
-            reverseSeqNr();
+            setCurrentRound(getCurrentRound() + 1);
         } else if (nextSeqnr == 0) {
             endRound();
         } else {
@@ -243,14 +248,7 @@ public class Game extends Observable {
         notifyObservers(Game.class);
     }
 
-    private void reverseSeqNr() {
-        for (Player player : getPlayers()) {
-            player.setSeqnr(player.getSeqnr() * -1);
-        }
-    }
-
     private void endRound() {
-        reverseSeqNr();
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == getPlayers().size()) {
                 player.setSeqnr(1);
