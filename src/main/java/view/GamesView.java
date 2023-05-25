@@ -96,7 +96,7 @@ public class GamesView extends VBox {
 
                 setStyle("");
 
-                if (game != null && !Boolean.parseBoolean(game.get("isPlayerInGame"))) {
+                if (game != null && (!Boolean.parseBoolean(game.get("isPlayerInGame")) || Boolean.parseBoolean(game.get("hasDeclinedInvites")))) {
                     setStyle("-fx-background-color: lightgrey;");
                 } else if (game != null && gamesWithOpenInvites.containsKey(Integer.parseInt(game.get("idgame")))
                         && gamesWithOpenInvites.get(Integer.parseInt(game.get("idgame")))) {
@@ -120,6 +120,8 @@ public class GamesView extends VBox {
                         && view.playerHasChosenPatternCard(Integer.parseInt(game.get("idgame")),
                                 view.getUsername())) {
                     view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");
+                } else if(game != null && Boolean.parseBoolean(game.get("hasDeclinedInvites"))) {
+                    view.displayError("Iemand heeft de uitnodiging geweigerd"); 
                 } else if (game != null) {
                     this.view.openGameView(Integer.parseInt(game.get("idgame")));
                 }
