@@ -106,13 +106,19 @@ public class PatternCard {
 
         if (this.getField(rowIndex, columnIndex).getColor() == null
                 && this.getField(rowIndex, columnIndex).getValue() == null) {
-            if (neighborsEmpty(rowIndex, columnIndex, board)
-                    && validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue,
-                            dieColor, board)
-                    && !board.isEmpty()) {
 
+            if (!board.isEmpty()) {
                 return false;
             }
+
+            if (neighborsEmpty(rowIndex, columnIndex, board)) {
+                return false;
+            }
+
+            if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue, dieColor, board)) {
+                return false;
+            }
+
             return true;
         }
 
@@ -127,7 +133,6 @@ public class PatternCard {
 
         if (this.getField(rowIndex, columnIndex).getValue() != null
                 && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
-
             return false;
         }
 
