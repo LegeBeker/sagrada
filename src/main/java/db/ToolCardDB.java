@@ -32,11 +32,11 @@ public final class ToolCardDB {
         return true;
     }
     
-    public static void addDieToBag(Die die) {
+    public static void addDieToBag(final Die die) {
         Database db = Database.getInstance();
         String sql = "INSERT INTO gamedie (idgame, diecolor, eyes) VALUES (?, ?, ?)";
         // weet niet of de die.getGame().toString() 100% klopt
-        String[] params = { (die.getGame().toString()), die.getColor().toString(), Integer.toString(die.getEyes()) };
+        String[] params = {(die.getGame().toString()), die.getColor().toString(), Integer.toString(die.getEyes())};
         db.exec(sql, params);
     }
 }
