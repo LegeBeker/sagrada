@@ -23,7 +23,8 @@ public final class GameDB {
 
         String sql = "SELECT game.*, DATE_FORMAT(game.creationdate, '%d-%m-%Y %H:%i:%s') AS formatted_creationdate, "
                 + "player.username, CASE WHEN pl2.username IS NOT NULL THEN 'TRUE' ELSE 'FALSE' END AS isPlayerInGame, "
-                + "CASE WHEN EXISTS (SELECT 1 FROM player pl3 WHERE game.idgame = pl3.idgame AND pl3.playstatus = 'refused') THEN 'TRUE' ELSE 'FALSE' END AS hasDeclinedInvites "
+                + "CASE WHEN EXISTS (SELECT 1 FROM player pl3 WHERE game.idgame = pl3.idgame AND pl3.playstatus = 'refused') " 
+                + "THEN 'TRUE' ELSE 'FALSE' END AS hasDeclinedInvites "
                 + "FROM game JOIN player ON game.turn_idplayer = player.idplayer "
                 + "LEFT JOIN player pl2 ON game.idgame = pl2.idgame AND pl2.username = ? "
                 + "GROUP BY game.idgame;";

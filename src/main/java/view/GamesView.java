@@ -93,15 +93,16 @@ public class GamesView extends VBox {
             @Override
             protected void updateItem(final Map<String, String> game, final boolean empty) {
                 super.updateItem(game, empty);
-            
+
                 if (empty || game == null) {
                     setStyle("");
                     return;
                 }
-            
+
                 int gameId = Integer.parseInt(game.get("idgame"));
-            
-                if (!Boolean.parseBoolean(game.get("isPlayerInGame")) || Boolean.parseBoolean(game.get("hasDeclinedInvites"))) {
+
+                if (!Boolean.parseBoolean(game.get("isPlayerInGame"))
+                        || Boolean.parseBoolean(game.get("hasDeclinedInvites"))) {
                     setStyle("-fx-background-color: lightgrey;");
                 } else if (gamesWithOpenInvites.containsKey(gameId) && gamesWithOpenInvites.get(gameId)) {
                     setStyle("-fx-background-color: orange;");
@@ -119,12 +120,13 @@ public class GamesView extends VBox {
 
                 if (game != null) {
                     int gameId = Integer.parseInt(game.get("idgame"));
-                
+
                     if (!Boolean.parseBoolean(game.get("isPlayerInGame"))) {
                         view.displayError("Je bent niet uitgenodigd voor dit spel");
                     } else if (gamesWithOpenInvites.containsKey(gameId) && gamesWithOpenInvites.get(gameId)) {
                         showInviteAlert(gameId);
-                    } else if (gamesWithOpenInvites.containsKey(gameId) && view.playerHasChosenPatternCard(gameId, view.getUsername())) {
+                    } else if (gamesWithOpenInvites.containsKey(gameId)
+                            && view.playerHasChosenPatternCard(gameId, view.getUsername())) {
                         view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");
                     } else if (Boolean.parseBoolean(game.get("hasDeclinedInvites"))) {
                         view.displayError("Iemand heeft de uitnodiging geweigerd");
