@@ -7,7 +7,6 @@ import java.util.Scanner;
 import javafx.scene.paint.Color;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
-import main.java.view.GameOfferView;
 
 public class ToolcardController {
 
