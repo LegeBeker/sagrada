@@ -31,11 +31,10 @@ public final class ToolCardDB {
         db.exec(sql, params);
         return true;
     }
-    
+    // weet niet of de die.getGame().toString() 100% klopt
     public static void addDieToBag(final Die die) {
         Database db = Database.getInstance();
         String sql = "INSERT INTO gamedie (idgame, diecolor, eyes) VALUES (?, ?, ?)";
-        // weet niet of de die.getGame().toString() 100% klopt
         String[] params = {(die.getGame().toString()), die.getColor().toString(), Integer.toString(die.getEyes())};
         db.exec(sql, params);
     }
