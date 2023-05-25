@@ -7,6 +7,7 @@ import java.util.Scanner;
 import javafx.scene.paint.Color;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
+import main.java.view.GameOfferView;
 
 public class ToolcardController {
 
@@ -135,6 +136,19 @@ public class ToolcardController {
         ToolCardDB.updateGameDieColor(gameId, colorString);
         ToolCardDB.updateGameDieValue(gameId, selectedDie.getEyes());
 
+        input.close();
+    }
+
+    public void fluxRemover(final int gameId, final int roundId) {
+        Scanner input = new Scanner(System.in);
+        List<Die> gameOffer = Die.getOffer(gameId, roundId);
+
+        System.out.print("Enter which die you want to remove from the game offer: ");
+        int choice = input.nextInt();
+        Die selectedDie = gameOffer.get(choice - 1);
+
+        gameOffer.remove(selectedDie);
+        ToolCardDB.addDieToBag(selectedDie);
         input.close();
     }
 }
