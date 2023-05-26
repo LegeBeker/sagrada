@@ -14,6 +14,13 @@ public final class ToolCardDB {
         return db.exec(sql, params);
     }
 
+    public static Map<String, String> getToolCard(final int idGame, final String toolCardname) {
+        Database db = Database.getInstance();
+        String sql = "SELECT * FROM toolcard tc JOIN gametoolcard gtc ON tc.idtoolcard = gtc.idtoolcard WHERE gtc.idgame = ? AND tc.name = ?";
+        String[] params = {Integer.toString(idGame), toolCardname};
+        return db.exec(sql, params).get(0);
+    }
+
     public static boolean updateGameDieValue(final int idgame, final int eyes) {
         Database db = Database.getInstance();
         String sql = "UPDATE gamedie SET eyes = ? WHERE idgame = ?";

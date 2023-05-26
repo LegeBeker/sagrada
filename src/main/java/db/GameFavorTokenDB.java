@@ -62,4 +62,14 @@ public final class GameFavorTokenDB {
 
         return db.exec(sql, params);
     }
+
+
+    public static List<Map<String, String>> getFavorTokensForToolCard(final int idToolCard, final int idGame) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM gamefavortoken WHERE idgame = ? AND gametoolcard = ?;";
+        String[] params = {Integer.toString(idGame), Integer.toString(idToolCard)};
+
+        return db.exec(sql, params);
+    }
 }

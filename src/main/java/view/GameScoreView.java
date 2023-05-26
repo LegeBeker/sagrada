@@ -16,11 +16,11 @@ public class GameScoreView extends VBox {
         view.getPlayers().forEach(player -> {
             StackPane playerScore = new StackPane();
 
-            playerScore.setBackground(new Background(new BackgroundFill(player.getColor(), null, null)));
+            playerScore.setBackground(new Background(new BackgroundFill(Color.valueOf(player.get("color")), null, null)));
             playerScore.setPadding(new Insets(PADDING));
             playerScore.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
 
-            Text text = new Text(player.getUsername() + ": " + player.getScore());
+            Text text = new Text(player.get("username") + ": " + player.get("score"));
             text.setFill(Color.WHITE);
             text.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-stroke: black; -fx-stroke-width: 0.5px;");
 

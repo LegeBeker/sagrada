@@ -1,8 +1,14 @@
 package main.java.view;
 
+import java.util.List;
+import java.util.Map;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import main.java.controller.ViewController;
 
 public class GameToolCardView extends StackPane {
@@ -10,6 +16,19 @@ public class GameToolCardView extends StackPane {
 
     private static final int WIDTH = 150;
     private static final int HEIGHT = 200;
+
+    private static final int CARDHEIGHT = 200;
+
+    private static final int PROHIBITEDX = 40;
+    private static final int PROHIBITEDY = 40;
+    private static final int CIRCLERADIUS = 15;
+    private static final double OPACITY = 0.6;
+
+    private static final int INNERCIRCLEY = 6;
+    private static final int INNERCIRCLEX = 6;
+    private static final int INNERCIRCLERADIUS = 5;
+
+    private static final int MAXVALUERGB = 255;
 
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
@@ -34,7 +53,48 @@ public class GameToolCardView extends StackPane {
         imageView.setImage(imageToolCard);
         view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, OFFSET, 0);
 
-        this.getChildren().add(imageView);
+        Pane pane = new Pane();
+        pane.setPrefHeight(CARDHEIGHT);
+        pane.setPrefWidth(WIDTH);
+
+        List<Map<String, String>> players = view.getPlayers();
+
+        for (Map<String, String> ft : view.getFavorTokensForToolCard(toolCardName)) {
+
+            int randX = 1 + (int) (Math.random() * WIDTH);
+            int randY = 1 + (int) (Math.random() * CARDHEIGHT);
+
+            if (randX <= PROHIBITEDX) {
+                randX += PROHIBITEDX;
+            } else if (randX > WIDTH - CIRCLERADIUS) {
+                randX -= CIRCLERADIUS;
+            }
+            if (randY <= PROHIBITEDY) {
+                randY += PROHIBITEDY;
+            } else if (randY > WIDTH - CIRCLERADIUS) {
+                randY -= CIRCLERADIUS;
+            }
+            for (Map<String, String> p : players) {
+                if (p.get("idPlayer").equals(ft.get("idplayer"))) {
+                    Circle c = new Circle(randX, randY, CIRCLERADIUS);
+                    Color playerColor = Color.valueOf(p.get("color"));
+                    if (playerColor != null) {
+                        c.setFill(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
+                                (int) (playerColor.getGreen() * MAXVALUERGB),
+                                (int) (playerColor.getBlue() * MAXVALUERGB), OPACITY));
+                        c.setStroke(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
+                                (int) (playerColor.getGreen() * MAXVALUERGB),
+                                (int) (playerColor.getBlue()) * MAXVALUERGB).deriveColor(0, 1, 0.2, 1));
+                        c.setStrokeWidth(2);
+
+                        Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
+                        innerCircle.setFill(Color.rgb(MAXVALUERGB, MAXVALUERGB, MAXVALUERGB, OPACITY));
+                        pane.getChildren().addAll(c, innerCircle);
+                    }
+                }
+            }
+        }
+        this.getChildren().addAll(imageView, pane);
 
         this.setOnMouseClicked(event -> {
             if (!isSelected) {
