@@ -143,8 +143,7 @@ public class ToolcardController {
         List<Die> gameOffer = Die.getOffer(gameId, roundId);
 
         System.out.print("Enter which die you want to remove from the game offer: ");
-        int choice = input.nextInt();
-        Die selectedDie = gameOffer.get(choice - 1);
+        Die selectedDie = gameOffer.get(input.nextInt() - 1);
 
         gameOffer.remove(selectedDie);
         ToolCardDB.addDieToBag(selectedDie);
