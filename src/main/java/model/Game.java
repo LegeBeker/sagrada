@@ -13,6 +13,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
 import main.java.db.DieDB;
 import main.java.db.GameDB;
+import main.java.db.GameFavorTokenDB;
 import main.java.db.PatternCardDB;
 import main.java.enums.PlayStatusEnum;
 import main.java.pattern.Observable;
@@ -74,6 +75,7 @@ public class Game extends Observable {
             // newGame.addPatternCards(randomCards);
         }
 
+        GameFavorTokenDB.createGameFavorTokens(thisGameID);
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);
 
