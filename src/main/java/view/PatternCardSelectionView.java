@@ -35,9 +35,16 @@ public class PatternCardSelectionView extends BorderPane {
         textTitle.setPadding(new Insets(PADDING, 0, 0, 0));
         this.setTop(textTitle);
 
-        view.getPatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
-            flowPane.getChildren().add(patternCardSelect(patternCard));
-        });
+        if (!view.getPatternCardOptions().get(view.getPlayerId()).isEmpty()) {
+            view.getPatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
+                flowPane.getChildren().add(patternCardSelect(patternCard));
+            });
+        } else {
+            System.out.println("No pattern cards available");
+            view.generatePatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
+                flowPane.getChildren().add(patternCardSelect(patternCard));
+            });
+        }      
 
         this.flowPane.setHgap(10);
         this.flowPane.setVgap(10);
