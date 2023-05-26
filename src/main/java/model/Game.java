@@ -34,6 +34,7 @@ public class Game extends Observable {
 
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
+    private static final int TOKENSPERGAME = 24;
 
     private boolean helpFunction = false;
 
@@ -75,7 +76,9 @@ public class Game extends Observable {
             // newGame.addPatternCards(randomCards);
         }
 
-        GameFavorTokenDB.createGameFavorTokens(thisGameID);
+        for (int i = 0; i < TOKENSPERGAME; i++) {
+            GameFavorTokenDB.createGameFavorTokens(thisGameID);
+        }
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);
 
