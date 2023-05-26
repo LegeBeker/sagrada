@@ -11,7 +11,6 @@ import main.java.model.Die;
 import main.java.model.ToolCard;
 
 public class ToolcardController {
-
     private static final int MAX_VALUE = 6;
     private static final int ONE = 1;
     private static final int TWO = 2;
@@ -31,7 +30,6 @@ public class ToolcardController {
         System.out.println("Starting value: " + dieValue);
         System.out.print("Enter 1 to add or 2 to subtract: ");
         int choice = input.nextInt();
-
         if (choice == 1) {
             if (dieValue == MAX_VALUE) {
                 System.out.println("Value is 6 and cant become 7");
