@@ -77,7 +77,7 @@ public class Game extends Observable {
         }
 
         for (int i = 0; i < TOKENSPERGAME; i++) {
-            GameFavorTokenDB.createGameFavorTokens(thisGameID);
+            GameFavorTokenDB.createGameFavorToken(thisGameID);
         }
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);

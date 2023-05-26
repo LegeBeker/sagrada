@@ -40,7 +40,7 @@ public final class GameFavorTokenDB {
         return Integer.parseInt(result.get(0).get("idfavortoken"));
     }
 
-    public static List<Map<String, String>> createGameFavorTokens(final int idGame) {
+    public static List<Map<String, String>> createGameFavorToken(final int idGame) {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO gamefavortoken (idfavortoken, idgame) "
@@ -62,9 +62,14 @@ public final class GameFavorTokenDB {
         return db.exec(sql, params);
     }
 
-    public static void assignGameFavorTokenToPlayer(final int idGame, final int idPlayer) {
+    public static List<Map<String, String>> assignGameFavorTokenToPlayer(final int idGame, final int idPlayer) {
         Database db = Database.getInstance();
 
-        String sql = "UPDATE gamefavortoken SET  WHERE idfavortoken = ? AND idgame = ?;";
+        String sql = "UPDATE gamefavortoken SET idplayer = ? WHERE idfavortoken = "
+        + "(SELECT temp.idfavortoken "
+        + "FROM (SELECT MIN(idfavortoken) AS idfavortoken FROM gamefavortoken WHERE idplayer IS NULL AND idgame = ?) AS temp);";
+        String[] params = {Integer.toString(idPlayer), Integer.toString(idGame)};
+
+        return db.exec(sql, params);
     }
 }
