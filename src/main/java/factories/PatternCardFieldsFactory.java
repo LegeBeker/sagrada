@@ -59,7 +59,7 @@ public class PatternCardFieldsFactory {
             }
         });
 
-        if (randomNumber > 50) {
+        if (!possibilities.isEmpty() && randomNumber > 50) {
             Random randomColor = new Random();
             int randomIndex = randomColor.nextInt(possibilities.size());
             return possibilities.get(randomIndex);
@@ -80,7 +80,7 @@ public class PatternCardFieldsFactory {
             }
         });
 
-        if (randomNumber > 50) {
+        if (!possibilities.isEmpty() && randomNumber > 50) {
             Random randomEyes = new Random();
             int randomIndex = randomEyes.nextInt(possibilities.size());
             return possibilities.get(randomIndex);
