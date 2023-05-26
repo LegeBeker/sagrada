@@ -59,7 +59,7 @@ public class PatternCardController {
             patternCardMap.put("name", "Gegenereerde kaart " + i);
             patternCardMap.put("difficulty", "3");
 
-            PatternCard patternCard = PatternCard.mapToPatternCard(patternCardMap, PatternCardFieldsFactory.generatePatternCard());
+            PatternCard patternCard = PatternCard.mapToPatternCard(patternCardMap, PatternCardFieldsFactory.generatePatternCardFields());
             patternCardNumbers.add(patternCard.getIdPatternCard());
         }
 
