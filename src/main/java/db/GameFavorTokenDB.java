@@ -44,7 +44,7 @@ public final class GameFavorTokenDB {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO gamefavortoken (idfavortoken, idgame) "
-        + "SELECT temp.idfavortoken, 1 "
+        + "SELECT temp.idfavortoken, ? "
         + "FROM (SELECT IFNULL(MAX(idfavortoken), 0) + 1 AS idfavortoken FROM gamefavortoken) AS temp;";
         String[] params = {Integer.toString(idGame)};
 
