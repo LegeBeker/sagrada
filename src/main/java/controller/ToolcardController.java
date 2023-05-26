@@ -140,7 +140,7 @@ public class ToolcardController {
         input.close();
     }
 
-    public static Map<String, String> getToolCard(final int gameId, final String toolCardName){
+    public static Map<String, String> getToolCard(final int gameId, final String toolCardName) {
         return ToolCard.getToolCard(gameId, toolCardName);
     }
 }
