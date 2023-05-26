@@ -74,15 +74,16 @@ public class GameToolCardView extends StackPane {
             } else if (randY > WIDTH - CIRCLERADIUS) {
                 randY -= CIRCLERADIUS;
             }
-            
             for (Map<String, String> p : players) {
                 if (p.get("idPlayer").equals(ft.get("idplayer"))) {
                     Circle c = new Circle(randX, randY, CIRCLERADIUS);
                     Color playerColor = Color.valueOf(p.get("color"));
                     if (playerColor != null) {
-                        c.setFill(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB), (int) (playerColor.getGreen() * MAXVALUERGB),
+                        c.setFill(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
+                                (int) (playerColor.getGreen() * MAXVALUERGB),
                                 (int) (playerColor.getBlue() * MAXVALUERGB), OPACITY));
-                        c.setStroke(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB), (int) (playerColor.getGreen() * MAXVALUERGB),
+                        c.setStroke(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
+                                (int) (playerColor.getGreen() * MAXVALUERGB),
                                 (int) (playerColor.getBlue()) * MAXVALUERGB).deriveColor(0, 1, 0.2, 1));
                         c.setStrokeWidth(2);
 

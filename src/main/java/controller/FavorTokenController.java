@@ -12,11 +12,7 @@ public class FavorTokenController {
         this.view = view;
     }
 
-
-    public List<Map<String, String>> getFavorTokensForToolCard(final int toolCardId, final int gameId){
-
+    public List<Map<String, String>> getFavorTokensForToolCard(final int toolCardId, final int gameId) {
         return FavorToken.getFavorTokensForToolCard(toolCardId, gameId);
-
     }
-
 }

@@ -38,7 +38,7 @@ public class ToolCard {
         return toolCards;
     }
 
-    public static Map<String,String> getToolCard(final int idGame, final String toolCardname) {
+    public static Map<String, String> getToolCard(final int idGame, final String toolCardname) {
         return ToolCardDB.getToolCard(idGame, toolCardname);
     }
 }

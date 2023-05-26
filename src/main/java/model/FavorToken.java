@@ -1,6 +1,5 @@
 package main.java.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,15 +24,15 @@ public class FavorToken {
         return idPlayer;
     }
 
-    public int getGameToolCardId(){
+    public int getGameToolCardId() {
         return gameToolCardId;
     }
 
-    public int getRoundId(){
+    public int getRoundId() {
         return roundId;
     }
 
-    public static List<Map<String, String>> getFavorTokensForToolCard(final int toolCardId, final int gameId){
+    public static List<Map<String, String>> getFavorTokensForToolCard(final int toolCardId, final int gameId) {
         return GameFavorTokenDB.getFavorTokensForToolCard(toolCardId, gameId);
     };
 }
