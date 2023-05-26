@@ -28,6 +28,8 @@ public class GameToolCardView extends StackPane {
     private static final int INNERCIRCLEX = 6;
     private static final int INNERCIRCLERADIUS = 5;
 
+    private static final int MAXVALUERGB = 255;
+
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
 
@@ -78,14 +80,14 @@ public class GameToolCardView extends StackPane {
                     Circle c = new Circle(randX, randY, CIRCLERADIUS);
                     Color playerColor = Color.valueOf(p.get("color"));
                     if (playerColor != null) {
-                        c.setFill(Color.rgb((int) (playerColor.getRed() * 255), (int) (playerColor.getGreen() * 255),
-                                (int) (playerColor.getBlue() * 255), OPACITY));
-                        c.setStroke(Color.rgb((int) (playerColor.getRed() * 255), (int) (playerColor.getGreen() * 255),
-                                (int) (playerColor.getBlue()) * 255).deriveColor(0, 1, 0.2, 1));
+                        c.setFill(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB), (int) (playerColor.getGreen() * MAXVALUERGB),
+                                (int) (playerColor.getBlue() * MAXVALUERGB), OPACITY));
+                        c.setStroke(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB), (int) (playerColor.getGreen() * MAXVALUERGB),
+                                (int) (playerColor.getBlue()) * MAXVALUERGB).deriveColor(0, 1, 0.2, 1));
                         c.setStrokeWidth(2);
 
                         Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
-                        innerCircle.setFill(Color.rgb(255, 255, 255, OPACITY));
+                        innerCircle.setFill(Color.rgb(MAXVALUERGB, MAXVALUERGB, MAXVALUERGB, OPACITY));
                         pane.getChildren().addAll(c, innerCircle);
                     }
                 }

@@ -35,7 +35,7 @@ public final class GameController implements Observer {
 
         ArrayList<Map<String, String>> playersMap = new ArrayList<Map<String, String>>();
         ArrayList<Player> players = game.getPlayers(username);
-        for(Player p : game.getPlayers(username)){
+        for (Player p : game.getPlayers(username)) {
             Map<String, String> playerMap = new HashMap<String, String>();
             playerMap.put("idPlayer", Integer.toString(p.getId()));
             playerMap.put("username", p.getUsername());
