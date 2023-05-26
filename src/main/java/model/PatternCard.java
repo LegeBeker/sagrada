@@ -207,10 +207,9 @@ public class PatternCard {
         int[][] offsets;
 
         if (includeDiagonals) {
-            offsets = new int[][] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }, { -1, -1 }, { -1, 1 }, { 1, -1 },
-                    { 1, 1 } };
+            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
         } else {
-            offsets = new int[][] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         }
 
         for (int[] offset : offsets) {
@@ -218,7 +217,7 @@ public class PatternCard {
             int neighborCol = col + offset[1];
 
             if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] { neighborRow, neighborCol });
+                neighbors.add(new int[] {neighborRow, neighborCol });
             }
         }
 
