@@ -62,4 +62,8 @@ public class InvitesView extends HBox {
             }
         });
     }
+
+    public void update() {
+        this.accountsView.update();
+    }
 }

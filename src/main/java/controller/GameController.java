@@ -134,10 +134,6 @@ public final class GameController implements Observer {
         return this.game.getHelpFunction();
     }
 
-    public void getNewOffer() {
-        game.getNewOffer();
-    }
-
     public void choosePatternCard(final int idPatternCard) {
         getCurrentPlayer().choosePatternCard(idPatternCard, this.game.getId());
         getCurrentPlayer().createGameFavorTokens();
