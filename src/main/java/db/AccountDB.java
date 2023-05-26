@@ -67,7 +67,7 @@ public final class AccountDB {
                 + "AND username = ? AND playstatus = ?) AS 'lostGames', "
                 + "(SELECT MAX(score) FROM player WHERE username = ?) AS 'highestScore', "
                 + "(SELECT eyes "
-                + "FROM playerframefield AS PFF " 
+                + "FROM playerframefield AS PFF "
                 + "JOIN gamedie AS gd "
                 + "ON gd.dienumber = pff.dienumber AND gd.diecolor = pff.diecolor AND gd.idgame = pff.idgame "
                 + "WHERE idplayer IN (SELECT idplayer FROM player WHERE username = ?) "
