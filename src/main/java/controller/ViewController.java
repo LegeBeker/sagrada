@@ -365,6 +365,10 @@ public class ViewController extends Scene {
         return this.gameController.getPatternCardOptions();
     }
 
+    public Map<Integer, List<Integer>> generatePatternCardOptions(){
+        return this.patternCardController.generatePatternCardOptions();
+    }
+
     public Boolean createAccount(final String username, final String password) {
         return this.accountController.createAccount(username, password);
     }
