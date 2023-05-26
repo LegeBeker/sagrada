@@ -12,7 +12,9 @@ public final class GameDB {
     public static Map<String, String> get(final int idGame) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT * FROM game WHERE idgame = ? LIMIT 1";
+        String sql = "SELECT * FROM game"
+        + " JOIN round ON game.current_roundID = round.roundID"
+        + " WHERE idgame = ? LIMIT 1;";
         String[] params = {Integer.toString(idGame)};
 
         return db.exec(sql, params).get(0);
@@ -22,11 +24,12 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT game.*, DATE_FORMAT(game.creationdate, '%d-%m-%Y %H:%i:%s') AS formatted_creationdate, "
-                + "player.username, CASE WHEN pl2.username IS NOT NULL THEN 'TRUE' ELSE 'FALSE' END AS isPlayerInGame, "
+                + "player.username, round.roundnr, CASE WHEN pl2.username IS NOT NULL THEN 'TRUE' ELSE 'FALSE' END AS isPlayerInGame, "
                 + "CASE WHEN EXISTS (SELECT 1 FROM player pl3 WHERE game.idgame = pl3.idgame AND pl3.playstatus = 'refused') "
                 + "THEN 'TRUE' ELSE 'FALSE' END AS hasDeclinedInvites "
                 + "FROM game JOIN player ON game.turn_idplayer = player.idplayer "
                 + "LEFT JOIN player pl2 ON game.idgame = pl2.idgame AND pl2.username = ? "
+                + "JOIN round ON round.roundID = game.current_roundID "
                 + "GROUP BY game.idgame;";
 
         String[] params = {username};
