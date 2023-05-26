@@ -19,7 +19,7 @@ public class ToolcardController {
     private static final int SIX = 6;
     private static final int TURNCOUNT = 2;
     private Random random;
-  
+
     public static Map<String, String> getToolCard(final int gameId, final String toolCardName) {
         return ToolCard.getToolCard(gameId, toolCardName);
     }
