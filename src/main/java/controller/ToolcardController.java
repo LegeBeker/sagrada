@@ -146,7 +146,7 @@ public class ToolcardController {
         Die selectedDie = gameOffer.get(input.nextInt() - 1);
 
         gameOffer.remove(selectedDie);
-        ToolCardDB.addDieToBag(selectedDie);
+        ToolCardDB.addDieToBag(selectedDie.getGame().getId(), selectedDie.getColor(), selectedDie.getEyes());
         input.close();
     }
 }
