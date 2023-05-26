@@ -3,6 +3,8 @@ package main.java.db;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
+
 public final class ToolCardDB {
     private ToolCardDB() {
     }
@@ -35,5 +37,12 @@ public final class ToolCardDB {
         String[] params = {color.toString(), Integer.toString(idgame)};
         db.exec(sql, params);
         return true;
+    }
+    // weet niet of de die.getGame().toString() 100% klopt
+    public static void addDieToBag(final int idgame, final Color color, final int eyes) {
+        Database db = Database.getInstance();
+        String sql = "INSERT INTO gamedie (idgame, diecolor, eyes) VALUES (?, ?, ?)";
+        String[] params = {Integer.toString(idgame), color.toString(), Integer.toString(eyes)};
+        db.exec(sql, params);
     }
 }
