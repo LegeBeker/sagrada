@@ -69,7 +69,7 @@ public final class GameFavorTokenDB {
         + "(SELECT temp.idfavortoken "
         + "FROM (SELECT MIN(idfavortoken) AS idfavortoken FROM gamefavortoken WHERE idplayer IS NULL AND idgame = ?) AS temp);";
         String[] params = {Integer.toString(idPlayer), Integer.toString(idGame)};
-  
+
         return db.exec(sql, params);
     }
 
