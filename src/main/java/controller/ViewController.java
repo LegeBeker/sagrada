@@ -200,15 +200,16 @@ public class ViewController extends Scene {
         return this.gameController.isTurnPlayer(playerId);
     }
 
-    public List<Map<String,String>> getFavorTokensForToolCard(final String toolCardName){
-        return this.favorTokenController.getFavorTokensForToolCard(Integer.parseInt(ToolcardController.getToolCard(gameController.getGameId(), toolCardName).get("idtoolcard")), gameController.getGameId());
+    public List<Map<String, String>> getFavorTokensForToolCard(final String toolCardName) {
+        return this.favorTokenController.getFavorTokensForToolCard(
+                Integer.parseInt(
+                        ToolcardController.getToolCard(gameController.getGameId(), toolCardName).get("idtoolcard")),
+                gameController.getGameId());
     }
 
-    public List<Map<String, String>> getPlayers(){
+    public List<Map<String, String>> getPlayers() {
         return this.gameController.getPlayers(getUsername());
     }
-
-
 
     public ArrayList<Integer> getPlayerIds() {
         return this.gameController.getPlayerIds();
