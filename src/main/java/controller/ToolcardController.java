@@ -1,12 +1,14 @@
 package main.java.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
 import javafx.scene.paint.Color;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
+import main.java.model.ToolCard;
 
 public class ToolcardController {
 
@@ -136,5 +138,9 @@ public class ToolcardController {
         ToolCardDB.updateGameDieValue(gameId, selectedDie.getEyes());
 
         input.close();
+    }
+
+    public static Map<String, String> getToolCard(final int gameId, final String toolCardName) {
+        return ToolCard.getToolCard(gameId, toolCardName);
     }
 }

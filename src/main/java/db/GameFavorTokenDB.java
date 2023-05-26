@@ -69,6 +69,15 @@ public final class GameFavorTokenDB {
         + "(SELECT temp.idfavortoken "
         + "FROM (SELECT MIN(idfavortoken) AS idfavortoken FROM gamefavortoken WHERE idplayer IS NULL AND idgame = ?) AS temp);";
         String[] params = {Integer.toString(idPlayer), Integer.toString(idGame)};
+  
+        return db.exec(sql, params);
+    }
+
+    public static List<Map<String, String>> getFavorTokensForToolCard(final int idToolCard, final int idGame) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM gamefavortoken WHERE idgame = ? AND gametoolcard = ?;";
+        String[] params = {Integer.toString(idGame), Integer.toString(idToolCard)};
 
         return db.exec(sql, params);
     }
