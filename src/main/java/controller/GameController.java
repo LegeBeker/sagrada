@@ -31,8 +31,24 @@ public final class GameController implements Observer {
         return this.game;
     }
 
-    public ArrayList<Player> getPlayers(final String username) {
-        return game.getPlayers(username);
+    public ArrayList<Map<String, String>> getPlayers(final String username) {
+
+        ArrayList<Map<String, String>> playersMap = new ArrayList<Map<String, String>>();
+        ArrayList<Player> players = game.getPlayers(username);
+        for (Player p : game.getPlayers(username)) {
+            Map<String, String> playerMap = new HashMap<String, String>();
+            playerMap.put("idPlayer", Integer.toString(p.getId()));
+            playerMap.put("username", p.getUsername());
+            playerMap.put("game", Integer.toString(p.getGame().getId()));
+            playerMap.put("playStatus", p.getPlayStatus().toString());
+            playerMap.put("seqnr", Integer.toString(p.getSeqnr()));
+            playerMap.put("color", p.getColor().toString());
+            playerMap.put("score", Integer.toString(p.getScore()));
+
+            playersMap.add(playerMap);
+        }
+
+        return playersMap;
     }
 
     public ArrayList<Integer> getPlayerIds() {
@@ -118,13 +134,9 @@ public final class GameController implements Observer {
         return this.game.getHelpFunction();
     }
 
-    public void getNewOffer() {
-        game.getNewOffer();
-    }
-
     public void choosePatternCard(final int idPatternCard) {
         getCurrentPlayer().choosePatternCard(idPatternCard, this.game.getId());
-        getCurrentPlayer().createGameFavorTokens();
+        getCurrentPlayer().assignGameFavorTokensToPlayer();
     }
 
     public void endTurn() {

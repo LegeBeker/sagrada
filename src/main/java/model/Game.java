@@ -13,6 +13,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Color;
 import main.java.db.DieDB;
 import main.java.db.GameDB;
+import main.java.db.GameFavorTokenDB;
 import main.java.db.PatternCardDB;
 import main.java.enums.PlayStatusEnum;
 import main.java.pattern.Observable;
@@ -21,7 +22,10 @@ public class Game extends Observable {
     private int idGame;
 
     private Player turnPlayer;
+
+    private int roundID;
     private int currentRound;
+    private boolean clockwise;
 
     private String creationDate;
 
@@ -30,6 +34,7 @@ public class Game extends Observable {
 
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
+    private static final int TOKENSPERGAME = 24;
 
     private boolean helpFunction = false;
 
@@ -66,10 +71,15 @@ public class Game extends Observable {
             newGame.addPatternCards();
         } 
         
+        }
+        for (int i = 0; i < TOKENSPERGAME; i++) {
+            GameFavorTokenDB.createGameFavorToken(thisGameID);
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);
 
         Die.createGameOffer(thisGameID);
+        Die.getNewOffer(newGame.getId(), 1, newGame.players.size());
+
         Board.createBoards(newGame);
 
         return newGame;
@@ -119,6 +129,14 @@ public class Game extends Observable {
 
     public int getCurrentRound() {
         return this.currentRound;
+    }
+
+    public int getRoundID() {
+        return this.roundID;
+    }
+
+    public boolean getClockwise() {
+        return this.clockwise;
     }
 
     public String getCreationDate() {
@@ -222,9 +240,14 @@ public class Game extends Observable {
     }
 
     public void endTurn() {
-        int nextSeqnr = getTurnPlayer().getSeqnr() + 1;
+        int nextSeqnr;
+        if (getClockwise()) {
+            nextSeqnr = getTurnPlayer().getSeqnr() + 1;
+        } else {
+            nextSeqnr = getTurnPlayer().getSeqnr() - 1;
+        }
         if (nextSeqnr > getPlayers().size()) {
-            reverseSeqNr();
+            setCurrentRoundID(getRoundID() + 1);
         } else if (nextSeqnr == 0) {
             endRound();
         } else {
@@ -238,14 +261,7 @@ public class Game extends Observable {
         notifyObservers(Game.class);
     }
 
-    private void reverseSeqNr() {
-        for (Player player : getPlayers()) {
-            player.setSeqnr(player.getSeqnr() * -1);
-        }
-    }
-
     private void endRound() {
-        reverseSeqNr();
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == getPlayers().size()) {
                 player.setSeqnr(1);
@@ -255,15 +271,18 @@ public class Game extends Observable {
             }
         }
 
-        for (Map<String, String> dieMap : DieDB.getOffer(getId(), getCurrentRound())) {
-            DieDB.putRoundTrack(getId(), getCurrentRound(), Integer.parseInt(dieMap.get("dienumber")),
+        for (Map<String, String> dieMap : DieDB.getOffer(getId(), getRoundID())) {
+            DieDB.putRoundTrack(getId(), getRoundID(), Integer.parseInt(dieMap.get("dienumber")),
                     dieMap.get("diecolor"));
         }
 
-        setCurrentRound(getCurrentRound() + 1);
+        setCurrentRoundID(getRoundID() + 1);
+
+        Die.getNewOffer(getId(), getRoundID(), players.size());
+        notifyObservers(Game.class);
     }
 
-    private void setCurrentRound(final int roundID) {
+    private void setCurrentRoundID(final int roundID) {
         GameDB.setRound(getId(), roundID);
         notifyObservers(Game.class);
     }
@@ -276,8 +295,11 @@ public class Game extends Observable {
         game.idGame = Integer.parseInt(gameMap.get("idgame"));
 
         if (gameMap.get("current_roundID") != null) {
-            game.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
-            game.offer = Die.getOffer(game.idGame, game.currentRound);
+            game.roundID = Integer.parseInt(gameMap.get("current_roundID"));
+            game.currentRound = Integer.parseInt(gameMap.get("roundnr"));
+            game.clockwise = gameMap.get("clockwise").equals("1");
+
+            game.offer = Die.getOffer(game.getId(), game.getRoundID());
         }
         game.creationDate = gameMap.get("creationdate");
         game.helpFunction = false;
@@ -299,10 +321,12 @@ public class Game extends Observable {
         Map<String, String> gameMap = GameDB.get(idGame);
 
         if (gameMap.get("current_roundID") != null) {
-            this.offer = Die.getOffer(this.idGame, this.currentRound);
+            this.offer = Die.getOffer(this.getId(), this.getRoundID());
             if (Integer.parseInt(gameMap.get("current_roundID")) != currentRound) {
-                this.currentRound = Integer.parseInt(gameMap.get("current_roundID"));
+                this.roundID = Integer.parseInt(gameMap.get("current_roundID"));
+                this.currentRound = Integer.parseInt(gameMap.get("roundnr"));
                 this.roundTrack = Die.getRoundTrack(this.idGame);
+                this.clockwise = gameMap.get("clockwise").equals("1");
             }
         }
 
@@ -331,11 +355,6 @@ public class Game extends Observable {
     public StringProperty creationDateShowProperty() {
         final int year = 5;
         return new SimpleStringProperty(getCreationDate().substring(year));
-    }
-
-    public void getNewOffer() {
-        Die.getNewOffer(idGame, currentRound, players.size());
-        notifyObservers(Game.class);
     }
 
     public ArrayList<String> getToolCardsNames() {

@@ -49,6 +49,8 @@ public class ViewController extends Scene {
     private GameController gameController;
     private PatternCardController patternCardController;
     private MessageController messageController;
+    private ToolcardController toolCardController;
+    private FavorTokenController favorTokenController;
 
     private EffectsController effectsController;
 
@@ -87,6 +89,8 @@ public class ViewController extends Scene {
         this.patternCardController = new PatternCardController(this);
         this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
+        this.toolCardController = new ToolcardController();
+        this.favorTokenController = new FavorTokenController(this);
 
         this.openLoginView();
     }
@@ -196,7 +200,14 @@ public class ViewController extends Scene {
         return this.gameController.isTurnPlayer(playerId);
     }
 
-    public ArrayList<Player> getPlayers() {
+    public List<Map<String, String>> getFavorTokensForToolCard(final String toolCardName) {
+        return this.favorTokenController.getFavorTokensForToolCard(
+                Integer.parseInt(
+                        ToolcardController.getToolCard(gameController.getGameId(), toolCardName).get("idtoolcard")),
+                gameController.getGameId());
+    }
+
+    public List<Map<String, String>> getPlayers() {
         return this.gameController.getPlayers(getUsername());
     }
 
@@ -210,10 +221,6 @@ public class ViewController extends Scene {
 
     public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
         return this.patternCardController.getPossibleMoves(eyes, color);
-    }
-
-    public void getNewOffer() {
-        this.gameController.getNewOffer();
     }
 
     public void setHelpFunction() {

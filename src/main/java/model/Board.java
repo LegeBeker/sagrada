@@ -40,7 +40,7 @@ public class Board {
 
     public boolean placeDie(final Color color, final int number, final int row, final int column) {
         boolean result = BoardDB.setField(
-                this.player.getGame().getId(), this.player.getGame().getCurrentRound(), this.player.getId(), row,
+                this.player.getGame().getId(), this.player.getGame().getRoundID(), this.player.getId(), row,
                 column, ColorEnum.fromString(color.toString()).getName(), number);
 
         if (!result) {

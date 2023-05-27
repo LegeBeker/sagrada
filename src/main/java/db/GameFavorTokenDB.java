@@ -40,14 +40,13 @@ public final class GameFavorTokenDB {
         return Integer.parseInt(result.get(0).get("idfavortoken"));
     }
 
-    public static List<Map<String, String>> createGameFavorToken(final int idGame,
-            final int idPlayer) {
+    public static List<Map<String, String>> createGameFavorToken(final int idGame) {
         Database db = Database.getInstance();
 
-        String sql = "INSERT INTO gamefavortoken (idfavortoken, idgame, idplayer) "
-           + "SELECT temp.idfavortoken, ?, ? "
-           + "FROM (SELECT IFNULL(MAX(idfavortoken), 0) + 1 AS idfavortoken FROM gamefavortoken) AS temp;";
-        String[] params = {Integer.toString(idGame), Integer.toString(idPlayer)};
+        String sql = "INSERT INTO gamefavortoken (idfavortoken, idgame) "
+        + "SELECT temp.idfavortoken, ? "
+        + "FROM (SELECT IFNULL(MAX(idfavortoken), 0) + 1 AS idfavortoken FROM gamefavortoken) AS temp;";
+        String[] params = {Integer.toString(idGame)};
 
         return db.exec(sql, params);
     }
@@ -59,6 +58,26 @@ public final class GameFavorTokenDB {
         String sql = "UPDATE gamefavortoken SET gametoolcard = ?, roundID = ? WHERE idfavortoken = ? AND idgame = ?;";
         String[] params = {Integer.toString(idGameToolCard), Integer.toString(roundID), Integer.toString(idFavorToken),
                 Integer.toString(idGame)};
+
+        return db.exec(sql, params);
+    }
+
+    public static List<Map<String, String>> assignGameFavorTokenToPlayer(final int idGame, final int idPlayer) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE gamefavortoken SET idplayer = ? WHERE idfavortoken = "
+        + "(SELECT temp.idfavortoken "
+        + "FROM (SELECT MIN(idfavortoken) AS idfavortoken FROM gamefavortoken WHERE idplayer IS NULL AND idgame = ?) AS temp);";
+        String[] params = {Integer.toString(idPlayer), Integer.toString(idGame)};
+
+        return db.exec(sql, params);
+    }
+
+    public static List<Map<String, String>> getFavorTokensForToolCard(final int idToolCard, final int idGame) {
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM gamefavortoken WHERE idgame = ? AND gametoolcard = ?;";
+        String[] params = {Integer.toString(idGame), Integer.toString(idToolCard)};
 
         return db.exec(sql, params);
     }
