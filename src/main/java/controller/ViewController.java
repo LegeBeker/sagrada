@@ -415,4 +415,30 @@ public class ViewController extends Scene {
     public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return this.gameController.getGamesWithOpenInvites();
     }
+
+
+    //-- Toolcard methods
+    public void grozingPliers(final int dieValue){
+        this.toolCardController.grozingPliers(dieValue);
+    }
+
+    public void grindingStone(){
+        this.toolCardController.grindingStone();
+    }
+
+    public void fluxBrush(final int dieValue){
+        this.toolCardController.fluxBrush(dieValue);
+    }
+
+    public void glazingHammer(final int turnCount, final int gameId, final int roundId){
+        this.toolCardController.glazingHammer(turnCount, gameId, roundId);
+    }
+
+    public void lensCutter(final int gameId, final int roundId){
+        this.toolCardController.lensCutter(gameId, roundId);
+    }
+
+    public void fluxRemover(final int gameId, final int roundId){
+        this.toolCardController.fluxRemover(gameId, roundId);
+    }
 }

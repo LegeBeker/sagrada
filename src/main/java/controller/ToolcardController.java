@@ -18,7 +18,7 @@ public class ToolcardController {
     private static final int FIVE = 5;
     private static final int SIX = 6;
     private static final int TURNCOUNT = 2;
-    private Random random;
+    private Random random = new Random();
 
     public static Map<String, String> getToolCard(final int gameId, final String toolCardName) {
         return ToolCard.getToolCard(gameId, toolCardName);
@@ -99,7 +99,9 @@ public class ToolcardController {
         } while (newValue == currentValue);
         System.out.println("Starting value: " + currentValue);
         System.out.println("New value: " + newValue);
-        ToolCardDB.updateGameDieValue(newValue, 0);
+        //-- First params needs to be a gameId and the second one needs to be eyes. 
+        //-- This query is also too vague, needs to be more specific
+        ToolCardDB.updateGameDieValue(newValue, 0); //-- Whut? Hardcoded eyes to 0? 
     }
 
     public void glazingHammer(final int turnCount, final int gameId, final int roundId) {

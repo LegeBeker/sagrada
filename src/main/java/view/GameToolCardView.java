@@ -2,7 +2,11 @@ package main.java.view;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -101,12 +105,62 @@ public class GameToolCardView extends StackPane {
                 if (selectedToolCardView != null) {
                     selectedToolCardView.removeSelection();
                     String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCardName());
-                    System.out.println(deselectedMethodName + "() has been deselected.");
                 }
-                this.addSelection();
-                selectedToolCardView = this;
+
                 String methodName = getSelectedMethodName(toolCardName);
-                System.out.println(methodName + "() has been selected.");
+                if (!methodName.equals("")) {
+                    if(askConfirmationUsageCard(this.getToolCardName())){
+                        this.addSelection();
+                        selectedToolCardView = this;
+                        switch (methodName) {
+                            case "grozingPliers": //-- Keep in mind that all values are hardcoded as of now
+                                System.out.println("Switch case for grozingPliers triggert");
+                                view.grozingPliers(2);
+                                break;
+                            case "eglomiseBrush":
+                                System.out.println("Switch case for eglomiseBrush triggert");
+                                break;
+                            case "copperFoilBurnisher":
+                                System.out.println("Switch case for copperFoilBurnisher triggert");
+                                break;
+                            case "lathekin":
+                                System.out.println("Switch case for lathekin triggert");
+                                break;
+                            case "lensCutter":
+                                System.out.println("Switch case for lensCutter triggert");
+                                view.lensCutter(1, 2);
+                                break;
+                            case "fluxBrush":
+                                System.out.println("Switch case for fluxBrush triggert");
+                                view.fluxBrush(2);
+                                break;
+                            case "glazingHammer":
+                                System.out.println("Switch case for glazingHammer triggert");
+                                view.glazingHammer(1, 2, 3);
+                                break;
+                            case "runningPliers":
+                                System.out.println("Switch case for runningPliers triggert");
+                                break;
+                            case "cork-backedStraightedge":
+                                System.out.println("Switch case for backedStraightedge triggert");
+                                break;
+                            case "grindingStone":
+                                System.out.println("Switch case for grindingStone triggert");
+                                view.grindingStone();
+                                break;
+                            case "fluxRemover":
+                                System.out.println("Switch case for fluxRemover triggert");
+                                view.fluxRemover(1, 2);
+                                break;
+                            case "tapWheel":
+                                System.out.println("Switch case for tapWheel triggert");
+                                break;
+                            default:
+                                break;
+                            }
+                    }
+                }
+
             } else {
                 removeSelection();
                 selectedToolCardView = null;
@@ -138,5 +192,33 @@ public class GameToolCardView extends StackPane {
     private String getDeselectedMethodName(final String toolCardName) {
         String deselectedMethodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
         return Character.toLowerCase(deselectedMethodName.charAt(0)) + deselectedMethodName.substring(1);
+    }
+
+    private Boolean askConfirmationUsageCard(final String toolCardname) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Gebruik gereedschapskaart");
+        alert.setHeaderText("Bevestiging gebruikt " + toolCardname);
+        alert.setContentText(
+                "Je staat op het punt om de gereedschapskaart " + toolCardname + " te gebruiken. Weet je het zeker?");
+
+        ButtonType acceptButton = new ButtonType("Accepteren");
+        ButtonType refuseButton = new ButtonType("Weigeren");
+        ButtonType closeButton = new ButtonType("Sluiten", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(acceptButton, refuseButton, closeButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (!result.isPresent()) {
+            return false;
+        }
+
+        if (result.get() == acceptButton) {
+            return true;
+        } else if (result.get() == refuseButton) {
+            return false;
+        }
+        else{
+            return false; //-- failsafe for if we forget to handle a new button
+        }
     }
 }
