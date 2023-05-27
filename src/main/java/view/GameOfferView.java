@@ -14,6 +14,8 @@ public class GameOfferView extends FlowPane implements Observer {
 
     private ViewController view;
 
+    private ArrayList<DieView> dieViews = new ArrayList<DieView>();
+
     public GameOfferView(final ViewController view) {
         this.view = view;
 
@@ -25,13 +27,12 @@ public class GameOfferView extends FlowPane implements Observer {
     @Override
     public void update() {
         this.getChildren().clear();
-
+        dieViews.clear();
         for (Map<String, String> die : view.getOffer()) {
-            DieView dieView = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
-                    Integer.parseInt(die.get("number")), true);
-
-            this.getChildren().add(dieView);
+            dieViews.add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+                    Integer.parseInt(die.get("number")), true));       
         }
+        this.getChildren().addAll(dieViews);
     }
 
     public void showPossibleMoves(final int eyes, final Color color) {
@@ -43,5 +44,11 @@ public class GameOfferView extends FlowPane implements Observer {
     public void cleanTargets() {
         GameCenterView gameCenterView = (GameCenterView) this.getParent();
         gameCenterView.cleanTargets();
+    }
+
+    public void updateSelectionStatus(final Boolean isSelected){
+        for(DieView dv : this.dieViews){
+            dv.updateSelectionStatus(isSelected);
+        }
     }
 }

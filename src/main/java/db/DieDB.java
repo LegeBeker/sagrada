@@ -66,4 +66,14 @@ public final class DieDB {
         return true;
     }
 
+    public static int getGameDieEyes(final int idGame, final int dieNumber, final String dieColor){
+        Database db = Database.getInstance();
+
+        String sql = "SELECT * FROM gamedie WHERE idgame = ? AND dienumber = ? AND diecolor = ?;";
+
+        String[] params = {Integer.toString(idGame), Integer.toString(dieNumber), dieColor};
+
+        return Integer.valueOf(db.exec(sql, params).get(0).get("eyes"));
+    }
+
 }

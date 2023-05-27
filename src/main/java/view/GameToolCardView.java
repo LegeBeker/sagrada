@@ -17,6 +17,7 @@ import main.java.controller.ViewController;
 
 public class GameToolCardView extends StackPane {
     private final Image imageToolCard;
+    private GameCenterView gameCenterView;
 
     private static final int WIDTH = 150;
     private static final int HEIGHT = 200;
@@ -42,8 +43,9 @@ public class GameToolCardView extends StackPane {
     private boolean isSelected = false;
     private static GameToolCardView selectedToolCardView = null;
 
-    public GameToolCardView(final ViewController view, final String toolCardName) {
+    public GameToolCardView(final ViewController view, final String toolCardName, final GameCenterView gameCenterView) {
         ImageView imageView = new ImageView();
+        this.gameCenterView = gameCenterView;
 
         this.toolCardName = toolCardName;
 
@@ -131,8 +133,9 @@ public class GameToolCardView extends StackPane {
                                 view.lensCutter(1, 2);
                                 break;
                             case "fluxBrush":
-                                System.out.println("Switch case for fluxBrush triggert");
-                                view.fluxBrush(2);
+                                System.out.println("Switch case for fluxBrush triggert"); //-- Current W.I.P.
+                                //-- dieNumber & dieColor
+                                // view.fluxBrush(6, "blue"); //-- Temp hardcoded values
                                 break;
                             case "glazingHammer":
                                 System.out.println("Switch case for glazingHammer triggert");
@@ -173,11 +176,13 @@ public class GameToolCardView extends StackPane {
     private void addSelection() {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
         isSelected = true;
+        gameCenterView.updateSelectionStatus(isSelected);
     }
 
     private void removeSelection() {
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
         isSelected = false;
+        gameCenterView.updateSelectionStatus(isSelected);
     }
 
     public String getToolCardName() {

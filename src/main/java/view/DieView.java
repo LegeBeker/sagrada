@@ -30,15 +30,17 @@ public class DieView extends Group {
     private int eyes;
     private Color color;
     private int number;
+    private Boolean toolCardSelected;
 
     public DieView(final ViewController view, final int eyes, final Color color, final int number,
             final Boolean isDraggable) {
         this.eyes = eyes;
         this.color = color;
         this.number = number;
+        this.toolCardSelected = false;
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
         rectangle.setFill(Color.rgb(0, 0, 0, 0));
-
+        this.setOnMouseClicked(e -> checkSelectionModeToolCard());
         Rectangle die = new Rectangle(RECTANGLE, RECTANGLE);
         die.setFill(color);
         die.setStroke(Color.BLACK);
@@ -148,5 +150,19 @@ public class DieView extends Group {
 
     public int getNumber() {
         return this.number;
+    }
+
+    private void checkSelectionModeToolCard(){
+        System.out.println("DieView is geklikt!");
+        System.out.println("Checking toolCardSelected: " + toolCardSelected);
+        if (toolCardSelected){
+            System.out.println("DieView is correct geklikt!");
+        }
+        
+    }
+
+    public void updateSelectionStatus(final Boolean toolCardSelected){
+        this.toolCardSelected = toolCardSelected;
+        System.out.println("[DieView] Updated status to: " + toolCardSelected);
     }
 }

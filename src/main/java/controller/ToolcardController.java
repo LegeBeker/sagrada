@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import javafx.scene.paint.Color;
+import main.java.db.DieDB;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
 import main.java.model.ToolCard;
@@ -91,17 +95,20 @@ public class ToolcardController {
         }
     }
 
-    public void fluxBrush(final int dieValue) {
-        int currentValue = dieValue;
+    public void fluxBrush(final int gameId, final int dieNumber, final String dieColor) {
+        int currentValue = DieDB.getGameDieEyes(gameId, dieNumber, dieColor);
         int newValue;
         do {
             newValue = random.nextInt(SIX) + 1;
         } while (newValue == currentValue);
-        System.out.println("Starting value: " + currentValue);
+
+        System.out.println("Update gameDie with old value: " + currentValue);
+        System.out.println("GameID: " + gameId);
+        System.out.println("DieNumber: " + dieNumber);
+        System.out.println("DieColor: " + dieColor);
         System.out.println("New value: " + newValue);
-        //-- First params needs to be a gameId and the second one needs to be eyes. 
-        //-- This query is also too vague, needs to be more specific
-        ToolCardDB.updateGameDieValue(newValue, 0); //-- Whut? Hardcoded eyes to 0? 
+
+        ToolCardDB.updateGameDieValue(gameId, dieNumber, dieColor, newValue);
     }
 
     public void glazingHammer(final int turnCount, final int gameId, final int roundId) {

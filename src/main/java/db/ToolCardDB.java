@@ -23,10 +23,10 @@ public final class ToolCardDB {
         return db.exec(sql, params).get(0);
     }
 
-    public static boolean updateGameDieValue(final int idgame, final int eyes) {
+    public static boolean updateGameDieValue(final int idgame, final int dieNumber, final String dieColor, final int eyes) {
         Database db = Database.getInstance();
-        String sql = "UPDATE gamedie SET eyes = ? WHERE idgame = ?";
-        String[] params = {Integer.toString(eyes), Integer.toString(idgame) };
+        String sql = "UPDATE gamedie SET eyes = ? WHERE idgame = ? AND dienumber = ? AND diecolor = ?";
+        String[] params = {Integer.toString(eyes), Integer.toString(idgame), Integer.toString(dieNumber), dieColor};
         db.exec(sql, params);
         return true;
     }

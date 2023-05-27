@@ -426,8 +426,10 @@ public class ViewController extends Scene {
         this.toolCardController.grindingStone();
     }
 
-    public void fluxBrush(final int dieValue){
-        this.toolCardController.fluxBrush(dieValue);
+    public void fluxBrush(final int dieNumber, final String dieColor){
+        
+
+        this.toolCardController.fluxBrush(gameController.getGameId(),dieNumber, dieColor);
     }
 
     public void glazingHammer(final int turnCount, final int gameId, final int roundId){
