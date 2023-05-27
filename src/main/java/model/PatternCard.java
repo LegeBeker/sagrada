@@ -170,7 +170,7 @@ public class PatternCard {
         return true;
     }
 
-    private boolean neighborsEmpty(final int row, final int col, final Board board) {
+    public boolean neighborsEmpty(final int row, final int col, final Board board) {
         ArrayList<int[]> neighbors = getNeighbors(row, col, true);
 
         for (int[] neighbor : neighbors) {
