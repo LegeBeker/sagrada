@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
+import main.java.enums.ColorEnum;
 
 public final class ToolCardDB {
     private ToolCardDB() {
@@ -26,7 +27,7 @@ public final class ToolCardDB {
     public static boolean updateGameDieValue(final int idgame, final int dieNumber, final String dieColor, final int eyes) {
         Database db = Database.getInstance();
         String sql = "UPDATE gamedie SET eyes = ? WHERE idgame = ? AND dienumber = ? AND diecolor = ?";
-        String[] params = {Integer.toString(eyes), Integer.toString(idgame), Integer.toString(dieNumber), dieColor};
+        String[] params = {Integer.toString(eyes), Integer.toString(idgame), Integer.toString(dieNumber), ColorEnum.fromString(dieColor).getName()};
         db.exec(sql, params);
         return true;
     }

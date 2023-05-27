@@ -1,6 +1,8 @@
 package main.java.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
@@ -31,6 +33,7 @@ public class DieView extends Group {
     private Color color;
     private int number;
     private Boolean toolCardSelected;
+    private GameCenterView gameCenterView;
 
     public DieView(final ViewController view, final int eyes, final Color color, final int number,
             final Boolean isDraggable) {
@@ -152,17 +155,24 @@ public class DieView extends Group {
         return this.number;
     }
 
+    public void setGameCenterView(final GameCenterView gameCenterView){
+        this.gameCenterView = gameCenterView;
+    }
+
     private void checkSelectionModeToolCard(){
-        System.out.println("DieView is geklikt!");
-        System.out.println("Checking toolCardSelected: " + toolCardSelected);
-        if (toolCardSelected){
-            System.out.println("DieView is correct geklikt!");
+        if (toolCardSelected && gameCenterView != null){
+            Map<String, String> selectedDieMap = new HashMap<>();;
+            selectedDieMap.put("eyes", Integer.toString(this.eyes));
+            selectedDieMap.put("dieNumber", Integer.toString(this.number));
+            selectedDieMap.put("dieColor", this.color.toString());
+
+            gameCenterView.dieSelectedForToolcard(selectedDieMap);
+            
         }
         
     }
 
     public void updateSelectionStatus(final Boolean toolCardSelected){
         this.toolCardSelected = toolCardSelected;
-        System.out.println("[DieView] Updated status to: " + toolCardSelected);
     }
 }

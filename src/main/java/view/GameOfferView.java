@@ -13,12 +13,13 @@ import main.java.pattern.Observer;
 public class GameOfferView extends FlowPane implements Observer {
 
     private ViewController view;
+    private GameCenterView gameCenterView;
 
     private ArrayList<DieView> dieViews = new ArrayList<DieView>();
 
-    public GameOfferView(final ViewController view) {
+    public GameOfferView(final ViewController view, final GameCenterView gameCenterView) {
         this.view = view;
-
+        this.gameCenterView = gameCenterView;
         Observable.addObserver(Game.class, this);
 
         this.update();
@@ -27,11 +28,17 @@ public class GameOfferView extends FlowPane implements Observer {
     @Override
     public void update() {
         this.getChildren().clear();
-        dieViews.clear();
-        for (Map<String, String> die : view.getOffer()) {
-            dieViews.add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
-                    Integer.parseInt(die.get("number")), true));       
+        if(dieViews.size() != view.getOffer().size()){
+            dieViews.clear();
+            for (Map<String, String> die : view.getOffer()) {
+
+                DieView dv = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+                Integer.parseInt(die.get("number")), true);
+                dv.setGameCenterView(gameCenterView);
+                dieViews.add(dv);
+            }
         }
+        
         this.getChildren().addAll(dieViews);
     }
 

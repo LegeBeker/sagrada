@@ -1,5 +1,7 @@
 package main.java.view;
 
+import java.util.Map;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import main.java.controller.ViewController;
@@ -7,10 +9,12 @@ import main.java.controller.ViewController;
 public class GameToolBarView extends HBox {
 
     private GameCenterView gameCenterView;
+    private GameToolCardsView gameToolCardsView;
 
     public GameToolBarView(final ViewController view, final GameCenterView gameCenterView) {
         this.gameCenterView = gameCenterView;
-        this.getChildren().addAll(new GameToolCardsView(view, gameCenterView), new GamePublicObjectiveCardsView(view),
+        this.gameToolCardsView = new GameToolCardsView(view, gameCenterView);
+        this.getChildren().addAll(gameToolCardsView, new GamePublicObjectiveCardsView(view),
                 new GamePrivateObjectiveCardView(view),
                 new RoundTrackView(view));
 
@@ -20,4 +24,8 @@ public class GameToolBarView extends HBox {
 
         this.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
     }
+
+    public void dieSelectedForToolcard(Map<String, String> selectedDieMap){
+        gameToolCardsView.dieSelectedForToolcard(selectedDieMap);
+    } 
 }

@@ -18,6 +18,7 @@ import main.java.controller.ViewController;
 public class GameToolCardView extends StackPane {
     private final Image imageToolCard;
     private GameCenterView gameCenterView;
+    private ViewController view;
 
     private static final int WIDTH = 150;
     private static final int HEIGHT = 200;
@@ -46,6 +47,7 @@ public class GameToolCardView extends StackPane {
     public GameToolCardView(final ViewController view, final String toolCardName, final GameCenterView gameCenterView) {
         ImageView imageView = new ImageView();
         this.gameCenterView = gameCenterView;
+        this.view = view;
 
         this.toolCardName = toolCardName;
 
@@ -114,53 +116,6 @@ public class GameToolCardView extends StackPane {
                     if(askConfirmationUsageCard(this.getToolCardName())){
                         this.addSelection();
                         selectedToolCardView = this;
-                        switch (methodName) {
-                            case "grozingPliers": //-- Keep in mind that all values are hardcoded as of now
-                                System.out.println("Switch case for grozingPliers triggert");
-                                view.grozingPliers(2);
-                                break;
-                            case "eglomiseBrush":
-                                System.out.println("Switch case for eglomiseBrush triggert");
-                                break;
-                            case "copperFoilBurnisher":
-                                System.out.println("Switch case for copperFoilBurnisher triggert");
-                                break;
-                            case "lathekin":
-                                System.out.println("Switch case for lathekin triggert");
-                                break;
-                            case "lensCutter":
-                                System.out.println("Switch case for lensCutter triggert");
-                                view.lensCutter(1, 2);
-                                break;
-                            case "fluxBrush":
-                                System.out.println("Switch case for fluxBrush triggert"); //-- Current W.I.P.
-                                //-- dieNumber & dieColor
-                                // view.fluxBrush(6, "blue"); //-- Temp hardcoded values
-                                break;
-                            case "glazingHammer":
-                                System.out.println("Switch case for glazingHammer triggert");
-                                view.glazingHammer(1, 2, 3);
-                                break;
-                            case "runningPliers":
-                                System.out.println("Switch case for runningPliers triggert");
-                                break;
-                            case "cork-backedStraightedge":
-                                System.out.println("Switch case for backedStraightedge triggert");
-                                break;
-                            case "grindingStone":
-                                System.out.println("Switch case for grindingStone triggert");
-                                view.grindingStone();
-                                break;
-                            case "fluxRemover":
-                                System.out.println("Switch case for fluxRemover triggert");
-                                view.fluxRemover(1, 2);
-                                break;
-                            case "tapWheel":
-                                System.out.println("Switch case for tapWheel triggert");
-                                break;
-                            default:
-                                break;
-                            }
                     }
                 }
 
@@ -225,5 +180,60 @@ public class GameToolCardView extends StackPane {
         else{
             return false; //-- failsafe for if we forget to handle a new button
         }
+    }
+
+    public Boolean getSelectionStatus(){
+        return this.isSelected;
+    }
+
+    public void dieSelectedForToolcard (Map<String, String> selectedDieMap){
+        String methodName = getSelectedMethodName(toolCardName);
+        switch (methodName) {
+            case "grozingPliers": //-- Keep in mind that all values are hardcoded as of now
+                System.out.println("Switch case for grozingPliers triggert");
+                view.grozingPliers(2);
+                break;
+            case "eglomiseBrush":
+                System.out.println("Switch case for eglomiseBrush triggert");
+                break;
+            case "copperFoilBurnisher":
+                System.out.println("Switch case for copperFoilBurnisher triggert");
+                break;
+            case "lathekin":
+                System.out.println("Switch case for lathekin triggert");
+                break;
+            case "lensCutter":
+                System.out.println("Switch case for lensCutter triggert");
+                view.lensCutter(1, 2);
+                break;
+            case "fluxBrush":
+                System.out.println("Switch case for fluxBrush triggert");
+                //-- dieNumber & dieColor
+                view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                break;
+            case "glazingHammer":
+                System.out.println("Switch case for glazingHammer triggert");
+                view.glazingHammer(1, 2, 3);
+                break;
+            case "runningPliers":
+                System.out.println("Switch case for runningPliers triggert");
+                break;
+            case "cork-backedStraightedge":
+                System.out.println("Switch case for backedStraightedge triggert");
+                break;
+            case "grindingStone":
+                System.out.println("Switch case for grindingStone triggert");
+                view.grindingStone();
+                break;
+            case "fluxRemover":
+                System.out.println("Switch case for fluxRemover triggert");
+                view.fluxRemover(1, 2);
+                break;
+            case "tapWheel":
+                System.out.println("Switch case for tapWheel triggert");
+                break;
+            default:
+                break;
+            }
     }
 }
