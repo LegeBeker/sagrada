@@ -276,8 +276,8 @@ public class Game extends Observable {
             }
         }
 
-        for (Map<String, String> dieMap : DieDB.getOffer(getId(), getRoundID())) {
-            DieDB.putRoundTrack(getId(), getRoundID(), Integer.parseInt(dieMap.get("dienumber")),
+        for (Map<String, String> dieMap : DieDB.getOffer(getId(), getRoundID() - 1)) {
+            DieDB.putRoundTrack(getId(), getRoundID() - 1, Integer.parseInt(dieMap.get("dienumber")),
                     dieMap.get("diecolor"));
         }
 
