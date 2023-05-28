@@ -86,7 +86,7 @@ public class Board {
             boards.put(player, new ArrayList<>());
             for (int row = 1; row <= ROWS; row++) {
                 for (int col = 1; col <= COLUMNS; col++) {
-                    boards.get(player).add(new int[] { col, row });
+                    boards.get(player).add(new int[] {col, row });
                 }
             }
         });
