@@ -25,7 +25,7 @@ public class ToolcardController {
     private Random random;
     private Game game;
     private PatternCard patternCard;
-    
+
     public ToolcardController(final ViewController view) {
         this.view = view;
     }
@@ -72,26 +72,26 @@ public class ToolcardController {
 
             if (input.equalsIgnoreCase("flip")) {
                 switch (Integer.toString(dieValue)) {
-                case "1":
-                    dieValue = SIX;
-                    break;
-                case "2":
-                    dieValue = FIVE;
-                    break;
-                case "3":
-                    dieValue = FOUR;
-                    break;
-                case "4":
-                    dieValue = THREE;
-                    break;
-                case "5":
-                    dieValue = TWO;
-                    break;
-                case "6":
-                    dieValue = ONE;
-                    break;
-                default:
-                    break;
+                    case "1":
+                        dieValue = SIX;
+                        break;
+                    case "2":
+                        dieValue = FIVE;
+                        break;
+                    case "3":
+                        dieValue = FOUR;
+                        break;
+                    case "4":
+                        dieValue = THREE;
+                        break;
+                    case "5":
+                        dieValue = TWO;
+                        break;
+                    case "6":
+                        dieValue = ONE;
+                        break;
+                    default:
+                        break;
                 }
                 ToolCardDB.updateGameDieValue(dieValue, 0);
                 System.out.println("Die flipped. New value: " + dieValue);
