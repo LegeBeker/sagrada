@@ -56,13 +56,13 @@ public class RoundTrackView extends StackPane implements Observer {
             diceShower.setFill(Color.BEIGE);
             group.getChildren().add(diceShower);
             roundGroups.add(group);
-            Text text = new Text(Integer.toString(i + 1));
-            text.setFill(Color.WHITE);
-            TextFlow textFlow = new TextFlow(text);
-            textFlow.setPadding(new Insets(TEXTPADDING));
-            textFlow.setTextAlignment(TextAlignment.CENTER);
+            Text roundNumber = new Text(Integer.toString(i + 1));
+            roundNumber.setFill(Color.WHITE);
+            TextFlow roundNumberFlow = new TextFlow(roundNumber);
+            roundNumberFlow.setPadding(new Insets(TEXTPADDING));
+            roundNumberFlow.setTextAlignment(TextAlignment.CENTER);
             vbox.setAlignment(Pos.CENTER);
-            vbox.getChildren().addAll(group, textFlow);
+            vbox.getChildren().addAll(group, roundNumberFlow);
             if (i >= ROWAMOUNT) {
                 gridPane.add(vbox, i - ROWAMOUNT, 2);
             } else {
