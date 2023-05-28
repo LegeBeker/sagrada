@@ -3,6 +3,7 @@ package main.java.view;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import main.java.controller.ViewController;
 
@@ -22,12 +23,14 @@ public class GamePublicObjectiveCardView extends StackPane {
                 + view.getObjectiveCardName(publicObjectiveCardId).toLowerCase().replace(" ", "-")
                 + "-objectivecard.png");
 
-        this.imageView.setFitWidth(this.width);
-        this.imageView.setFitHeight(this.height);
-
         this.imageView.setImage(this.imageToolCard);
 
-        this.getChildren().add(imageView);
+        Pane imagePane = new Pane();
+        imagePane.setPrefHeight(this.height);
+        imagePane.setPrefWidth(this.width);
+        imagePane.getChildren().add(imageView);
+
+        this.getChildren().add(imagePane);
 
         view.effects().add3DHoverEffect((Node) this, width, height, scaleIncrease, offset, 0);
     }

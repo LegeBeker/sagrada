@@ -48,10 +48,17 @@ public class GameToolCardView extends StackPane {
                         + ".png");
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
 
-        imageView.setFitWidth(WIDTH);
-        imageView.setFitHeight(HEIGHT);
+        imageView.setPreserveRatio(true);
+
         imageView.setImage(imageToolCard);
-        view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, OFFSET, 0);
+
+        Pane imagePane = new Pane();
+        imagePane.setPrefHeight(HEIGHT);
+        imagePane.setPrefWidth(WIDTH);
+        imagePane.getChildren().add(imageView);
+
+        view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, OFFSET,
+                0);
 
         Pane pane = new Pane();
         pane.setPrefHeight(CARDHEIGHT);
@@ -94,7 +101,7 @@ public class GameToolCardView extends StackPane {
                 }
             }
         }
-        this.getChildren().addAll(imageView, pane);
+        this.getChildren().addAll(imagePane, pane);
 
         this.setOnMouseClicked(event -> {
             if (!isSelected) {
