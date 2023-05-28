@@ -28,7 +28,8 @@ public class ToolcardController {
         return ToolCard.getToolCard(gameId, toolCardName);
     }
 
-    public void grozingPliers(final int dieValue) {
+    public void grozingPliers(final int gameId, final int dieNumber, final String dieColor, final String choiceAction) {
+        //-- choiceaction is a string which can contain "increment" or "decrement". Based on this you can trigger the corresponding values 
         Scanner input = new Scanner(System.in);
         System.out.println("Starting value: " + dieValue);
         System.out.print("Enter 1 to add or 2 to subtract: ");
@@ -54,7 +55,7 @@ public class ToolcardController {
         input.close();
     }
 
-    public void grindingStone() {
+    public void grindingStone(final int gameId, final int dieNumber, final String dieColor) {
         int dieValue = SIX;
         System.out.println("Starting value: " + dieValue);
 
@@ -102,12 +103,6 @@ public class ToolcardController {
             newValue = random.nextInt(SIX) + 1;
         } while (newValue == currentValue);
 
-        System.out.println("Update gameDie with old value: " + currentValue);
-        System.out.println("GameID: " + gameId);
-        System.out.println("DieNumber: " + dieNumber);
-        System.out.println("DieColor: " + dieColor);
-        System.out.println("New value: " + newValue);
-
         ToolCardDB.updateGameDieValue(gameId, dieNumber, dieColor, newValue);
     }
 
@@ -150,7 +145,7 @@ public class ToolcardController {
         input.close();
     }
 
-    public void fluxRemover(final int gameId, final int roundId) {
+    public void fluxRemover(final int gameId, final int dieNumber, final String dieColor) {
         Scanner input = new Scanner(System.in);
         List<Die> gameOffer = Die.getOffer(gameId, roundId);
 

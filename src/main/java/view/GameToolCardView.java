@@ -116,6 +116,21 @@ public class GameToolCardView extends StackPane {
                     if(askConfirmationUsageCard(this.getToolCardName())){
                         this.addSelection();
                         selectedToolCardView = this;
+
+
+                        //-- These methods can be called without any input variables
+                        switch (methodName) {
+                            case "glazingHammer":
+                                if(!view.glazingHammer()){ // Returns a boolean for the extra check 
+                                    this.view.displayError("Je kan alleen het aanbod opnieuw rollen bij de 2e beurt in de ronde.");
+                                }
+                                this.removeSelection();
+                                this.isSelected = false;
+                                break;
+                                
+                            default:
+                                break;
+                            }
                     }
                 }
 
@@ -190,8 +205,10 @@ public class GameToolCardView extends StackPane {
         String methodName = getSelectedMethodName(toolCardName);
         switch (methodName) {
             case "grozingPliers": //-- Keep in mind that all values are hardcoded as of now
-                System.out.println("Switch case for grozingPliers triggert");
-                view.grozingPliers(2);
+                String actionChoice = askGrozingPliersAction();
+                view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"), actionChoice);
+                this.removeSelection();
+                this.isSelected = false;
                 break;
             case "eglomiseBrush":
                 System.out.println("Switch case for eglomiseBrush triggert");
@@ -204,16 +221,13 @@ public class GameToolCardView extends StackPane {
                 break;
             case "lensCutter":
                 System.out.println("Switch case for lensCutter triggert");
-                view.lensCutter(1, 2);
+                view.lensCutter(1, 2); //-- This is going to be a tricky one since we swap values from offer and roundtrack
                 break;
             case "fluxBrush":
-                System.out.println("Switch case for fluxBrush triggert");
                 //-- dieNumber & dieColor
                 view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
-                break;
-            case "glazingHammer":
-                System.out.println("Switch case for glazingHammer triggert");
-                view.glazingHammer(1, 2, 3);
+                this.removeSelection();
+                this.isSelected = false;
                 break;
             case "runningPliers":
                 System.out.println("Switch case for runningPliers triggert");
@@ -223,11 +237,13 @@ public class GameToolCardView extends StackPane {
                 break;
             case "grindingStone":
                 System.out.println("Switch case for grindingStone triggert");
-                view.grindingStone();
+                view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                this.removeSelection(); //-- Possibly make these 2 methods global for each switch case. More dynamic that way
+                this.isSelected = false;
                 break;
             case "fluxRemover":
                 System.out.println("Switch case for fluxRemover triggert");
-                view.fluxRemover(1, 2);
+                view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
                 break;
             case "tapWheel":
                 System.out.println("Switch case for tapWheel triggert");
@@ -235,5 +251,26 @@ public class GameToolCardView extends StackPane {
             default:
                 break;
             }
+    }
+
+    private String askGrozingPliersAction(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Gebruik gereedschapskaart");
+        alert.setHeaderText("Vermeld je keuze m.b.t. de actie die deze doelkaart moet uitvoeren.");
+
+        ButtonType incrementButton = new ButtonType("Toevoegen");
+        ButtonType decrementButton = new ButtonType("Aftrekken");
+        alert.getButtonTypes().setAll(incrementButton, decrementButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == incrementButton) {
+            return "increment";
+        } else if (result.get() == decrementButton) {
+            return "decrement";
+        }
+        else{
+            return "?"; //-- failsafe for if we forget to handle a new button
+        }
+
     }
 }

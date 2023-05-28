@@ -70,7 +70,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -416,31 +416,39 @@ public class ViewController extends Scene {
         return this.gameController.getGamesWithOpenInvites();
     }
 
-
-    //-- Toolcard methods
-    public void grozingPliers(final int dieValue){
-        this.toolCardController.grozingPliers(dieValue);
+    // -- Toolcard methods
+    public void grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
+        if(actionChoice.equals("?")){
+            System.err.println("Foutje m.b.t. confirmatie van actie");
+        }
+        this.toolCardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor, actionChoice);
     }
 
-    public void grindingStone(){
-        this.toolCardController.grindingStone();
+    public void grindingStone(final int dieNumber, final String dieColor) {
+        this.toolCardController.grindingStone(gameController.getGameId(), dieNumber, dieColor);
     }
 
-    public void fluxBrush(final int dieNumber, final String dieColor){
-        
+    public void fluxBrush(final int dieNumber, final String dieColor) {
 
-        this.toolCardController.fluxBrush(gameController.getGameId(),dieNumber, dieColor);
+        this.toolCardController.fluxBrush(gameController.getGameId(), dieNumber, dieColor);
     }
 
-    public void glazingHammer(final int turnCount, final int gameId, final int roundId){
-        this.toolCardController.glazingHammer(turnCount, gameId, roundId);
+    public Boolean glazingHammer() {
+        if (!gameController.getGame(gameController.getGameId()).getClockwise()) {
+            this.toolCardController.glazingHammer(gameController.getGame(gameController.getGameId()).getRoundID(), gameController.getGameId(),
+                    gameController.getGame(gameController.getGameId()).getRoundID());
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
-    public void lensCutter(final int gameId, final int roundId){
+    public void lensCutter(final int gameId, final int roundId) {
         this.toolCardController.lensCutter(gameId, roundId);
     }
 
-    public void fluxRemover(final int gameId, final int roundId){
-        this.toolCardController.fluxRemover(gameId, roundId);
+    public void fluxRemover(final int dieNumber, final String dieColor) {
+        this.toolCardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor);
     }
 }
