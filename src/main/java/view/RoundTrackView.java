@@ -70,12 +70,12 @@ public class RoundTrackView extends StackPane implements Observer {
             }
         }
 
-        Rectangle rectangle = new Rectangle(WIDTH, HEIGHT);
-        rectangle.setFill(Color.RED);
-        rectangle.setOpacity(OPACITY);
-        rectangle.setArcHeight(ROUNDING);
-        rectangle.setArcWidth(ROUNDING);
-        this.getChildren().add(rectangle);
+        Rectangle background = new Rectangle(WIDTH, HEIGHT);
+        background.setFill(Color.RED);
+        background.setOpacity(OPACITY);
+        background.setArcHeight(ROUNDING);
+        background.setArcWidth(ROUNDING);
+        this.getChildren().add(background);
         this.getChildren().add(gridPane);
 
         Observable.addObserver(Game.class, this);
