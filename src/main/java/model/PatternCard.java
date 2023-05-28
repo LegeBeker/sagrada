@@ -12,7 +12,7 @@ public class PatternCard {
 
     private String name;
     private Integer difficulty;
-
+    
     private Boolean standard;
 
     private static final int ROWS = 4;
@@ -20,6 +20,8 @@ public class PatternCard {
 
     private static Map<Integer, PatternCard> cachedCards = new HashMap<Integer, PatternCard>();
 
+    private boolean validateNeighbors = true;
+    
     private PatternCardField[][] fields = new PatternCardField[ROWS][COLUMNS];
 
     public static PatternCard get(final int idPatternCard) {
@@ -58,6 +60,10 @@ public class PatternCard {
         }
 
         return patternCard;
+    }
+    
+    public void setValidateNeighbors(final boolean validateNeigbors) {
+        this.validateNeighbors = validateNeigbors;
     }
 
     public int getIdPatternCard() {
@@ -111,7 +117,7 @@ public class PatternCard {
                 return false;
             }
 
-            if (neighborsEmpty(rowIndex, columnIndex, board)) {
+            if (!this.validateNeighbors && this.neighborsEmpty(rowIndex, columnIndex, board)) {
                 return false;
             }
 
@@ -122,7 +128,7 @@ public class PatternCard {
             return true;
         }
 
-        if (!board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
+        if (!this.validateNeighbors && !board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
             return false;
         }
 
