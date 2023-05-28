@@ -22,9 +22,14 @@ public class ToolcardController {
     private static final int FIVE = 5;
     private static final int SIX = 6;
     private static final int TURNCOUNT = 2;
+    private ViewController view;
     private Random random;
     private Game game;
     private PatternCard patternCard;
+    
+    public ToolcardController(final ViewController view) {
+        this.view = view;
+    }
 
     public static Map<String, String> getToolCard(final int gameId, final String toolCardName) {
         return ToolCard.getToolCard(gameId, toolCardName);
@@ -159,16 +164,8 @@ public class ToolcardController {
         input.close();
     }
 
-    public void corkBackedStraightEdge(final int row, final int col, final Board board) {
-        Scanner input = new Scanner(System.in);
-        List<Die> gameOffer = Die.getOffer(game.getId(), game.getRoundID());
-
-        if (patternCard.neighborsEmpty(row, col, board)) {
-            System.out.print("Enter which die you want to place on the board: ");
-            Die selectedDie = gameOffer.get(input.nextInt() - 1);
-            board.placeDie(selectedDie.getColor(), selectedDie.getEyes(), col, row);
-        } else {
-            System.out.println("No spot available, there are adjascent neigbours!");
-        }
+    public void corkBackedStraightEdge() {
+        patternCard = view.getCurrentPlayer().getPatternCard();
+        patternCard.setValidateNeighbors(false);
     }
 }
