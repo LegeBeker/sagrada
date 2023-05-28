@@ -6,6 +6,9 @@ import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,15 +24,15 @@ import main.java.pattern.Observer;
 
 public class RoundTrackView extends StackPane implements Observer {
     private static final int PADDING = 5;
-    private static final int SIZE = 32;
+    private static final int SIZE = 50;
     private static final int TEXTPADDING = 2;
     private static final int ROUNDS = 10;
     private static final int ROWAMOUNT = 5;
     private static final int ROUNDING = 20;
     private static final Double OPACITY = 0.5;
 
-    private static final int WIDTH = 190;
-    private static final int HEIGHT = 120;
+    private static final int WIDTH = 280;
+    private static final int HEIGHT = 150;
 
     private final ArrayList<Group> roundGroups;
     private final ViewController view;
@@ -54,8 +57,11 @@ public class RoundTrackView extends StackPane implements Observer {
             Group group = new Group();
             Rectangle diceShower = new Rectangle(SIZE, SIZE);
             diceShower.setFill(Color.BEIGE);
+            group.setOnMouseEntered(e -> showAllDice(group, diceShower));
+            group.setOnMouseExited(e -> showOneDice(group, diceShower));
             group.getChildren().add(diceShower);
             roundGroups.add(group);
+
             Text roundNumber = new Text(Integer.toString(i + 1));
             roundNumber.setFill(Color.WHITE);
             TextFlow roundNumberFlow = new TextFlow(roundNumber);
@@ -76,11 +82,22 @@ public class RoundTrackView extends StackPane implements Observer {
         background.setArcHeight(ROUNDING);
         background.setArcWidth(ROUNDING);
         this.getChildren().add(background);
+        // gridPane.setBackground(new Background(new BackgroundFill(Color.MAROON, new CornerRadii(ROUNDING), null)));
         this.getChildren().add(gridPane);
 
         Observable.addObserver(Game.class, this);
 
         update();
+    }
+
+    private void showAllDice(final Group diceGroup, final Rectangle diceShower) {
+        System.out.println("entered: " + diceGroup.getChildren().size());
+        diceShower.setScaleY(2);
+    }
+
+    private void showOneDice(final Group diceGroup, final Rectangle diceShower) {
+        System.out.println("exited");
+        diceShower.setScaleY(1);
     }
 
     @Override
