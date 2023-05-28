@@ -52,9 +52,9 @@ public class RoundTrackView extends StackPane implements Observer {
         for (int i = 0; i < ROUNDS; i++) {
             VBox vbox = new VBox();
             Group group = new Group();
-            Rectangle rectangle = new Rectangle(SIZE, SIZE);
-            rectangle.setFill(Color.BEIGE);
-            group.getChildren().add(rectangle);
+            Rectangle diceShower = new Rectangle(SIZE, SIZE);
+            diceShower.setFill(Color.BEIGE);
+            group.getChildren().add(diceShower);
             roundGroups.add(group);
             Text text = new Text(Integer.toString(i + 1));
             text.setFill(Color.WHITE);
