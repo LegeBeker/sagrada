@@ -27,7 +27,10 @@ public class PatternCardController {
         boolean valid = getPatternCard(patternCardId).validateMove(player.getBoard(), eyes, dieColor, columnIndex,
                 rowIndex);
 
-        if (valid) {
+        if (valid) { 
+            
+            player.getPatternCard().setValidateNeighbors(true);
+            
             return player.getBoard().placeDie(dieColor, dieNumber, rowIndex, columnIndex);
         }
 
