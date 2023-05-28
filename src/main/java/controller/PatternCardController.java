@@ -28,7 +28,7 @@ public class PatternCardController {
                 rowIndex);
 
         if (valid) {
-            player.getPatternCard().setValidateNeighbors(true);
+            player.getPatternCard().setValidateNeighbours(true);
 
             return player.getBoard().placeDie(dieColor, dieNumber, rowIndex, columnIndex);
         }

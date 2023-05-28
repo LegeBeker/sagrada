@@ -8,7 +8,6 @@ import java.util.Scanner;
 import javafx.scene.paint.Color;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
-import main.java.model.Game;
 import main.java.model.PatternCard;
 import main.java.model.ToolCard;
 
@@ -21,10 +20,9 @@ public class ToolcardController {
     private static final int FIVE = 5;
     private static final int SIX = 6;
     private static final int TURNCOUNT = 2;
+
     private ViewController view;
     private Random random;
-    private Game game;
-    private PatternCard patternCard;
 
     public ToolcardController(final ViewController view) {
         this.view = view;
@@ -164,7 +162,7 @@ public class ToolcardController {
     }
 
     public void corkBackedStraightEdge() {
-        patternCard = view.getCurrentPlayer().getPatternCard();
-        patternCard.setValidateNeighbors(false);
+        PatternCard patternCard = view.getCurrentPlayer().getPatternCard();
+        patternCard.setValidateNeighbours(false);
     }
 }
