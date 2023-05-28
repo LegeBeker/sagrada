@@ -57,9 +57,9 @@ public class RoundTrackView extends StackPane implements Observer {
             Group group = new Group();
             Rectangle diceShower = new Rectangle(SIZE, SIZE);
             diceShower.setFill(Color.BEIGE);
-            group.setOnMouseEntered(e -> showAllDice(group, diceShower));
-            group.setOnMouseExited(e -> showOneDice(group, diceShower));
-            group.getChildren().add(diceShower);
+            group.getChildren().add(0, diceShower);
+            group.setOnMouseEntered(e -> showAllDice(group));
+            group.setOnMouseExited(e -> showOneDice(group));
             roundGroups.add(group);
 
             Text roundNumber = new Text(Integer.toString(i + 1));
@@ -82,7 +82,6 @@ public class RoundTrackView extends StackPane implements Observer {
         background.setArcHeight(ROUNDING);
         background.setArcWidth(ROUNDING);
         this.getChildren().add(background);
-        // gridPane.setBackground(new Background(new BackgroundFill(Color.MAROON, new CornerRadii(ROUNDING), null)));
         this.getChildren().add(gridPane);
 
         Observable.addObserver(Game.class, this);
@@ -90,21 +89,22 @@ public class RoundTrackView extends StackPane implements Observer {
         update();
     }
 
-    private void showAllDice(final Group diceGroup, final Rectangle diceShower) {
+    private void showAllDice(final Group diceGroup) {
         System.out.println("entered: " + diceGroup.getChildren().size());
-        diceShower.setScaleY(2);
+        diceGroup.getChildren().get(0).setScaleY(2);
     }
 
-    private void showOneDice(final Group diceGroup, final Rectangle diceShower) {
+    private void showOneDice(final Group diceGroup) {
         System.out.println("exited");
-        diceShower.setScaleY(1);
+        diceGroup.getChildren().get(0).setScaleY(1);
     }
 
     @Override
     public void update() {
         for (Map<String, String> die : view.getRoundTrack()) {
-            roundGroups.get(Integer.parseInt(die.get("roundtrack")) - 1).getChildren()
-                    .add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+            Group currentDiceGroup = roundGroups.get(Integer.parseInt(die.get("roundtrack")) - 1);
+            currentDiceGroup.getChildren().remove(1, currentDiceGroup.getChildren().size());
+            currentDiceGroup.getChildren().add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
                             Integer.parseInt(die.get("number")), false));
         }
     }
