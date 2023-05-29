@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -97,8 +96,10 @@ public class RoundTrackView extends StackPane implements Observer {
         FlowPane diceDisplay = (FlowPane) diceGroup.getChildren().get(1);
         System.out.println("entered, amount of dice: " + diceDisplay.getChildren().size());
         diceGroup.getChildren().get(0).setScaleY(Math.max(diceDisplay.getChildren().size(), 1));
-        diceDisplay.setTranslateY(-SIZE * (Math.max(diceDisplay.getChildren().size(), 1) - 1) / 2);
-        diceDisplay.setVisible(true);
+        if (!diceDisplay.getChildren().isEmpty()) {
+            diceDisplay.setTranslateY(-SIZE * (Math.max(diceDisplay.getChildren().size(), 1) - 1) / 2);
+            diceDisplay.setVisible(true);
+        }
     }
 
     private void showOneDice(final Group diceGroup) {
