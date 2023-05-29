@@ -14,7 +14,7 @@ import main.java.model.Player;
 public class PatternCardController {
 
     private ViewController view;
-    private static final int PATTERN_CARD_GENERATE_AMOUNT = 7;
+    private static final int PATTERN_CARD_GENERATE_AMOUNT = 4;
 
     public PatternCardController(final ViewController view) {
         this.view = view;
