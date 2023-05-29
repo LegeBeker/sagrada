@@ -4,112 +4,77 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
-public class PatternCardFieldsFactory {
+import javafx.scene.paint.Color;
+import main.java.enums.ColorEnum;
+import main.java.model.PatternCard;
+import main.java.model.PatternCardField;
+
+public final class PatternCardFieldsFactory {
 
     private static final int ROWS = 4;
     private static final int COLUMNS = 5;
 
-    private static String[][] fieldColor = new String[ROWS][COLUMNS];
-    private static String[][] fieldEyes = new String[ROWS][COLUMNS];
+    private static final int MAX_DIFFICULTY = 6;
 
-    private static ArrayList<String> options = new ArrayList<String>(Arrays.asList("1", "2", "3", "4", "5", "6","Red", "Green", "Blue", "Yellow", "Purple"));
+    private static ArrayList<String> options = new ArrayList<String>(
+            Arrays.asList("1", "2", "3", "4", "5", "6", "Red", "Green", "Blue", "Yellow", "Purple"));
 
-    public static ArrayList<Map<String, String>> generatePatternCardFields() {
-        ArrayList<Map<String, String>> fields = new ArrayList<Map<String, String>>();
+    private PatternCardFieldsFactory() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static PatternCard generatePatternCard(final int id) {
+        PatternCardField[][] fields = new PatternCardField[ROWS][COLUMNS];
+
+        int difficulty = (int) (Math.random() * MAX_DIFFICULTY + 1);
 
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
-                Map<String, String> field = new HashMap<>();
-                field.put("position_x", String.valueOf(col));
-                field.put("position_y", String.valueOf(row));
-                String color = setFieldColor(row, col);
-                field.put("color", color);
-                fieldColor[row - 1][col - 1] = color;
-                String eyes = setFieldEyes(row, col);
-                field.put("value", eyes);
-                fieldEyes[row - 1][col - 1] = eyes;
-                fields.add(field);
+                fields[row - 1][col - 1] = PatternCardField
+                        .mapToPatternCardField(setField(row, col, fields, difficulty));
             }
         }
 
-        return fields;
+        return PatternCard.mapCustomPatternCard(id, difficulty, fields);
     }
 
-    private static String setFieldColor(final int row, final int col) {
-        ArrayList<int[]> neighbors = getNeighbors(row, col);
-        ArrayList<String> possibilities = colors;
-        Random random = new Random();
-        int randomNumber = random.nextInt(101);
+    private static Map<String, String> setField(final int row, final int col,
+            final PatternCardField[][] fields, final int difficulty) {
+        Map<String, String> field = new HashMap<String, String>();
+        ArrayList<int[]> neighbors = PatternCard.getNeighbors(row, col, false);
 
-        String[] valueToRemove = {null};
+        field.put("position_x", Integer.toString(col));
+        field.put("position_y", Integer.toString(row));
 
-        neighbors.forEach((cell) -> {
-            if (fieldColor[cell[0] - 1][cell[1] - 1] != null) {
-                possibilities.forEach((value) -> {
-                    if (value.equals(fieldColor[cell[0] - 1][cell[1] - 1])) {
-                        valueToRemove[0] = value;
-                    }
-                });
+        String option = null;
+        while (option == null) {
+            option = options.get((int) (Math.random() * options.size()));
+            for (int[] neighbor : neighbors) {
+                PatternCardField neighborField = fields[neighbor[0] - 1][neighbor[1] - 1];
+                if (neighborField != null
+                        && ((option.matches("[1-6]") && neighborField.getValue() != null
+                                && neighborField.getValue().equals(Integer.parseInt(option)))
+                                || ((option.matches("(Red|Green|Blue|Yellow|Purple)")
+                                        && neighborField.getColor() != null
+                                        && neighborField.getColor()
+                                                .equals(Color.web(ColorEnum.fromString(option).getHexCode())))))) {
+                    option = null;
+                    break;
+                }
             }
-        });    
 
-        possibilities.remove(valueToRemove[0]);
-
-        if (!possibilities.isEmpty() && randomNumber > 50) {
-            Random randomColor = new Random();
-            int randomIndex = randomColor.nextInt(possibilities.size());
-            return possibilities.get(randomIndex);
-        }
-
-        return null;
-    }
-
-    private static String setFieldEyes(final int row, final int col) {
-        ArrayList<int[]> neighbors = getNeighbors(row, col);
-        ArrayList<String> possibilities = numbers;
-        Random random = new Random();
-        int randomNumber = random.nextInt(101);
-        String[] valueToRemove = {null};
-
-        neighbors.forEach((cell) -> {
-            if (fieldEyes[cell[0] - 1][cell[1] - 1] != null) {
-                possibilities.forEach((value) -> {
-                    if (value.equals(fieldEyes[cell[0] - 1][cell[1] - 1])) {
-                        valueToRemove[0] = value;
-                    }
-                });
+            if (Math.random() <= ((-0.06 * difficulty) + 0.66)) {
+                return field;
             }
-        });    
 
-        possibilities.remove(valueToRemove[0]);
-
-        if (!possibilities.isEmpty() && randomNumber > 50) {
-            Random randomEyes = new Random();
-            int randomIndex = randomEyes.nextInt(possibilities.size());
-            return possibilities.get(randomIndex);
-        }
-
-        return null;
-    }
-
-    public static ArrayList<int[]> getNeighbors(final int row, final int col) {
-        ArrayList<int[]> neighbors = new ArrayList<>();
-        int[][] offsets;
-
-        offsets = new int[][] {{-1, 0 }, { 0, -1 }};
-
-        for (int[] offset : offsets) {
-            int neighborRow = row + offset[0];
-            int neighborCol = col + offset[1];
-
-            if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] { neighborRow, neighborCol });
+            if (option != null && option.matches("[1-6]")) {
+                field.put("value", option);
+            } else if (option != null && option.matches("(Red|Green|Blue|Yellow|Purple)")) {
+                field.put("color", option);
             }
         }
 
-        return neighbors;
+        return field;
     }
-
 }

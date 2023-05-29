@@ -14,7 +14,7 @@ import main.java.model.Player;
 public class PatternCardController {
 
     private ViewController view;
-    
+    private static final int PATTERN_CARD_GENERATE_AMOUNT = 7;
 
     public PatternCardController(final ViewController view) {
         this.view = view;
@@ -50,16 +50,13 @@ public class PatternCardController {
     }
 
     public Map<Integer, List<Integer>> generatePatternCardOptions() {
+        PatternCard.clearCache();
+
         Map<Integer, List<Integer>> patternCardOptions = new HashMap<>();
         List<Integer> patternCardNumbers = new ArrayList<>();
 
-        for (int i = 1; i <= 7 ; i++) {
-            Map<String, String> patternCardMap = new HashMap<>();
-            patternCardMap.put("idpatterncard", i + "");
-            patternCardMap.put("name", "Gegenereerde kaart " + i);
-            patternCardMap.put("difficulty", "3");
-
-            PatternCard patternCard = PatternCard.mapToPatternCard(patternCardMap, PatternCardFieldsFactory.generatePatternCardFields());
+        for (int i = 1; i <= PATTERN_CARD_GENERATE_AMOUNT; i++) {
+            PatternCard patternCard = PatternCardFieldsFactory.generatePatternCard(i);
             patternCardNumbers.add(patternCard.getIdPatternCard());
         }
 

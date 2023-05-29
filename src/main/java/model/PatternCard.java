@@ -55,28 +55,23 @@ public class PatternCard {
             int col = Integer.parseInt(map.get("position_x"));
 
             patternCard.fields[row - 1][col - 1] = PatternCardField.mapToPatternCardField(map);
-        }   
-    
+        }
+
         return patternCard;
     }
 
-    public static PatternCard mapToPatternCard(final Map<String, String> patternCardMap, final ArrayList<Map<String, String>> fields) {
+    public static PatternCard mapCustomPatternCard(final int id, final int difficulty,
+            final PatternCardField[][] fields) {
         PatternCard patternCard = new PatternCard();
 
-        patternCard.idPatternCard = Integer.parseInt(patternCardMap.get("idpatterncard"));
-        patternCard.name = patternCardMap.get("name");
-        patternCard.difficulty = Integer.parseInt(patternCardMap.get("difficulty"));
+        patternCard.idPatternCard = id;
+        patternCard.name = "Gegenereerde kaart " + id;
+        patternCard.difficulty = difficulty;
         patternCard.standard = false;
+        patternCard.fields = fields;
 
+        cachedCards.put(id, patternCard);
 
-        for (Map<String, String> map : fields) {
-            int row = Integer.parseInt(map.get("position_y"));
-            int col = Integer.parseInt(map.get("position_x"));
-
-            patternCard.fields[row - 1][col - 1] = PatternCardField.mapToPatternCardField(map);
-        }
-        
-        cachedCards.put(patternCard.idPatternCard, patternCard);
         return patternCard;
     }
 
@@ -105,7 +100,7 @@ public class PatternCard {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 if (validateMove(board, dieValue, dieColor, col, row)) {
-                    possibleMoves.add(new int[] { row, col });
+                    possibleMoves.add(new int[] {row, col});
                 }
             }
         }
@@ -202,7 +197,7 @@ public class PatternCard {
         return true;
     }
 
-    public ArrayList<int[]> getNeighbors(final int row, final int col, final boolean includeDiagonals) {
+    public static ArrayList<int[]> getNeighbors(final int row, final int col, final boolean includeDiagonals) {
         ArrayList<int[]> neighbors = new ArrayList<>();
         int[][] offsets;
 
@@ -217,10 +212,14 @@ public class PatternCard {
             int neighborCol = col + offset[1];
 
             if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] {neighborRow, neighborCol });
+                neighbors.add(new int[] {neighborRow, neighborCol});
             }
         }
 
         return neighbors;
+    }
+
+    public static void clearCache() {
+        cachedCards.clear();
     }
 }
