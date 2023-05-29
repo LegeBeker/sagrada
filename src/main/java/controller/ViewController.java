@@ -372,7 +372,7 @@ public class ViewController extends Scene {
         return this.gameController.getPatternCardOptions();
     }
 
-    public Map<Integer, List<Integer>> generatePatternCardOptions(){
+    public Map<Integer, List<Integer>> generatePatternCardOptions() {
         return this.patternCardController.generatePatternCardOptions();
     }
 

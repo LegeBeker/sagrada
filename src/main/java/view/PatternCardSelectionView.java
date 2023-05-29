@@ -40,11 +40,10 @@ public class PatternCardSelectionView extends BorderPane {
                 flowPane.getChildren().add(patternCardSelect(patternCard));
             });
         } else {
-            System.out.println("No pattern cards available");
             view.generatePatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
                 flowPane.getChildren().add(patternCardSelect(patternCard));
             });
-        }      
+        }
 
         this.flowPane.setHgap(10);
         this.flowPane.setVgap(10);
