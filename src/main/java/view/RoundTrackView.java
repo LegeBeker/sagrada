@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -52,9 +54,13 @@ public class RoundTrackView extends StackPane implements Observer {
         for (int i = 0; i < ROUNDS; i++) {
             VBox vbox = new VBox();
             Group group = new Group();
+            FlowPane diceDisplay = new FlowPane(Orientation.VERTICAL, 0, 1);
+            diceDisplay.setMaxWidth(SIZE + 5);
+            diceDisplay.setPrefHeight(SIZE + PADDING);
             Rectangle diceShower = new Rectangle(SIZE, SIZE);
             diceShower.setFill(Color.BEIGE);
             group.getChildren().add(0, diceShower);
+            group.getChildren().add(1, diceDisplay);
             group.setOnMouseEntered(e -> showAllDice(group));
             group.setOnMouseExited(e -> showOneDice(group));
             roundGroups.add(group);
@@ -87,13 +93,17 @@ public class RoundTrackView extends StackPane implements Observer {
     }
 
     private void showAllDice(final Group diceGroup) {
-        System.out.println("entered: " + diceGroup.getChildren().size());
-        diceGroup.getChildren().get(0).setScaleY(Math.max(diceGroup.getChildren().size() - 1, 1));
+        FlowPane diceDisplay = (FlowPane) diceGroup.getChildren().get(1);
+        System.out.println("entered, amount of dice: " + diceDisplay.getChildren().size());
+        diceGroup.getChildren().get(0).setScaleY(Math.max(diceDisplay.getChildren().size(), 1));
+        diceDisplay.setTranslateY(-SIZE * (Math.max(diceDisplay.getChildren().size(), 1) - 1) / 2);
     }
 
     private void showOneDice(final Group diceGroup) {
+        FlowPane diceDisplay = (FlowPane) diceGroup.getChildren().get(1);
         System.out.println("exited");
         diceGroup.getChildren().get(0).setScaleY(1);
+        diceDisplay.setTranslateY(0);
     }
 
     @Override
@@ -102,12 +112,14 @@ public class RoundTrackView extends StackPane implements Observer {
         for (Map<String, String> die : view.getRoundTrack()) {
             int currentRoundTrack = Integer.parseInt(die.get("roundtrack")) - 1;
             Group currentDiceGroup = roundGroups.get((currentRoundTrack + 1) / 2);
+            FlowPane diceDisplay = (FlowPane) currentDiceGroup.getChildren().get(1);
             if (previousRoundtrack != currentRoundTrack) {
-                currentDiceGroup.getChildren().remove(1, currentDiceGroup.getChildren().size());
+                diceDisplay.getChildren().clear();
             }
-            currentDiceGroup.getChildren().add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+            diceDisplay.getChildren().add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
                 Integer.parseInt(die.get("number")), false));
             previousRoundtrack = currentRoundTrack;
+            diceDisplay.setPrefHeight((SIZE + PADDING) * Math.max(diceDisplay.getChildren().size(), 1));
         }
     }
 }
