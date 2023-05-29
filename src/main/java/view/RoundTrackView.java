@@ -55,7 +55,7 @@ public class RoundTrackView extends StackPane implements Observer {
             VBox vbox = new VBox();
             Group group = new Group();
             FlowPane diceDisplay = new FlowPane(Orientation.VERTICAL, 0, 1);
-            diceDisplay.setMaxWidth(SIZE + 5);
+            diceDisplay.setMaxWidth(SIZE + PADDING);
             diceDisplay.setPrefHeight(SIZE + PADDING);
             Rectangle diceShower = new Rectangle(SIZE, SIZE);
             diceShower.setFill(Color.BEIGE);
@@ -124,9 +124,9 @@ public class RoundTrackView extends StackPane implements Observer {
             diceDisplay.setPrefHeight((SIZE + PADDING) * Math.max(diceDisplay.getChildren().size(), 1));
             previousRoundtrack = currentRoundTrack;
         }
-        
+
         for (Group diceGroup : roundGroups) {
-            if(diceGroup.isHover()) {
+            if (diceGroup.isHover()) {
                 showAllDice(diceGroup);
             } else {
                 showOneDice(diceGroup);
