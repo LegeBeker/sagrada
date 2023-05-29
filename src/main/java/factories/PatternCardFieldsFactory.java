@@ -1,6 +1,7 @@
 package main.java.factories;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -13,8 +14,7 @@ public class PatternCardFieldsFactory {
     private static String[][] fieldColor = new String[ROWS][COLUMNS];
     private static String[][] fieldEyes = new String[ROWS][COLUMNS];
 
-    // fill with {"1", "2", "3", "4", "5", "6","Red", "Green", "Blue", "Yellow", "Purple"}
-    private static ArrayList<String> options = new ArrayList<String>("1", "2", "3", "4", "5", "6","Red", "Green", "Blue", "Yellow", "Purple");
+    private static ArrayList<String> options = new ArrayList<String>(Arrays.asList("1", "2", "3", "4", "5", "6","Red", "Green", "Blue", "Yellow", "Purple"));
 
     public static ArrayList<Map<String, String>> generatePatternCardFields() {
         ArrayList<Map<String, String>> fields = new ArrayList<Map<String, String>>();
