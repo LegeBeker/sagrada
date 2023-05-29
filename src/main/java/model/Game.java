@@ -268,11 +268,11 @@ public class Game extends Observable {
 
     private void endRound() {
         for (Player player : getPlayers()) {
-            if (player.getSeqnr() == getPlayers().size()) {
-                player.setSeqnr(1);
+            if (player.getSeqnr() == 1) {
+                player.setSeqnr(getPlayers().size());
                 setTurnPlayer(player);
             } else {
-                player.setSeqnr(player.getSeqnr() + 1);
+                player.setSeqnr(player.getSeqnr() - 1);
             }
         }
 
