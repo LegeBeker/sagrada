@@ -6,9 +6,6 @@ import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -91,7 +88,7 @@ public class RoundTrackView extends StackPane implements Observer {
 
     private void showAllDice(final Group diceGroup) {
         System.out.println("entered: " + diceGroup.getChildren().size());
-        diceGroup.getChildren().get(0).setScaleY(2);
+        diceGroup.getChildren().get(0).setScaleY(Math.min(diceGroup.getChildren().size() - 1, 1));
     }
 
     private void showOneDice(final Group diceGroup) {
@@ -101,11 +98,16 @@ public class RoundTrackView extends StackPane implements Observer {
 
     @Override
     public void update() {
+        int previousRoundtrack = -1;
         for (Map<String, String> die : view.getRoundTrack()) {
-            Group currentDiceGroup = roundGroups.get(Integer.parseInt(die.get("roundtrack")) - 1);
-            currentDiceGroup.getChildren().remove(1, currentDiceGroup.getChildren().size());
+            int currentRoundTrack = Integer.parseInt(die.get("roundtrack")) - 1;
+            Group currentDiceGroup = roundGroups.get((currentRoundTrack + 1) / 2);
+            if (previousRoundtrack != currentRoundTrack) {
+                currentDiceGroup.getChildren().remove(1, currentDiceGroup.getChildren().size());
+            }
             currentDiceGroup.getChildren().add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
-                            Integer.parseInt(die.get("number")), false));
+                Integer.parseInt(die.get("number")), false));
+            previousRoundtrack = currentRoundTrack;
         }
     }
 }
