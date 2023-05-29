@@ -57,9 +57,9 @@ public class RoundTrackView extends StackPane implements Observer {
             FlowPane diceDisplay = new FlowPane(Orientation.VERTICAL, 0, 1);
             diceDisplay.setMaxWidth(SIZE + PADDING);
             diceDisplay.setPrefHeight(SIZE + PADDING);
-            Rectangle diceShower = new Rectangle(SIZE, SIZE);
-            diceShower.setFill(Color.BEIGE);
-            group.getChildren().add(0, diceShower);
+            Rectangle diceBackground = new Rectangle(SIZE, SIZE);
+            diceBackground.setFill(Color.BEIGE);
+            group.getChildren().add(0, diceBackground);
             group.getChildren().add(1, diceDisplay);
             group.setOnMouseEntered(e -> showAllDice(group));
             group.setOnMouseExited(e -> showOneDice(group));
