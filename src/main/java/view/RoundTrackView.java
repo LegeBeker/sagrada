@@ -99,6 +99,10 @@ public class RoundTrackView extends StackPane implements Observer {
             diceDisplay.setTranslateY(-SIZE * (Math.max(diceDisplay.getChildren().size(), 1) - 1) / 2);
             diceDisplay.setVisible(true);
         }
+        if (!diceDisplay.getChildren().isEmpty()) {
+            Rectangle background = (Rectangle) diceGroup.getChildren().get(0);
+            background.setFill(Color.BEIGE);
+        }
     }
 
     private void showOneDice(final Group diceGroup) {
@@ -106,6 +110,10 @@ public class RoundTrackView extends StackPane implements Observer {
         diceGroup.getChildren().get(0).setScaleY(1);
         diceDisplay.setTranslateY(0);
         diceDisplay.setVisible(false);
+        if (!diceDisplay.getChildren().isEmpty()) {
+            Rectangle background = (Rectangle) diceGroup.getChildren().get(0);
+            background.setFill(Color.GREEN);
+        }
     }
 
     @Override
