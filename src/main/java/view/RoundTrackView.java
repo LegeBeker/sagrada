@@ -78,8 +78,8 @@ public class RoundTrackView extends StackPane implements Observer {
         background.setOpacity(OPACITY);
         background.setArcHeight(ROUNDING);
         background.setArcWidth(ROUNDING);
-        this.getChildren().add(background);
-        this.getChildren().add(gridPane);
+        this.getChildren().add(0, background);
+        this.getChildren().add(1, gridPane);
 
         Observable.addObserver(Game.class, this);
 
@@ -88,7 +88,7 @@ public class RoundTrackView extends StackPane implements Observer {
 
     private void showAllDice(final Group diceGroup) {
         System.out.println("entered: " + diceGroup.getChildren().size());
-        diceGroup.getChildren().get(0).setScaleY(Math.min(diceGroup.getChildren().size() - 1, 1));
+        diceGroup.getChildren().get(0).setScaleY(Math.max(diceGroup.getChildren().size() - 1, 1));
     }
 
     private void showOneDice(final Group diceGroup) {
