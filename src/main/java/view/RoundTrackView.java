@@ -94,7 +94,6 @@ public class RoundTrackView extends StackPane implements Observer {
 
     private void showAllDice(final Group diceGroup) {
         FlowPane diceDisplay = (FlowPane) diceGroup.getChildren().get(1);
-        System.out.println("entered, amount of dice: " + diceDisplay.getChildren().size());
         diceGroup.getChildren().get(0).setScaleY(Math.max(diceDisplay.getChildren().size(), 1));
         if (!diceDisplay.getChildren().isEmpty()) {
             diceDisplay.setTranslateY(-SIZE * (Math.max(diceDisplay.getChildren().size(), 1) - 1) / 2);
