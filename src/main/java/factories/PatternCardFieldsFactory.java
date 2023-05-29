@@ -13,18 +13,8 @@ public class PatternCardFieldsFactory {
     private static String[][] fieldColor = new String[ROWS][COLUMNS];
     private static String[][] fieldEyes = new String[ROWS][COLUMNS];
 
-    private static ArrayList<String> numbers = new ArrayList<>();
-    private static ArrayList<String> colors = new ArrayList<>();
-
-    static {
-        for (String number : new String[] { "1", "2", "3", "4", "5", "6" }) {
-            numbers.add(number);
-        }
-
-        for (String color : new String[] { "Red", "Green", "Blue", "Yellow", "Purple" }) {
-            colors.add(color);
-        }
-    }
+    // fill with {"1", "2", "3", "4", "5", "6","Red", "Green", "Blue", "Yellow", "Purple"}
+    private static ArrayList<String> options = new ArrayList<String>("1", "2", "3", "4", "5", "6","Red", "Green", "Blue", "Yellow", "Purple");
 
     public static ArrayList<Map<String, String>> generatePatternCardFields() {
         ArrayList<Map<String, String>> fields = new ArrayList<Map<String, String>>();
@@ -53,11 +43,19 @@ public class PatternCardFieldsFactory {
         Random random = new Random();
         int randomNumber = random.nextInt(101);
 
+        String[] valueToRemove = {null};
+
         neighbors.forEach((cell) -> {
-            if (fieldColor[cell[0] - 1][cell[1] -1] != null) {
-                possibilities.remove(fieldColor[cell[0] - 1][cell[1] - 1]);
+            if (fieldColor[cell[0] - 1][cell[1] - 1] != null) {
+                possibilities.forEach((value) -> {
+                    if (value.equals(fieldColor[cell[0] - 1][cell[1] - 1])) {
+                        valueToRemove[0] = value;
+                    }
+                });
             }
-        });
+        });    
+
+        possibilities.remove(valueToRemove[0]);
 
         if (!possibilities.isEmpty() && randomNumber > 50) {
             Random randomColor = new Random();
@@ -73,12 +71,19 @@ public class PatternCardFieldsFactory {
         ArrayList<String> possibilities = numbers;
         Random random = new Random();
         int randomNumber = random.nextInt(101);
+        String[] valueToRemove = {null};
 
         neighbors.forEach((cell) -> {
-            if (fieldColor[cell[0] - 1][cell[1] - 1] != null) {
-                possibilities.remove(fieldEyes[cell[0] - 1][cell[1] - 1]);
+            if (fieldEyes[cell[0] - 1][cell[1] - 1] != null) {
+                possibilities.forEach((value) -> {
+                    if (value.equals(fieldEyes[cell[0] - 1][cell[1] - 1])) {
+                        valueToRemove[0] = value;
+                    }
+                });
             }
-        });
+        });    
+
+        possibilities.remove(valueToRemove[0]);
 
         if (!possibilities.isEmpty() && randomNumber > 50) {
             Random randomEyes = new Random();
@@ -93,7 +98,7 @@ public class PatternCardFieldsFactory {
         ArrayList<int[]> neighbors = new ArrayList<>();
         int[][] offsets;
 
-        offsets = new int[][] { { -1, 0 }, { 0, -1 } };
+        offsets = new int[][] {{-1, 0 }, { 0, -1 }};
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
