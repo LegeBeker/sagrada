@@ -95,7 +95,7 @@ public class PatternCard {
         return fields[row - 1][column - 1];
     }
 
-    public static boolean createPatternCard(final PatternCard patternCard){
+    public static int createPatternCard(final PatternCard patternCard){
         return PatternCardDB.createPatternCard(patternCard);
     }
 

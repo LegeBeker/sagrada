@@ -66,7 +66,7 @@ public final class PatternCardDB {
         return db.exec(sql, params);
     }
 
-    public static boolean createPatternCard(final PatternCard patternCard) {
+    public static int createPatternCard(final PatternCard patternCard) {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO patterncard (name, difficulty, standard) VALUES (?, ?, ?);";
@@ -83,17 +83,17 @@ public final class PatternCardDB {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 PatternCardField field = patternCard.getField(row, col);
-                sqlBuilder.append("(" + lastId + ", " + col + ", " + row + ", " + field.getColorName() + ", "
-                        + field.getValue() + "),");
+                sqlBuilder.append("(" + lastId + ", " + col + ", " + row + ", "
+                        + (field.getColorName() != null ? "'" + field.getColorName() + "'" : "null") + ", "
+                        + (field.getValue() != null ? field.getValue().toString() : "null") + "),");
             }
         }
 
         String sql2 = sqlBuilder.toString();
-        sql2 = sql2.substring(0, sql2.length() - 1); // remove the last comma and space
         System.out.println(sql2);
 
-        // db.exec(sql2, null);
+        db.exec(sql2, null);
 
-        return true;
+        return Integer.parseInt(lastId);
     }
 }
