@@ -37,11 +37,11 @@ public class PatternCardSelectionView extends BorderPane {
 
         if (!view.getPatternCardOptions().get(view.getPlayerId()).isEmpty()) {
             view.getPatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
-                flowPane.getChildren().add(patternCardSelect(patternCard));
+                flowPane.getChildren().add(patternCardSelect(patternCard, true));
             });
         } else {
             view.generatePatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
-                flowPane.getChildren().add(patternCardSelect(patternCard));
+                flowPane.getChildren().add(patternCardSelect(patternCard, false));
             });
         }
 
@@ -60,13 +60,13 @@ public class PatternCardSelectionView extends BorderPane {
         this.setBackground(view.getBackground());
     }
 
-    private VBox patternCardSelect(final int idPatternCard) {
+    private VBox patternCardSelect(final int idPatternCard, final boolean defaultCards) {
         this.vbox = new VBox();
         this.vbox.getChildren().add(new PatternCardView(this.view, idPatternCard, null));
         Button button = new Button("Kiezen");
 
         button.setOnAction(event -> {
-            this.view.choosePatternCard(idPatternCard);
+            this.view.choosePatternCard(idPatternCard, defaultCards);
         });
 
         this.vbox.getChildren().add(button);

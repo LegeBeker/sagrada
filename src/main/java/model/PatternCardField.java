@@ -8,6 +8,7 @@ import main.java.enums.ColorEnum;
 public class PatternCardField {
 
     private Color color;
+    private String colorName;
     private Integer value;
 
     public Color getColor() {
@@ -18,8 +19,13 @@ public class PatternCardField {
         return this.value;
     }
 
+    public String getColorName() {
+        return this.colorName != null ? this.colorName.toLowerCase() : null;
+    }
+
     public void setColor(final String color) {
         ColorEnum colorEnum = ColorEnum.fromString(color);
+        this.colorName = color;
         this.color = Color.web(colorEnum.getHexCode());
     }
 
