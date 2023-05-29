@@ -149,4 +149,12 @@ public class DieView extends Group {
     public int getNumber() {
         return this.number;
     }
+
+    public void hide() {
+        this.setVisible(false);
+    }
+
+    public void show() {
+        this.setVisible(true);
+    }
 }

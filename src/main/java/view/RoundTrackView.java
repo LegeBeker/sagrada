@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -97,13 +98,25 @@ public class RoundTrackView extends StackPane implements Observer {
         System.out.println("entered, amount of dice: " + diceDisplay.getChildren().size());
         diceGroup.getChildren().get(0).setScaleY(Math.max(diceDisplay.getChildren().size(), 1));
         diceDisplay.setTranslateY(-SIZE * (Math.max(diceDisplay.getChildren().size(), 1) - 1) / 2);
+        for(Node diceNode : diceDisplay.getChildren()) {
+            DieView diceView = (DieView) diceNode;
+            diceView.show();
+        }
     }
 
     private void showOneDice(final Group diceGroup) {
         FlowPane diceDisplay = (FlowPane) diceGroup.getChildren().get(1);
-        System.out.println("exited");
         diceGroup.getChildren().get(0).setScaleY(1);
         diceDisplay.setTranslateY(0);
+        for(Node diceNode : diceDisplay.getChildren()) {
+            DieView diceView = (DieView) diceNode;
+            diceView.hide();
+        }
+        
+        if (!diceDisplay.getChildren().isEmpty()) {
+            DieView diceView = (DieView) diceDisplay.getChildren().get(0);
+            diceView.show();
+        }
     }
 
     @Override
@@ -116,10 +129,19 @@ public class RoundTrackView extends StackPane implements Observer {
             if (previousRoundtrack != currentRoundTrack) {
                 diceDisplay.getChildren().clear();
             }
-            diceDisplay.getChildren().add(new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
-                Integer.parseInt(die.get("number")), false));
+            DieView newDice = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
+                Integer.parseInt(die.get("number")), false);
+            diceDisplay.getChildren().add(newDice);
             previousRoundtrack = currentRoundTrack;
             diceDisplay.setPrefHeight((SIZE + PADDING) * Math.max(diceDisplay.getChildren().size(), 1));
+        }
+
+        for (Group diceGroup : roundGroups) {
+            if(diceGroup.isHover()) {
+                showAllDice(diceGroup);
+            } else {
+                showOneDice(diceGroup);
+            }
         }
     }
 }
