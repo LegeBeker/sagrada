@@ -388,7 +388,7 @@ public class Game extends Observable {
         return GameDB.getGamesWithOpenInvites(username);
     }
 
-    public int getAmountPlacedDiePerRound (final int gameId, final int roundId, final int playerId){
+    public int getAmountPlacedDiePerRound(final int gameId, final int roundId, final int playerId) {
         return GameDB.getAmountPlacedDiePerRound(gameId, roundId, playerId);
     }
 }

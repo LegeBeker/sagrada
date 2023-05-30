@@ -188,8 +188,8 @@ public final class GameController implements Observer {
     public void update() {
         this.game.update();
     }
-
-    public int getAmountPlacedDiePerRound (final int gameId, final int roundId, final int playerId){
+{}
+    public int getAmountPlacedDiePerRound(final int gameId, final int roundId, final int playerId) {
         return game.getAmountPlacedDiePerRound(gameId, roundId, playerId);
     }
 }
