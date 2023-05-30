@@ -19,7 +19,7 @@ public class PatternCardField {
     }
 
     public String getColorName() {
-        return ColorEnum.fromString(this.color.toString()).getName();
+        return this.color != null ? ColorEnum.fromString(this.color.toString()).getName() : null;
     }
 
     public void setColor(final String color) {
