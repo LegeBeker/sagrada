@@ -321,8 +321,8 @@ public class ViewController extends Scene {
         openPatternCardSelectionView(this.gameController.createGame(accounts, getUsername(), useDefaultCards));
     }
 
-    public void choosePatternCard(final int idPatternCard) {
-        this.gameController.choosePatternCard(idPatternCard);
+    public void choosePatternCard(final int idPatternCard, final boolean defaultCards) {
+        this.gameController.choosePatternCard(this.patternCardController.getPatternCard(idPatternCard), defaultCards);
 
         if (this.gameController.gameHasOpenInvites()) {
             openGamesView();
@@ -370,6 +370,10 @@ public class ViewController extends Scene {
 
     public Map<Integer, List<Integer>> getPatternCardOptions() {
         return this.gameController.getPatternCardOptions();
+    }
+
+    public Map<Integer, List<Integer>> generatePatternCardOptions() {
+        return this.patternCardController.generatePatternCardOptions();
     }
 
     public Boolean createAccount(final String username, final String password) {
