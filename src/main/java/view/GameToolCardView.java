@@ -97,7 +97,7 @@ public class GameToolCardView extends StackPane {
         this.getChildren().addAll(imageView, pane);
 
         this.setOnMouseClicked(event -> {
-            if(view.isTurnPlayer()){
+            if (view.isTurnPlayer()) {
                 if (!isSelected) {
                     if (selectedToolCardView != null) {
                         selectedToolCardView.removeSelection();
@@ -113,9 +113,9 @@ public class GameToolCardView extends StackPane {
                     selectedToolCardView = null;
                     String deselectedMethodName = getDeselectedMethodName(toolCardName);
                     System.out.println(deselectedMethodName + "() has been deselected.");
-                }   
+                }
             }
-            
+
         });
     }
 
