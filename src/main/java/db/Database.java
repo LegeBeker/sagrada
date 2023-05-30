@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,7 +100,7 @@ public final class Database {
                 this.connect();
             }
 
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             if (params != null) {
                 for (int i = 0; i < params.length; i++) {
                     stmt.setString(i + 1, params[i]);
@@ -117,6 +118,14 @@ public final class Database {
                     result.add(0, row);
                 }
                 rs.close();
+            } else {
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    Map<String, String> idRow = new HashMap<String, String>();
+                    idRow.put("id", String.valueOf(generatedKeys.getLong(1)));
+                    result.add(0, idRow);
+                }
+                generatedKeys.close();
             }
 
             if (this.debug) {
