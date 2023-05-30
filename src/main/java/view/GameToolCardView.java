@@ -130,7 +130,7 @@ public class GameToolCardView extends StackPane {
                                 
                             default:
                                 break;
-                            }
+                        }
                     }
                 }
 
@@ -204,9 +204,11 @@ public class GameToolCardView extends StackPane {
     public void dieSelectedForToolcard (Map<String, String> selectedDieMap){
         String methodName = getSelectedMethodName(toolCardName);
         switch (methodName) {
-            case "grozingPliers": //-- Keep in mind that all values are hardcoded as of now
-                String actionChoice = askGrozingPliersAction();
-                view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"), actionChoice);
+            case "grozingPliers":
+                String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
+                if(!actionChoice.equals("?")){
+                    view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"), actionChoice);
+                }
                 this.removeSelection();
                 this.isSelected = false;
                 break;
@@ -253,16 +255,25 @@ public class GameToolCardView extends StackPane {
             }
     }
 
-    private String askGrozingPliersAction(){
+    private String askGrozingPliersAction(final int currentDieValue){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Gebruik gereedschapskaart");
         alert.setHeaderText("Vermeld je keuze m.b.t. de actie die deze doelkaart moet uitvoeren.");
+        alert.setContentText(
+            "Let op: Als de dobbelsteen de waarde 6 heeft, en je verhoogt de steen, wordt het geen 1. " +
+            "De huidge waarde van de geselecteerde dobbelsteen is " + currentDieValue + ". ");
 
         ButtonType incrementButton = new ButtonType("Toevoegen");
         ButtonType decrementButton = new ButtonType("Aftrekken");
-        alert.getButtonTypes().setAll(incrementButton, decrementButton);
+        ButtonType closeButton = new ButtonType("Sluiten", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(incrementButton, decrementButton, closeButton);
 
         Optional<ButtonType> result = alert.showAndWait();
+
+        if (!result.isPresent()) {
+            return "?";
+        }
+
         if (result.get() == incrementButton) {
             return "increment";
         } else if (result.get() == decrementButton) {
