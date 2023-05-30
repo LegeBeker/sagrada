@@ -69,12 +69,12 @@ public class Game extends Observable {
 
         if (useDefaultCards) {
             newGame.addPatternCards();
-        } 
-        
+        }
+
         for (int i = 0; i < TOKENSPERGAME; i++) {
             GameFavorTokenDB.createGameFavorToken(thisGameID);
         }
-        
+
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);
 

@@ -208,7 +208,7 @@ public class PatternCard {
         if (includeDiagonals) {
             offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
         } else {
-            offsets = new int[][] {{ -1, 0}, {1, 0}, {0, -1}, {0, 1}};
+            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         }
 
         for (int[] offset : offsets) {

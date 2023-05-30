@@ -52,7 +52,7 @@ public final class PatternCardDB {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO patterncardoption VALUE (?, ?);";
-        String[] params = { Integer.toString(idPatternCard), Integer.toString(idPlayer) };
+        String[] params = {Integer.toString(idPatternCard), Integer.toString(idPlayer) };
 
         return db.exec(sql, params);
     }
