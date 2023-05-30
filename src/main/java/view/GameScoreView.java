@@ -16,7 +16,8 @@ public class GameScoreView extends VBox {
         view.getPlayers().forEach(player -> {
             StackPane playerScore = new StackPane();
 
-            playerScore.setBackground(new Background(new BackgroundFill(Color.valueOf(player.get("color")), null, null)));
+            playerScore
+                    .setBackground(new Background(new BackgroundFill(Color.valueOf(player.get("color")), null, null)));
             playerScore.setPadding(new Insets(PADDING));
             playerScore.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
 
