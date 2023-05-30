@@ -135,9 +135,9 @@ public final class GameController implements Observer {
         return this.game.getHelpFunction();
     }
 
-    public void choosePatternCard(final PatternCard patternCard, final boolean defaultCards) {  
+    public void choosePatternCard(final PatternCard patternCard, final boolean defaultCards) {
         int idPatternCard = 0;
-        if(!defaultCards) {
+        if (!defaultCards) {
             idPatternCard = PatternCard.createPatternCard(patternCard);
         } else {
             idPatternCard = patternCard.getIdPatternCard();
