@@ -50,6 +50,8 @@ public class ViewController extends Scene {
     private PatternCardController patternCardController;
     private MessageController messageController;
     private ScoreController scoreController;
+    private ToolcardController toolCardController;
+    private FavorTokenController favorTokenController;
 
     private EffectsController effectsController;
 
@@ -69,7 +71,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -89,6 +91,8 @@ public class ViewController extends Scene {
         this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
         this.scoreController = new ScoreController();
+        this.toolCardController = new ToolcardController();
+        this.favorTokenController = new FavorTokenController(this);
 
         this.openLoginView();
     }
@@ -151,6 +155,15 @@ public class ViewController extends Scene {
     public void openGamesView() {
         GamesView gamesView = new GamesView(this);
         changeView(gamesView);
+
+        this.timer = new Timer();
+        this.timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(() -> {
+                    gamesView.update();
+                });
+            }
+        }, 0, REFRESHRATE);
     }
 
     public void openStatsView() {
@@ -161,6 +174,15 @@ public class ViewController extends Scene {
     public void openNewGameView() {
         NewGameView newGameView = new NewGameView(this);
         changeView(newGameView);
+
+        this.timer = new Timer();
+        this.timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(() -> {
+                    newGameView.updateInvites();
+                });
+            }
+        }, 0, REFRESHRATE);
     }
 
     public ArrayList<String> getInviteableAccountsUsernames() {
@@ -180,7 +202,14 @@ public class ViewController extends Scene {
         return this.gameController.isTurnPlayer(playerId);
     }
 
-    public ArrayList<Player> getPlayers() {
+    public List<Map<String, String>> getFavorTokensForToolCard(final String toolCardName) {
+        return this.favorTokenController.getFavorTokensForToolCard(
+                Integer.parseInt(
+                        ToolcardController.getToolCard(gameController.getGameId(), toolCardName).get("idtoolcard")),
+                gameController.getGameId());
+    }
+
+    public List<Map<String, String>> getPlayers() {
         return this.gameController.getPlayers(getUsername());
     }
 
@@ -194,10 +223,6 @@ public class ViewController extends Scene {
 
     public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
         return this.patternCardController.getPossibleMoves(eyes, color);
-    }
-
-    public void getNewOffer() {
-        this.gameController.getNewOffer();
     }
 
     public void setHelpFunction() {

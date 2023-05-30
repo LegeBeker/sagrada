@@ -42,10 +42,10 @@ public class Player {
         return newPlayer;
     }
 
-    public void createGameFavorTokens() {
+    public void assignGameFavorTokensToPlayer() {
         Integer patternCardDifficulty = getPatternCard().getDifficulty();
         for (int tokenNumber = 1; patternCardDifficulty >= tokenNumber; tokenNumber++) {
-            GameFavorTokenDB.createGameFavorToken(this.game.getId(), this.idPlayer);
+            GameFavorTokenDB.assignGameFavorTokenToPlayer(this.game.getId(), this.idPlayer);
         }
 
         this.unassignedFavortokensLeft = patternCardDifficulty;

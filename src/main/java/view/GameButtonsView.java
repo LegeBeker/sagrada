@@ -15,7 +15,6 @@ public class GameButtonsView extends VBox implements Observer {
 
     private Button buttonBack;
     private Button buttonEndTurn;
-    private Button buttonGetDice;
     private Button buttonCalculateScore;
     private ToggleButton helpToggle;
 
@@ -29,10 +28,6 @@ public class GameButtonsView extends VBox implements Observer {
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefWidth(BUTTONWIDTH);
         this.buttonBack.setOnAction(e -> view.openGamesView());
-
-        this.buttonGetDice = new Button("Pak dobbelstenen");
-        this.buttonGetDice.setPrefWidth(BUTTONWIDTH);
-        this.buttonGetDice.setOnAction(e -> view.getNewOffer());
 
         this.helpToggle = new ToggleButton("Help!");
         this.helpToggle.setPrefWidth(BUTTONWIDTH);
@@ -48,9 +43,8 @@ public class GameButtonsView extends VBox implements Observer {
         this.buttonCalculateScore = new Button("Bereken score");
         this.buttonCalculateScore.setPrefWidth(BUTTONWIDTH);
         this.buttonCalculateScore.setOnAction(e -> view.calculateScore());
+        this.getChildren().addAll(this.buttonBack, this.helpToggle, this.buttonCalculateScore);
         Observable.addObserver(Game.class, this);
-
-        this.getChildren().addAll(this.buttonBack, this.buttonGetDice, this.helpToggle, this.buttonCalculateScore);
 
         if (view.isTurnPlayer()) {
             this.getChildren().addAll(buttonEndTurn);
@@ -59,14 +53,6 @@ public class GameButtonsView extends VBox implements Observer {
 
         this.setPadding(new Insets(PADDING));
         this.setSpacing(PADDING);
-    }
-
-    public void getDice() {
-        try {
-            view.getNewOffer();
-        } catch (RuntimeException e) {
-            this.view.displayError(e.getMessage());
-        }
     }
 
     private void endTurn() {

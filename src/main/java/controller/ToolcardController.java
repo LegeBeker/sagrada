@@ -1,15 +1,15 @@
 package main.java.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-
 import javafx.scene.paint.Color;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
+import main.java.model.ToolCard;
 
 public class ToolcardController {
-
     private static final int MAX_VALUE = 6;
     private static final int ONE = 1;
     private static final int TWO = 2;
@@ -20,12 +20,15 @@ public class ToolcardController {
     private static final int TURNCOUNT = 2;
     private Random random;
 
+    public static Map<String, String> getToolCard(final int gameId, final String toolCardName) {
+        return ToolCard.getToolCard(gameId, toolCardName);
+    }
+
     public void grozingPliers(final int dieValue) {
         Scanner input = new Scanner(System.in);
         System.out.println("Starting value: " + dieValue);
         System.out.print("Enter 1 to add or 2 to subtract: ");
         int choice = input.nextInt();
-
         if (choice == 1) {
             if (dieValue == MAX_VALUE) {
                 System.out.println("Value is 6 and cant become 7");
@@ -135,6 +138,18 @@ public class ToolcardController {
         ToolCardDB.updateGameDieColor(gameId, colorString);
         ToolCardDB.updateGameDieValue(gameId, selectedDie.getEyes());
 
+        input.close();
+    }
+
+    public void fluxRemover(final int gameId, final int roundId) {
+        Scanner input = new Scanner(System.in);
+        List<Die> gameOffer = Die.getOffer(gameId, roundId);
+
+        System.out.print("Enter which die you want to remove from the game offer: ");
+        Die selectedDie = gameOffer.get(input.nextInt() - 1);
+
+        gameOffer.remove(selectedDie);
+        ToolCardDB.addDieToBag(selectedDie.getGame().getId(), selectedDie.getColor(), selectedDie.getEyes());
         input.close();
     }
 }
