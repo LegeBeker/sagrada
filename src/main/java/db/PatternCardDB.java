@@ -90,7 +90,7 @@ public final class PatternCardDB {
         }
 
         String sql2 = sqlBuilder.toString();
-        System.out.println(sql2);
+        sql2 = sql2.substring(0, sql2.length() - 1);
 
         db.exec(sql2, null);
 
