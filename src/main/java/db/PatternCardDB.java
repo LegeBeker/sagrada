@@ -18,7 +18,7 @@ public final class PatternCardDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM patterncard WHERE idpatterncard = ? LIMIT 1";
-        String[] params = {Integer.toString(idPatternCard) };
+        String[] params = {Integer.toString(idPatternCard)};
 
         return db.exec(sql, params).get(0);
     }
@@ -43,7 +43,7 @@ public final class PatternCardDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM patterncardfield WHERE idpatterncard = ? ORDER BY position_x ASC, position_y ASC";
-        String[] params = {Integer.toString(idPatternCard) };
+        String[] params = {Integer.toString(idPatternCard)};
 
         return db.exec(sql, params);
     }
@@ -52,7 +52,7 @@ public final class PatternCardDB {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO patterncardoption VALUE (?, ?);";
-        String[] params = {Integer.toString(idPatternCard), Integer.toString(idPlayer) };
+        String[] params = {Integer.toString(idPatternCard), Integer.toString(idPlayer)};
 
         return db.exec(sql, params);
     }
@@ -61,7 +61,7 @@ public final class PatternCardDB {
         Database db = Database.getInstance();
 
         String sql = "SELECT * FROM patterncardoption WHERE idplayer = ?;";
-        String[] params = {Integer.toString(idPlayer) };
+        String[] params = {Integer.toString(idPlayer)};
 
         return db.exec(sql, params);
     }
@@ -71,7 +71,7 @@ public final class PatternCardDB {
 
         String sql = "INSERT INTO patterncard (name, difficulty, standard) VALUES (?, ?, ?);";
         String[] params = {patternCard.getName(), Integer.toString(patternCard.getDifficulty()),
-                patternCard.getStandard() ? "1" : "0" };
+                patternCard.getStandard() ? "1" : "0"};
 
         List<Map<String, String>> id = db.exec(sql, params);
 
