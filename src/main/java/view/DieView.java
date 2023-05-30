@@ -161,6 +161,8 @@ public class DieView extends Group {
 
     private void checkSelectionModeToolCard(){
         //-- @TimBogersGitHub, Check if it his can result in any issues since this will be used in roudtrack and/or in the board itself. Check source of dieView??
+        
+        System.out.println("Paren class: " + this.getParent().getTypeSelector());
         if (toolCardSelected && gameCenterView != null){
             Map<String, String> selectedDieMap = new HashMap<>();;
             selectedDieMap.put("eyes", Integer.toString(this.eyes));
