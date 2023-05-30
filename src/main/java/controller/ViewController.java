@@ -221,6 +221,10 @@ public class ViewController extends Scene {
         return this.gameController.getCurrentPlayer();
     }
 
+    public List<Map<String, String>> getScores() {
+        return this.scoreController.getScores(getCurrentPlayer());
+    }
+
     public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
         return this.patternCardController.getPossibleMoves(eyes, color);
     }
@@ -416,13 +420,5 @@ public class ViewController extends Scene {
 
     public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return this.gameController.getGamesWithOpenInvites();
-    }
-
-    public void calculateScore() {
-        String privObjCardColor = getPrivateObjCardColor();
-        int favorTokens = getPlayerGameTokens(getPlayerId());
-        Game game = gameController.getGame();
-        Player player = gameController.getCurrentPlayer();
-        this.scoreController.calculateScore(player, game, privObjCardColor, favorTokens);
     }
 }
