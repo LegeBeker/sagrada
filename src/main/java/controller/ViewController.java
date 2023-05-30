@@ -415,4 +415,8 @@ public class ViewController extends Scene {
     public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return this.gameController.getGamesWithOpenInvites();
     }
+ 
+    public int getAmountPlacedDiePerRound (){
+        return gameController.getAmountPlacedDiePerRound(gameController.getGameId(), gameController.getGame(gameController.getGameId()).getRoundID(), gameController.getCurrentPlayer().getId());
+    }
 }

@@ -27,8 +27,9 @@ public class GameOfferView extends FlowPane implements Observer {
         this.getChildren().clear();
 
         for (Map<String, String> die : view.getOffer()) {
+            Boolean isDraggable = view.isTurnPlayer();
             DieView dieView = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
-                    Integer.parseInt(die.get("number")), true);
+                    Integer.parseInt(die.get("number")), isDraggable);
 
             this.getChildren().add(dieView);
         }

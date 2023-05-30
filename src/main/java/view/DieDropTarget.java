@@ -32,13 +32,19 @@ public class DieDropTarget extends StackPane {
         this.setOnDragDropped(event -> {
             DieView dieView = (DieView) event.getGestureSource();
 
-            Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
-                    dieView.getColor(), dieView.getNumber(),
-                    GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
-
-            if (!placeDie) {
-                this.view.displayError("Deze zet is niet geldig.");
+            if(view.getAmountPlacedDiePerRound() > 0){
+                this.view.displayError("Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
                 return;
+            }
+            else{
+                Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
+                dieView.getColor(), dieView.getNumber(),
+                GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+
+                if (!placeDie) {
+                    this.view.displayError("Deze zet is niet geldig.");
+                    return;
+                }
             }
 
             event.setDropCompleted(true);
