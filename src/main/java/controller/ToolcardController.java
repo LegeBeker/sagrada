@@ -112,11 +112,7 @@ public class ToolcardController {
         input.close();
     }
 
-    public void fluxRemover(final int gameId, final int dieNumber, final String dieColor) {
-        // List<Die> gameOffer = Die.getOffer(gameId, roundId);
-
-        // Die selectedDie = gameOffer.get(input.nextInt() - 1);
-        // gameOffer.remove(selectedDie);
-        ToolCardDB.addDieToBag(gameId, Color.valueOf(dieColor), DieDB.getGameDieEyes(gameId, dieNumber, dieColor));
+    public void fluxRemover(final int gameId, final int dieNumber, final String dieColor, final int roundId) {
+        ToolCardDB.addDieToBag(gameId, dieColor, dieNumber, roundId);
     }
 }

@@ -457,6 +457,6 @@ public class ViewController extends Scene {
     }
 
     public void fluxRemover(final int dieNumber, final String dieColor) {
-        this.toolCardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor);
+        this.toolCardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor, gameController.getGame().getRoundID());
     }
 }
