@@ -170,7 +170,7 @@ public class PatternCardView extends BorderPane {
 
         StackPane stackPane;
 
-        if (isCardOwner) {
+        if (isCardOwner) {  
             stackPane = new DieDropTarget(this.view);
         } else {
             stackPane = new StackPane();

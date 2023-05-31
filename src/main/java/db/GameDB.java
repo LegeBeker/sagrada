@@ -142,18 +142,4 @@ public final class GameDB {
 
         return gamesWithOpenInvites;
     }
-
-    public static int getAmountPlacedDiePerRound(final int gameId, final int roundId, final int playerId) {
-        Database db = Database.getInstance();
-
-        String sql = "SELECT COUNT(*) AS 'amount_placed_die_per_round' "
-                + "FROM gamedie AS gd "
-                + "JOIN playerframefield AS pff "
-                + "ON gd.idgame = pff.idgame AND gd.dienumber = pff.dienumber AND gd.diecolor = pff.diecolor "
-                + "WHERE gd.idgame = ? AND gd.roundID = ? AND pff.idplayer = ?; ";
-
-        String[] params = {Integer.toString(gameId), Integer.toString(roundId), Integer.toString(playerId) };
-        return Integer.parseInt(db.exec(sql, params).get(0).get("amount_placed_die_per_round"));
-    }
-
 }

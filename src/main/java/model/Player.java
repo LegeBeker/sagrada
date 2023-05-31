@@ -23,6 +23,7 @@ public class Player {
     private String privateObjCardColor;
     private PatternCard patternCard;
     private int unassignedFavortokensLeft;
+    private int getAmountPlacedDiePerRound;
 
     private Board board;
 

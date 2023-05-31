@@ -27,6 +27,7 @@ import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.Player;
 import main.java.pattern.Observable;
+import main.java.view.DieDropTarget;
 import main.java.view.GameView;
 import main.java.view.GamesView;
 import main.java.view.LoginView;
@@ -315,6 +316,7 @@ public class ViewController extends Scene {
 
     public void endTurn() {
         this.gameController.endTurn();
+        DieDropTarget.resetAmountPlacedDie();
     }
 
     public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
@@ -418,11 +420,5 @@ public class ViewController extends Scene {
 
     public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return this.gameController.getGamesWithOpenInvites();
-    }
-
-    public int getAmountPlacedDiePerRound() {
-        return gameController.getAmountPlacedDiePerRound(gameController.getGameId(),
-                gameController.getGame(gameController.getGameId()).getRoundID(),
-                gameController.getCurrentPlayer().getId());
     }
 }

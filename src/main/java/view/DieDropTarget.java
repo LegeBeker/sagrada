@@ -8,6 +8,7 @@ import main.java.controller.ViewController;
 public class DieDropTarget extends StackPane {
 
     private final ViewController view;
+    private static int amountPlacedDie = 0;
 
     public DieDropTarget(final ViewController view) {
         this.view = view;
@@ -31,8 +32,9 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragDropped(event -> {
             DieView dieView = (DieView) event.getGestureSource();
-
-            if (view.getAmountPlacedDiePerRound() > 0) {
+            
+            
+            if (amountPlacedDie > 0) {
                 this.view.displayError(
                         "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
                 return;
@@ -47,8 +49,13 @@ public class DieDropTarget extends StackPane {
                 }
             }
 
+            DieDropTarget.amountPlacedDie++;
             event.setDropCompleted(true);
             event.consume();
         });
+    }
+
+    public static void resetAmountPlacedDie(){
+        DieDropTarget.amountPlacedDie = 0;
     }
 }

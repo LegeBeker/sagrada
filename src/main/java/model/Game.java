@@ -383,8 +383,4 @@ public class Game extends Observable {
     public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
         return GameDB.getGamesWithOpenInvites(username);
     }
-
-    public int getAmountPlacedDiePerRound(final int gameId, final int roundId, final int playerId) {
-        return GameDB.getAmountPlacedDiePerRound(gameId, roundId, playerId);
-    }
 }
