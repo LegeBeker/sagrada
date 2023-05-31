@@ -32,8 +32,7 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragDropped(event -> {
             DieView dieView = (DieView) event.getGestureSource();
-            
-            
+
             if (amountPlacedDie > 0) {
                 this.view.displayError(
                         "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
@@ -55,7 +54,7 @@ public class DieDropTarget extends StackPane {
         });
     }
 
-    public static void resetAmountPlacedDie(){
+    public static void resetAmountPlacedDie() {
         DieDropTarget.amountPlacedDie = 0;
     }
 }
