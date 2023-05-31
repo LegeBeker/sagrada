@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -54,7 +52,7 @@ public class RoundTrackView extends StackPane implements Observer {
         for (int i = 0; i < ROUNDS; i++) {
             VBox vbox = new VBox();
             Group group = new Group();
-            FlowPane diceDisplay = new FlowPane(Orientation.VERTICAL, 0, 1);
+            GridPane diceDisplay = new GridPane();
             diceDisplay.setMaxWidth(SIZE + PADDING);
             diceDisplay.setPrefHeight(SIZE + PADDING);
             Rectangle diceBackground = new Rectangle(SIZE, SIZE);
@@ -93,7 +91,7 @@ public class RoundTrackView extends StackPane implements Observer {
     }
 
     private void showAllDice(final Group diceGroup) {
-        FlowPane diceDisplay = (FlowPane) diceGroup.getChildren().get(1);
+        GridPane diceDisplay = (GridPane) diceGroup.getChildren().get(1);
         diceGroup.getChildren().get(0).setScaleY(Math.max(diceDisplay.getChildren().size(), 1));
         if (!diceDisplay.getChildren().isEmpty()) {
             diceDisplay.setTranslateY(-SIZE * (Math.max(diceDisplay.getChildren().size(), 1) - 1) / 2);
@@ -106,7 +104,7 @@ public class RoundTrackView extends StackPane implements Observer {
     }
 
     private void showOneDice(final Group diceGroup) {
-        FlowPane diceDisplay = (FlowPane) diceGroup.getChildren().get(1);
+        GridPane diceDisplay = (GridPane) diceGroup.getChildren().get(1);
         diceGroup.getChildren().get(0).setScaleY(1);
         diceDisplay.setTranslateY(0);
         diceDisplay.setVisible(false);
@@ -122,7 +120,7 @@ public class RoundTrackView extends StackPane implements Observer {
         for (Map<String, String> die : view.getRoundTrack()) {
             int currentRoundTrack = Integer.parseInt(die.get("roundtrack")) - 1;
             Group currentDiceGroup = roundGroups.get((currentRoundTrack + 1) / 2);
-            FlowPane diceDisplay = (FlowPane) currentDiceGroup.getChildren().get(1);
+            GridPane diceDisplay = (GridPane) currentDiceGroup.getChildren().get(1);
             if (previousRoundtrack != currentRoundTrack) {
                 diceDisplay.getChildren().clear();
             }
