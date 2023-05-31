@@ -6,6 +6,7 @@ import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -53,14 +54,13 @@ public class RoundTrackView extends StackPane implements Observer {
             VBox vbox = new VBox();
             Group group = new Group();
             GridPane diceDisplay = new GridPane();
-            diceDisplay.setMaxWidth(SIZE + PADDING);
-            diceDisplay.setPrefHeight(SIZE + PADDING);
+            diceDisplay.setMaxWidth(SIZE);
+            diceDisplay.setMaxHeight(SIZE);
+            diceDisplay.setAlignment(Pos.CENTER);
             Rectangle diceBackground = new Rectangle(SIZE, SIZE);
             diceBackground.setFill(Color.BEIGE);
             group.getChildren().add(0, diceBackground);
             group.getChildren().add(1, diceDisplay);
-            group.setOnMouseEntered(e -> showAllDice(group));
-            group.setOnMouseExited(e -> showOneDice(group));
             roundGroups.add(group);
 
             Text roundNumber = new Text(Integer.toString(i + 1));
@@ -90,30 +90,6 @@ public class RoundTrackView extends StackPane implements Observer {
         update();
     }
 
-    private void showAllDice(final Group diceGroup) {
-        GridPane diceDisplay = (GridPane) diceGroup.getChildren().get(1);
-        diceGroup.getChildren().get(0).setScaleY(Math.max(diceDisplay.getChildren().size(), 1));
-        if (!diceDisplay.getChildren().isEmpty()) {
-            diceDisplay.setTranslateY(-SIZE * (Math.max(diceDisplay.getChildren().size(), 1) - 1) / 2);
-            diceDisplay.setVisible(true);
-        }
-        if (!diceDisplay.getChildren().isEmpty()) {
-            Rectangle background = (Rectangle) diceGroup.getChildren().get(0);
-            background.setFill(Color.BEIGE);
-        }
-    }
-
-    private void showOneDice(final Group diceGroup) {
-        GridPane diceDisplay = (GridPane) diceGroup.getChildren().get(1);
-        diceGroup.getChildren().get(0).setScaleY(1);
-        diceDisplay.setTranslateY(0);
-        diceDisplay.setVisible(false);
-        if (!diceDisplay.getChildren().isEmpty()) {
-            Rectangle background = (Rectangle) diceGroup.getChildren().get(0);
-            background.setFill(Color.GREEN);
-        }
-    }
-
     @Override
     public void update() {
         int previousRoundtrack = -1;
@@ -126,16 +102,23 @@ public class RoundTrackView extends StackPane implements Observer {
             }
             DieView newDice = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
                 Integer.parseInt(die.get("number")), false);
-            diceDisplay.getChildren().add(newDice);
-            diceDisplay.setPrefHeight((SIZE + PADDING) * Math.max(diceDisplay.getChildren().size(), 1));
+            diceDisplay.add(newDice, 1, 1);
             previousRoundtrack = currentRoundTrack;
         }
-
+        
         for (Group diceGroup : roundGroups) {
-            if (diceGroup.isHover()) {
-                showAllDice(diceGroup);
-            } else {
-                showOneDice(diceGroup);
+            GridPane diceDisplay = (GridPane) diceGroup.getChildren().get(1);
+            for (Node die : diceDisplay.getChildren()) {
+                double scaledown = 1;
+                if (diceDisplay.getChildren().size() > 1) {
+                    scaledown = 0.5;
+                    if (diceDisplay.getChildren().size() > 4) {
+                        scaledown = 1/3;
+                    }
+                } 
+                die.setScaleX(getScaleX() * scaledown);
+                die.setScaleY(getScaleY() * scaledown);
+
             }
         }
     }
