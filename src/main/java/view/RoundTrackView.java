@@ -102,7 +102,15 @@ public class RoundTrackView extends StackPane implements Observer {
             }
             DieView newDice = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
                 Integer.parseInt(die.get("number")), false);
-            diceDisplay.add(newDice, 1, 1);
+            int alreadyPlacedDice = diceDisplay.getChildren().size();
+            if (alreadyPlacedDice >= 1) {
+                if (alreadyPlacedDice >= 4) {
+                    System.out.println("Help");
+                }
+                diceDisplay.add(newDice, alreadyPlacedDice % 2, alreadyPlacedDice / 2);
+            } else {
+                diceDisplay.add(newDice, 0, 0);
+            }
             previousRoundtrack = currentRoundTrack;
         }
         
