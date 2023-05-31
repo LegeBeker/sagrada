@@ -97,22 +97,25 @@ public class GameToolCardView extends StackPane {
         this.getChildren().addAll(imageView, pane);
 
         this.setOnMouseClicked(event -> {
-            if (!isSelected) {
-                if (selectedToolCardView != null) {
-                    selectedToolCardView.removeSelection();
-                    String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCardName());
+            if (view.isTurnPlayer()) {
+                if (!isSelected) {
+                    if (selectedToolCardView != null) {
+                        selectedToolCardView.removeSelection();
+                        String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCardName());
+                        System.out.println(deselectedMethodName + "() has been deselected.");
+                    }
+                    this.addSelection();
+                    selectedToolCardView = this;
+                    String methodName = getSelectedMethodName(toolCardName);
+                    System.out.println(methodName + "() has been selected.");
+                } else {
+                    removeSelection();
+                    selectedToolCardView = null;
+                    String deselectedMethodName = getDeselectedMethodName(toolCardName);
                     System.out.println(deselectedMethodName + "() has been deselected.");
                 }
-                this.addSelection();
-                selectedToolCardView = this;
-                String methodName = getSelectedMethodName(toolCardName);
-                System.out.println(methodName + "() has been selected.");
-            } else {
-                removeSelection();
-                selectedToolCardView = null;
-                String deselectedMethodName = getDeselectedMethodName(toolCardName);
-                System.out.println(deselectedMethodName + "() has been deselected.");
             }
+
         });
     }
 
