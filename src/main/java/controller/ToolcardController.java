@@ -1,5 +1,6 @@
 package main.java.controller;
 
+import java.security.KeyStoreSpi;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -78,11 +79,8 @@ public class ToolcardController {
             List<Die> gameOffer = Die.getOffer(gameId, roundId);
             for (Die die : gameOffer) {
                 int newValue = random.nextInt(SIX) + 1;
-                ToolCardDB.updateGameDieValue(die.getNumber(), newValue);
+                ToolCardDB.updateGameDieValue(gameId, die.getNumber(), die.getColor().toString(), newValue);
             }
-            System.out.println("Draft pool dice have been rerolled");
-        } else {
-            System.out.println("You can only reroll the draft pool when its ur second turn");
         }
     }
 
