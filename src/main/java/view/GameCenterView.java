@@ -14,12 +14,10 @@ public class GameCenterView extends BorderPane {
     private GameToolBarView gameToolBarView;
 
     public GameCenterView(final ViewController view) {
-        this.gameOfferView = new GameOfferView(view, this);
-        this.setTop(gameOfferView);
+        this.setTop(new GameOfferView(view));
         this.gameBoardsView = new GameBoardsView(view);
         this.setCenter(this.gameBoardsView);
-        this.gameToolBarView = new GameToolBarView(view, this);
-        this.setBottom(gameToolBarView);
+        this.setBottom(new GameToolBarView(view));
     }
 
     public void showPossibleMoves(final ArrayList<int[]> moves) {
@@ -28,10 +26,6 @@ public class GameCenterView extends BorderPane {
 
     public void cleanTargets() {
         this.gameBoardsView.cleanTargets();
-    }
-
-    public void updateSelectionStatus(final Boolean isSelected){
-        this.gameOfferView.updateSelectionStatus(isSelected);
     }
 
     public void dieSelectedForToolcard(final Map<String, String> selectedDieMap){

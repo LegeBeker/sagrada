@@ -9,7 +9,9 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import javafx.scene.paint.Color;
 import main.java.db.DieDB;
+import main.java.db.GameDB;
 import main.java.db.ToolCardDB;
+import main.java.enums.ColorEnum;
 import main.java.model.Die;
 import main.java.model.ToolCard;
 
@@ -56,44 +58,9 @@ public class ToolcardController {
     }
 
     public void grindingStone(final int gameId, final int dieNumber, final String dieColor) {
-        int dieValue = SIX;
-        System.out.println("Starting value: " + dieValue);
-
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter a command (flip to flip the die): ");
-            String input = scanner.nextLine().trim();
-
-            if (input.equalsIgnoreCase("flip")) {
-                switch (Integer.toString(dieValue)) {
-                case "1":
-                    dieValue = SIX;
-                    break;
-                case "2":
-                    dieValue = FIVE;
-                    break;
-                case "3":
-                    dieValue = FOUR;
-                    break;
-                case "4":
-                    dieValue = THREE;
-                    break;
-                case "5":
-                    dieValue = TWO;
-                    break;
-                case "6":
-                    dieValue = ONE;
-                    break;
-                default:
-                    break;
-                }
-                ToolCardDB.updateGameDieValue(dieValue, 0);
-                System.out.println("Die flipped. New value: " + dieValue);
-            } else {
-                System.out.println("Invalid command.");
-            }
-        }
+        int dieValue = DieDB.getGameDieEyes(gameId, dieNumber, dieColor);
+        int newValue = 7 - dieValue;
+        ToolCardDB.updateGameDieValue(gameId, dieNumber, dieColor, newValue);    
     }
 
     public void fluxBrush(final int gameId, final int dieNumber, final String dieColor) {
@@ -146,14 +113,10 @@ public class ToolcardController {
     }
 
     public void fluxRemover(final int gameId, final int dieNumber, final String dieColor) {
-        Scanner input = new Scanner(System.in);
-        List<Die> gameOffer = Die.getOffer(gameId, roundId);
+        // List<Die> gameOffer = Die.getOffer(gameId, roundId);
 
-        System.out.print("Enter which die you want to remove from the game offer: ");
-        Die selectedDie = gameOffer.get(input.nextInt() - 1);
-
-        gameOffer.remove(selectedDie);
-        ToolCardDB.addDieToBag(selectedDie.getGame().getId(), selectedDie.getColor(), selectedDie.getEyes());
-        input.close();
+        // Die selectedDie = gameOffer.get(input.nextInt() - 1);
+        // gameOffer.remove(selectedDie);
+        ToolCardDB.addDieToBag(gameId, Color.valueOf(dieColor), DieDB.getGameDieEyes(gameId, dieNumber, dieColor));
     }
 }

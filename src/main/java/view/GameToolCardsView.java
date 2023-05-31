@@ -9,17 +9,14 @@ import main.java.controller.ViewController;
 
 public class GameToolCardsView extends FlowPane {
 
-    private GameCenterView gameCenterView;
     private ArrayList<GameToolCardView> toolCardViews = new ArrayList<GameToolCardView>();
 
     private static final int GAP = 10;
     private static final int PADDING = 5;
 
-    public GameToolCardsView(final ViewController view, final GameCenterView gameCenterView) {
-        this.gameCenterView = gameCenterView;
-
+    public GameToolCardsView(final ViewController view) {
         for (String toolCardName : view.getToolCardsNames()) {
-            GameToolCardView gcv = new GameToolCardView(view, toolCardName, gameCenterView);
+            GameToolCardView gcv = new GameToolCardView(view, toolCardName);
             this.getChildren().add(gcv);
             toolCardViews.add(gcv);
         }

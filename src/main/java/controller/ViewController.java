@@ -417,6 +417,14 @@ public class ViewController extends Scene {
     }
 
     // -- Toolcard methods
+    public void setToolCardSelection(final String selectedToolcardName){
+        gameController.setSelectedToolcardName(selectedToolcardName);
+    }
+
+    public String getSelectedToolcardName(){
+        return gameController.getSelectedToolcardName();
+    }
+
     public void grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
         if(actionChoice.equals("?")){
             System.err.println("Foutje m.b.t. confirmatie van actie");

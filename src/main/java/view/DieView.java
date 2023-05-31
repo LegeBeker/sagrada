@@ -3,9 +3,13 @@ package main.java.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -28,19 +32,18 @@ public class DieView extends Group {
     private static final double SCALE = 0.8;
 
     private GameOfferView gameOfferView;
+    private ViewController view;
 
     private int eyes;
     private Color color;
     private int number;
-    private Boolean toolCardSelected;
-    private GameCenterView gameCenterView;
 
     public DieView(final ViewController view, final int eyes, final Color color, final int number,
             final Boolean isDraggable) {
         this.eyes = eyes;
         this.color = color;
         this.number = number;
-        this.toolCardSelected = false;
+        this.view = view;
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
         rectangle.setFill(Color.rgb(0, 0, 0, 0));
         this.setOnMouseClicked(e -> checkSelectionModeToolCard());
@@ -155,27 +158,96 @@ public class DieView extends Group {
         return this.number;
     }
 
-    public void setGameCenterView(final GameCenterView gameCenterView){
-        this.gameCenterView = gameCenterView;
-    }
-
     private void checkSelectionModeToolCard(){
         //-- @TimBogersGitHub, Check if it his can result in any issues since this will be used in roudtrack and/or in the board itself. Check source of dieView??
         
-        System.out.println("Paren class: " + this.getParent().getTypeSelector());
-        if (toolCardSelected && gameCenterView != null){
+        System.out.println("Parent class: " + this.getParent().getTypeSelector());
+        String methodName = view.getSelectedToolcardName();
+        if (methodName != null){
+            System.out.println("Kaart " + view.getSelectedToolcardName() + " is geselecteerd");
             Map<String, String> selectedDieMap = new HashMap<>();;
             selectedDieMap.put("eyes", Integer.toString(this.eyes));
             selectedDieMap.put("dieNumber", Integer.toString(this.number));
             selectedDieMap.put("dieColor", this.color.toString());
 
-            gameCenterView.dieSelectedForToolcard(selectedDieMap);
-            
+            //-- trigger toolcard logic
+            switch (methodName) {
+                case "grozingPliers":
+                    String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
+                    if(!actionChoice.equals("?")){
+                        view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"), actionChoice);
+                    }
+                    break;
+                case "eglomiseBrush":
+                    System.out.println("Switch case for eglomiseBrush triggert");
+                    break;
+                case "copperFoilBurnisher":
+                    System.out.println("Switch case for copperFoilBurnisher triggert");
+                    break;
+                case "lathekin":
+                    System.out.println("Switch case for lathekin triggert");
+                    break;
+                case "lensCutter":
+                    System.out.println("Switch case for lensCutter triggert");
+                    view.lensCutter(1, 2); //-- This is going to be a tricky one since we swap values from offer and roundtrack
+                    break;
+                case "fluxBrush":
+                    view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                    break;
+                case "runningPliers":
+                    System.out.println("Switch case for runningPliers triggert");
+                    break;
+                case "cork-backedStraightedge":
+                    System.out.println("Switch case for backedStraightedge triggert");
+                    break;
+                case "grindingStone":
+                    System.out.println("Switch case for grindingStone triggert");
+                    view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                    break;
+                case "fluxRemover":
+                    System.out.println("Switch case for fluxRemover triggert");
+                    view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                    break;
+                case "tapWheel":
+                    System.out.println("Switch case for tapWheel triggert");
+                    break;
+                default:
+                    break;
+                }
+            view.setToolCardSelection(null);
         }
-        
+        else{
+            System.out.println("Kaart niet geselecteerd");
+        }
     }
 
-    public void updateSelectionStatus(final Boolean toolCardSelected){
-        this.toolCardSelected = toolCardSelected;
+    private String askGrozingPliersAction(final int currentDieValue){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Gebruik gereedschapskaart");
+        alert.setHeaderText("Vermeld je keuze m.b.t. de actie die deze doelkaart moet uitvoeren.");
+        alert.setContentText(
+            "Let op: Als de dobbelsteen de waarde 6 heeft, en je verhoogt de steen, wordt het geen 1. " +
+            "De huidge waarde van de geselecteerde dobbelsteen is " + currentDieValue + ". ");
+
+        ButtonType incrementButton = new ButtonType("Toevoegen");
+        ButtonType decrementButton = new ButtonType("Aftrekken");
+        ButtonType closeButton = new ButtonType("Sluiten", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(incrementButton, decrementButton, closeButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (!result.isPresent()) {
+            return "?";
+        }
+
+        if (result.get() == incrementButton) {
+            return "increment";
+        } else if (result.get() == decrementButton) {
+            return "decrement";
+        }
+        else{
+            return "?"; //-- failsafe for if we forget to handle a new button
+        }
+
     }
 }

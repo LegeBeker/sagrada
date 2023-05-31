@@ -11,9 +11,8 @@ public class GameToolBarView extends HBox {
     private GameCenterView gameCenterView;
     private GameToolCardsView gameToolCardsView;
 
-    public GameToolBarView(final ViewController view, final GameCenterView gameCenterView) {
-        this.gameCenterView = gameCenterView;
-        this.gameToolCardsView = new GameToolCardsView(view, gameCenterView);
+    public GameToolBarView(final ViewController view) {
+        this.gameToolCardsView = new GameToolCardsView(view);
         this.getChildren().addAll(gameToolCardsView, new GamePublicObjectiveCardsView(view),
                 new GamePrivateObjectiveCardView(view),
                 new RoundTrackView(view));

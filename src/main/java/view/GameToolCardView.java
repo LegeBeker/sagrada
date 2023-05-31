@@ -44,9 +44,8 @@ public class GameToolCardView extends StackPane {
     private boolean isSelected = false;
     private static GameToolCardView selectedToolCardView = null;
 
-    public GameToolCardView(final ViewController view, final String toolCardName, final GameCenterView gameCenterView) {
+    public GameToolCardView(final ViewController view, final String toolCardName) {
         ImageView imageView = new ImageView();
-        this.gameCenterView = gameCenterView;
         this.view = view;
 
         this.toolCardName = toolCardName;
@@ -146,13 +145,15 @@ public class GameToolCardView extends StackPane {
     private void addSelection() {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
         isSelected = true;
-        gameCenterView.updateSelectionStatus(isSelected);
+        view.setToolCardSelection(this.getSelectedMethodName(this.toolCardName));
+        // gameCenterView.updateSelection(isSelected);
     }
 
     private void removeSelection() {
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
         isSelected = false;
-        gameCenterView.updateSelectionStatus(isSelected);
+        view.setToolCardSelection(null);
+        // gameCenterView.updateSelection(isSelected);
     }
 
     public String getToolCardName() {
@@ -203,85 +204,6 @@ public class GameToolCardView extends StackPane {
 
     public void dieSelectedForToolcard (Map<String, String> selectedDieMap){
         String methodName = getSelectedMethodName(toolCardName);
-        switch (methodName) {
-            case "grozingPliers":
-                String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
-                if(!actionChoice.equals("?")){
-                    view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"), actionChoice);
-                }
-                this.removeSelection();
-                this.isSelected = false;
-                break;
-            case "eglomiseBrush":
-                System.out.println("Switch case for eglomiseBrush triggert");
-                break;
-            case "copperFoilBurnisher":
-                System.out.println("Switch case for copperFoilBurnisher triggert");
-                break;
-            case "lathekin":
-                System.out.println("Switch case for lathekin triggert");
-                break;
-            case "lensCutter":
-                System.out.println("Switch case for lensCutter triggert");
-                view.lensCutter(1, 2); //-- This is going to be a tricky one since we swap values from offer and roundtrack
-                break;
-            case "fluxBrush":
-                //-- dieNumber & dieColor
-                view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
-                this.removeSelection();
-                this.isSelected = false;
-                break;
-            case "runningPliers":
-                System.out.println("Switch case for runningPliers triggert");
-                break;
-            case "cork-backedStraightedge":
-                System.out.println("Switch case for backedStraightedge triggert");
-                break;
-            case "grindingStone":
-                System.out.println("Switch case for grindingStone triggert");
-                view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
-                this.removeSelection(); //-- Possibly make these 2 methods global for each switch case. More dynamic that way
-                this.isSelected = false;
-                break;
-            case "fluxRemover":
-                System.out.println("Switch case for fluxRemover triggert");
-                view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
-                break;
-            case "tapWheel":
-                System.out.println("Switch case for tapWheel triggert");
-                break;
-            default:
-                break;
-            }
-    }
-
-    private String askGrozingPliersAction(final int currentDieValue){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Gebruik gereedschapskaart");
-        alert.setHeaderText("Vermeld je keuze m.b.t. de actie die deze doelkaart moet uitvoeren.");
-        alert.setContentText(
-            "Let op: Als de dobbelsteen de waarde 6 heeft, en je verhoogt de steen, wordt het geen 1. " +
-            "De huidge waarde van de geselecteerde dobbelsteen is " + currentDieValue + ". ");
-
-        ButtonType incrementButton = new ButtonType("Toevoegen");
-        ButtonType decrementButton = new ButtonType("Aftrekken");
-        ButtonType closeButton = new ButtonType("Sluiten", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(incrementButton, decrementButton, closeButton);
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (!result.isPresent()) {
-            return "?";
-        }
-
-        if (result.get() == incrementButton) {
-            return "increment";
-        } else if (result.get() == decrementButton) {
-            return "decrement";
-        }
-        else{
-            return "?"; //-- failsafe for if we forget to handle a new button
-        }
-
+        
     }
 }

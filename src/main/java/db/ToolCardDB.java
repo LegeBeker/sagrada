@@ -42,6 +42,7 @@ public final class ToolCardDB {
     // weet niet of de die.getGame().toString() 100% klopt
     public static void addDieToBag(final int idgame, final Color color, final int eyes) {
         Database db = Database.getInstance();
+        System.out.println("Color for addDieToBag(): " + color.toString());
         String sql = "INSERT INTO gamedie (idgame, diecolor, eyes) VALUES (?, ?, ?)";
         String[] params = {Integer.toString(idgame), color.toString(), Integer.toString(eyes)};
         db.exec(sql, params);
