@@ -38,7 +38,14 @@ public class GameBoardsView extends HBox implements Observer {
 
     private void showPlayerGameboards() {
         int cardCount = 0;
-        for (Integer playerId : view.getPlayerIds()) {
+        //-- Add the player to the first index so it always shows on the left side of the screen.
+        ArrayList<Integer> playersList = view.getPlayerIds();
+        int index = playersList.indexOf(view.getPlayerId());
+        playersList.remove(index);
+        playersList.add(0, view.getPlayerId());
+
+
+        for (Integer playerId : playersList) {
             if (view.getPlayerPatternCardId(playerId) == null) {
                 continue; // skip players without a pattern card
             }

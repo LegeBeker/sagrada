@@ -142,5 +142,4 @@ public final class GameDB {
 
         return gamesWithOpenInvites;
     }
-
 }
