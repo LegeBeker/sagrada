@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
+import main.java.model.PatternCard;
 import main.java.model.Player;
 import main.java.pattern.Observer;
 
@@ -138,7 +139,13 @@ public final class GameController implements Observer {
         return this.game.getHelpFunction();
     }
 
-    public void choosePatternCard(final int idPatternCard) {
+    public void choosePatternCard(final PatternCard patternCard, final boolean defaultCards) {
+        int idPatternCard = 0;
+        if (!defaultCards) {
+            idPatternCard = PatternCard.createPatternCard(patternCard);
+        } else {
+            idPatternCard = patternCard.getIdPatternCard();
+        }
         getCurrentPlayer().choosePatternCard(idPatternCard, this.game.getId());
         getCurrentPlayer().assignGameFavorTokensToPlayer();
     }

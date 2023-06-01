@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Env file](#env-file)
+- [Instructions](#instructions)
 - [Sagrada](#sagrada)
 - [Avans](#avans)
 
@@ -18,6 +19,20 @@ DB_PASSWORD=
 ```
 
 By using the .env file we prevent the database credentials to be pushed to a repository
+
+## Instructions
+
+1. Clone the repository
+2. Create a .env file in the root of the project
+3. Fill in the .env file with the correct database credentials
+4. Create a branch based on a issue or feature
+5. Commit your changes to the branch
+6. Create a pull request to merge your branch with the main branch
+7. Assign yourself to the pull request
+8. Make sure the github actions succeed
+9. Assign 2 reviewers to review your pull request
+10. After the pull request has been approved by 1 reviewer, merge the branch with the main branch
+11. Delete the branch
 
 ## Sagrada
 
