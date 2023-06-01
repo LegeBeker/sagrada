@@ -41,15 +41,15 @@ public class RoundTrackView extends StackPane implements Observer {
         this.view = view;
 
         this.setMaxSize(WIDTH, HEIGHT);
-        // this.setPadding(new Insets(PADDING));
+        this.setBackground(new Background(new BackgroundFill(Color.MAROON, new CornerRadii(ROUNDING), null)));
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(PADDING));
         gridPane.setVgap(PADDING);
         gridPane.setHgap(PADDING);
 
-        this.setAlignment(Pos.CENTER_RIGHT);
-        gridPane.setAlignment(Pos.CENTER_RIGHT);
+        // this.setAlignment(Pos.CENTER_RIGHT);
+        // gridPane.setAlignment(Pos.CENTER_RIGHT);
 
         for (int i = 0; i < ROUNDS; i++) {
             VBox vbox = new VBox();
@@ -72,16 +72,8 @@ public class RoundTrackView extends StackPane implements Observer {
             vbox.getChildren().addAll(group, roundNumberFlow);
             gridPane.add(vbox, i, 0);
         }
-
-        Rectangle background = new Rectangle(WIDTH, HEIGHT);
-        background.setVisible(false);
-        // background.setFill(Color.MAROON);
-        // background.setArcHeight(ROUNDING);
-        // background.setArcWidth(ROUNDING);
         StackPane.setMargin(gridPane, (new Insets(PADDING)));
-        this.setBackground(new Background(new BackgroundFill(Color.MAROON, new CornerRadii(ROUNDING), null)));
-        this.getChildren().add(0, background);
-        this.getChildren().add(1, gridPane);
+        this.getChildren().add(gridPane);
 
         Observable.addObserver(Game.class, this);
 
