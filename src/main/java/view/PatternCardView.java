@@ -121,7 +121,7 @@ public class PatternCardView extends BorderPane {
         ArrayList<int[]> locations = new ArrayList<int[]>();
         grid.getChildren().forEach((e) -> {
             if (e.getStyle().contains("-fx-border-color: #00FFBF;")) {
-                int[] location = { GridPane.getRowIndex(e), GridPane.getColumnIndex(e) };
+                int[] location = {GridPane.getRowIndex(e), GridPane.getColumnIndex(e)};
                 locations.add(location);
             }
         });
@@ -132,7 +132,7 @@ public class PatternCardView extends BorderPane {
 
         grid.getChildren().forEach((cell) -> {
             locations.forEach((cellLocation) -> {
-                int[] location = { GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell) };
+                int[] location = {GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)};
                 if (cellLocation[0] == location[0] && cellLocation[1] == location[1]) {
                     cell.setStyle("-fx-border-color: #00FFBF;");
                 }
