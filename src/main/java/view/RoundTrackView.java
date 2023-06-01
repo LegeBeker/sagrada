@@ -33,7 +33,7 @@ public class RoundTrackView extends StackPane implements Observer {
     private static final int WIDTH = 570;
     private static final int HEIGHT = 85;
     private static final int NUMBERWHENCHANGETO3X3 = 4;
-    private static final int THREE = 3;
+    private static final int EXPANDEDDICEDISPLAYSIZE = 3;
 
     private final ArrayList<Group> roundGroups;
     private final ViewController view;
@@ -96,7 +96,7 @@ public class RoundTrackView extends StackPane implements Observer {
                 if (alreadyPlacedDice == NUMBERWHENCHANGETO3X3) {
                     diceDisplay.add(newDice, 2, 0);
                 } else if (alreadyPlacedDice >= NUMBERWHENCHANGETO3X3 + 1) {
-                    diceDisplay.add(newDice, alreadyPlacedDice % THREE, alreadyPlacedDice / THREE);
+                    diceDisplay.add(newDice, alreadyPlacedDice % EXPANDEDDICEDISPLAYSIZE, alreadyPlacedDice / EXPANDEDDICEDISPLAYSIZE);
                 } else {
                     diceDisplay.add(newDice, alreadyPlacedDice % 2, alreadyPlacedDice / 2);
                 }
@@ -114,17 +114,18 @@ public class RoundTrackView extends StackPane implements Observer {
                 if (diceDisplay.getChildren().size() > 1) {
                     scaledown = 2;
                     if (diceDisplay.getChildren().size() > NUMBERWHENCHANGETO3X3) {
-                        scaledown = THREE;
+                        scaledown = EXPANDEDDICEDISPLAYSIZE;
                     }
                 }
                 switch (scaledown) {
                     case 2:
-                    GridPane.setMargin(die, new Insets(-SIZE / scaledown / scaledown));
-                    break;
-                    case THREE:
-                    GridPane.setMargin(die, new Insets(-SIZE / scaledown));
+                        GridPane.setMargin(die, new Insets(-SIZE / scaledown / scaledown));
+                        break;
+                    case EXPANDEDDICEDISPLAYSIZE:
+                        GridPane.setMargin(die, new Insets(-SIZE / scaledown));
+                        break;
                     default:
-                    break;
+                        break;
                 }
                 diceDisplay.setTranslateY(scaledown * -1 + 1);
                 diceDisplay.setTranslateX(scaledown * -1 + 1);
