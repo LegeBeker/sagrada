@@ -31,7 +31,7 @@ public class Board {
             for (int j = 1; j < COLUMNS; j++) {
                 Die die = getField(i, j);
                 if (die != null) {
-                    position = new int[][] { { i, j } };
+                    position = new int[][] {{i, j }};
                 }
             }
         }
@@ -55,7 +55,7 @@ public class Board {
     }
 
     public boolean placeDie(final Color color, final int number, final int row, final int column) {
-        
+
         boolean result = BoardDB.setField(
                 this.player.getGame().getId(), this.player.getGame().getRoundID(), this.player.getId(), row,
                 column, ColorEnum.fromString(color.toString()).getName(), number);
@@ -103,7 +103,7 @@ public class Board {
             boards.put(player, new ArrayList<>());
             for (int row = 1; row <= ROWS; row++) {
                 for (int col = 1; col <= COLUMNS; col++) {
-                    boards.get(player).add(new int[] { col, row });
+                    boards.get(player).add(new int[] {col, row });
                 }
             }
         });

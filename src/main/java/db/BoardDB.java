@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import main.java.enums.ColorEnum;
 import main.java.model.Player;
 
 public final class BoardDB {
