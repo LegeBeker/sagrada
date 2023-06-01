@@ -195,7 +195,7 @@ public class DieView extends Group {
                         break;
                     case "lensCutter":
                         System.out.println("Switch case for lensCutter triggert");
-                        view.lensCutter(1, 2); // -- This is going to be a tricky one since we swap values from offer
+                        // view.lensCutter(1, 2); // -- This is going to be a tricky one since we swap values from offer
                                                // and roundtrack
                         break;
                     case "fluxBrush":

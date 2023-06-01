@@ -25,12 +25,20 @@ public class PatternCardController {
     }
 
     public boolean doMove(final int patternCardId, final int eyes, final Color dieColor, final int dieNumber,
-            final int columnIndex, final int rowIndex) {
+            final int columnIndex, final int rowIndex, final String selectedToolCardName) {
 
         Player player = view.getCurrentPlayer();
 
-        boolean valid = getPatternCard(patternCardId).validateMove(player.getBoard(), eyes, dieColor, columnIndex,
-                rowIndex);
+
+        boolean valid = false; //-- Default value set to false
+        if(selectedToolCardName != null){
+            valid = getPatternCard(patternCardId).validateMove(player.getBoard(), eyes, dieColor, columnIndex,
+                rowIndex, selectedToolCardName);
+        } else {
+            valid = getPatternCard(patternCardId).validateMove(player.getBoard(), eyes, dieColor, columnIndex,
+            rowIndex);
+        }
+        
 
         if (valid) {
             return player.getBoard().placeDie(dieColor, dieNumber, rowIndex, columnIndex);

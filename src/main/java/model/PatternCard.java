@@ -159,6 +159,59 @@ public class PatternCard {
         return true;
     }
 
+    public boolean validateMove(final Board board, final int dieValue, final Color dieColor, final int columnIndex,
+            final int rowIndex, final String toolCardName) {
+
+        if (board.getField(rowIndex, columnIndex) != null) {
+            return false;
+        }
+
+        if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
+            return false;
+        }
+
+        if (this.getField(rowIndex, columnIndex).getColor() == null
+                && this.getField(rowIndex, columnIndex).getValue() == null) {
+
+            if (neighborsEmpty(rowIndex, columnIndex, board)) {
+                return false;
+            }
+
+            if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue, dieColor, board)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        if (!board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
+            return false;
+        }
+
+
+        if(!toolCardName.equals("eglomiseBrush")){
+            if (this.getField(rowIndex, columnIndex).getColor() != null
+            && !dieColor.equals(this.getField(rowIndex, columnIndex).getColor())) {
+                return false;
+            }
+        }
+       
+        if(toolCardName.equals("copperFoilBurnisher")){
+            if (this.getField(rowIndex, columnIndex).getValue() != null
+            && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
+                return false;
+            }
+        }
+        
+
+        if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue,
+                dieColor, board)) {
+            return false;
+        }
+
+        return true;
+    }
+
     private boolean isOnSideOrCorner(final int row, final int col) {
         return row == 1 || row == ROWS || col == 1 || col == COLUMNS;
     }
