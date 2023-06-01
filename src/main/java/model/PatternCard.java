@@ -195,7 +195,7 @@ public class PatternCard {
             }
         }
 
-        if (toolCardName.equals("copperFoilBurnisher")) {
+        if (!toolCardName.equals("copperFoilBurnisher")) {
             if (this.getField(rowIndex, columnIndex).getValue() != null
                     && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
                 return false;

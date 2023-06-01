@@ -450,6 +450,8 @@ public class ViewController extends Scene {
     }
 
     public Boolean glazingHammer() {
+
+        //-- Turn count == roundID??
         return ToolcardController.glazingHammer(1, gameController.getGameId(), gameController.getGame().getRoundID());
     }
 

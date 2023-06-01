@@ -27,6 +27,14 @@ public class GameOfferView extends FlowPane implements Observer {
     public void update() {
         this.getChildren().clear();
         Boolean isDraggable = view.isTurnPlayer();
+
+        if (view.getSelectedToolcardName() != null) {
+            if (view.getSelectedToolcardName().equals("eglomiseBrush")
+                    || view.getSelectedToolcardName().equals("copperFoilBurnisher")) {
+                isDraggable = false;
+            }
+        }
+
         for (Map<String, String> die : view.getOffer()) {
             DieView dieView = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
                     Integer.parseInt(die.get("number")), isDraggable);
