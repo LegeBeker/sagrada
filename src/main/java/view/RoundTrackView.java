@@ -86,11 +86,14 @@ public class RoundTrackView extends StackPane implements Observer {
             int currentRoundTrack = Integer.parseInt(die.get("roundtrack")) - 1;
             Group currentDiceGroup = roundGroups.get((currentRoundTrack + 1) / 2);
             GridPane diceDisplay = (GridPane) currentDiceGroup.getChildren().get(1);
+
             if (previousRoundtrack != currentRoundTrack) {
                 diceDisplay.getChildren().clear();
             }
+
             DieView newDice = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
                 Integer.parseInt(die.get("number")), false);
+
             int alreadyPlacedDice = diceDisplay.getChildren().size();
             if (alreadyPlacedDice >= 1) {
                 if (alreadyPlacedDice == NUMBERWHENCHANGETO3X3) {
