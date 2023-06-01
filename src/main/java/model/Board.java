@@ -23,6 +23,20 @@ public class Board {
         return board[row - 1][column - 1];
     }
 
+    public int[][] getDie(final int dieNumber, final Color color) {
+        int[][] position = null;
+        for (int i = 1; i < ROWS; i++) {
+            for (int j = 1; j < COLUMNS; j++) {
+                Die die = getField(i, j);
+                if (die != null && die.getColor().equals(color) && die.getNumber() == dieNumber) {
+                    position = new int[][] { { i, j } };
+                }
+            }
+        }
+
+        return position;
+    }
+
     public void setPlayer(final Player player) {
         this.player = player;
     }
@@ -86,7 +100,7 @@ public class Board {
             boards.put(player, new ArrayList<>());
             for (int row = 1; row <= ROWS; row++) {
                 for (int col = 1; col <= COLUMNS; col++) {
-                    boards.get(player).add(new int[] {col, row});
+                    boards.get(player).add(new int[] { col, row });
                 }
             }
         });
