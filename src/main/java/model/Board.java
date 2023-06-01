@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mysql.cj.x.protobuf.MysqlxResultset.Row;
+
 import javafx.scene.paint.Color;
 import main.java.db.BoardDB;
 import main.java.enums.ColorEnum;
@@ -28,7 +30,7 @@ public class Board {
         for (int i = 1; i < ROWS; i++) {
             for (int j = 1; j < COLUMNS; j++) {
                 Die die = getField(i, j);
-                if (die != null && die.getColor().equals(color) && die.getNumber() == dieNumber) {
+                if (die != null) {
                     position = new int[][] { { i, j } };
                 }
             }
@@ -53,6 +55,7 @@ public class Board {
     }
 
     public boolean placeDie(final Color color, final int number, final int row, final int column) {
+        
         boolean result = BoardDB.setField(
                 this.player.getGame().getId(), this.player.getGame().getRoundID(), this.player.getId(), row,
                 column, ColorEnum.fromString(color.toString()).getName(), number);

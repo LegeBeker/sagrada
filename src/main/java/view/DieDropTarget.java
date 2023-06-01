@@ -49,7 +49,7 @@ public class DieDropTarget extends StackPane {
                 }
 
             } else {
-                // -- First check if this is the first round, otherwise user can place 3 die in
+                // -- First check if this is the first round, otherwise user can place 3 die
                 if (!view.getGameClockwise()) {
                     view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
                 } else {

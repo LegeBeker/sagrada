@@ -26,7 +26,7 @@ public class GameButtonsView extends VBox implements Observer {
 
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefWidth(BUTTONWIDTH);
-        this.buttonBack.setOnAction(e -> view.openGamesView());
+        this.buttonBack.setOnAction(e -> backOutOfGame());
 
         this.helpToggle = new ToggleButton("Help!");
         this.helpToggle.setPrefWidth(BUTTONWIDTH);
@@ -50,6 +50,7 @@ public class GameButtonsView extends VBox implements Observer {
 
     private void endTurn() {
         this.buttonEndTurn.setDisable(true);
+        view.setToolCardSelection(null);
         view.endTurn();
     }
 
@@ -62,6 +63,11 @@ public class GameButtonsView extends VBox implements Observer {
             this.getChildren().addAll(buttonEndTurn);
             this.buttonEndTurn.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
         }
+    }
+
+    private void backOutOfGame(){
+        view.setToolCardSelection(null);
+        view.openGamesView();
     }
 
 }

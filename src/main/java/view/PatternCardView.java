@@ -180,8 +180,20 @@ public class PatternCardView extends BorderPane {
 
         if (this.playerId != null && view.getPlayerBoardField(this.playerId, row, col) != null) {
             Map<String, String> die = view.getPlayerBoardField(this.playerId, row, col);
+
+            Boolean isDraggable = false;
+            if(view.getSelectedToolcardName() == null){
+                isDraggable = false;
+            }
+            else{
+                if (view.getSelectedToolcardName().equals("eglomiseBrush") || view.getSelectedToolcardName().equals("copperFoilBurnisher")){
+                    isDraggable = true;
+                }
+            }
+            
+
             DieView dieView = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
-                    Integer.parseInt(die.get("number")), false);
+                    Integer.parseInt(die.get("number")), isDraggable);
             stackPane.getChildren().add(dieView);
         }
 

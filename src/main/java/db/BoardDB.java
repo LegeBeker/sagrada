@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import main.java.enums.ColorEnum;
 import main.java.model.Player;
 
 public final class BoardDB {
@@ -37,10 +38,26 @@ public final class BoardDB {
             final int number) {
         Database db = Database.getInstance();
 
-        String sql = "UPDATE playerframefield SET dienumber = ?, diecolor = ?"
+
+        //-- Load old position based on color, number and gameID.
+        String sql = "SELECT * FROM playerframefielD WHERE idgame = ? AND idplayer = ? AND dienumber = ? AND diecolor = ?";
+        String[] params = {String.valueOf(idGame), String.valueOf(idPlayer), String.valueOf(number), color};
+        Map<String,String> dbResult = db.exec(sql, params).get(0);
+        if(dbResult != null){
+            sql = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL"
                 + " WHERE idgame = ? AND idplayer = ? AND position_x = ? AND position_y = ?";
-        String[] params = {String.valueOf(number), color, String.valueOf(idGame), String.valueOf(idPlayer),
+            params = new String[] {String.valueOf(idGame), String.valueOf(idPlayer),
+                    String.valueOf(dbResult.get("position_x")), String.valueOf(dbResult.get("position_y"))};
+            db.exec(sql, params);
+        } 
+
+        sql = "UPDATE playerframefield SET dienumber = ?, diecolor = ?"
+            + " WHERE idgame = ? AND idplayer = ? AND position_x = ? AND position_y = ?";
+        params = new String[] {String.valueOf(number), color, String.valueOf(idGame), String.valueOf(idPlayer),
                 String.valueOf(column), String.valueOf(row)};
+        
+
+        
 
         db.exec(sql, params);
 

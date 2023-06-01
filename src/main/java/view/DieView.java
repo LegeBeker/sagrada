@@ -62,10 +62,13 @@ public class DieView extends Group {
             this.setOnDragDetected(event -> {
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
-                this.gameOfferView = (GameOfferView) this.getParent();
+                if(this.getParent().getClass().getSimpleName().equals("GameOfferView")){
+                    this.gameOfferView = (GameOfferView) this.getParent();
                 if (view.getHelpFunction()) {
                     gameOfferView.showPossibleMoves(this.eyes, this.color);
                 }
+                }
+                
                 SnapshotParameters sp = new SnapshotParameters();
                 sp.setFill(Color.TRANSPARENT);
                 Image image = this.snapshot(sp, null);
@@ -75,7 +78,7 @@ public class DieView extends Group {
             });
 
             this.setOnDragDone(event -> {
-                if (view.getHelpFunction()) {
+                if (view.getHelpFunction() && gameOfferView != null) {
                     gameOfferView.cleanTargets();
                 }
             });
@@ -183,12 +186,6 @@ public class DieView extends Group {
                             view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")),
                                     selectedDieMap.get("dieColor"), actionChoice);
                         }
-                        break;
-                    case "eglomiseBrush":
-                        System.out.println("Switch case for eglomiseBrush triggert");
-                        break;
-                    case "copperFoilBurnisher":
-                        System.out.println("Switch case for copperFoilBurnisher triggert");
                         break;
                     case "lathekin":
                         System.out.println("Switch case for lathekin triggert");
