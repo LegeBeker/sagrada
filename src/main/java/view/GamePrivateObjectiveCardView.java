@@ -15,7 +15,8 @@ public class GamePrivateObjectiveCardView extends ImageView {
 
     public GamePrivateObjectiveCardView(final ViewController view) {
         this.imagePrivateObjectiveCard = new Image(
-                "file:resources/img/objectivecards/" + view.getPrivateObjCardColor() + "-objectivecard.png");
+                getClass().getResource("/img/objectivecards/" + view.getPrivateObjCardColor() + "-objectivecard.png")
+                        .toExternalForm());
 
         this.setFitWidth(WIDTH);
         this.setFitHeight(HEIGHT);
