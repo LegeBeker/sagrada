@@ -1,10 +1,26 @@
 # Sagrada
 
-## Table of Contents
+## Build Instructions
 
-- [Env file](#env-file)
-- [Sagrada](#sagrada)
-- [Avans](#avans)
+To build the project you need to have maven installed on your computer. You can download maven [here](https://maven.apache.org/download.cgi). After installing maven, you can build the project by running the following command in the root of the project
+
+```bash
+mvn package spring-boot:repackage
+```
+
+## Code Instructions
+
+1. Clone the repository
+2. Create a .env file in the root of the project
+3. Fill in the .env file with the correct database credentials
+4. Create a branch based on a issue or feature
+5. Commit your changes to the branch
+6. Create a pull request to merge your branch with the main branch
+7. Assign yourself to the pull request
+8. Make sure the github actions succeed
+9. Assign 2 reviewers to review your pull request
+10. After the pull request has been approved by 1 reviewer, merge the branch with the main branch
+11. Delete the branch
 
 ## Env file
 

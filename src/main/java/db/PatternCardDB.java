@@ -3,7 +3,14 @@ package main.java.db;
 import java.util.List;
 import java.util.Map;
 
+import main.java.model.PatternCard;
+import main.java.model.PatternCardField;
+
 public final class PatternCardDB {
+
+    private static final int ROWS = 4;
+    private static final int COLUMNS = 5;
+
     private PatternCardDB() {
     }
 
@@ -57,5 +64,36 @@ public final class PatternCardDB {
         String[] params = {Integer.toString(idPlayer)};
 
         return db.exec(sql, params);
+    }
+
+    public static int createPatternCard(final PatternCard patternCard) {
+        Database db = Database.getInstance();
+
+        String sql = "INSERT INTO patterncard (name, difficulty, standard) VALUES (?, ?, ?);";
+        String[] params = {patternCard.getName(), Integer.toString(patternCard.getDifficulty()),
+                patternCard.getStandard() ? "1" : "0"};
+
+        List<Map<String, String>> id = db.exec(sql, params);
+
+        String lastId = id.get(0).get("id");
+
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("INSERT INTO patterncardfield (idpatterncard, position_x, position_y, color, value) VALUES ");
+
+        for (int row = 1; row <= ROWS; row++) {
+            for (int col = 1; col <= COLUMNS; col++) {
+                PatternCardField field = patternCard.getField(row, col);
+                sqlBuilder.append("(" + lastId + ", " + col + ", " + row + ", "
+                        + (field.getColorName() != null ? "'" + field.getColorName() + "'" : "null") + ", "
+                        + (field.getValue() != null ? field.getValue().toString() : "null") + "),");
+            }
+        }
+
+        String sql2 = sqlBuilder.toString();
+        sql2 = sql2.substring(0, sql2.length() - 1);
+
+        db.exec(sql2, null);
+
+        return Integer.parseInt(lastId);
     }
 }
