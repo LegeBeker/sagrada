@@ -266,9 +266,11 @@ public class Game extends Observable {
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == 1) {
                 player.setSeqnr(getPlayers().size());
-                setTurnPlayer(player);
             } else {
                 player.setSeqnr(player.getSeqnr() - 1);
+                if (player.getSeqnr() == 1) {
+                    setTurnPlayer(player);
+                }
             }
         }
 
