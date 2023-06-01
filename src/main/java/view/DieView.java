@@ -62,13 +62,13 @@ public class DieView extends Group {
             this.setOnDragDetected(event -> {
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
-                if(this.getParent().getClass().getSimpleName().equals("GameOfferView")){
+                if (this.getParent().getClass().getSimpleName().equals("GameOfferView")) {
                     this.gameOfferView = (GameOfferView) this.getParent();
-                if (view.getHelpFunction()) {
-                    gameOfferView.showPossibleMoves(this.eyes, this.color);
+                    if (view.getHelpFunction()) {
+                        gameOfferView.showPossibleMoves(this.eyes, this.color);
+                    }
                 }
-                }
-                
+
                 SnapshotParameters sp = new SnapshotParameters();
                 sp.setFill(Color.TRANSPARENT);
                 Image image = this.snapshot(sp, null);
@@ -192,8 +192,9 @@ public class DieView extends Group {
                         break;
                     case "lensCutter":
                         System.out.println("Switch case for lensCutter triggert");
-                        // view.lensCutter(1, 2); // -- This is going to be a tricky one since we swap values from offer
-                                               // and roundtrack
+                        // view.lensCutter(1, 2); // -- This is going to be a tricky one since we swap
+                        // values from offer
+                        // and roundtrack
                         break;
                     case "fluxBrush":
                         view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")),
@@ -231,7 +232,7 @@ public class DieView extends Group {
         alert.setHeaderText("Vermeld je keuze m.b.t. de actie die deze doelkaart moet uitvoeren.");
         alert.setContentText(
                 "Let op: Als de dobbelsteen de waarde 6 heeft, en je verhoogt de steen, wordt het geen 1. "
-                + "De huidge waarde van de geselecteerde dobbelsteen is " + currentDieValue + ". ");
+                        + "De huidge waarde van de geselecteerde dobbelsteen is " + currentDieValue + ". ");
 
         ButtonType incrementButton = new ButtonType("Toevoegen");
         ButtonType decrementButton = new ButtonType("Aftrekken");
