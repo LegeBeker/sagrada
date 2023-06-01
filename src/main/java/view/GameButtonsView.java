@@ -31,7 +31,7 @@ public class GameButtonsView extends VBox implements Observer {
         this.helpToggle = new ToggleButton("Help!");
         this.helpToggle.setPrefWidth(BUTTONWIDTH);
         this.helpToggle.setOnAction(e -> {
-            view.setHelpFunction();
+            view.toggleHelpFunction();
             this.view.displayMessage("Help functie is " + (view.getHelpFunction() ? "aan" : "uit"));
         });
 

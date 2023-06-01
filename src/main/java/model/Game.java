@@ -181,7 +181,7 @@ public class Game extends Observable {
         return players;
     }
 
-    public void setHelpFunction() {
+    public void toggleHelpFunction() {
         this.helpFunction = !this.helpFunction;
     }
 

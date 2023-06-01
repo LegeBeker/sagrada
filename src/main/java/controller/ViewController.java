@@ -224,8 +224,8 @@ public class ViewController extends Scene {
         return this.patternCardController.getPossibleMoves(eyes, color);
     }
 
-    public void setHelpFunction() {
-        this.gameController.setHelpFunction();
+    public void toggleHelpFunction() {
+        this.gameController.toggleHelpFunction();
     }
 
     public boolean sendMessage(final String message) {

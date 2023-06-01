@@ -127,8 +127,8 @@ public final class GameController implements Observer {
         return this.game.hasOpenInvites();
     }
 
-    public void setHelpFunction() {
-        this.game.setHelpFunction();
+    public void toggleHelpFunction() {
+        this.game.toggleHelpFunction();
     }
 
     public boolean getHelpFunction() {
