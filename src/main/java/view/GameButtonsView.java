@@ -65,7 +65,7 @@ public class GameButtonsView extends VBox implements Observer {
         }
     }
 
-    private void backOutOfGame(){
+    private void backOutOfGame() {
         view.setToolCardSelection(null);
         view.openGamesView();
     }
