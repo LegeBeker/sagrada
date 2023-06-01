@@ -279,7 +279,7 @@ public class Game extends Observable {
         }
 
         if (getRoundID() == 10) {
-            gameOver();
+            endGame();
         } else {
             setCurrentRoundID(getRoundID() + 1);
     
@@ -294,7 +294,7 @@ public class Game extends Observable {
         notifyObservers(Game.class);
     }
 
-    private void gameOver() {
+    private void endGame() {
         GameDB.finishGame(getId());
     }
 
