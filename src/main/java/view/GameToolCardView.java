@@ -104,7 +104,7 @@ public class GameToolCardView extends StackPane {
         this.getChildren().addAll(imageView, pane);
 
         this.setOnMouseClicked(event -> {
-            if (view.isTurnPlayer()) {  
+            if (view.isTurnPlayer()) {
                 if (!isSelected) {
                     if (selectedToolCardView != null) {
                         selectedToolCardView.removeSelection();
@@ -113,39 +113,38 @@ public class GameToolCardView extends StackPane {
 
                     String methodName = getSelectedMethodName(toolCardName);
                     if (!methodName.equals("")) {
-                        if(askConfirmationUsageCard(this.getToolCardName())){
+                        if (askConfirmationUsageCard(this.getToolCardName())) {
                             this.addSelection();
                             selectedToolCardView = this;
 
+                            // -- These methods can be called without any input variables
+                            switch (methodName) {
+                                case "glazingHammer":
+                                    if (!view.glazingHammer()) { // Returns a boolean for the extra check
+                                        this.view.displayError(
+                                                "Je kan alleen het aanbod opnieuw rollen bij de 2e beurt in de ronde.");
+                                    }
+                                    this.removeSelection();
+                                    this.isSelected = false;
+                                    break;
 
-                        //-- These methods can be called without any input variables
-                        switch (methodName) {
-                            case "glazingHammer":
-                                if(!view.glazingHammer()){ // Returns a boolean for the extra check 
-                                    this.view.displayError("Je kan alleen het aanbod opnieuw rollen bij de 2e beurt in de ronde.");
-                                }
-                                this.removeSelection();
-                                this.isSelected = false;
-                                break;
+                                case "runningPliers":
+                                    System.out.println("Switch case for runningPliers triggert");
+                                    break;
 
-                            case "runningPliers":
-                                System.out.println("Switch case for runningPliers triggert");
-                                break;
+                                default:
+                                    break;
+                            }
 
-                            default:
-                                break;
                         }
-                       
-
                     }
-                }
 
                 } else {
                     removeSelection();
                     selectedToolCardView = null;
                     String deselectedMethodName = getDeselectedMethodName(toolCardName);
                     System.out.println(deselectedMethodName + "() has been deselected.");
-              }
+                }
             }
 
         });
@@ -201,18 +200,17 @@ public class GameToolCardView extends StackPane {
             return true;
         } else if (result.get() == refuseButton) {
             return false;
-        }
-        else{
-            return false; //-- failsafe for if we forget to handle a new button
+        } else {
+            return false; // -- failsafe for if we forget to handle a new button
         }
     }
 
-    public Boolean getSelectionStatus(){
+    public Boolean getSelectionStatus() {
         return this.isSelected;
     }
 
-    public void dieSelectedForToolcard (Map<String, String> selectedDieMap){
+    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
         String methodName = getSelectedMethodName(toolCardName);
-        
+
     }
 }

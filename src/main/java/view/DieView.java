@@ -158,29 +158,31 @@ public class DieView extends Group {
         return this.number;
     }
 
-    private void checkSelectionModeToolCard(){
-        //-- @TimBogersGitHub, Check if it his can result in any issues since this will be used in roudtrack and/or in the board itself. Check source of dieView??
-        
+    private void checkSelectionModeToolCard() {
+        // -- @TimBogersGitHub, Check if it his can result in any issues since this will
+        // be used in roudtrack and/or in the board itself. Check source of dieView??
+
         System.out.println("Parent class: " + this.getParent().getTypeSelector());
         String methodName = view.getSelectedToolcardName();
-        if (methodName != null){
+        if (methodName != null) {
             System.out.println("Kaart " + view.getSelectedToolcardName() + " is geselecteerd");
 
-            if(!this.getParent().getClass().getSimpleName().equals("GameOfferView")){
+            if (!this.getParent().getClass().getSimpleName().equals("GameOfferView")) {
                 view.displayError("Kies een dobbelsteen uit het aanbod.");
-            }
-            else{
-                Map<String, String> selectedDieMap = new HashMap<>();;
+            } else {
+                Map<String, String> selectedDieMap = new HashMap<>();
+                ;
                 selectedDieMap.put("eyes", Integer.toString(this.eyes));
                 selectedDieMap.put("dieNumber", Integer.toString(this.number));
                 selectedDieMap.put("dieColor", this.color.toString());
 
-                //-- trigger toolcard logic
+                // -- trigger toolcard logic
                 switch (methodName) {
                     case "grozingPliers":
                         String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
-                        if(!actionChoice.equals("?")){
-                            view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"), actionChoice);
+                        if (!actionChoice.equals("?")) {
+                            view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                                    selectedDieMap.get("dieColor"), actionChoice);
                         }
                         break;
                     case "eglomiseBrush":
@@ -194,43 +196,46 @@ public class DieView extends Group {
                         break;
                     case "lensCutter":
                         System.out.println("Switch case for lensCutter triggert");
-                        view.lensCutter(1, 2); //-- This is going to be a tricky one since we swap values from offer and roundtrack
+                        view.lensCutter(1, 2); // -- This is going to be a tricky one since we swap values from offer
+                                               // and roundtrack
                         break;
                     case "fluxBrush":
-                        view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                        view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                                selectedDieMap.get("dieColor"));
                         break;
                     case "cork-backedStraightedge":
                         System.out.println("Switch case for backedStraightedge triggert");
                         break;
                     case "grindingStone":
                         System.out.println("Switch case for grindingStone triggert");
-                        view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                        view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                                selectedDieMap.get("dieColor"));
                         break;
                     case "fluxRemover":
                         System.out.println("Switch case for fluxRemover triggert");
-                        view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                        view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                                selectedDieMap.get("dieColor"));
                         break;
                     case "tapWheel":
                         System.out.println("Switch case for tapWheel triggert");
                         break;
                     default:
                         break;
-                    }
+                }
                 view.setToolCardSelection(null);
             }
-        }
-        else{
+        } else {
             System.out.println("Kaart niet geselecteerd");
         }
     }
 
-    private String askGrozingPliersAction(final int currentDieValue){
+    private String askGrozingPliersAction(final int currentDieValue) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Gebruik gereedschapskaart");
         alert.setHeaderText("Vermeld je keuze m.b.t. de actie die deze doelkaart moet uitvoeren.");
         alert.setContentText(
-            "Let op: Als de dobbelsteen de waarde 6 heeft, en je verhoogt de steen, wordt het geen 1. " +
-            "De huidge waarde van de geselecteerde dobbelsteen is " + currentDieValue + ". ");
+                "Let op: Als de dobbelsteen de waarde 6 heeft, en je verhoogt de steen, wordt het geen 1. "
+                + "De huidge waarde van de geselecteerde dobbelsteen is " + currentDieValue + ". ");
 
         ButtonType incrementButton = new ButtonType("Toevoegen");
         ButtonType decrementButton = new ButtonType("Aftrekken");
@@ -247,9 +252,8 @@ public class DieView extends Group {
             return "increment";
         } else if (result.get() == decrementButton) {
             return "decrement";
-        }
-        else{
-            return "?"; //-- failsafe for if we forget to handle a new button
+        } else {
+            return "?"; // -- failsafe for if we forget to handle a new button
         }
 
     }

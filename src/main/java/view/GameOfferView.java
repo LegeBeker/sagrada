@@ -32,7 +32,7 @@ public class GameOfferView extends FlowPane implements Observer {
                     Integer.parseInt(die.get("number")), isDraggable);
             this.getChildren().add(dieView);
         }
-        
+
         this.getChildren().addAll(dieViews);
     }
 

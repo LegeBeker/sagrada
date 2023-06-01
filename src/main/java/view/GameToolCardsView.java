@@ -25,9 +25,9 @@ public class GameToolCardsView extends FlowPane {
         this.setHgap(GAP);
     }
 
-    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap){
-        for(GameToolCardView gcv : this.toolCardViews){
-            if(gcv.getSelectionStatus()){
+    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
+        for (GameToolCardView gcv : this.toolCardViews) {
+            if (gcv.getSelectionStatus()) {
                 gcv.dieSelectedForToolcard(selectedDieMap);
             }
         }

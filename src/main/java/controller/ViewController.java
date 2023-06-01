@@ -71,7 +71,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor) };
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -422,23 +422,32 @@ public class ViewController extends Scene {
         return this.gameController.getGamesWithOpenInvites();
     }
 
+    public int getRoundID() {
+        return gameController.getGame().getRoundID();
+    }
+
+    public Boolean getGameClockwise() {
+        return gameController.getGame().getClockwise();
+    }
+
     // -- Toolcard methods
-    public void setToolCardSelection(final String selectedToolcardName){
+    public void setToolCardSelection(final String selectedToolcardName) {
         gameController.setSelectedToolcardName(selectedToolcardName);
     }
 
-    public String getSelectedToolcardName(){
+    public String getSelectedToolcardName() {
         return gameController.getSelectedToolcardName();
     }
 
     public void grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
-        if(actionChoice.equals("?")){
+        if (actionChoice.equals("?")) {
             System.err.println("Foutje m.b.t. confirmatie van actie");
         }
-        String responseGrozingPliers = this.toolCardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor, actionChoice);
-        if(responseGrozingPliers != null){
+        String responseGrozingPliers = this.toolCardController.grozingPliers(gameController.getGameId(), dieNumber,
+                dieColor, actionChoice);
+        if (responseGrozingPliers != null) {
             displayError(responseGrozingPliers);
-        }    
+        }
     }
 
     public void grindingStone(final int dieNumber, final String dieColor) {
@@ -451,9 +460,9 @@ public class ViewController extends Scene {
     }
 
     public Boolean glazingHammer() {
-        if (!gameController.getGame(gameController.getGameId()).getClockwise()) {
-            this.toolCardController.glazingHammer(gameController.getGame(gameController.getGameId()).getRoundID(), gameController.getGameId(),
-                    gameController.getGame(gameController.getGameId()).getRoundID());
+        if (!gameController.getGame().getClockwise()) {
+            this.toolCardController.glazingHammer(gameController.getGame().getRoundID(), gameController.getGameId(),
+                    gameController.getGame().getRoundID());
             return true;
         } else {
             return false;
@@ -462,10 +471,11 @@ public class ViewController extends Scene {
     }
 
     public void lensCutter(final int gameId, final int roundId) {
-        this.toolCardController.lensCutter(gameId, roundId);
+        // this.toolCardController.lensCutter(gameId, roundId);
     }
 
     public void fluxRemover(final int dieNumber, final String dieColor) {
-        this.toolCardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor, gameController.getGame().getRoundID());
+        this.toolCardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor,
+                gameController.getGame().getRoundID());
     }
 }

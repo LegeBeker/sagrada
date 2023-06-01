@@ -61,25 +61,26 @@ public final class DieDB {
 
         String sql = "UPDATE gamedie SET roundtrack = ? WHERE idgame = ? AND dienumber = ? AND diecolor = ?;";
 
-        String[] params = {Integer.toString(roundID), Integer.toString(idGame), Integer.toString(dieNumber), dieColor};
+        String[] params = {Integer.toString(roundID), Integer.toString(idGame), Integer.toString(dieNumber),
+                dieColor};
 
         db.exec(sql, params);
 
         return true;
     }
 
-    public static int getGameDieEyes(final int idGame, final int dieNumber, final String dieColor){
+    public static int getGameDieEyes(final int idGame, final int dieNumber, final String dieColor) {
         Database db = Database.getInstance();
         String sql = "SELECT * FROM gamedie WHERE idgame = ? AND dienumber = ? AND diecolor = ?;";
-        String[] params = {Integer.toString(idGame), Integer.toString(dieNumber), ColorEnum.fromString(dieColor).getName()};
-        if(db.exec(sql, params).size() > 0 ){
+        String[] params = {Integer.toString(idGame), Integer.toString(dieNumber),
+                ColorEnum.fromString(dieColor).getName()};
+        if (db.exec(sql, params).size() > 0) {
             return Integer.valueOf(db.exec(sql, params).get(0).get("eyes"));
-        }
-        else{
+        } else {
             System.out.println("Iets is er fout gegaan bij de query");
             return 0;
         }
-        
+
     }
 
 }
