@@ -142,4 +142,13 @@ public final class GameDB {
 
         return gamesWithOpenInvites;
     }
+
+    public static void finishGame(final int idgame) {
+        Database db = Database.getInstance();
+
+        String sql1 = "UPDATE player SET playstatus = 'finished' WHERE idgame = ?;";
+
+        String[] params = {Integer.toString(idgame)};
+        db.exec(sql1, params);
+    }
 }

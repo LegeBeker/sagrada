@@ -278,15 +278,24 @@ public class Game extends Observable {
                     dieMap.get("diecolor"));
         }
 
-        setCurrentRoundID(getRoundID() + 1);
+        if (getRoundID() == 10) {
+            gameOver();
+        } else {
+            setCurrentRoundID(getRoundID() + 1);
+    
+            Die.getNewOffer(getId(), getRoundID(), players.size());
+            notifyObservers(Game.class);
+        }
 
-        Die.getNewOffer(getId(), getRoundID(), players.size());
-        notifyObservers(Game.class);
     }
 
     private void setCurrentRoundID(final int roundID) {
         GameDB.setRound(getId(), roundID);
         notifyObservers(Game.class);
+    }
+
+    private void gameOver() {
+        GameDB.finishGame(getId());
     }
 
     public static Game get(final int idGame) {
