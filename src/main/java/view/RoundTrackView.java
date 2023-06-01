@@ -120,17 +120,24 @@ public class RoundTrackView extends StackPane implements Observer {
             GridPane diceDisplay = (GridPane) diceGroup.getChildren().get(1);
             for (Node dieNode : diceDisplay.getChildren()) {
                 DieView die = (DieView) dieNode;
-                double scaledown = 1;
+                int scaledown = 1;
                 if (diceDisplay.getChildren().size() > 1) {
-                    scaledown = 0.5;
+                    scaledown = 2;
                     if (diceDisplay.getChildren().size() > 4) {
-                        scaledown = 1/3;
+                        scaledown = 3;
                     }
                 }
-                GridPane.setMargin(die, new Insets(-SIZE * (scaledown == 1? 0 : scaledown) / 2));
-                die.setScaleX(getScaleX() * scaledown);
-                die.setScaleY(getScaleY() * scaledown);
-
+                switch (scaledown) {
+                    case 2:
+                    GridPane.setMargin(die, new Insets(-SIZE / scaledown / scaledown));
+                    break;
+                    case 3:
+                    GridPane.setMargin(die, new Insets(-SIZE / scaledown));
+                    default:
+                    break;
+                }
+                die.setScaleX(getScaleX() / (double) scaledown);
+                die.setScaleY(getScaleY() / (double) scaledown);
             }
         }
     }
