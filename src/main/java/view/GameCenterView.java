@@ -13,7 +13,7 @@ public class GameCenterView extends BorderPane {
     private GameBoardsView gameBoardsView;
 
     public GameCenterView(final ViewController view) {
-        HBox onlyDice = new HBox(10);
+        HBox onlyDice = new HBox();
         onlyDice.getChildren().addAll(new GameOfferView(view), new RoundTrackView(view), new Rectangle(450, 0) );
         onlyDice.getChildren().forEach(child -> {HBox.setHgrow(child, Priority.ALWAYS);});
         this.setTop(onlyDice);
