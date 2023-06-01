@@ -38,24 +38,34 @@ public final class BoardDB {
         Database db = Database.getInstance();
 
         // -- Load old position based on color, number and gameID.
+
+        System.out.println("[BoardDB] setField triggert");
+
         String sql = "SELECT * FROM playerframefielD WHERE idgame = ? AND idplayer = ? AND dienumber = ? AND diecolor = ?";
         String[] params = {String.valueOf(idGame), String.valueOf(idPlayer), String.valueOf(number), color};
-        Map<String, String> dbResult = db.exec(sql, params).get(0);
-        if (dbResult != null) {
-            sql = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL"
-                    + " WHERE idgame = ? AND idplayer = ? AND position_x = ? AND position_y = ?";
-            params = new String[] {String.valueOf(idGame), String.valueOf(idPlayer),
-                    String.valueOf(dbResult.get("position_x")), String.valueOf(dbResult.get("position_y"))};
-            db.exec(sql, params);
+
+        List<Map<String, String>> dbResultRaw = db.exec(sql, params);
+        if(dbResultRaw.size() > 0){
+            Map<String, String> dbResult = db.exec(sql, params).get(0);
+            if (dbResult != null) {
+                sql = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL"
+                        + " WHERE idgame = ? AND idplayer = ? AND position_x = ? AND position_y = ?";
+                params = new String[] {String.valueOf(idGame), String.valueOf(idPlayer),
+                        String.valueOf(dbResult.get("position_x")), String.valueOf(dbResult.get("position_y"))};
+                db.exec(sql, params);
+            }
         }
 
+
+        System.out.println("Set die in DB");
         sql = "UPDATE playerframefield SET dienumber = ?, diecolor = ?"
                 + " WHERE idgame = ? AND idplayer = ? AND position_x = ? AND position_y = ?";
         params = new String[] {String.valueOf(number), color, String.valueOf(idGame), String.valueOf(idPlayer),
                 String.valueOf(column), String.valueOf(row)};
 
         db.exec(sql, params);
-
+        
+        System.out.println("Update gamdie");
         sql = "UPDATE gamedie SET roundID = ? WHERE idgame = ? AND dienumber = ? AND diecolor = ?";
         params = new String[] {String.valueOf(roundID), String.valueOf(idGame), String.valueOf(number), color};
 

@@ -38,6 +38,7 @@ public class DieDropTarget extends StackPane {
                             "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
                     return;
                 } else {
+                    System.out.println("Place die triggert");
                     Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
                             dieView.getColor(), dieView.getNumber(),
                             GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
@@ -71,7 +72,14 @@ public class DieDropTarget extends StackPane {
                 }
             }
 
-            DieDropTarget.amountPlacedDie++;
+
+            if(view.getSelectedToolcardName() != null){
+                if(!view.getSelectedToolcardName().equals("eglomiseBrush") || !view.getSelectedToolcardName().equals("copperFoilBurnisher")){
+                    DieDropTarget.amountPlacedDie++;
+                }
+            } else {
+                DieDropTarget.amountPlacedDie++;
+            }
             event.setDropCompleted(true);
             event.consume();
         });

@@ -190,6 +190,7 @@ public class ViewController extends Scene {
 
     public Boolean doMove(final int patternCardId, final int eyes, final Color dieColor, final int dieNumber,
             final int columnIndex, final int rowIndex) {
+                System.out.println("Do move triggert");
         return this.patternCardController.doMove(patternCardId, eyes, dieColor, dieNumber, columnIndex, rowIndex,
                 gameController.getSelectedToolcardName());
 

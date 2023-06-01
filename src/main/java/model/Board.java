@@ -54,6 +54,8 @@ public class Board {
 
     public boolean placeDie(final Color color, final int number, final int row, final int column) {
 
+        System.out.println("Board.java triggert --> setField");
+
         boolean result = BoardDB.setField(
                 this.player.getGame().getId(), this.player.getGame().getRoundID(), this.player.getId(), row,
                 column, ColorEnum.fromString(color.toString()).getName(), number);
