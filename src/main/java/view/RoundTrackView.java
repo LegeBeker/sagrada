@@ -56,7 +56,6 @@ public class RoundTrackView extends StackPane implements Observer {
             GridPane diceDisplay = new GridPane();
             diceDisplay.setMaxWidth(SIZE);
             diceDisplay.setMaxHeight(SIZE);
-            diceDisplay.setAlignment(Pos.CENTER);
             Rectangle diceBackground = new Rectangle(SIZE, SIZE);
             diceBackground.setFill(Color.BEIGE);
             group.getChildren().add(0, diceBackground);
@@ -99,7 +98,7 @@ public class RoundTrackView extends StackPane implements Observer {
             GridPane diceDisplay = (GridPane) currentDiceGroup.getChildren().get(1);
             if (previousRoundtrack != currentRoundTrack) {
                 diceDisplay.getChildren().clear();
-            }
+            } 
             DieView newDice = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
                 Integer.parseInt(die.get("number")), false);
             int alreadyPlacedDice = diceDisplay.getChildren().size();
@@ -116,14 +115,20 @@ public class RoundTrackView extends StackPane implements Observer {
         
         for (Group diceGroup : roundGroups) {
             GridPane diceDisplay = (GridPane) diceGroup.getChildren().get(1);
-            for (Node die : diceDisplay.getChildren()) {
+            for (Node dieNode : diceDisplay.getChildren()) {
+                DieView die = (DieView) dieNode;
                 double scaledown = 1;
                 if (diceDisplay.getChildren().size() > 1) {
                     scaledown = 0.5;
                     if (diceDisplay.getChildren().size() > 4) {
                         scaledown = 1/3;
                     }
-                } 
+                }
+                diceDisplay.setTranslateX(-SIZE * (scaledown == 1? 0 : scaledown) / 2);
+                diceDisplay.setTranslateY(-SIZE * (scaledown == 1? 0 : scaledown) / 2);
+                diceDisplay.setVgap(-SIZE * scaledown);
+                diceDisplay.setHgap(-SIZE * scaledown);
+                // GridPane.setMargin(die, new Insets(-SIZE * (scaledown == 1? 0 : scaledown) / 2));
                 die.setScaleX(getScaleX() * scaledown);
                 die.setScaleY(getScaleY() * scaledown);
 
