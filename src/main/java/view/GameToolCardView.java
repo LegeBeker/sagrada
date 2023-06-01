@@ -104,17 +104,18 @@ public class GameToolCardView extends StackPane {
         this.getChildren().addAll(imageView, pane);
 
         this.setOnMouseClicked(event -> {
-            if (!isSelected) {
-                if (selectedToolCardView != null) {
-                    selectedToolCardView.removeSelection();
-                    String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCardName());
-                }
+            if (view.isTurnPlayer()) {  
+                if (!isSelected) {
+                    if (selectedToolCardView != null) {
+                        selectedToolCardView.removeSelection();
+                        String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCardName());
+                    }
 
-                String methodName = getSelectedMethodName(toolCardName);
-                if (!methodName.equals("")) {
-                    if(askConfirmationUsageCard(this.getToolCardName())){
-                        this.addSelection();
-                        selectedToolCardView = this;
+                    String methodName = getSelectedMethodName(toolCardName);
+                    if (!methodName.equals("")) {
+                        if(askConfirmationUsageCard(this.getToolCardName())){
+                            this.addSelection();
+                            selectedToolCardView = this;
 
 
                         //-- These methods can be called without any input variables
@@ -139,12 +140,14 @@ public class GameToolCardView extends StackPane {
                     }
                 }
 
-            } else {
-                removeSelection();
-                selectedToolCardView = null;
-                String deselectedMethodName = getDeselectedMethodName(toolCardName);
-                System.out.println(deselectedMethodName + "() has been deselected.");
+                } else {
+                    removeSelection();
+                    selectedToolCardView = null;
+                    String deselectedMethodName = getDeselectedMethodName(toolCardName);
+                    System.out.println(deselectedMethodName + "() has been deselected.");
+              }
             }
+
         });
     }
 
