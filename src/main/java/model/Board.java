@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.mysql.cj.x.protobuf.MysqlxResultset.Row;
-
 import javafx.scene.paint.Color;
 import main.java.db.BoardDB;
 import main.java.enums.ColorEnum;
