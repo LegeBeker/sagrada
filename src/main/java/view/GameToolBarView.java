@@ -24,7 +24,7 @@ public class GameToolBarView extends HBox {
         this.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
     }
 
-    public void dieSelectedForToolcard(Map<String, String> selectedDieMap) {
+    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
         gameToolCardsView.dieSelectedForToolcard(selectedDieMap);
     }
 }

@@ -28,7 +28,7 @@ public class GameCenterView extends BorderPane {
         this.gameBoardsView.cleanTargets();
     }
 
-    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap){
+    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
         this.gameToolBarView.dieSelectedForToolcard(selectedDieMap);
     }
 }

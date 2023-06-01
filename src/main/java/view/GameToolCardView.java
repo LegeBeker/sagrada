@@ -198,8 +198,6 @@ public class GameToolCardView extends StackPane {
 
         if (result.get() == acceptButton) {
             return true;
-        } else if (result.get() == refuseButton) {
-            return false;
         } else {
             return false; // -- failsafe for if we forget to handle a new button
         }

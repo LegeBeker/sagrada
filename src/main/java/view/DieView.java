@@ -171,7 +171,6 @@ public class DieView extends Group {
                 view.displayError("Kies een dobbelsteen uit het aanbod.");
             } else {
                 Map<String, String> selectedDieMap = new HashMap<>();
-                ;
                 selectedDieMap.put("eyes", Integer.toString(this.eyes));
                 selectedDieMap.put("dieNumber", Integer.toString(this.number));
                 selectedDieMap.put("dieColor", this.color.toString());

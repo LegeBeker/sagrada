@@ -200,11 +200,11 @@ public final class GameController implements Observer {
         this.game.update();
     }
 
-    public void setSelectedToolcardName(final String selectedToolcardName){
+    public void setSelectedToolcardName(final String selectedToolcardName) {
         this.selectedToolcardName = selectedToolcardName;
     }
 
-    public String getSelectedToolcardName(){
+    public String getSelectedToolcardName() {
         return this.selectedToolcardName;
     }
 }
