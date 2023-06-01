@@ -181,9 +181,22 @@ public class Game extends Observable {
         return players;
     }
 
-    public void toggleHelpFunction() {
+    public void toggleHelpFunction(final Player currentPlayer) {
         this.helpFunction = !this.helpFunction;
+        if (helpFunction) {
+            helpCurrentPlayer(currentPlayer);
+        }
     }
+
+    private void helpCurrentPlayer(final Player currentPlayer) {
+        String currentPlayersColor = currentPlayer.getPrivateObjCardColor();
+        ArrayList<String> dieKeys = new ArrayList<>();
+            getOffer().forEach(die -> {
+                if (die.getColor().toString().equals(currentPlayersColor)) {
+                    dieKeys.add(die.getNumber() + " " + die.getColor().toString());
+                }
+            });
+        }
 
     public boolean getHelpFunction() {
         return this.helpFunction;
