@@ -103,10 +103,13 @@ public class RoundTrackView extends StackPane implements Observer {
                 Integer.parseInt(die.get("number")), false);
             int alreadyPlacedDice = diceDisplay.getChildren().size();
             if (alreadyPlacedDice >= 1) {
-                if (alreadyPlacedDice >= 4) {
-                    System.out.println("Help");
+                if (alreadyPlacedDice == 4) {
+                    diceDisplay.add(newDice, 2, 0);
+                } else if (alreadyPlacedDice >= 4) {
+                    diceDisplay.add(newDice, alreadyPlacedDice % 3, alreadyPlacedDice / 3);
+                } else {
+                    diceDisplay.add(newDice, alreadyPlacedDice % 2, alreadyPlacedDice / 2);
                 }
-                diceDisplay.add(newDice, alreadyPlacedDice % 2, alreadyPlacedDice / 2);
             } else {
                 diceDisplay.add(newDice, 0, 0);
             }
@@ -128,6 +131,7 @@ public class RoundTrackView extends StackPane implements Observer {
                 diceDisplay.setTranslateY(-SIZE * (scaledown == 1? 0 : scaledown) / 2);
                 diceDisplay.setVgap(-SIZE * scaledown);
                 diceDisplay.setHgap(-SIZE * scaledown);
+                // GridPane.setMargin(diceDisplay, new Insets(-SIZE * (scaledown == 1? 0 : scaledown) / 2));
                 // GridPane.setMargin(die, new Insets(-SIZE * (scaledown == 1? 0 : scaledown) / 2));
                 die.setScaleX(getScaleX() * scaledown);
                 die.setScaleY(getScaleY() * scaledown);
