@@ -81,31 +81,31 @@ public class ToolcardController {
         }
     }
 
-    public void lensCutter(final int gameId, final int roundId) {
-        Scanner input = new Scanner(System.in);
-        List<Die> gameOffer = Die.getOffer(gameId, roundId);
-        List<Die> roundTrack = Die.getRoundTrack(gameId);
+    // public void lensCutter(final int gameId, final int roundId) {
+    //     Scanner input = new Scanner(System.in);
+    //     List<Die> gameOffer = Die.getOffer(gameId, roundId);
+    //     List<Die> roundTrack = Die.getRoundTrack(gameId);
 
-        System.out.print("Enter which die you want to swap from the game offer: ");
-        int choice = input.nextInt();
-        Die selectedDie = gameOffer.get(choice - 1);
+    //     System.out.print("Enter which die you want to swap from the game offer: ");
+    //     int choice = input.nextInt();
+    //     Die selectedDie = gameOffer.get(choice - 1);
 
-        System.out.print("Enter which die you want to swap from the round track: ");
-        int roundTrackChoice = input.nextInt();
-        Die selectedRoundtrack = roundTrack.get(roundTrackChoice - 1);
+    //     System.out.print("Enter which die you want to swap from the round track: ");
+    //     int roundTrackChoice = input.nextInt();
+    //     Die selectedRoundtrack = roundTrack.get(roundTrackChoice - 1);
 
-        Die temp = selectedDie;
-        selectedDie = selectedRoundtrack;
-        selectedRoundtrack = temp;
+    //     Die temp = selectedDie;
+    //     selectedDie = selectedRoundtrack;
+    //     selectedRoundtrack = temp;
 
-        Color color = selectedDie.getColor();
-        String colorString = color.toString();
+    //     Color color = selectedDie.getColor();
+    //     String colorString = color.toString();
 
-        ToolCardDB.updateGameDieColor(gameId, colorString);
-        ToolCardDB.updateGameDieValue(gameId, selectedDie.getEyes());
+    //     ToolCardDB.updateGameDieColor(gameId, colorString);
+    //     ToolCardDB.updateGameDieValue(gameId, selectedDie.getEyes());
 
-        input.close();
-    }
+    //     input.close();
+    // }
 
     public void fluxRemover(final int gameId, final int dieNumber, final String dieColor, final int roundId) {
         ToolCardDB.addDieToBag(gameId, dieColor, dieNumber, roundId);
