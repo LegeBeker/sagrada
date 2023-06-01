@@ -130,9 +130,13 @@ public class RoundTrackView extends StackPane implements Observer {
                 switch (scaledown) {
                     case 2:
                     GridPane.setMargin(die, new Insets(-SIZE / scaledown / scaledown));
+                    diceDisplay.setTranslateY(-1);
+                    diceDisplay.setTranslateX(-1);
                     break;
                     case 3:
                     GridPane.setMargin(die, new Insets(-SIZE / scaledown));
+                    diceDisplay.setTranslateY(-2);
+                    diceDisplay.setTranslateX(-2);
                     default:
                     break;
                 }
