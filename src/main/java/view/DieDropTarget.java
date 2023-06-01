@@ -32,7 +32,7 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragDropped(event -> {
             DieView dieView = (DieView) event.getGestureSource();
-            if(view.getSelectedToolcardName() == null || !view.getSelectedToolcardName().equals("runningPliers")){
+            if (view.getSelectedToolcardName() == null || !view.getSelectedToolcardName().equals("runningPliers")) {
                 if (amountPlacedDie > 0) {
                     this.view.displayError(
                             "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
@@ -48,8 +48,7 @@ public class DieDropTarget extends StackPane {
                     }
                 }
 
-            }
-            else{
+            } else {
                 // -- First check if this is the first round, otherwise user can place 3 die in
                 if (!view.getGameClockwise()) {
                     view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
