@@ -83,32 +83,32 @@ public class Board {
         for (Integer integer : ids) {
             switch (integer) {
                 case 1:
-                    // publicObjectiveScore += sets(5, "1", "2", "3", "4", "5","6");
-                    // break;
-                    // case 2:
-                    // publicObjectiveScore += sets(2, "3","4");
-                    // break;
+                    publicObjectiveScore += sets(5, "1", "2", "3", "4", "5", "6");
+                    break;
+                case 2:
+                    publicObjectiveScore += sets(2, "3", "4");
+                    break;
                 case 3:
                     publicObjectiveScore += columns(4, "shades");
                     break;
                 case 4:
                     publicObjectiveScore += columns(5, "colors");
                     break;
-                // case 5:
-                // publicObjectiveScore += sets(2, "5", "6");
-                // break;
-                // case 6:
-                // publicObjectiveScore += sets(4, "red", "blue","green", "yellow", "purple");
-                // break;
+                case 5:
+                    publicObjectiveScore += sets(2, "5", "6");
+                    break;
+                case 6:
+                    publicObjectiveScore += sets(4, "red", "blue", "green", "yellow", "purple");
+                    break;
                 case 7:
                     publicObjectiveScore += rows(5, "colors");
                     break;
                 case 8:
                     publicObjectiveScore += adjecentInSameColor();
                     break;
-                // case 9:
-                // publicObjectiveScore += sets(2, "1","2");
-                // break;
+                case 9:
+                    publicObjectiveScore += sets(2, "1", "2");
+                    break;
                 case 10:
                     publicObjectiveScore += rows(5, "shades");
                     break;
@@ -117,6 +117,7 @@ public class Board {
 
         return publicObjectiveScore;
     }
+    
 
     public static Board get(final Player player) {
         Board board = new Board();
@@ -161,11 +162,41 @@ public class Board {
         BoardDB.createBoard(boards);
     }
 
-    private int sets() {
-
-        return 0;
+    private int sets(int points, Object... values) {
+        int count = 0;
+        int totalScore = 0;
+    
+        for (int i = 0; i < values.length; i++) {
+            System.out.println("i: " + i);
+            int setCount = 0;
+            for (int row = 1; row <= ROWS; row++) {
+                for (int col = 1; col <= COLUMNS; col++) {
+                    Die die = getField(row, col);
+                    if (die != null && valueMatches(die, values[i])) {
+                        setCount++;
+                        if (setCount == i + 1) {
+                            System.out.println("setCount: " + setCount);
+                            count++;
+                            totalScore += points;
+                            setCount = 0;
+                        }
+                    }
+                }
+            }
+        }
+    
+        return totalScore;
     }
-
+    
+    private boolean valueMatches(Die die, Object value) {
+        if (value instanceof Integer) {
+            return die.getEyes() == (int) value;
+        } else if (value instanceof String) {
+            return ColorEnum.fromString(die.getColor().toString()).toString().equalsIgnoreCase((String) value);
+        }
+        return false;
+    }
+    
     private int rows(final int points, final String type) {
         int totalScore = 0;
         int dices = 0;
