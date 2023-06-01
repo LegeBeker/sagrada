@@ -32,10 +32,25 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragDropped(event -> {
             DieView dieView = (DieView) event.getGestureSource();
-            System.err.println("Drop event triggert");
-            if (view.getSelectedToolcardName().equals("runningPliers")) {
+            if(view.getSelectedToolcardName() == null || !view.getSelectedToolcardName().equals("runningPliers")){
+                if (amountPlacedDie > 0) {
+                    this.view.displayError(
+                            "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
+                    return;
+                } else {
+                    Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
+                            dieView.getColor(), dieView.getNumber(),
+                            GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+
+                    if (!placeDie) {
+                        this.view.displayError("Deze zet is niet geldig.");
+                        return;
+                    }
+                }
+
+            }
+            else{
                 // -- First check if this is the first round, otherwise user can place 3 die in
-                // 1 turn basically
                 if (!view.getGameClockwise()) {
                     view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
                 } else {
@@ -55,26 +70,8 @@ public class DieDropTarget extends StackPane {
                         }
                     }
                 }
-            } else {
-                System.out.println("Other or no toolcard selected");
-                if (amountPlacedDie > 0) {
-                    this.view.displayError(
-                            "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
-                    return;
-                } else {
-                    System.out.println("Place normal die");
-                    Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
-                            dieView.getColor(), dieView.getNumber(),
-                            GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
-
-                    if (!placeDie) {
-                        this.view.displayError("Deze zet is niet geldig.");
-                        return;
-                    }
-                }
             }
 
-            System.out.println("end of check");
             DieDropTarget.amountPlacedDie++;
             event.setDropCompleted(true);
             event.consume();
