@@ -33,6 +33,7 @@ public class RoundTrackView extends StackPane implements Observer {
     private static final int WIDTH = 570;
     private static final int HEIGHT = 85;
     private static final int NUMBERWHENCHANGETO3X3 = 4;
+    private static final int THREE = 3;
 
     private final ArrayList<Group> roundGroups;
     private final ViewController view;
@@ -95,7 +96,7 @@ public class RoundTrackView extends StackPane implements Observer {
                 if (alreadyPlacedDice == NUMBERWHENCHANGETO3X3) {
                     diceDisplay.add(newDice, 2, 0);
                 } else if (alreadyPlacedDice >= NUMBERWHENCHANGETO3X3 + 1) {
-                    diceDisplay.add(newDice, alreadyPlacedDice % 3, alreadyPlacedDice / 3);
+                    diceDisplay.add(newDice, alreadyPlacedDice % THREE, alreadyPlacedDice / THREE);
                 } else {
                     diceDisplay.add(newDice, alreadyPlacedDice % 2, alreadyPlacedDice / 2);
                 }
@@ -104,7 +105,7 @@ public class RoundTrackView extends StackPane implements Observer {
             }
             previousRoundtrack = currentRoundTrack;
         }
-        
+
         for (Group diceGroup : roundGroups) {
             GridPane diceDisplay = (GridPane) diceGroup.getChildren().get(1);
             for (Node dieNode : diceDisplay.getChildren()) {
@@ -113,22 +114,20 @@ public class RoundTrackView extends StackPane implements Observer {
                 if (diceDisplay.getChildren().size() > 1) {
                     scaledown = 2;
                     if (diceDisplay.getChildren().size() > NUMBERWHENCHANGETO3X3) {
-                        scaledown = 3;
+                        scaledown = THREE;
                     }
                 }
                 switch (scaledown) {
                     case 2:
                     GridPane.setMargin(die, new Insets(-SIZE / scaledown / scaledown));
-                    diceDisplay.setTranslateY(-1);
-                    diceDisplay.setTranslateX(-1);
                     break;
-                    case 3:
+                    case THREE:
                     GridPane.setMargin(die, new Insets(-SIZE / scaledown));
-                    diceDisplay.setTranslateY(-2);
-                    diceDisplay.setTranslateX(-2);
                     default:
                     break;
                 }
+                diceDisplay.setTranslateY(scaledown * -1 + 1);
+                diceDisplay.setTranslateX(scaledown * -1 + 1);
                 die.setScaleX(getScaleX() / (double) scaledown);
                 die.setScaleY(getScaleY() / (double) scaledown);
             }
