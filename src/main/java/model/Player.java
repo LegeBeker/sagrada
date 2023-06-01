@@ -214,8 +214,7 @@ public class Player {
             player.patternCard = PatternCard.get(Integer.parseInt(playerMap.get("idpatterncard")));
         }
 
-        player.board = Board.update(player.board);
-
+        player.board = Board.get(player);
         return player;
     }
 

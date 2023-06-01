@@ -63,20 +63,6 @@ public class Board {
 
             board.board[row - 1][col - 1] = Die.mapToDie(map);
         }
-
-        return board;
-    }
-
-    public static Board update(final Board board) {
-        List<Map<String, String>> fieldValues = BoardDB.getBoard(board.player.getGame().getId(), board.player.getId());
-
-        for (Map<String, String> map : fieldValues) {
-            int row = Integer.parseInt(map.get("position_y"));
-            int col = Integer.parseInt(map.get("position_x"));
-
-            board.board[row - 1][col - 1] = Die.mapToDie(map);
-        }
-
         return board;
     }
 
