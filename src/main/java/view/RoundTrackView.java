@@ -32,6 +32,7 @@ public class RoundTrackView extends StackPane implements Observer {
 
     private static final int WIDTH = 570;
     private static final int HEIGHT = 85;
+    private static final int NUMBERWHENCHANGETO3X3 = 4;
 
     private final ArrayList<Group> roundGroups;
     private final ViewController view;
@@ -86,14 +87,14 @@ public class RoundTrackView extends StackPane implements Observer {
             GridPane diceDisplay = (GridPane) currentDiceGroup.getChildren().get(1);
             if (previousRoundtrack != currentRoundTrack) {
                 diceDisplay.getChildren().clear();
-            } 
+            }
             DieView newDice = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
                 Integer.parseInt(die.get("number")), false);
             int alreadyPlacedDice = diceDisplay.getChildren().size();
             if (alreadyPlacedDice >= 1) {
-                if (alreadyPlacedDice == 4) {
+                if (alreadyPlacedDice == NUMBERWHENCHANGETO3X3) {
                     diceDisplay.add(newDice, 2, 0);
-                } else if (alreadyPlacedDice >= 5) {
+                } else if (alreadyPlacedDice >= NUMBERWHENCHANGETO3X3 + 1) {
                     diceDisplay.add(newDice, alreadyPlacedDice % 3, alreadyPlacedDice / 3);
                 } else {
                     diceDisplay.add(newDice, alreadyPlacedDice % 2, alreadyPlacedDice / 2);
@@ -111,7 +112,7 @@ public class RoundTrackView extends StackPane implements Observer {
                 int scaledown = 1;
                 if (diceDisplay.getChildren().size() > 1) {
                     scaledown = 2;
-                    if (diceDisplay.getChildren().size() > 4) {
+                    if (diceDisplay.getChildren().size() > NUMBERWHENCHANGETO3X3) {
                         scaledown = 3;
                     }
                 }

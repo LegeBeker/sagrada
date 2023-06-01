@@ -10,12 +10,15 @@ import main.java.controller.ViewController;
 
 public class GameCenterView extends BorderPane {
 
+    private static final int COUNTERTOPVIEWWIDTH = 450;
     private GameBoardsView gameBoardsView;
 
     public GameCenterView(final ViewController view) {
         HBox onlyDice = new HBox();
-        onlyDice.getChildren().addAll(new GameOfferView(view), new RoundTrackView(view), new Rectangle(450, 0) );
-        onlyDice.getChildren().forEach(child -> {HBox.setHgrow(child, Priority.ALWAYS);});
+        onlyDice.getChildren().addAll(new GameOfferView(view), new RoundTrackView(view), new Rectangle(COUNTERTOPVIEWWIDTH, 0));
+        onlyDice.getChildren().forEach(child -> {
+            HBox.setHgrow(child, Priority.ALWAYS);
+        });
         this.setTop(onlyDice);
         this.gameBoardsView = new GameBoardsView(view);
         this.setCenter(this.gameBoardsView);
