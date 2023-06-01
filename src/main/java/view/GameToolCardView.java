@@ -192,10 +192,6 @@ public class GameToolCardView extends StackPane {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (!result.isPresent()) {
-            return false;
-        }
-
         if (result.get() == acceptButton) {
             return true;
         } else {
