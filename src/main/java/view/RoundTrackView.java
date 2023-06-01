@@ -25,15 +25,16 @@ import main.java.pattern.Observer;
 
 public class RoundTrackView extends StackPane implements Observer {
     private static final int PADDING = 5;
-    private static final int SIZE = 50;
+    private static final int BASESIZE = 50;
     private static final int TEXTPADDING = 2;
     private static final int ROUNDS = 10;
     private static final int ROUNDING = 20;
-
+    private static final double GLOBALSCALING = 1.2;
     private static final int WIDTH = 570;
     private static final int HEIGHT = 85;
-    private static final int NUMBERWHENCHANGETO3X3 = 4;
+    private static final int CHANGETO3X3 = 4;
     private static final int EXPANDEDDICEDISPLAYSIZE = 3;
+    private static final int SIZE = (int) Math.round(BASESIZE * GLOBALSCALING);
 
     private final ArrayList<Group> roundGroups;
     private final ViewController view;
@@ -96,9 +97,9 @@ public class RoundTrackView extends StackPane implements Observer {
 
             int alreadyPlacedDice = diceDisplay.getChildren().size();
             if (alreadyPlacedDice >= 1) {
-                if (alreadyPlacedDice == NUMBERWHENCHANGETO3X3) {
+                if (alreadyPlacedDice == CHANGETO3X3) {
                     diceDisplay.add(newDice, 2, 0);
-                } else if (alreadyPlacedDice >= NUMBERWHENCHANGETO3X3 + 1) {
+                } else if (alreadyPlacedDice >= CHANGETO3X3 + 1) {
                     diceDisplay.add(newDice, alreadyPlacedDice % EXPANDEDDICEDISPLAYSIZE, alreadyPlacedDice / EXPANDEDDICEDISPLAYSIZE);
                 } else {
                     diceDisplay.add(newDice, alreadyPlacedDice % 2, alreadyPlacedDice / 2);
@@ -116,24 +117,25 @@ public class RoundTrackView extends StackPane implements Observer {
                 int scaledown = 1;
                 if (diceDisplay.getChildren().size() > 1) {
                     scaledown = 2;
-                    if (diceDisplay.getChildren().size() > NUMBERWHENCHANGETO3X3) {
+                    if (diceDisplay.getChildren().size() > CHANGETO3X3) {
                         scaledown = EXPANDEDDICEDISPLAYSIZE;
                     }
                 }
                 switch (scaledown) {
                     case 2:
-                        GridPane.setMargin(die, new Insets(-SIZE / scaledown / scaledown));
+                        GridPane.setMargin(die, new Insets(-BASESIZE / scaledown / scaledown));
                         break;
                     case EXPANDEDDICEDISPLAYSIZE:
-                        GridPane.setMargin(die, new Insets(-SIZE / scaledown));
+                        GridPane.setMargin(die, new Insets(-BASESIZE / scaledown));
                         break;
                     default:
                         break;
                 }
+                diceDisplay.setPadding(new Insets((SIZE - BASESIZE) / 2));
                 diceDisplay.setTranslateY(scaledown * -1 + 1);
                 diceDisplay.setTranslateX(scaledown * -1 + 1);
-                die.setScaleX(getScaleX() / (double) scaledown);
-                die.setScaleY(getScaleY() / (double) scaledown);
+                die.setScaleX(GLOBALSCALING / (double) scaledown);
+                die.setScaleY(GLOBALSCALING / (double) scaledown);
             }
         }
     }
