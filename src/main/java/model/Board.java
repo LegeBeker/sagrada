@@ -1,9 +1,12 @@
 package main.java.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javafx.scene.paint.Color;
 import main.java.db.BoardDB;
@@ -83,10 +86,10 @@ public class Board {
         for (Integer integer : ids) {
             switch (integer) {
                 case 1:
-                    publicObjectiveScore += sets(5, "1", "2", "3", "4", "5", "6");
+                    publicObjectiveScore += sets(5, 1, 2, 3, 4, 5, 6);
                     break;
                 case 2:
-                    publicObjectiveScore += sets(2, "3", "4");
+                    publicObjectiveScore += sets(2, 3, 4);
                     break;
                 case 3:
                     publicObjectiveScore += columns(4, "shades");
@@ -95,7 +98,7 @@ public class Board {
                     publicObjectiveScore += columns(5, "colors");
                     break;
                 case 5:
-                    publicObjectiveScore += sets(2, "5", "6");
+                    publicObjectiveScore += sets(2, 5, 6);
                     break;
                 case 6:
                     publicObjectiveScore += sets(4, "red", "blue", "green", "yellow", "purple");
@@ -104,10 +107,10 @@ public class Board {
                     publicObjectiveScore += rows(5, "colors");
                     break;
                 case 8:
-                    publicObjectiveScore += adjecentInSameColor();
+                    publicObjectiveScore += diagonallySameColor();
                     break;
                 case 9:
-                    publicObjectiveScore += sets(2, "1", "2");
+                    publicObjectiveScore += sets(2, 1, 2);
                     break;
                 case 10:
                     publicObjectiveScore += rows(5, "shades");
@@ -117,7 +120,6 @@ public class Board {
 
         return publicObjectiveScore;
     }
-    
 
     public static Board get(final Player player) {
         Board board = new Board();
@@ -163,31 +165,38 @@ public class Board {
     }
 
     private int sets(int points, Object... values) {
-        int count = 0;
-        int totalScore = 0;
-    
+        Set<Object> hashSet = new HashSet<>();
+        Set<Object> targetSet = new HashSet<>(Arrays.asList(values));
         for (int i = 0; i < values.length; i++) {
-            System.out.println("i: " + i);
-            int setCount = 0;
             for (int row = 1; row <= ROWS; row++) {
                 for (int col = 1; col <= COLUMNS; col++) {
                     Die die = getField(row, col);
                     if (die != null && valueMatches(die, values[i])) {
-                        setCount++;
-                        if (setCount == i + 1) {
-                            System.out.println("setCount: " + setCount);
-                            count++;
-                            totalScore += points;
-                            setCount = 0;
-                        }
+                        hashSet.add(values[i]);
                     }
                 }
             }
         }
-    
-        return totalScore;
+
+        int completeSets = countSubsetOccurrences(hashSet, targetSet);
+        return completeSets * points;
     }
-    
+
+    private static int countSubsetOccurrences(Set<Object> set, Set<Object> targetSet) {
+        int count = 0;
+        for (Object element : set) {
+            if (targetSet.contains(element)) {
+                targetSet.remove(element);
+                if (targetSet.isEmpty()) {
+                    count++;
+                    targetSet.addAll(new HashSet<>(targetSet));
+                }
+            }
+        }
+
+        return count;
+    }
+
     private boolean valueMatches(Die die, Object value) {
         if (value instanceof Integer) {
             return die.getEyes() == (int) value;
@@ -196,7 +205,7 @@ public class Board {
         }
         return false;
     }
-    
+
     private int rows(final int points, final String type) {
         int totalScore = 0;
         int dices = 0;
@@ -270,44 +279,8 @@ public class Board {
         return totalScore;
     }
 
-    private int adjecentInSameColor() {
-        // ArrayList<Die> checkedDices = new ArrayList<>();
-        // int[] adjecentScore = { 0 };
-
-        // for (int row = 1; row < ROWS; row++) {
-        // for (int col = 1; col < COLUMNS; col++) {
-        // Die die = getField(row, col);
-        // ArrayList<int[]> neighbors = this.getDiagonalNeighbors(row, col);
-        // neighbors.forEach((neighbor) -> {
-        // if (checkedDices.contains(die)) {
-        // return;
-        // }
-        // if (die.getColor().equals(getField(neighbor[0], neighbor[1]).getColor())) {
-        // adjecentScore[0]++;
-        // checkedDices.add(die);
-        // }
-        // });
-        // }
-        // }
-
-        return 0;
-    }
-
-    public ArrayList<int[]> getDiagonalNeighbors(final int row, final int col) {
-        ArrayList<int[]> neighbors = new ArrayList<>();
-        int[][] offsets;
-
-        offsets = new int[][] { { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
-
-        for (int[] offset : offsets) {
-            int neighborRow = row + offset[0];
-            int neighborCol = col + offset[1];
-
-            if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] { neighborRow, neighborCol });
-            }
-        }
-
-        return neighbors;
+    public int diagonallySameColor() {
+        int count = 0;
+        return count;
     }
 }
