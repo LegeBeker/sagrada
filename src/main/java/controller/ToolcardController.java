@@ -31,31 +31,28 @@ public class ToolcardController {
         return ToolCard.getToolCard(gameId, toolCardName);
     }
 
-    public void grozingPliers(final int gameId, final int dieNumber, final String dieColor, final String choiceAction) {
+    public String grozingPliers(final int gameId, final int dieNumber, final String dieColor, final String choiceAction) {
         //-- choiceaction is a string which can contain "increment" or "decrement". Based on this you can trigger the corresponding values 
-        Scanner input = new Scanner(System.in);
-        System.out.println("Starting value: " + dieValue);
-        System.out.print("Enter 1 to add or 2 to subtract: ");
-        int choice = input.nextInt();
-        if (choice == 1) {
-            if (dieValue == MAX_VALUE) {
-                System.out.println("Value is 6 and cant become 7");
+        String returnValue = null;
+        int currentAmountOfEyes = DieDB.getGameDieEyes(gameId, dieNumber, dieColor);
+        if (choiceAction.equals("increment")) {
+            if (currentAmountOfEyes == MAX_VALUE) {
+                returnValue = "De waarde is 6, en kan niet 7 worden.";
             } else {
-                System.out.println("Added 1, value is now " + (dieValue + 1));
-                ToolCardDB.updateGameDieValue(dieValue + 1, choice);
+                ToolCardDB.updateGameDieValue(gameId, dieNumber, dieColor, currentAmountOfEyes + 1);
             }
-        } else if (choice == 2) {
-            if (dieValue == 1) {
-                System.out.println("Value is 1 and cant become 0");
+        } else if (choiceAction.equals("decrement")) {
+            if (currentAmountOfEyes == 1) {
+                returnValue = "De waarde is 1, en kan niet 0 worden.";
+                
             } else {
-                System.out.println("Subtracted 1, value is now " + (dieValue - 1));
-                ToolCardDB.updateGameDieValue(dieValue - 1, choice);
+                ToolCardDB.updateGameDieValue(gameId, dieNumber, dieColor, currentAmountOfEyes - 1);
             }
         } else {
-            System.out.println("Invalid choice.");
+            returnValue = "Invalid choice.";
         }
 
-        input.close();
+        return returnValue;
     }
 
     public void grindingStone(final int gameId, final int dieNumber, final String dieColor) {

@@ -429,7 +429,10 @@ public class ViewController extends Scene {
         if(actionChoice.equals("?")){
             System.err.println("Foutje m.b.t. confirmatie van actie");
         }
-        this.toolCardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor, actionChoice);
+        String responseGrozingPliers = this.toolCardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor, actionChoice);
+        if(responseGrozingPliers != null){
+            displayError(responseGrozingPliers);
+        }    
     }
 
     public void grindingStone(final int dieNumber, final String dieColor) {
