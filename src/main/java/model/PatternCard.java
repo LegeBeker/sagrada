@@ -188,21 +188,19 @@ public class PatternCard {
             return false;
         }
 
-
-        if(!toolCardName.equals("eglomiseBrush")){
+        if (!toolCardName.equals("eglomiseBrush")) {
             if (this.getField(rowIndex, columnIndex).getColor() != null
-            && !dieColor.equals(this.getField(rowIndex, columnIndex).getColor())) {
+                    && !dieColor.equals(this.getField(rowIndex, columnIndex).getColor())) {
                 return false;
             }
         }
-       
-        if(toolCardName.equals("copperFoilBurnisher")){
+
+        if (toolCardName.equals("copperFoilBurnisher")) {
             if (this.getField(rowIndex, columnIndex).getValue() != null
-            && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
+                    && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
                 return false;
             }
         }
-        
 
         if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue,
                 dieColor, board)) {
@@ -255,9 +253,10 @@ public class PatternCard {
         int[][] offsets;
 
         if (includeDiagonals) {
-            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+            offsets = new int[][] {{-1, 0 }, {1, 0 }, {0, -1 }, {0, 1 }, {-1, -1 }, {-1, 1 }, {1, -1 },
+                    {1, 1 }};
         } else {
-            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+            offsets = new int[][] {{-1, 0 }, {1, 0 }, {0, -1 }, {0, 1 }};
         }
 
         for (int[] offset : offsets) {
