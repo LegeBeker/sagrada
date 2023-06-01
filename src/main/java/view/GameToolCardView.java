@@ -126,10 +126,16 @@ public class GameToolCardView extends StackPane {
                                 this.removeSelection();
                                 this.isSelected = false;
                                 break;
-                                
+
+                            case "runningPliers":
+                                System.out.println("Switch case for runningPliers triggert");
+                                break;
+
                             default:
                                 break;
                         }
+                       
+
                     }
                 }
 

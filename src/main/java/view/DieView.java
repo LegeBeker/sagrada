@@ -194,9 +194,6 @@ public class DieView extends Group {
                 case "fluxBrush":
                     view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
                     break;
-                case "runningPliers":
-                    System.out.println("Switch case for runningPliers triggert");
-                    break;
                 case "cork-backedStraightedge":
                     System.out.println("Switch case for backedStraightedge triggert");
                     break;
