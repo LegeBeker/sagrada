@@ -29,7 +29,6 @@ public class GameScoreView extends VBox implements Observer {
     public void update() {
         this.getChildren().clear();
         view.getScores().forEach(score -> {
-            System.out.println(score.get("username") + ": " + score.get("score"));
             StackPane playerScore = new StackPane();
 
             playerScore

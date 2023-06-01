@@ -65,21 +65,54 @@ public class Board {
 
     public int getPrivateObjectiveCardScore(final String color) {
         int privateObjectiveScore = 0;
-        for (int row = 1; row < ROWS; row++) {
-            for (int col = 1; col < COLUMNS; col++) {
+        for (int row = 1; row <= ROWS; row++) {
+            for (int col = 1; col <= COLUMNS; col++) {
                 Die die = getField(row, col);
                 String dieColor = die != null ? ColorEnum.fromString(die.getColor().toString()).toString() : "null";
-                if(die != null && dieColor.equals(color)) {
+                if (die != null && dieColor.equals(color)) {
                     privateObjectiveScore += die.getEyes();
                 }
             }
         }
+
         return privateObjectiveScore;
     }
 
-    public int getPublicObjectiveCardScore(final ArrayList<Integer> id) {
+    public int getPublicObjectiveCardScore(final ArrayList<Integer> ids) {
         int publicObjectiveScore = 0;
-        for (int i = 0; i < id.size(); i++) {
+        for (Integer integer : ids) {
+            switch (integer) {
+                case 1:
+                    // publicObjectiveScore += sets(5, "1", "2", "3", "4", "5","6");
+                    // break;
+                    // case 2:
+                    // publicObjectiveScore += sets(2, "3","4");
+                    // break;
+                case 3:
+                    publicObjectiveScore += columns(4, "shades");
+                    break;
+                case 4:
+                    publicObjectiveScore += columns(5, "colors");
+                    break;
+                // case 5:
+                // publicObjectiveScore += sets(2, "5", "6");
+                // break;
+                // case 6:
+                // publicObjectiveScore += sets(4, "red", "blue","green", "yellow", "purple");
+                // break;
+                case 7:
+                    publicObjectiveScore += rows(5, "colors");
+                    break;
+                case 8:
+                    publicObjectiveScore += adjecentInSameColor();
+                    break;
+                // case 9:
+                // publicObjectiveScore += sets(2, "1","2");
+                // break;
+                case 10:
+                    publicObjectiveScore += rows(5, "shades");
+                    break;
+            }
         }
 
         return publicObjectiveScore;
@@ -126,5 +159,124 @@ public class Board {
         });
 
         BoardDB.createBoard(boards);
+    }
+
+    private int sets() {
+
+        return 0;
+    }
+
+    private int rows(final int points, final String type) {
+        int totalScore = 0;
+        int dices = 0;
+        for (int row = 1; row <= ROWS; row++) {
+            Die firstDie = getField(row, 1);
+            if (firstDie == null) {
+                continue;
+            }
+
+            String compareWith = null;
+
+            if (type.equals("shades")) {
+                int eyes = firstDie.getEyes();
+                compareWith = String.valueOf(eyes);
+            } else {
+                Color color = firstDie.getColor();
+                compareWith = ColorEnum.fromString(color.toString()).toString();
+            }
+
+            if (compareWith != null) {
+                for (int col = 1; col <= COLUMNS; col++) {
+                    Die die = getField(row, col);
+                    if (die != null && (ColorEnum.fromString(die.getColor().toString()).toString().equals(compareWith)
+                            || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
+                        dices++;
+                    }
+                    if (dices % 4 == 0) {
+                        totalScore += points;
+                    }
+                }
+            }
+
+        }
+
+        return totalScore;
+    }
+
+    private int columns(final int points, final String type) {
+        int totalScore = 0;
+        int dices = 0;
+        for (int col = 1; col <= COLUMNS; col++) {
+            Die firstDie = getField(1, col);
+
+            if (firstDie == null) {
+                continue;
+            }
+
+            String compareWith = null;
+            if (type.equals("shades")) {
+                int eyes = firstDie.getEyes();
+                compareWith = String.valueOf(eyes);
+            } else {
+                Color color = firstDie.getColor();
+                compareWith = ColorEnum.fromString(color.toString()).toString();
+            }
+
+            if (compareWith != null) {
+                for (int row = 1; row <= ROWS; row++) {
+                    Die die = getField(row, col);
+                    if (die != null && (ColorEnum.fromString(die.getColor().toString()).toString().equals(compareWith)
+                            || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
+                        dices++;
+                    }
+                    if (dices % 5 == 0) {
+                        totalScore += points;
+                    }
+                }
+            }
+        }
+
+        return totalScore;
+    }
+
+    private int adjecentInSameColor() {
+        // ArrayList<Die> checkedDices = new ArrayList<>();
+        // int[] adjecentScore = { 0 };
+
+        // for (int row = 1; row < ROWS; row++) {
+        // for (int col = 1; col < COLUMNS; col++) {
+        // Die die = getField(row, col);
+        // ArrayList<int[]> neighbors = this.getDiagonalNeighbors(row, col);
+        // neighbors.forEach((neighbor) -> {
+        // if (checkedDices.contains(die)) {
+        // return;
+        // }
+        // if (die.getColor().equals(getField(neighbor[0], neighbor[1]).getColor())) {
+        // adjecentScore[0]++;
+        // checkedDices.add(die);
+        // }
+        // });
+        // }
+        // }
+
+        return 0;
+    }
+
+    public ArrayList<int[]> getDiagonalNeighbors(final int row, final int col) {
+        ArrayList<int[]> neighbors = new ArrayList<>();
+        int[][] offsets;
+
+        offsets = new int[][] { { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
+
+        for (int[] offset : offsets) {
+            int neighborRow = row + offset[0];
+            int neighborCol = col + offset[1];
+
+            if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
+                neighbors.add(new int[] { neighborRow, neighborCol });
+            }
+        }
+
+        return neighbors;
     }
 }

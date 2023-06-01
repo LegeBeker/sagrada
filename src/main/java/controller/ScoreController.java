@@ -26,13 +26,24 @@ public class ScoreController {
         int favorTokens = player.getFavorTokensLeft();
         int defaultScore = -20;
 
+        System.out.println("player: " + player.getUsername() + " - " + defaultScore);
+
         if (player.getGame().getCurrentRound() == 10 || player.getId() == currentPlayer.getId()) {
             defaultScore += getPrivateObjectiveCardScore(player);
+            System.out.println("player: " + player.getUsername() + " - private - " + getPrivateObjectiveCardScore(player));
+
         } 
 
         defaultScore += getPublicObjectiveCardScore(player);
+        System.out.println("player: " + player.getUsername() + " - public - " + getPublicObjectiveCardScore(player));
+
         defaultScore += getAmountOfDice(player);
+        System.out.println("player: " + player.getUsername() + " - dice - " + getAmountOfDice(player));
+
         defaultScore += favorTokens;
+        System.out.println("player: " + player.getUsername() + " - favor - " + favorTokens);
+
+        System.out.println("player: " + player.getUsername() + " - score - " + defaultScore);
 
         return Integer.toString(defaultScore);
     }
