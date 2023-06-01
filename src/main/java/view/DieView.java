@@ -165,53 +165,59 @@ public class DieView extends Group {
         String methodName = view.getSelectedToolcardName();
         if (methodName != null){
             System.out.println("Kaart " + view.getSelectedToolcardName() + " is geselecteerd");
-            Map<String, String> selectedDieMap = new HashMap<>();;
-            selectedDieMap.put("eyes", Integer.toString(this.eyes));
-            selectedDieMap.put("dieNumber", Integer.toString(this.number));
-            selectedDieMap.put("dieColor", this.color.toString());
 
-            //-- trigger toolcard logic
-            switch (methodName) {
-                case "grozingPliers":
-                    String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
-                    if(!actionChoice.equals("?")){
-                        view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"), actionChoice);
+            if(!this.getParent().getClass().getSimpleName().equals("GameOfferView")){
+                view.displayError("Kies een dobbelsteen uit het aanbod.");
+            }
+            else{
+                Map<String, String> selectedDieMap = new HashMap<>();;
+                selectedDieMap.put("eyes", Integer.toString(this.eyes));
+                selectedDieMap.put("dieNumber", Integer.toString(this.number));
+                selectedDieMap.put("dieColor", this.color.toString());
+
+                //-- trigger toolcard logic
+                switch (methodName) {
+                    case "grozingPliers":
+                        String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
+                        if(!actionChoice.equals("?")){
+                            view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"), actionChoice);
+                        }
+                        break;
+                    case "eglomiseBrush":
+                        System.out.println("Switch case for eglomiseBrush triggert");
+                        break;
+                    case "copperFoilBurnisher":
+                        System.out.println("Switch case for copperFoilBurnisher triggert");
+                        break;
+                    case "lathekin":
+                        System.out.println("Switch case for lathekin triggert");
+                        break;
+                    case "lensCutter":
+                        System.out.println("Switch case for lensCutter triggert");
+                        view.lensCutter(1, 2); //-- This is going to be a tricky one since we swap values from offer and roundtrack
+                        break;
+                    case "fluxBrush":
+                        view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                        break;
+                    case "cork-backedStraightedge":
+                        System.out.println("Switch case for backedStraightedge triggert");
+                        break;
+                    case "grindingStone":
+                        System.out.println("Switch case for grindingStone triggert");
+                        view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                        break;
+                    case "fluxRemover":
+                        System.out.println("Switch case for fluxRemover triggert");
+                        view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                        break;
+                    case "tapWheel":
+                        System.out.println("Switch case for tapWheel triggert");
+                        break;
+                    default:
+                        break;
                     }
-                    break;
-                case "eglomiseBrush":
-                    System.out.println("Switch case for eglomiseBrush triggert");
-                    break;
-                case "copperFoilBurnisher":
-                    System.out.println("Switch case for copperFoilBurnisher triggert");
-                    break;
-                case "lathekin":
-                    System.out.println("Switch case for lathekin triggert");
-                    break;
-                case "lensCutter":
-                    System.out.println("Switch case for lensCutter triggert");
-                    view.lensCutter(1, 2); //-- This is going to be a tricky one since we swap values from offer and roundtrack
-                    break;
-                case "fluxBrush":
-                    view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
-                    break;
-                case "cork-backedStraightedge":
-                    System.out.println("Switch case for backedStraightedge triggert");
-                    break;
-                case "grindingStone":
-                    System.out.println("Switch case for grindingStone triggert");
-                    view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
-                    break;
-                case "fluxRemover":
-                    System.out.println("Switch case for fluxRemover triggert");
-                    view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
-                    break;
-                case "tapWheel":
-                    System.out.println("Switch case for tapWheel triggert");
-                    break;
-                default:
-                    break;
-                }
-            view.setToolCardSelection(null);
+                view.setToolCardSelection(null);
+            }
         }
         else{
             System.out.println("Kaart niet geselecteerd");
