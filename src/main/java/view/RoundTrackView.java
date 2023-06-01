@@ -48,9 +48,6 @@ public class RoundTrackView extends StackPane implements Observer {
         gridPane.setVgap(PADDING);
         gridPane.setHgap(PADDING);
 
-        // this.setAlignment(Pos.CENTER_RIGHT);
-        // gridPane.setAlignment(Pos.CENTER_RIGHT);
-
         for (int i = 0; i < ROUNDS; i++) {
             VBox vbox = new VBox();
             Group group = new Group();
