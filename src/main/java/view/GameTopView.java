@@ -6,10 +6,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import main.java.controller.ViewController;
 
-public class GameTopView extends HBox{
+public class GameTopView extends HBox {
 
-    private final static double PARTOFTHESCREEN = 4.75;
-    
+    private static final double PARTOFTHESCREEN = 4.75;
+
     public GameTopView(final ViewController view) {
         super();
         final double screenWidth = Screen.getPrimary().getBounds().getMaxX();
