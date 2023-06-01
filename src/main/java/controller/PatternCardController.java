@@ -29,16 +29,14 @@ public class PatternCardController {
 
         Player player = view.getCurrentPlayer();
 
-
-        boolean valid = false; //-- Default value set to false
-        if(selectedToolCardName != null){
+        boolean valid = false; // -- Default value set to false
+        if (selectedToolCardName != null) {
             valid = getPatternCard(patternCardId).validateMove(player.getBoard(), eyes, dieColor, columnIndex,
-                rowIndex, selectedToolCardName);
+                    rowIndex, selectedToolCardName);
         } else {
             valid = getPatternCard(patternCardId).validateMove(player.getBoard(), eyes, dieColor, columnIndex,
-            rowIndex);
+                    rowIndex);
         }
-        
 
         if (valid) {
             return player.getBoard().placeDie(dieColor, dieNumber, rowIndex, columnIndex);
