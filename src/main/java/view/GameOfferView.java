@@ -30,7 +30,8 @@ public class GameOfferView extends FlowPane implements Observer {
 
         if (view.getSelectedToolcardName() != null) {
             if (view.getSelectedToolcardName().equals("eglomiseBrush")
-                    || view.getSelectedToolcardName().equals("copperFoilBurnisher")) {
+                    || view.getSelectedToolcardName().equals("copperFoilBurnisher")
+                    || view.getSelectedToolcardName().equals("lathekin")) {
                 isDraggable = false;
             }
         }

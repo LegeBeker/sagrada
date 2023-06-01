@@ -137,6 +137,9 @@ public class GameToolCardView extends StackPane {
                                 case "copperFoilBurnisher":
                                     System.out.println("Switch case for copperFoilBurnisher triggert");
                                     break;
+                                case "lathekin":
+                                    System.out.println("Switch case for lathekin triggert");
+                                    break;
 
                                 default:
                                     break;
