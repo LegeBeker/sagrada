@@ -49,6 +49,17 @@ public final class PlayerDB {
         return db.exec(sql, params);
     }
 
+    public static boolean updateScore(final int playerId, final String score) {
+        Database db = Database.getInstance();
+
+        String sql = "UPDATE player SET score = ? WHERE idplayer = ?;";
+        String[] params = {score, Integer.toString(playerId)};
+
+        db.exec(sql, params);
+
+        return true;
+    }
+
     public static List<Map<String, String>> getRecentPlayerFromGame(final int idGame) {
         Database db = Database.getInstance();
 

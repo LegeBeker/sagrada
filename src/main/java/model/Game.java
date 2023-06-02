@@ -35,6 +35,7 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
     private static final int TOKENSPERGAME = 24;
+    private static final int MAXROUNDNR = 10;
 
     private boolean helpFunction = false;
 
@@ -69,16 +70,12 @@ public class Game extends Observable {
 
         if (useDefaultCards) {
             newGame.addPatternCards();
-        } else {
-            newGame.addPatternCards();
-            // TODO create random (but valid) cards
-            // ArrayList<PatternCard> randomCards = new PatternCard().generateRandomCards();
-            // newGame.addPatternCards(randomCards);
         }
 
         for (int i = 0; i < TOKENSPERGAME; i++) {
             GameFavorTokenDB.createGameFavorToken(thisGameID);
         }
+
         GameDB.assignToolcards(thisGameID);
         GameDB.assignPublicObjectivecards(thisGameID);
 
@@ -268,28 +265,39 @@ public class Game extends Observable {
 
     private void endRound() {
         for (Player player : getPlayers()) {
-            if (player.getSeqnr() == getPlayers().size()) {
-                player.setSeqnr(1);
-                setTurnPlayer(player);
+            if (player.getSeqnr() == 1) {
+                player.setSeqnr(getPlayers().size());
             } else {
-                player.setSeqnr(player.getSeqnr() + 1);
+                player.setSeqnr(player.getSeqnr() - 1);
+                if (player.getSeqnr() == 1) {
+                    setTurnPlayer(player);
+                }
             }
         }
 
-        for (Map<String, String> dieMap : DieDB.getOffer(getId(), getRoundID())) {
-            DieDB.putRoundTrack(getId(), getRoundID(), Integer.parseInt(dieMap.get("dienumber")),
+        final int previousRoundID = getRoundID() - 1;
+        for (Map<String, String> dieMap : DieDB.getOffer(getId(), previousRoundID)) {
+            DieDB.putRoundTrack(getId(), previousRoundID, Integer.parseInt(dieMap.get("dienumber")),
                     dieMap.get("diecolor"));
         }
 
-        setCurrentRoundID(getRoundID() + 1);
+        if (getRoundID() == MAXROUNDNR) {
+            endGame();
+        } else {
+            setCurrentRoundID(getRoundID() + 1);
+            Die.getNewOffer(getId(), getRoundID(), players.size());
+            notifyObservers(Game.class);
+        }
 
-        Die.getNewOffer(getId(), getRoundID(), players.size());
-        notifyObservers(Game.class);
     }
 
     private void setCurrentRoundID(final int roundID) {
         GameDB.setRound(getId(), roundID);
         notifyObservers(Game.class);
+    }
+
+    private void endGame() {
+        GameDB.finishGame(getId());
     }
 
     public static Game get(final int idGame) {

@@ -66,6 +66,21 @@ public class PatternCard {
         this.validateNeighbors = validateNeighbors;
     }
 
+    public static PatternCard mapCustomPatternCard(final int id, final int difficulty,
+            final PatternCardField[][] fields) {
+        PatternCard patternCard = new PatternCard();
+
+        patternCard.idPatternCard = id;
+        patternCard.name = "Gegenereerde kaart " + id;
+        patternCard.difficulty = difficulty;
+        patternCard.standard = false;
+        patternCard.fields = fields;
+
+        cachedCards.put(id, patternCard);
+
+        return patternCard;
+    }
+
     public int getIdPatternCard() {
         return this.idPatternCard;
     }
@@ -86,12 +101,16 @@ public class PatternCard {
         return fields[row - 1][column - 1];
     }
 
+    public static int createPatternCard(final PatternCard patternCard) {
+        return PatternCardDB.createPatternCard(patternCard);
+    }
+
     public ArrayList<int[]> getPossibleMoves(final Board board, final int dieValue, final Color dieColor) {
         ArrayList<int[]> possibleMoves = new ArrayList<int[]>();
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 if (validateMove(board, dieValue, dieColor, col, row)) {
-                    possibleMoves.add(new int[] {row, col});
+                    possibleMoves.add(new int[] {row, col });
                 }
             }
         }
@@ -188,7 +207,7 @@ public class PatternCard {
         return true;
     }
 
-    private ArrayList<int[]> validateNeighbors(final int row, final int col, final boolean includeDiagonals) {
+    public ArrayList<int[]> getNeighbors(final int row, final int col, final boolean includeDiagonals) {
         ArrayList<int[]> neighbors = new ArrayList<>();
         int[][] offsets;
 
@@ -203,10 +222,14 @@ public class PatternCard {
             int neighborCol = col + offset[1];
 
             if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] {neighborRow, neighborCol});
+                neighbors.add(new int[] {neighborRow, neighborCol });
             }
         }
 
         return neighbors;
+    }
+
+    public static void clearCache() {
+        cachedCards.clear();
     }
 }

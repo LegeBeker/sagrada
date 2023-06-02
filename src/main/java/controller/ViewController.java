@@ -27,6 +27,7 @@ import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.Player;
 import main.java.pattern.Observable;
+import main.java.view.DieDropTarget;
 import main.java.view.GameView;
 import main.java.view.GamesView;
 import main.java.view.LoginView;
@@ -49,13 +50,14 @@ public class ViewController extends Scene {
     private GameController gameController;
     private PatternCardController patternCardController;
     private MessageController messageController;
+    private ScoreController scoreController;
     private ToolcardController toolCardController;
     private FavorTokenController favorTokenController;
 
     private EffectsController effectsController;
 
     private final Background background;
-    private final ImageView logo = new ImageView(new Image("file:resources/img/logo.png"));
+    private final ImageView logo = new ImageView(new Image(getClass().getResource("/img/logo.png").toExternalForm()));
 
     private static final int LOGOWIDTH = 300;
 
@@ -75,7 +77,7 @@ public class ViewController extends Scene {
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
 
-        this.getStylesheets().add("file:resources/css/style.css");
+        this.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
 
         this.messageBox = new Label();
         this.messageBox.setVisible(false);
@@ -89,7 +91,8 @@ public class ViewController extends Scene {
         this.patternCardController = new PatternCardController(this);
         this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
-        this.toolCardController = new ToolcardController(this);
+        this.scoreController = new ScoreController();
+        this.toolCardController = new ToolcardController();
         this.favorTokenController = new FavorTokenController(this);
 
         this.openLoginView();
@@ -219,6 +222,10 @@ public class ViewController extends Scene {
         return this.gameController.getCurrentPlayer();
     }
 
+    public List<Map<String, String>> getScores() {
+        return this.scoreController.getScores(getCurrentPlayer());
+    }
+
     public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
         return this.patternCardController.getPossibleMoves(eyes, color);
     }
@@ -315,14 +322,15 @@ public class ViewController extends Scene {
 
     public void endTurn() {
         this.gameController.endTurn();
+        DieDropTarget.resetAmountPlacedDie();
     }
 
     public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
         openPatternCardSelectionView(this.gameController.createGame(accounts, getUsername(), useDefaultCards));
     }
 
-    public void choosePatternCard(final int idPatternCard) {
-        this.gameController.choosePatternCard(idPatternCard);
+    public void choosePatternCard(final int idPatternCard, final boolean defaultCards) {
+        this.gameController.choosePatternCard(this.patternCardController.getPatternCard(idPatternCard), defaultCards);
 
         if (this.gameController.gameHasOpenInvites()) {
             openGamesView();
@@ -370,6 +378,10 @@ public class ViewController extends Scene {
 
     public Map<Integer, List<Integer>> getPatternCardOptions() {
         return this.gameController.getPatternCardOptions();
+    }
+
+    public Map<Integer, List<Integer>> generatePatternCardOptions() {
+        return this.patternCardController.generatePatternCardOptions();
     }
 
     public Boolean createAccount(final String username, final String password) {

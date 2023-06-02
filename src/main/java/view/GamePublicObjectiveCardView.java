@@ -18,9 +18,9 @@ public class GamePublicObjectiveCardView extends StackPane {
 
     public GamePublicObjectiveCardView(final ViewController view, final int publicObjectiveCardId) {
         this.imageView = new ImageView();
-        this.imageToolCard = new Image("file:resources/img/objectivecards/"
+        this.imageToolCard = new Image(getClass().getResource("/img/objectivecards/"
                 + view.getObjectiveCardName(publicObjectiveCardId).toLowerCase().replace(" ", "-")
-                + "-objectivecard.png");
+                + "-objectivecard.png").toExternalForm());
 
         this.imageView.setFitWidth(this.width);
         this.imageView.setFitHeight(this.height);

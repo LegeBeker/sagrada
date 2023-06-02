@@ -18,9 +18,12 @@ public class PatternCardField {
         return this.value;
     }
 
+    public String getColorName() {
+        return this.color != null ? ColorEnum.fromString(this.color.toString()).getName() : null;
+    }
+
     public void setColor(final String color) {
-        ColorEnum colorEnum = ColorEnum.fromString(color);
-        this.color = Color.web(colorEnum.getHexCode());
+        this.color = Color.web(ColorEnum.fromString(color).getHexCode());
     }
 
     public void setValue(final String value) {
