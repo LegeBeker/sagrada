@@ -26,7 +26,8 @@ public class Board {
     private static final int POINTSTWO = 2;
     private static final int POINTSFOUR = 4;
     private static final int POINTSFIVE = 5;
-
+    private static final int MODULOSFOUR = 4;
+    private static final int MODULOSFIVE = 5;
 
 
 
@@ -127,6 +128,8 @@ public class Board {
                     break;
                 case "10":
                     publicObjectiveScore += rows(POINTSFIVE, "shades");
+                    break;
+                default:
                     break;
             }
         }
@@ -245,7 +248,7 @@ public class Board {
                             || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
                         dices++;
                     }
-                    if (dices % 4 == 0) {
+                    if (dices % MODULOSFOUR == 0) {
                         totalScore += points;
                     }
                 }
@@ -282,7 +285,7 @@ public class Board {
                             || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
                         dices++;
                     }
-                    if (dices % 5 == 0) {
+                    if (dices % MODULOSFIVE == 0) {
                         totalScore += points;
                     }
                 }
