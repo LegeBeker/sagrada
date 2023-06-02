@@ -28,7 +28,7 @@ public class GameButtonsView extends VBox implements Observer {
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefWidth(BUTTONWIDTH);
         this.buttonBack.setOnAction(e -> view.openGamesView());
-        
+
         this.buttonGetOffer = new Button("Pak dobbelstenen");
         this.buttonGetOffer.setPrefWidth(BUTTONWIDTH);
         this.buttonGetOffer.setOnAction(e -> getNewOffer());
