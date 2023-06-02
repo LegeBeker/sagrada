@@ -35,6 +35,7 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
     private static final int TOKENSPERGAME = 24;
+    private static final int MAXROUNDNR = 10;
 
     private boolean helpFunction = false;
 
@@ -280,7 +281,7 @@ public class Game extends Observable {
                     dieMap.get("diecolor"));
         }
 
-        if (getRoundID() == 10) {
+        if (getRoundID() == MAXROUNDNR) {
             endGame();
         } else {
             setCurrentRoundID(getRoundID() + 1);
