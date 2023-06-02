@@ -281,11 +281,22 @@ public class Board {
 
     private int diagonallySameColor() {
         int count = 0;
+        ArrayList<Die> visitedDice = new ArrayList<>();
 
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 Die die = getField(row, col);
+                if(die == null) {
+                    continue;
+                }
                 ArrayList<int[]> diagonalNeighbors = getDiagonalNeighbors(row, col);
+                for (int[] neighbor : diagonalNeighbors) {
+                    Die neighborDie = getField(neighbor[0], neighbor[1]);
+                    if (neighborDie != null && die.getColor().equals(neighborDie.getColor()) && !visitedDice.contains(neighborDie)) {
+                        count++;
+                        visitedDice.add(neighborDie);
+                    }
+                }
             }
         }
 
@@ -307,11 +318,7 @@ public class Board {
             }
         }
 
-
-
-
-        return neighbours;
-
+        return neighbors;
     }
 
 }
