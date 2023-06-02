@@ -146,9 +146,10 @@ public final class GameDB {
     public static void finishGame(final int idgame) {
         Database db = Database.getInstance();
 
-        String sql1 = "UPDATE player SET playstatus = 'finished' WHERE idgame = ?;";
+        String sql = "UPDATE player SET playstatus = 'finished' WHERE idgame = ?;";
+        // TODO: add the final score
 
         String[] params = {Integer.toString(idgame)};
-        db.exec(sql1, params);
+        db.exec(sql, params);
     }
 }
