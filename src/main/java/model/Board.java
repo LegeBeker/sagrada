@@ -26,8 +26,7 @@ public class Board {
     private static final int POINTSTWO = 2;
     private static final int POINTSFOUR = 4;
     private static final int POINTSFIVE = 5;
-    private static final int MODULOSFOUR = 4;
-    private static final int MODULOSFIVE = 5;
+
 
 
 
@@ -248,7 +247,7 @@ public class Board {
                             || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
                         dices++;
                     }
-                    if (dices % MODULOSFOUR == 0) {
+                    if (dices % ROWS == 0) {
                         totalScore += points;
                     }
                 }
@@ -285,7 +284,7 @@ public class Board {
                             || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
                         dices++;
                     }
-                    if (dices % MODULOSFIVE == 0) {
+                    if (dices % COLUMNS == 0) {
                         totalScore += points;
                     }
                 }
@@ -336,5 +335,4 @@ public class Board {
 
         return neighbors;
     }
-
 }
