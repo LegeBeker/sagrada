@@ -19,7 +19,8 @@ public class ScoreController {
             String playerScore = calculateScore(player, currentPlayer, playStatusses);
             score.put("score", playerScore);
             scores.add(score);
-            if (currentPlayer.getPlayStatus().equals(PlayStatusEnum.CHALLENGER.toString()) && currentPlayer.getPlayStatus().equals(PlayStatusEnum.FINISHED.toString())) {
+            if (currentPlayer.getPlayStatus().equals(PlayStatusEnum.CHALLENGER.toString())
+                    && currentPlayer.getPlayStatus().equals(PlayStatusEnum.FINISHED.toString())) {
                 player.updateScore(playerScore);
             }
         }
@@ -27,14 +28,16 @@ public class ScoreController {
         return scores;
     }
 
-    public String calculateScore(final Player player, final Player currentPlayer, ArrayList<PlayStatusEnum> playStatusses) {
+    public String calculateScore(final Player player, final Player currentPlayer,
+            final ArrayList<PlayStatusEnum> playStatusses) {
         int favorTokens = player.getFavorTokensLeft();
         int defaultScore = 0;
 
-        if (player.getPlayStatus().equals(PlayStatusEnum.FINISHED.toString()) || player.getId() == currentPlayer.getId()) {
+        if (player.getPlayStatus().equals(PlayStatusEnum.FINISHED.toString())
+                || player.getId() == currentPlayer.getId()) {
             defaultScore += getPrivateObjectiveCardScore(player);
         }
-        
+
         defaultScore += getPublicObjectiveCardScore(player);
         defaultScore += getEmptyPlaces(player);
         defaultScore += favorTokens;

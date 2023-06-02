@@ -59,7 +59,7 @@ public class Board {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 if (board[row - 1][col - 1] == null) {
-                    emptyPlaces++;
+                    emptyPlaces--;
                 }
             }
         }
@@ -85,35 +85,35 @@ public class Board {
     public int getPublicObjectiveCardScore(final ArrayList<Integer> ids) {
         int publicObjectiveScore = 0;
         for (Integer integer : ids) {
-            switch (integer) {
-                case 1:
+            switch (Integer.toString(integer)) {
+                case "1":
                     publicObjectiveScore += sets(5, 1, 2, 3, 4, 5, 6);
                     break;
-                case 2:
+                case "2":
                     publicObjectiveScore += sets(2, 3, 4);
                     break;
-                case 3:
+                case "3":
                     publicObjectiveScore += columns(4, "shades");
                     break;
-                case 4:
+                case "4":
                     publicObjectiveScore += columns(5, "colors");
                     break;
-                case 5:
+                case "5":
                     publicObjectiveScore += sets(2, 5, 6);
                     break;
-                case 6:
+                case "6":
                     publicObjectiveScore += sets(4, "red", "blue", "green", "yellow", "purple");
                     break;
-                case 7:
+                case "7":
                     publicObjectiveScore += rows(5, "colors");
                     break;
-                case 8:
+                case "8":
                     publicObjectiveScore += diagonallySameColor();
                     break;
-                case 9:
+                case "9":
                     publicObjectiveScore += sets(2, 1, 2);
                     break;
-                case 10:
+                case "10":
                     publicObjectiveScore += rows(5, "shades");
                     break;
             }
@@ -165,7 +165,7 @@ public class Board {
         BoardDB.createBoard(boards);
     }
 
-    private int sets(int points, Object... values) {
+    private int sets(final int points, final Object... values) {
         Set<Object> hashSet = new HashSet<>();
         Set<Object> targetSet = new HashSet<>(Arrays.asList(values));
         for (int i = 0; i < values.length; i++) {
@@ -183,7 +183,7 @@ public class Board {
         return completeSets * points;
     }
 
-    private static int countSubsetOccurrences(Set<Object> set, Set<Object> targetSet) {
+    private static int countSubsetOccurrences(final Set<Object> set, final Set<Object> targetSet) {
         int count = 0;
         for (Object element : set) {
             if (targetSet.contains(element)) {
@@ -198,7 +198,7 @@ public class Board {
         return count;
     }
 
-    private boolean valueMatches(Die die, Object value) {
+    private boolean valueMatches(final Die die, final Object value) {
         if (value instanceof Integer) {
             return die.getEyes() == (int) value;
         } else if (value instanceof String) {
@@ -287,13 +287,14 @@ public class Board {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 Die die = getField(row, col);
-                if(die == null) {
+                if (die == null) {
                     continue;
                 }
                 ArrayList<int[]> diagonalNeighbors = getDiagonalNeighbors(row, col);
                 for (int[] neighbor : diagonalNeighbors) {
                     Die neighborDie = getField(neighbor[0], neighbor[1]);
-                    if (neighborDie != null && die.getColor().equals(neighborDie.getColor()) && !visitedDice.contains(neighborDie)) {
+                    if (neighborDie != null && die.getColor().equals(neighborDie.getColor())
+                            && !visitedDice.contains(neighborDie)) {
                         count++;
                         visitedDice.add(neighborDie);
                     }
@@ -307,15 +308,14 @@ public class Board {
     private ArrayList<int[]> getDiagonalNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
 
-        int[][] offsets = new int[][] {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
-
+        int[][] offsets = new int[][] { { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
             int neighborCol = col + offset[1];
 
             if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] {neighborRow, neighborCol});
+                neighbors.add(new int[] { neighborRow, neighborCol });
             }
         }
 

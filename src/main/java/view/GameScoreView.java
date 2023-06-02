@@ -14,8 +14,8 @@ import main.java.pattern.Observer;
 
 public class GameScoreView extends VBox implements Observer {
     private static final int PADDING = 10;
-    
-    private ViewController view; 
+
+    private ViewController view;
 
     public GameScoreView(final ViewController view) {
         this.view = view;
@@ -43,6 +43,6 @@ public class GameScoreView extends VBox implements Observer {
             playerScore.getChildren().add(text);
 
             this.getChildren().add(playerScore);
-        });    
+        });
     }
 }
