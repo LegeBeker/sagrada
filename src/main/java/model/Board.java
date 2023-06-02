@@ -54,16 +54,17 @@ public class Board {
         return true;
     }
 
-    public int getAmountOfDice() {
-        int dice = 0;
+    public int getEmptyPlaces() {
+        int emptyPlaces = 0;
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
-                if (board[row - 1][col - 1] != null) {
-                    dice++;
+                if (board[row - 1][col - 1] == null) {
+                    emptyPlaces++;
                 }
             }
         }
-        return dice;
+
+        return emptyPlaces;
     }
 
     public int getPrivateObjectiveCardScore(final String color) {

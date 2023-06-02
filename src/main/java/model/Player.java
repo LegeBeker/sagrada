@@ -151,6 +151,10 @@ public class Player {
         this.score = score;
     }
 
+    public boolean updateScore(final String score){
+       return PlayerDB.updateScore(getId(), score);
+    }
+
     public static ArrayList<Player> getInvites(final String username) {
         ArrayList<Player> players = new ArrayList<Player>();
 
