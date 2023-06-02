@@ -18,7 +18,7 @@ public class MainController extends Application {
         ViewController view = new ViewController();
 
         stage.setTitle("Sagrada Groep J");
-        stage.getIcons().add(new Image("file:resources/img/app-icon.png"));
+        stage.getIcons().add(new Image(getClass().getResource("/img/app-icon.png").toExternalForm()));
 
         stage.setScene(view);
 

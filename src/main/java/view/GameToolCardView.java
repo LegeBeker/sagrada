@@ -51,8 +51,8 @@ public class GameToolCardView extends StackPane {
         this.toolCardName = toolCardName;
 
         this.imageToolCard = new Image(
-                "file:resources/img/toolcards/" + toolCardName.toLowerCase().replace(" ", "-")
-                        + ".png");
+                getClass().getResource("/img/toolcards/" + toolCardName.toLowerCase().replace(" ", "-")
+                        + ".png").toExternalForm());
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
 
         imageView.setFitWidth(WIDTH);

@@ -14,7 +14,7 @@ public class GameCenterView extends BorderPane {
     private GameToolBarView gameToolBarView;
 
     public GameCenterView(final ViewController view) {
-        this.setTop(new GameOfferView(view));
+        this.setTop(new GameTopView(view));
         this.gameBoardsView = new GameBoardsView(view);
         this.setCenter(this.gameBoardsView);
         this.setBottom(new GameToolBarView(view));

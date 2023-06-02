@@ -48,7 +48,7 @@ public final class DieDB {
     public static List<Map<String, String>> getRoundTrack(final int idGame) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT * FROM gamedie WHERE idgame = ? AND eyes IS NOT NULL AND roundtrack IS NOT NULL";
+        String sql = "SELECT * FROM gamedie WHERE idgame = ? AND eyes IS NOT NULL AND roundtrack IS NOT NULL ORDER BY roundtrack DESC";
 
         String[] params = {Integer.toString(idGame)};
 
