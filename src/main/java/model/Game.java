@@ -384,4 +384,9 @@ public class Game extends Observable {
     public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
         return GameDB.getGamesWithOpenInvites(username);
     }
+
+    public void getNewOffer() {
+        Die.getNewOffer(getId(), getRoundID(), players.size());
+        notifyObservers(Game.class);
+    }
 }

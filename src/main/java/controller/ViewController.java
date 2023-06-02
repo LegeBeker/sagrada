@@ -421,4 +421,8 @@ public class ViewController extends Scene {
     public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return this.gameController.getGamesWithOpenInvites();
     }
+
+    public void getNewOffer() {
+        this.gameController.getGame().getNewOffer();
+    }
 }
