@@ -163,6 +163,6 @@ public class ToolcardController {
 
     public void corkBackedStraightEdge() {
         PatternCard patternCard = view.getCurrentPlayer().getPatternCard();
-        patternCard.setValidateNeighbours(false);
+        patternCard.setValidateNeighbors(false);
     }
 }
