@@ -96,7 +96,8 @@ public class DieDropTarget extends StackPane {
                     System.out.println(!view.getSelectedToolcardName().equals("lathekin"));
                     System.out.println("Die placed in if not: Amount placed die: " + DieDropTarget.amountPlacedDie);
                     DieDropTarget.amountPlacedDie++;
-                } else if (view.getSelectedToolcardName().equals("lathekin")) {
+                } else if (view.getSelectedToolcardName().equals("lathekin")
+                        || view.getSelectedToolcardName().equals("tapWheel")) {
                     System.out.println("else from if not triggered");
                     if (DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
                         DieDropTarget.amountToolcardDie++;
