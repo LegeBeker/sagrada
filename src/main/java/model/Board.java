@@ -279,8 +279,39 @@ public class Board {
         return totalScore;
     }
 
-    public int diagonallySameColor() {
+    private int diagonallySameColor() {
         int count = 0;
+
+        for (int row = 1; row <= ROWS; row++) {
+            for (int col = 1; col <= COLUMNS; col++) {
+                Die die = getField(row, col);
+                ArrayList<int[]> diagonalNeighbors = getDiagonalNeighbors(row, col);
+            }
+        }
+
         return count;
     }
+
+    private ArrayList<int[]> getDiagonalNeighbors(final int row, final int col) {
+        ArrayList<int[]> neighbors = new ArrayList<>();
+
+        int[][] offsets = new int[][] {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+
+
+        for (int[] offset : offsets) {
+            int neighborRow = row + offset[0];
+            int neighborCol = col + offset[1];
+
+            if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
+                neighbors.add(new int[] {neighborRow, neighborCol});
+            }
+        }
+
+
+
+
+        return neighbours;
+
+    }
+
 }
