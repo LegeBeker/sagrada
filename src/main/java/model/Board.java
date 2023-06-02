@@ -17,6 +17,18 @@ public class Board {
 
     private static final int ROWS = 4;
     private static final int COLUMNS = 5;
+    private static final int EYESONE = 1;
+    private static final int EYESTWO = 2;
+    private static final int EYESTHREE = 3;
+    private static final int EYESFOUR = 4;
+    private static final int EYESFIVE = 5;
+    private static final int EYESSIX = 6;
+    private static final int POINTSTWO = 2;
+    private static final int POINTSFOUR = 4;
+    private static final int POINTSFIVE = 5;
+
+
+
 
     private Die[][] board = new Die[ROWS][COLUMNS];
 
@@ -87,34 +99,34 @@ public class Board {
         for (Integer integer : ids) {
             switch (Integer.toString(integer)) {
                 case "1":
-                    publicObjectiveScore += sets(5, 1, 2, 3, 4, 5, 6);
+                    publicObjectiveScore += sets(POINTSFIVE, EYESONE, EYESTWO, EYESTHREE, EYESFOUR, EYESFIVE, EYESSIX);
                     break;
                 case "2":
-                    publicObjectiveScore += sets(2, 3, 4);
+                    publicObjectiveScore += sets(POINTSTWO, EYESTHREE, EYESFOUR);
                     break;
                 case "3":
-                    publicObjectiveScore += columns(4, "shades");
+                    publicObjectiveScore += columns(POINTSFOUR, "shades");
                     break;
                 case "4":
-                    publicObjectiveScore += columns(5, "colors");
+                    publicObjectiveScore += columns(POINTSFIVE, "colors");
                     break;
                 case "5":
-                    publicObjectiveScore += sets(2, 5, 6);
+                    publicObjectiveScore += sets(POINTSTWO, EYESFIVE, EYESSIX);
                     break;
                 case "6":
-                    publicObjectiveScore += sets(4, "red", "blue", "green", "yellow", "purple");
+                    publicObjectiveScore += sets(POINTSFOUR, "red", "blue", "green", "yellow", "purple");
                     break;
                 case "7":
-                    publicObjectiveScore += rows(5, "colors");
+                    publicObjectiveScore += rows(POINTSFIVE, "colors");
                     break;
                 case "8":
                     publicObjectiveScore += diagonallySameColor();
                     break;
                 case "9":
-                    publicObjectiveScore += sets(2, 1, 2);
+                    publicObjectiveScore += sets(POINTSTWO, EYESONE, EYESTWO);
                     break;
                 case "10":
-                    publicObjectiveScore += rows(5, "shades");
+                    publicObjectiveScore += rows(POINTSFIVE, "shades");
                     break;
             }
         }
@@ -157,7 +169,7 @@ public class Board {
             boards.put(player, new ArrayList<>());
             for (int row = 1; row <= ROWS; row++) {
                 for (int col = 1; col <= COLUMNS; col++) {
-                    boards.get(player).add(new int[] { col, row });
+                    boards.get(player).add(new int[] {col, row});
                 }
             }
         });
@@ -308,14 +320,14 @@ public class Board {
     private ArrayList<int[]> getDiagonalNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
 
-        int[][] offsets = new int[][] { { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
+        int[][] offsets = new int[][] {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
             int neighborCol = col + offset[1];
 
             if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] { neighborRow, neighborCol });
+                neighbors.add(new int[] {neighborRow, neighborCol});
             }
         }
 
