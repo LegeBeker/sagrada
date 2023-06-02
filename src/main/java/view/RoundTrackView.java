@@ -85,7 +85,7 @@ public class RoundTrackView extends StackPane implements Observer {
         int previousRoundtrack = -1;
         for (Map<String, String> die : view.getRoundTrack()) {
             int currentRoundTrack = Integer.parseInt(die.get("roundtrack")) - 1;
-            Group currentDiceGroup = roundGroups.get((currentRoundTrack + 1) / 2);
+            Group currentDiceGroup = roundGroups.get((currentRoundTrack) / 2);
             GridPane diceDisplay = (GridPane) currentDiceGroup.getChildren().get(1);
 
             if (previousRoundtrack != currentRoundTrack) {
