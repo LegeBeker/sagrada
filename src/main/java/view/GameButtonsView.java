@@ -14,6 +14,7 @@ public class GameButtonsView extends VBox implements Observer {
     private ViewController view;
 
     private Button buttonBack;
+    private Button buttonGetOffer;
     private Button buttonEndTurn;
     private ToggleButton helpToggle;
 
@@ -27,6 +28,10 @@ public class GameButtonsView extends VBox implements Observer {
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefWidth(BUTTONWIDTH);
         this.buttonBack.setOnAction(e -> view.openGamesView());
+
+        this.buttonGetOffer = new Button("Pak dobbelstenen");
+        this.buttonGetOffer.setPrefWidth(BUTTONWIDTH);
+        this.buttonGetOffer.setOnAction(e -> getNewOffer());
 
         this.helpToggle = new ToggleButton("Help!");
         this.helpToggle.setPrefWidth(BUTTONWIDTH);
@@ -51,6 +56,11 @@ public class GameButtonsView extends VBox implements Observer {
         this.setSpacing(PADDING);
     }
 
+    private void getNewOffer() {
+        this.buttonGetOffer.setDisable(true);
+        view.getNewOffer();
+    }
+
     private void endTurn() {
         this.buttonEndTurn.setDisable(true);
         view.endTurn();
@@ -61,9 +71,17 @@ public class GameButtonsView extends VBox implements Observer {
         if (this.getChildren().contains(buttonEndTurn)) {
             this.getChildren().remove(buttonEndTurn);
         }
-        if (view.isTurnPlayer()) {
+        if (view.isTurnPlayer() && !view.getOffer().isEmpty()) {
             this.getChildren().addAll(buttonEndTurn);
             this.buttonEndTurn.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
+        }
+
+        if (this.getChildren().contains(buttonGetOffer)) {
+            this.getChildren().remove(buttonGetOffer);
+        }
+        if (view.getOffer().isEmpty() && view.isTurnPlayer()) {
+            this.getChildren().addAll(buttonGetOffer);
+            this.buttonGetOffer.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
         }
     }
 
