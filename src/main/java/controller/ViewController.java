@@ -468,7 +468,7 @@ public class ViewController extends Scene {
 
     public void fluxRemover(final int dieNumber, final String dieColor) {
         ToolcardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor,
-                gameController.getGame().getRoundID());
+        gameController.getGame().getRoundID());
     }
       
     public void getNewOffer() {
