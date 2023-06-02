@@ -50,6 +50,7 @@ public class ViewController extends Scene {
     private GameController gameController;
     private PatternCardController patternCardController;
     private MessageController messageController;
+    private ScoreController scoreController;
     private ToolcardController toolCardController;
     private FavorTokenController favorTokenController;
 
@@ -90,6 +91,7 @@ public class ViewController extends Scene {
         this.patternCardController = new PatternCardController(this);
         this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
+        this.scoreController = new ScoreController();
         this.toolCardController = new ToolcardController();
         this.favorTokenController = new FavorTokenController(this);
 
@@ -218,6 +220,10 @@ public class ViewController extends Scene {
 
     public Player getCurrentPlayer() {
         return this.gameController.getCurrentPlayer();
+    }
+
+    public List<Map<String, String>> getScores() {
+        return this.scoreController.getScores(getCurrentPlayer());
     }
 
     public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
