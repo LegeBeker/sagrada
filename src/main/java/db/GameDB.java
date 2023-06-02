@@ -145,7 +145,7 @@ public final class GameDB {
 
     public static void finishGame(final int idgame) {
         Database db = Database.getInstance();
-        
+
         String sql = "UPDATE player SET playstatus = '" + PlayStatusEnum.FINISHED.toString()
             + "' WHERE idgame = ?;";
 
