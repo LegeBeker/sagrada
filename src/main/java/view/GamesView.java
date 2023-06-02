@@ -130,6 +130,9 @@ public class GamesView extends VBox {
                         view.displayError("Niet alle spelers hebben de uitnodiging geaccepteerd");
                     } else if (Boolean.parseBoolean(game.get("hasDeclinedInvites"))) {
                         view.displayError("Iemand heeft de uitnodiging geweigerd");
+                    } else if (game.get("username") == null && game.get("roundnr") == null) {
+                        view.displayError(
+                                "De game is nog niet gestart. Wacht tot de andere speler het spel heeft gestart");
                     } else {
                         view.openGameView(gameId);
                     }
