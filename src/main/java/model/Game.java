@@ -35,6 +35,7 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
     private static final int TOKENSPERGAME = 24;
+    private static final int MAXROUNDNR = 10;
 
     private boolean helpFunction = false;
 
@@ -266,9 +267,11 @@ public class Game extends Observable {
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == 1) {
                 player.setSeqnr(getPlayers().size());
-                setTurnPlayer(player);
             } else {
                 player.setSeqnr(player.getSeqnr() - 1);
+                if (player.getSeqnr() == 1) {
+                    setTurnPlayer(player);
+                }
             }
         }
 
@@ -278,12 +281,20 @@ public class Game extends Observable {
                     dieMap.get("diecolor"));
         }
 
-        setCurrentRoundID(getRoundID() + 1);
+        if (getRoundID() == MAXROUNDNR) {
+            endGame();
+        } else {
+            setCurrentRoundID(getRoundID() + 1);
+        }
     }
 
     private void setCurrentRoundID(final int roundID) {
         GameDB.setRound(getId(), roundID);
         notifyObservers(Game.class);
+    }
+
+    private void endGame() {
+        GameDB.finishGame(getId());
     }
 
     public static Game get(final int idGame) {
