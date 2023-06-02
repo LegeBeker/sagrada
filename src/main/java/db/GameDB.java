@@ -82,7 +82,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "UPDATE game SET current_roundID = ? WHERE idgame = " + Integer.toString(gameID) + ";";
-        String[] params = { Integer.toString(round) };
+        String[] params = {Integer.toString(round)};
 
         return db.exec(sql, params);
     }
