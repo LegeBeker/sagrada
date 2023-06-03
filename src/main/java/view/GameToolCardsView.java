@@ -33,7 +33,6 @@ public class GameToolCardsView extends FlowPane implements Observer {
 
     @Override
     public void update() {
-
         // -- Calculate new stone positions
         for (GameToolCardView toolCard : toolCardViews) {
             toolCard.reCalcStonePositions();
