@@ -2,7 +2,11 @@ package main.java.view;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -13,6 +17,7 @@ import main.java.controller.ViewController;
 
 public class GameToolCardView extends StackPane {
     private final Image imageToolCard;
+    private ViewController view;
 
     private static final int WIDTH = 150;
     private static final int HEIGHT = 200;
@@ -40,6 +45,7 @@ public class GameToolCardView extends StackPane {
 
     public GameToolCardView(final ViewController view, final String toolCardName) {
         ImageView imageView = new ImageView();
+        this.view = view;
 
         this.toolCardName = toolCardName;
 
@@ -101,13 +107,41 @@ public class GameToolCardView extends StackPane {
                 if (!isSelected) {
                     if (selectedToolCardView != null) {
                         selectedToolCardView.removeSelection();
-                        String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCardName());
-                        System.out.println(deselectedMethodName + "() has been deselected.");
                     }
-                    this.addSelection();
-                    selectedToolCardView = this;
+
                     String methodName = getSelectedMethodName(toolCardName);
-                    System.out.println(methodName + "() has been selected.");
+                    if (!methodName.equals("")) {
+                        if (askConfirmationUsageCard(this.getToolCardName())) {
+                            this.addSelection();
+                            selectedToolCardView = this;
+
+                            // -- These methods can be called without any input variables
+                            switch (methodName) {
+                                case "glazingHammer":
+                                    if (!view.glazingHammer()) { // Returns a boolean for the extra check
+                                        this.view.displayError(
+                                                "Je kan alleen het aanbod opnieuw rollen bij de 2e beurt in de ronde.");
+                                    }
+                                    this.removeSelection();
+                                    this.isSelected = false;
+                                    break;
+                                case "runningPliers":
+                                    break;
+                                case "eglomiseBrush":
+                                    view.eglomiseBrush();
+                                    break;
+                                case "copperFoilBurnisher":
+                                    view.copperFoilBurnisher();
+                                    break;
+                                case "lathekin":
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        }
+                    }
+
                 } else {
                     removeSelection();
                     selectedToolCardView = null;
@@ -122,11 +156,13 @@ public class GameToolCardView extends StackPane {
     private void addSelection() {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
         isSelected = true;
+        view.setToolCardSelection(this.getSelectedMethodName(this.toolCardName));
     }
 
     private void removeSelection() {
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
         isSelected = false;
+        view.setToolCardSelection(null);
     }
 
     public String getToolCardName() {
@@ -141,5 +177,26 @@ public class GameToolCardView extends StackPane {
     private String getDeselectedMethodName(final String toolCardName) {
         String deselectedMethodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
         return Character.toLowerCase(deselectedMethodName.charAt(0)) + deselectedMethodName.substring(1);
+    }
+
+    private Boolean askConfirmationUsageCard(final String toolCardname) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Gebruik gereedschapskaart");
+        alert.setHeaderText("Bevestiging gebruikt " + toolCardname);
+        alert.setContentText(
+                "Je staat op het punt om de gereedschapskaart " + toolCardname + " te gebruiken. Weet je het zeker?");
+
+        ButtonType acceptButton = new ButtonType("Accepteren");
+        ButtonType refuseButton = new ButtonType("Weigeren");
+        ButtonType closeButton = new ButtonType("Sluiten", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(acceptButton, refuseButton, closeButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return result.get() == acceptButton;
+    }
+
+    public Boolean getSelectionStatus() {
+        return this.isSelected;
     }
 }

@@ -27,7 +27,7 @@ public class GameButtonsView extends VBox implements Observer {
 
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefWidth(BUTTONWIDTH);
-        this.buttonBack.setOnAction(e -> view.openGamesView());
+        this.buttonBack.setOnAction(e -> backOutOfGame());
 
         this.buttonGetOffer = new Button("Pak dobbelstenen");
         this.buttonGetOffer.setPrefWidth(BUTTONWIDTH);
@@ -60,6 +60,7 @@ public class GameButtonsView extends VBox implements Observer {
 
     private void endTurn() {
         this.buttonEndTurn.setDisable(true);
+        view.setToolCardSelection(null);
         view.endTurn();
     }
 
@@ -80,6 +81,11 @@ public class GameButtonsView extends VBox implements Observer {
             this.getChildren().addAll(buttonGetOffer);
             this.buttonGetOffer.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
         }
+    }
+
+    private void backOutOfGame() {
+        view.setToolCardSelection(null);
+        view.openGamesView();
     }
 
 }

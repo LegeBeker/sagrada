@@ -27,9 +27,6 @@ public class Board {
     private static final int POINTSFOUR = 4;
     private static final int POINTSFIVE = 5;
 
-
-
-
     private Die[][] board = new Die[ROWS][COLUMNS];
 
     private Player player;
@@ -54,6 +51,8 @@ public class Board {
     }
 
     public boolean placeDie(final Color color, final int number, final int row, final int column) {
+
+
         boolean result = BoardDB.setField(
                 this.player.getGame().getId(), this.player.getGame().getRoundID(), this.player.getId(), row,
                 column, ColorEnum.fromString(color.toString()).getName(), number);
@@ -148,20 +147,6 @@ public class Board {
 
             board.board[row - 1][col - 1] = Die.mapToDie(map);
         }
-
-        return board;
-    }
-
-    public static Board update(final Board board) {
-        List<Map<String, String>> fieldValues = BoardDB.getBoard(board.player.getGame().getId(), board.player.getId());
-
-        for (Map<String, String> map : fieldValues) {
-            int row = Integer.parseInt(map.get("position_y"));
-            int col = Integer.parseInt(map.get("position_x"));
-
-            board.board[row - 1][col - 1] = Die.mapToDie(map);
-        }
-
         return board;
     }
 

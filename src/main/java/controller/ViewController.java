@@ -52,7 +52,6 @@ public class ViewController extends Scene {
     private MessageController messageController;
     private ScoreController scoreController;
     private ToolcardController toolCardController;
-    private FavorTokenController favorTokenController;
 
     private EffectsController effectsController;
 
@@ -93,7 +92,6 @@ public class ViewController extends Scene {
         this.effectsController = new EffectsController();
         this.scoreController = new ScoreController();
         this.toolCardController = new ToolcardController(this);
-        this.favorTokenController = new FavorTokenController(this);
 
         this.openLoginView();
     }
@@ -105,6 +103,10 @@ public class ViewController extends Scene {
     public int getPlayerId() {
         Player player = this.gameController.getCurrentPlayer();
         return player.getId();
+    }
+
+    public int getCurrentRound() {
+        return this.gameController.getRound();
     }
 
     public void changeView(final Pane pane) {
@@ -204,7 +206,7 @@ public class ViewController extends Scene {
     }
 
     public List<Map<String, String>> getFavorTokensForToolCard(final String toolCardName) {
-        return this.favorTokenController.getFavorTokensForToolCard(
+        return this.toolCardController.getFavorTokensForToolCard(
                 Integer.parseInt(
                         ToolcardController.getToolCard(gameController.getGameId(), toolCardName).get("idtoolcard")),
                 gameController.getGameId());
@@ -426,6 +428,48 @@ public class ViewController extends Scene {
 
     public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return this.gameController.getGamesWithOpenInvites();
+    }
+
+    public Boolean getGameClockwise() {
+        return gameController.getGame().getClockwise();
+    }
+
+    // -- Toolcards logic
+    public String getSelectedToolcardName() {
+        return gameController.getSelectedToolcardName();
+    }
+
+    public void setToolCardSelection(final String selectedToolcardName) {
+        gameController.setSelectedToolcardName(selectedToolcardName);
+    }
+
+    public void grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
+        ToolcardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor, actionChoice);
+    }
+
+    public void grindingStone(final int dieNumber, final String dieColor) {
+        ToolcardController.grindingStone(gameController.getGameId(), dieNumber, dieColor);
+    }
+
+    public void fluxBrush(final int dieNumber, final String dieColor) {
+        ToolcardController.fluxBrush(gameController.getGameId(), dieNumber, dieColor);
+    }
+
+    public Boolean glazingHammer() {
+        return ToolcardController.glazingHammer(1, gameController.getGameId(), gameController.getGame().getRoundID());
+    }
+
+    public void fluxRemover(final int dieNumber, final String dieColor) {
+        ToolcardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor,
+                gameController.getGame().getRoundID());
+    }
+
+    public void eglomiseBrush() {
+        this.toolCardController.eglomiseBrush();
+    }
+
+    public void copperFoilBurnisher() {
+        this.toolCardController.copperFoilBurnisher();
     }
 
     public void getNewOffer() {
