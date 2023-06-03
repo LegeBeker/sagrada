@@ -142,10 +142,6 @@ public class PatternCard {
         if (this.getField(rowIndex, columnIndex).getColor() == null
                 && this.getField(rowIndex, columnIndex).getValue() == null) {
 
-            if (!board.isEmpty()) {
-                return false;
-            }
-
             if (!this.validateNeighbors && this.neighborsEmpty(rowIndex, columnIndex, board)) {
                 return false;
             }
