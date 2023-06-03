@@ -21,6 +21,8 @@ public class PatternCard {
     private static Map<Integer, PatternCard> cachedCards = new HashMap<Integer, PatternCard>();
 
     private boolean validateNeighbors = true;
+    private boolean validateColors = true;
+    private boolean validateEyes = true;
 
     private PatternCardField[][] fields = new PatternCardField[ROWS][COLUMNS];
 
@@ -64,6 +66,14 @@ public class PatternCard {
 
     public void setValidateNeighbors(final boolean validateNeighbors) {
         this.validateNeighbors = validateNeighbors;
+    }
+
+    public void setValidateColors(final boolean validateColor) {
+        this.validateColors = validateColor;
+    }
+
+    public void setValidateEyes(final boolean validateEyes) {
+        this.validateEyes = validateEyes;
     }
 
     public static PatternCard mapCustomPatternCard(final int id, final int difficulty,
@@ -230,7 +240,7 @@ public class PatternCard {
             final int dieValue,
             final Color dieColor,
             final Board board) {
-        ArrayList<int[]> neighbors = validateNeighbors(rowIndex, columnIndex, false);
+        ArrayList<int[]> neighbors = getNeighbors(rowIndex, columnIndex, false);
         for (int[] neighbor : neighbors) {
             Die neighborDie = board.getField(neighbor[0], neighbor[1]);
 
@@ -247,7 +257,7 @@ public class PatternCard {
     }
 
     private boolean neighborsEmpty(final int row, final int col, final Board board) {
-        ArrayList<int[]> neighbors = validateNeighbors(row, col, true);
+        ArrayList<int[]> neighbors = getNeighbors(row, col, true);
 
         for (int[] neighbor : neighbors) {
             if (board.getField(neighbor[0], neighbor[1]) != null) {
@@ -263,10 +273,10 @@ public class PatternCard {
         int[][] offsets;
 
         if (includeDiagonals) {
-            offsets = new int[][] {{-1, 0 }, {1, 0 }, {0, -1 }, {0, 1 }, {-1, -1 }, {-1, 1 }, {1, -1 },
-                    {1, 1 }};
+            offsets = new int[][] {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1},
+                    {1, 1}};
         } else {
-            offsets = new int[][] {{-1, 0 }, {1, 0 }, {0, -1 }, {0, 1 }};
+            offsets = new int[][] {{-1, 0 }, {1, 0}, {0, -1}, {0, 1}};
         }
 
         for (int[] offset : offsets) {
