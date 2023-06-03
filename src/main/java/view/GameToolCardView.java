@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import main.java.controller.ViewController;
+import main.java.enums.ToolcardEnum;
 
 public class GameToolCardView extends StackPane {
     private final Image imageToolCard;
@@ -42,19 +43,19 @@ public class GameToolCardView extends StackPane {
     private List<Map<String, String>> players;
     private Pane stoneDisplayPane;
 
-    private String toolCardName;
+    private ToolcardEnum toolCard;
 
     private boolean isSelected = false;
     private static GameToolCardView selectedToolCardView = null;
 
-    public GameToolCardView(final ViewController view, final String toolCardName) {
+    public GameToolCardView(final ViewController view, final ToolcardEnum toolCard) {
         ImageView imageView = new ImageView();
         this.view = view;
 
-        this.toolCardName = toolCardName;
+        this.toolCard = toolCard;
 
         this.imageToolCard = new Image(
-                getClass().getResource("/img/toolcards/" + toolCardName.toLowerCase().replace(" ", "-")
+                getClass().getResource("/img/toolcards/" + toolCard.getImageName().toLowerCase().replace(" ", "-")
                         + ".png").toExternalForm());
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
 
@@ -69,7 +70,7 @@ public class GameToolCardView extends StackPane {
 
         players = view.getPlayers();
 
-        for (Map<String, String> ft : view.getFavorTokensForToolCard(toolCardName)) {
+        for (Map<String, String> ft : view.getFavorTokensForToolCard(toolCard.getName())) {
             calculateNewStonePosition(ft);
         }
 
@@ -82,9 +83,9 @@ public class GameToolCardView extends StackPane {
                         selectedToolCardView.removeSelection();
                     }
 
-                    String methodName = getSelectedMethodName(toolCardName);
+                    String methodName = getSelectedMethodName(toolCard.getName());
                     if (!methodName.equals("")) {
-                        if (askConfirmationUsageCard(this.getToolCardName())) {
+                        if (askConfirmationUsageCard(toolCard.getDutchName())) {
                             this.addSelection();
                             selectedToolCardView = this;
 
@@ -108,8 +109,6 @@ public class GameToolCardView extends StackPane {
                                     break;
                                 case "lathekin":
                                     break;
-                                default:
-                                    break;
                             }
 
                         }
@@ -118,7 +117,7 @@ public class GameToolCardView extends StackPane {
                 } else {
                     removeSelection();
                     selectedToolCardView = null;
-                    String deselectedMethodName = getDeselectedMethodName(toolCardName);
+                    String deselectedMethodName = getDeselectedMethodName(toolCard.getName());
                     System.out.println(deselectedMethodName + "() has been deselected.");
                 }
             }
@@ -137,7 +136,7 @@ public class GameToolCardView extends StackPane {
     public void addSelection() {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
         isSelected = true;
-        view.setToolCardSelection(this.getSelectedMethodName(this.toolCardName));
+        view.setToolCardSelection(this.getSelectedMethodName(toolCard.getName()));
     }
 
     public void removeSelection() {
@@ -147,7 +146,7 @@ public class GameToolCardView extends StackPane {
     }
 
     public String getToolCardName() {
-        return this.toolCardName;
+        return toolCard.getName();
     }
 
     public String getSelectedMethodName(final String toolCardName) {
