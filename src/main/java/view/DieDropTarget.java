@@ -33,8 +33,8 @@ public class DieDropTarget extends StackPane {
         });
 
         this.setOnDragDropped(event -> {
-            if (view.getSelectedToolcardName().equals("lathekin")
-                    || view.getSelectedToolcardName().equals("tapWheel")) {
+            if (view.getSelectedToolcardName() != null && (view.getSelectedToolcardName().equals("lathekin")
+                    || view.getSelectedToolcardName().equals("tapWheel"))) {
                 maxAmountToolcardDie = 2;
             }
 
