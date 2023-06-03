@@ -225,6 +225,7 @@ public class DieView extends Group {
                     break;
                 case "tapWheel":
                     break;
+                default:
             }
 
             if (!methodName.equals("lensCutter")) {
