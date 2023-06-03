@@ -8,14 +8,12 @@ import main.java.controller.ViewController;
 
 public class GameToolBarView extends HBox {
 
-    private GameCenterView gameCenterView;
     private GameToolCardsView gameToolCardsView;
 
     public GameToolBarView(final ViewController view) {
         this.gameToolCardsView = new GameToolCardsView(view);
         this.getChildren().addAll(gameToolCardsView, new GamePublicObjectiveCardsView(view),
-                new GamePrivateObjectiveCardView(view),
-                new RoundTrackView(view));
+                new GamePrivateObjectiveCardView(view));
 
         this.getChildren().forEach(child -> {
             HBox.setHgrow(child, Priority.ALWAYS);
@@ -23,7 +21,7 @@ public class GameToolBarView extends HBox {
 
         this.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
     }
-
+    
     public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
         gameToolCardsView.dieSelectedForToolcard(selectedDieMap);
     }
