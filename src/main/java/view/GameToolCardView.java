@@ -204,8 +204,8 @@ public class GameToolCardView extends StackPane {
 
     public void reCalcStonePositions() {
 
-        if (amountFavorTokensDisplayed != view.getFavorTokensForToolCard(getToolCardName()).size()) {
-            List<Map<String, String>> favorTokenList = view.getFavorTokensForToolCard(getToolCardName());
+        List<Map<String, String>> favorTokenList = view.getFavorTokensForToolCard(getToolCardName());
+        if (amountFavorTokensDisplayed != favorTokenList.size()) {
             int diff = favorTokenList.size() - amountFavorTokensDisplayed;
             for (int i = 0; i < diff; i++) {
                 int index = favorTokenList.size() - (i + 1);
