@@ -76,27 +76,27 @@ public class DieDropTarget extends StackPane {
                         return;
                     }
 
-                        Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
-                                dieView.getColor(), dieView.getNumber(),
-                                GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+                    Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
+                            dieView.getColor(), dieView.getNumber(),
+                            GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
 
-                        if (!placeDie) {
-                            this.view.displayError("Deze zet is niet geldig.");
-                            return;
-                        }
+                    if (!placeDie) {
+                        this.view.displayError("Deze zet is niet geldig.");
+                        return;
                     }
                 }
             }
 
-            if (view.getSelectedToolcardName() != null) {
-                if (DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
-                    DieDropTarget.amountToolcardDie++;
-                }
+            if (view.getSelectedToolcardName() != null && DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
+                DieDropTarget.amountToolcardDie++;
             }
+
             DieDropTarget.amountPlacedDie++;
             event.setDropCompleted(true);
             event.consume();
-        };
+        });
+
+    }
 
     public static void resetAmountPlacedDie() {
         DieDropTarget.amountPlacedDie = 0;
