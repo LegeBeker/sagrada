@@ -14,8 +14,7 @@ public class GameToolBarView extends HBox {
     public GameToolBarView(final ViewController view) {
         this.gameToolCardsView = new GameToolCardsView(view);
         this.getChildren().addAll(gameToolCardsView, new GamePublicObjectiveCardsView(view),
-                new GamePrivateObjectiveCardView(view),
-                new RoundTrackView(view));
+                new GamePrivateObjectiveCardView(view));
 
         this.getChildren().forEach(child -> {
             HBox.setHgrow(child, Priority.ALWAYS);
