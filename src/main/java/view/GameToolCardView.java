@@ -38,6 +38,10 @@ public class GameToolCardView extends StackPane {
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
 
+    private int amountFavorTokensDisplayed = 0;
+    private List<Map<String, String>> players;
+    private Pane stoneDisplayPane;
+
     private String toolCardName;
 
     private boolean isSelected = false;
@@ -59,48 +63,17 @@ public class GameToolCardView extends StackPane {
         imageView.setImage(imageToolCard);
         view.effects().add3DHoverEffect(this, WIDTH, HEIGHT, SCALEINCREASE, OFFSET, 0);
 
-        Pane pane = new Pane();
-        pane.setPrefHeight(CARDHEIGHT);
-        pane.setPrefWidth(WIDTH);
+        stoneDisplayPane = new Pane();
+        stoneDisplayPane.setPrefHeight(CARDHEIGHT);
+        stoneDisplayPane.setPrefWidth(WIDTH);
 
-        List<Map<String, String>> players = view.getPlayers();
+        players = view.getPlayers();
 
         for (Map<String, String> ft : view.getFavorTokensForToolCard(toolCardName)) {
-
-            int randX = 1 + (int) (Math.random() * WIDTH);
-            int randY = 1 + (int) (Math.random() * CARDHEIGHT);
-
-            if (randX <= PROHIBITEDX) {
-                randX += PROHIBITEDX;
-            } else if (randX > WIDTH - CIRCLERADIUS) {
-                randX -= CIRCLERADIUS;
-            }
-            if (randY <= PROHIBITEDY) {
-                randY += PROHIBITEDY;
-            } else if (randY > WIDTH - CIRCLERADIUS) {
-                randY -= CIRCLERADIUS;
-            }
-            for (Map<String, String> p : players) {
-                if (p.get("idPlayer").equals(ft.get("idplayer"))) {
-                    Circle c = new Circle(randX, randY, CIRCLERADIUS);
-                    Color playerColor = Color.valueOf(p.get("color"));
-                    if (playerColor != null) {
-                        c.setFill(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
-                                (int) (playerColor.getGreen() * MAXVALUERGB),
-                                (int) (playerColor.getBlue() * MAXVALUERGB), OPACITY));
-                        c.setStroke(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
-                                (int) (playerColor.getGreen() * MAXVALUERGB),
-                                (int) (playerColor.getBlue()) * MAXVALUERGB).deriveColor(0, 1, 0.2, 1));
-                        c.setStrokeWidth(2);
-
-                        Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
-                        innerCircle.setFill(Color.rgb(MAXVALUERGB, MAXVALUERGB, MAXVALUERGB, OPACITY));
-                        pane.getChildren().addAll(c, innerCircle);
-                    }
-                }
-            }
+            calculateNewStonePosition(ft);
         }
-        this.getChildren().addAll(imageView, pane);
+
+        this.getChildren().addAll(imageView, stoneDisplayPane);
 
         this.setOnMouseClicked(event -> {
             if (view.isTurnPlayer()) {
@@ -153,13 +126,21 @@ public class GameToolCardView extends StackPane {
         });
     }
 
-    private void addSelection() {
+    public void addSelectionOutline() {
+        this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
+    }
+
+    public void removeSelectionOutline() {
+        this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
+    }
+
+    public void addSelection() {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
         isSelected = true;
         view.setToolCardSelection(this.getSelectedMethodName(this.toolCardName));
     }
 
-    private void removeSelection() {
+    public void removeSelection() {
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
         isSelected = false;
         view.setToolCardSelection(null);
@@ -169,7 +150,7 @@ public class GameToolCardView extends StackPane {
         return this.toolCardName;
     }
 
-    private String getSelectedMethodName(final String toolCardName) {
+    public String getSelectedMethodName(final String toolCardName) {
         String methodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
         return Character.toLowerCase(methodName.charAt(0)) + methodName.substring(1);
     }
@@ -184,7 +165,8 @@ public class GameToolCardView extends StackPane {
         alert.setTitle("Gebruik gereedschapskaart");
         alert.setHeaderText("Bevestiging gebruikt " + toolCardname);
         alert.setContentText(
-                "Je staat op het punt om de gereedschapskaart " + toolCardname + " te gebruiken. Weet je het zeker?");
+                "Je staat op het punt om de gereedschapskaart " + toolCardname
+                        + " te gebruiken, je koopt dan direct de gereedschapskaart. Weet je het zeker?");
 
         ButtonType acceptButton = new ButtonType("Accepteren");
         ButtonType refuseButton = new ButtonType("Weigeren");
@@ -193,10 +175,67 @@ public class GameToolCardView extends StackPane {
 
         Optional<ButtonType> result = alert.showAndWait();
 
+        if (result.get() == acceptButton) {
+            if (!view.buyToolCard(toolCardname)) {
+                view.displayError("Je hebt niet genoeg betaalstenen om deze gereedschapskaart te kopen.");
+                return false;
+            }
+        }
+
         return result.get() == acceptButton;
     }
 
     public Boolean getSelectionStatus() {
         return this.isSelected;
+    }
+
+    public void reCalcStonePositions() {
+
+        List<Map<String, String>> favorTokenList = view.getFavorTokensForToolCard(getToolCardName());
+        if (amountFavorTokensDisplayed != favorTokenList.size()) {
+            int diff = favorTokenList.size() - amountFavorTokensDisplayed;
+            for (int i = 0; i < diff; i++) {
+                int index = favorTokenList.size() - (i + 1);
+                calculateNewStonePosition(favorTokenList.get(index));
+                amountFavorTokensDisplayed++;
+            }
+        }
+    }
+
+    private void calculateNewStonePosition(final Map<String, String> ft) {
+        int randX = 1 + (int) (Math.random() * WIDTH);
+        int randY = 1 + (int) (Math.random() * CARDHEIGHT);
+
+        if (randX <= PROHIBITEDX) {
+            randX += PROHIBITEDX;
+        } else if (randX > WIDTH - CIRCLERADIUS) {
+            randX -= CIRCLERADIUS;
+        }
+        if (randY <= PROHIBITEDY) {
+            randY += PROHIBITEDY;
+        } else if (randY > WIDTH - CIRCLERADIUS) {
+            randY -= CIRCLERADIUS;
+        }
+        for (Map<String, String> p : players) {
+            if (p.get("idPlayer").equals(ft.get("idplayer"))) {
+                Circle c = new Circle(randX, randY, CIRCLERADIUS);
+                Color playerColor = Color.valueOf(p.get("color"));
+                if (playerColor != null) {
+                    c.setFill(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
+                            (int) (playerColor.getGreen() * MAXVALUERGB),
+                            (int) (playerColor.getBlue() * MAXVALUERGB), OPACITY));
+                    c.setStroke(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
+                            (int) (playerColor.getGreen() * MAXVALUERGB),
+                            (int) (playerColor.getBlue()) * MAXVALUERGB).deriveColor(0, 1, 0.2, 1));
+                    c.setStrokeWidth(2);
+
+                    Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
+                    innerCircle.setFill(Color.rgb(MAXVALUERGB, MAXVALUERGB, MAXVALUERGB, OPACITY));
+                    stoneDisplayPane.getChildren().addAll(c, innerCircle);
+                    this.amountFavorTokensDisplayed++;
+                }
+            }
+        }
+
     }
 }

@@ -434,7 +434,23 @@ public class ViewController extends Scene {
         return gameController.getGame().getClockwise();
     }
 
-    // -- Toolcards logic
+    public boolean buyToolCard(final String toolcardName) {
+        int amountFavorTokens = gameController.getCurrentPlayer().getFavorTokensLeft();
+        int amountTokensAssigned = toolCardController.getToolCardPrice(toolcardName, gameController.getGameId());
+
+        int toolCardPrice = 1;
+        if (amountTokensAssigned > 0) {
+            toolCardPrice = 2;
+        }
+
+        if (amountFavorTokens >= toolCardPrice) {
+            toolCardController.buyToolCard(toolcardName, gameController.getGameId(),
+                    gameController.getCurrentPlayer().getId(), toolCardPrice, gameController.getGame().getRoundID());
+            return true;
+        }
+        return false;
+    }
+
     public String getSelectedToolcardName() {
         return gameController.getSelectedToolcardName();
     }
