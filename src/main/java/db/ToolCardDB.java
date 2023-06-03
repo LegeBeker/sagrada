@@ -56,4 +56,18 @@ public final class ToolCardDB {
         String[] params2 = {Integer.toString(roundID - 1), Integer.toString(idgame)};
         db.exec(sql2, params2);
     }
+
+    public static void lensCutter(final int gameId, final int currentRoundId, final int dieNumberOffer, final String dieColorOffer, final int dieNumberRoundTrack, final String dieColorRoundTrack) {
+        int roundtrack = DieDB.getRoundTrackFromDie(gameId, dieNumberRoundTrack, dieColorRoundTrack);
+
+        Database db = Database.getInstance();
+        String sql = "UPDATE gamedie SET roundID = ?, roundtrack = ? WHERE idgame = ? AND dienumber = ? AND diecolor = ?";
+        String[] params = {Integer.toString(roundtrack), Integer.toString(roundtrack), Integer.toString(gameId), Integer.toString(dieNumberOffer), ColorEnum.fromString(dieColorOffer).getName()};
+        db.exec(sql, params);
+
+        sql = "UPDATE gamedie SET roundID = ?, roundtrack = NULL WHERE idgame = ? AND dienumber = ? AND diecolor = ?";
+        params = new String[] {Integer.toString(currentRoundId), Integer.toString(gameId), Integer.toString(dieNumberRoundTrack), ColorEnum.fromString(dieColorRoundTrack).getName()};
+        db.exec(sql, params);
+
+    }
 }
