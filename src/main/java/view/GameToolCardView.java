@@ -17,7 +17,6 @@ import main.java.controller.ViewController;
 
 public class GameToolCardView extends StackPane {
     private final Image imageToolCard;
-    private GameCenterView gameCenterView;
     private ViewController view;
 
     private static final int WIDTH = 150;
@@ -108,7 +107,6 @@ public class GameToolCardView extends StackPane {
                 if (!isSelected) {
                     if (selectedToolCardView != null) {
                         selectedToolCardView.removeSelection();
-                        String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCardName());
                     }
 
                     String methodName = getSelectedMethodName(toolCardName);
@@ -200,9 +198,5 @@ public class GameToolCardView extends StackPane {
 
     public Boolean getSelectionStatus() {
         return this.isSelected;
-    }
-
-    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
-        String methodName = getSelectedMethodName(toolCardName);
     }
 }

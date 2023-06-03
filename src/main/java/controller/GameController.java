@@ -19,11 +19,9 @@ public final class GameController implements Observer {
 
     private Game game;
     private String selectedToolcardName = null;
-    private Map<String, String> selectedDieMap;
 
     public GameController(final ViewController view) {
         this.view = view;
-        this.selectedDieMap = null;
     }
 
     public List<Map<String, String>> getGamesList() {
@@ -42,7 +40,6 @@ public final class GameController implements Observer {
     public ArrayList<Map<String, String>> getPlayers(final String username) {
 
         ArrayList<Map<String, String>> playersMap = new ArrayList<Map<String, String>>();
-        ArrayList<Player> players = game.getPlayers(username);
         for (Player p : game.getPlayers(username)) {
             Map<String, String> playerMap = new HashMap<String, String>();
             playerMap.put("idPlayer", Integer.toString(p.getId()));

@@ -52,7 +52,6 @@ public class ViewController extends Scene {
     private MessageController messageController;
     private ScoreController scoreController;
     private ToolcardController toolCardController;
-    private FavorTokenController favorTokenController;
 
     private EffectsController effectsController;
 
@@ -72,7 +71,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -93,7 +92,6 @@ public class ViewController extends Scene {
         this.effectsController = new EffectsController();
         this.scoreController = new ScoreController();
         this.toolCardController = new ToolcardController(this);
-        this.favorTokenController = new FavorTokenController(this);
 
         this.openLoginView();
     }
@@ -208,7 +206,7 @@ public class ViewController extends Scene {
     }
 
     public List<Map<String, String>> getFavorTokensForToolCard(final String toolCardName) {
-        return this.favorTokenController.getFavorTokensForToolCard(
+        return this.toolCardController.getFavorTokensForToolCard(
                 Integer.parseInt(
                         ToolcardController.getToolCard(gameController.getGameId(), toolCardName).get("idtoolcard")),
                 gameController.getGameId());

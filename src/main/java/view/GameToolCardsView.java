@@ -1,7 +1,6 @@
 package main.java.view;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.FlowPane;
@@ -23,13 +22,5 @@ public class GameToolCardsView extends FlowPane {
 
         this.setPadding(new Insets(0, 0, PADDING, PADDING));
         this.setHgap(GAP);
-    }
-
-    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
-        for (GameToolCardView gcv : this.toolCardViews) {
-            if (gcv.getSelectionStatus()) {
-                gcv.dieSelectedForToolcard(selectedDieMap);
-            }
-        }
     }
 }

@@ -5,11 +5,9 @@ import java.util.Map;
 import java.util.Random;
 
 import main.java.db.DieDB;
-import java.util.Scanner;
-
-import javafx.scene.paint.Color;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
+import main.java.model.FavorToken;
 import main.java.model.PatternCard;
 import main.java.model.ToolCard;
 
@@ -126,6 +124,10 @@ public class ToolcardController {
     public void copperFoilBurnisher() {
         PatternCard patternCard = view.getCurrentPlayer().getPatternCard();
         patternCard.setValidateEyes(false);
+    }
+
+    public List<Map<String, String>> getFavorTokensForToolCard(final int toolCardId, final int gameId) {
+        return FavorToken.getFavorTokensForToolCard(toolCardId, gameId);
     }
 
 }

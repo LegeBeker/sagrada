@@ -1,14 +1,11 @@
 package main.java.view;
 
-import java.util.Map;
-
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import main.java.controller.ViewController;
 
 public class GameToolBarView extends HBox {
 
-    private GameCenterView gameCenterView;
     private GameToolCardsView gameToolCardsView;
 
     public GameToolBarView(final ViewController view) {
@@ -21,9 +18,5 @@ public class GameToolBarView extends HBox {
         });
 
         this.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
-    }
-
-    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
-        gameToolCardsView.dieSelectedForToolcard(selectedDieMap);
     }
 }

@@ -3,7 +3,6 @@ package main.java.db;
 import java.util.List;
 import java.util.Map;
 
-import javafx.scene.paint.Color;
 import main.java.enums.ColorEnum;
 
 public final class ToolCardDB {

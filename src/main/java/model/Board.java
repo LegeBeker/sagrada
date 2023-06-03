@@ -27,29 +27,12 @@ public class Board {
     private static final int POINTSFOUR = 4;
     private static final int POINTSFIVE = 5;
 
-
-
-
     private Die[][] board = new Die[ROWS][COLUMNS];
 
     private Player player;
 
     public Die getField(final int row, final int column) {
         return board[row - 1][column - 1];
-    }
-
-    public int[][] getDie(final int dieNumber, final Color color) {
-        int[][] position = null;
-        for (int i = 1; i < ROWS; i++) {
-            for (int j = 1; j < COLUMNS; j++) {
-                Die die = getField(i, j);
-                if (die != null) {
-                    position = new int[][] {{i, j }};
-                }
-            }
-        }
-
-        return position;
     }
 
     public void setPlayer(final Player player) {
