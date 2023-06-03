@@ -17,7 +17,6 @@ import main.java.controller.ViewController;
 
 public class GameToolCardView extends StackPane {
     private final Image imageToolCard;
-    private GameCenterView gameCenterView;
     private ViewController view;
 
     private static final int WIDTH = 150;
@@ -81,7 +80,6 @@ public class GameToolCardView extends StackPane {
                 if (!isSelected) {
                     if (selectedToolCardView != null) {
                         selectedToolCardView.removeSelection();
-                        String deselectedMethodName = getDeselectedMethodName(selectedToolCardView.getToolCardName());
                     }
 
                     String methodName = getSelectedMethodName(toolCardName);
@@ -100,20 +98,16 @@ public class GameToolCardView extends StackPane {
                                     this.removeSelection();
                                     this.isSelected = false;
                                     break;
-
                                 case "runningPliers":
-                                    System.out.println("Switch case for runningPliers triggert");
                                     break;
                                 case "eglomiseBrush":
-                                    System.out.println("Switch case for eglomiseBrush triggert");
+                                    view.eglomiseBrush();
                                     break;
                                 case "copperFoilBurnisher":
-                                    System.out.println("Switch case for copperFoilBurnisher triggert");
+                                    view.copperFoilBurnisher();
                                     break;
                                 case "lathekin":
-                                    System.out.println("Switch case for lathekin triggert");
                                     break;
-
                                 default:
                                     break;
                             }
@@ -144,14 +138,12 @@ public class GameToolCardView extends StackPane {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
         isSelected = true;
         view.setToolCardSelection(this.getSelectedMethodName(this.toolCardName));
-        // gameCenterView.updateSelection(isSelected);
     }
 
     public void removeSelection() {
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
         isSelected = false;
         view.setToolCardSelection(null);
-        // gameCenterView.updateSelection(isSelected);
     }
 
     public String getToolCardName() {
@@ -195,11 +187,6 @@ public class GameToolCardView extends StackPane {
 
     public Boolean getSelectionStatus() {
         return this.isSelected;
-    }
-
-    public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
-        String methodName = getSelectedMethodName(toolCardName);
-
     }
 
     public void reCalcStonePositions() {

@@ -33,18 +33,16 @@ public class DieDropTarget extends StackPane {
         });
 
         this.setOnDragDropped(event -> {
-            if (view.getSelectedToolcardName().equals("lathekin")
-                    || view.getSelectedToolcardName().equals("tapWheel")) {
+            if (view.getSelectedToolcardName() != null && (view.getSelectedToolcardName().equals("lathekin")
+                    || view.getSelectedToolcardName().equals("tapWheel"))) {
                 maxAmountToolcardDie = 2;
             }
 
             DieView dieView = (DieView) event.getGestureSource();
             if (view.getSelectedToolcardName() == null || !view.getSelectedToolcardName().equals("runningPliers")) {
-                System.out.println("Dies " + amountPlacedDie + " ToolcardDies" + amountToolcardDie);
 
                 if ((DieDropTarget.amountPlacedDie == 0 && view.getSelectedToolcardName() == null)
                         || (amountToolcardDie < maxAmountToolcardDie && view.getSelectedToolcardName() != null)) {
-                    System.out.println("Place die triggert");
                     Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
                             dieView.getColor(), dieView.getNumber(),
                             GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
@@ -59,9 +57,9 @@ public class DieDropTarget extends StackPane {
                                 "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
                         return;
                     } else if (amountToolcardDie >= maxAmountToolcardDie) {
-                        System.out.println("Amount toolcard die: " + amountToolcardDie);
                         this.view.displayError(
-                                "Je hebt al 2 dobbelstenen geplaatst met de gereedschapskaart. Eindig de beurt.");
+                                "Je hebt al " + maxAmountToolcardDie
+                                        + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
                         return;
                     }
                 }
@@ -73,41 +71,27 @@ public class DieDropTarget extends StackPane {
                 } else {
                     if (amountPlacedDie > 1) {
                         this.view.displayError(
-                                "Je hebt al 2 dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
+                                "Je hebt al " + maxAmountToolcardDie
+                                        + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
                         return;
-                    } else {
-                        // -- @TimBogersGitHub, watch out: you also need to skip another round
-                        Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
-                                dieView.getColor(), dieView.getNumber(),
-                                GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+                    }
 
-                        if (!placeDie) {
-                            this.view.displayError("Deze zet is niet geldig.");
-                            return;
-                        }
+                    Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
+                            dieView.getColor(), dieView.getNumber(),
+                            GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+
+                    if (!placeDie) {
+                        this.view.displayError("Deze zet is niet geldig.");
+                        return;
                     }
                 }
             }
 
-            if (view.getSelectedToolcardName() != null) {
-                if (!view.getSelectedToolcardName().equals("eglomiseBrush")
-                        && !view.getSelectedToolcardName().equals("copperFoilBurnisher")
-                        && !view.getSelectedToolcardName().equals("lathekin")) {
-                    System.out.println(!view.getSelectedToolcardName().equals("lathekin"));
-                    System.out.println("Die placed in if not: Amount placed die: " + DieDropTarget.amountPlacedDie);
-                    DieDropTarget.amountPlacedDie++;
-                } else if (view.getSelectedToolcardName().equals("lathekin")
-                        || view.getSelectedToolcardName().equals("tapWheel")) {
-                    System.out.println("else from if not triggered");
-                    if (DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
-                        DieDropTarget.amountToolcardDie++;
-                        System.out.println(amountToolcardDie);
-                    }
-                }
-            } else {
-                System.out.println("Die placed in else: Amount placed die: " + DieDropTarget.amountPlacedDie);
-                DieDropTarget.amountPlacedDie++;
+            if (view.getSelectedToolcardName() != null && DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
+                DieDropTarget.amountToolcardDie++;
             }
+
+            DieDropTarget.amountPlacedDie++;
             event.setDropCompleted(true);
             event.consume();
         });

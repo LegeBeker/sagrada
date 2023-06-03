@@ -52,7 +52,6 @@ public class ViewController extends Scene {
     private MessageController messageController;
     private ScoreController scoreController;
     private ToolcardController toolCardController;
-    private FavorTokenController favorTokenController;
 
     private EffectsController effectsController;
 
@@ -93,7 +92,6 @@ public class ViewController extends Scene {
         this.effectsController = new EffectsController();
         this.scoreController = new ScoreController();
         this.toolCardController = new ToolcardController(this);
-        this.favorTokenController = new FavorTokenController(this);
 
         this.openLoginView();
     }
@@ -105,6 +103,10 @@ public class ViewController extends Scene {
     public int getPlayerId() {
         Player player = this.gameController.getCurrentPlayer();
         return player.getId();
+    }
+
+    public int getCurrentRound() {
+        return this.gameController.getRound();
     }
 
     public void changeView(final Pane pane) {
@@ -192,10 +194,7 @@ public class ViewController extends Scene {
 
     public Boolean doMove(final int patternCardId, final int eyes, final Color dieColor, final int dieNumber,
             final int columnIndex, final int rowIndex) {
-        System.out.println("Do move triggert");
-        return this.patternCardController.doMove(patternCardId, eyes, dieColor, dieNumber, columnIndex, rowIndex,
-                gameController.getSelectedToolcardName());
-
+        return this.patternCardController.doMove(patternCardId, eyes, dieColor, dieNumber, columnIndex, rowIndex);
     }
 
     public Boolean isTurnPlayer() {
@@ -207,7 +206,7 @@ public class ViewController extends Scene {
     }
 
     public List<Map<String, String>> getFavorTokensForToolCard(final String toolCardName) {
-        return this.favorTokenController.getFavorTokensForToolCard(
+        return this.toolCardController.getFavorTokensForToolCard(
                 Integer.parseInt(
                         ToolcardController.getToolCard(gameController.getGameId(), toolCardName).get("idtoolcard")),
                 gameController.getGameId());
@@ -479,17 +478,21 @@ public class ViewController extends Scene {
 
     public Boolean glazingHammer() {
 
-        // -- Turn count == roundID??
+        //-- Turn count == roundID??
         return ToolcardController.glazingHammer(1, gameController.getGameId(), gameController.getGame().getRoundID());
-    }
-
-    public void lensCutter() {
-        // ToolcardController.lensCutter();
     }
 
     public void fluxRemover(final int dieNumber, final String dieColor) {
         ToolcardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor,
                 gameController.getGame().getRoundID());
+    }
+
+    public void eglomiseBrush() {
+        this.toolCardController.eglomiseBrush();
+    }
+
+    public void copperFoilBurnisher() {
+        this.toolCardController.copperFoilBurnisher();
     }
 
     public void getNewOffer() {

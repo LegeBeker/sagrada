@@ -18,13 +18,10 @@ public final class GameController implements Observer {
     private final ViewController view;
 
     private Game game;
-    private String selectedToolcardName;
-    private Map<String, String> selectedDieMap;
+    private String selectedToolcardName = null;
 
     public GameController(final ViewController view) {
         this.view = view;
-        this.selectedToolcardName = null;
-        this.selectedDieMap = null;
     }
 
     public List<Map<String, String>> getGamesList() {
@@ -36,10 +33,13 @@ public final class GameController implements Observer {
         return this.game;
     }
 
+    public int getRound() {
+        return game.getCurrentRound();
+    }
+
     public ArrayList<Map<String, String>> getPlayers(final String username) {
 
         ArrayList<Map<String, String>> playersMap = new ArrayList<Map<String, String>>();
-        ArrayList<Player> players = game.getPlayers(username);
         for (Player p : game.getPlayers(username)) {
             Map<String, String> playerMap = new HashMap<String, String>();
             playerMap.put("idPlayer", Integer.toString(p.getId()));
