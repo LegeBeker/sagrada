@@ -61,29 +61,29 @@ public enum ToolcardEnum {
     public String getDutchName() {
         switch (this) {
             case GROZINGPLIERS:
-                return "Tang";
+                return "driepuntstang";
             case COPPERFOILBURNISHER:
-                return "Brander";
+                return "folie-aandrukker";
             case LATHEKIN:
-                return "Puntenslijper";
+                return "loodopenhalen";
             case LENSCUTTER:
-                return "Snijder";
+                return "rondsnijder";
             case FLUXBRUSH:
-                return "Kwast";
+                return "fluxborstel";
             case GLAZINGHAMMER:
-                return "Hammer";
+                return "loodhamer";
             case RUNNINGPLIERS:
-                return "Tang";
+                return "glasbreektang";
             case CORKBACKEDSTRAIGHTEDGE:
-                return "Liniaal";
+                return "snijliniaal";
             case GRINDINGSTONE:
-                return "Slijpsteen";
+                return "shuurblok";
             case FLUXREMOVER:
-                return "Remover";
+                return "fluxverwijderaar";
             case TAPWHEEL:
-                return "Wiel";
+                return "olieglassnijder";
             case EGLOMISEBRUSH:
-                return "Kwast";
+                return "eglomise borstel";
             default:
                 return null;
         }
