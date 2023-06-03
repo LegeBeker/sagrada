@@ -10,13 +10,7 @@ import main.java.model.Die;
 import main.java.model.ToolCard;
 
 public class ToolcardController {
-    private static final int MAX_VALUE = 6;
-    private static final int ONE = 1;
-    private static final int TWO = 2;
-    private static final int THREE = 3;
-    private static final int FOUR = 4;
-    private static final int FIVE = 5;
-    private static final int SIX = 6;
+    private static final int MAXDIEVALUE = 6;
     private static final int TURNCOUNT = 2;
     private static final int MAXVALUEDIESUM = 7;
     private static final Random RANDOM = new Random();
@@ -32,7 +26,7 @@ public class ToolcardController {
         String returnValue = null;
         int currentAmountOfEyes = DieDB.getGameDieEyes(gameId, dieNumber, dieColor);
         if (choiceAction.equals("increment")) {
-            if (currentAmountOfEyes == MAX_VALUE) {
+            if (currentAmountOfEyes == MAXDIEVALUE) {
                 returnValue = "De waarde is 6, en kan niet 7 worden.";
             } else {
                 ToolCardDB.updateGameDieValue(gameId, dieNumber, dieColor, currentAmountOfEyes + 1);
@@ -61,7 +55,7 @@ public class ToolcardController {
         int currentValue = DieDB.getGameDieEyes(gameId, dieNumber, dieColor);
         int newValue;
         do {
-            newValue = RANDOM.nextInt(SIX) + 1;
+            newValue = RANDOM.nextInt(MAXDIEVALUE) + 1;
         } while (newValue == currentValue);
 
         ToolCardDB.updateGameDieValue(gameId, dieNumber, dieColor, newValue);
@@ -71,7 +65,7 @@ public class ToolcardController {
         if (turnCount == TURNCOUNT) {
             List<Die> gameOffer = Die.getOffer(gameId, roundId);
             for (Die die : gameOffer) {
-                int newValue = RANDOM.nextInt(SIX) + 1;
+                int newValue = RANDOM.nextInt(MAXDIEVALUE) + 1;
                 ToolCardDB.updateGameDieValue(gameId, die.getNumber(), die.getColor().toString(), newValue);
             }
 
