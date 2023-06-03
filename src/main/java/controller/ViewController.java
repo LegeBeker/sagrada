@@ -470,7 +470,7 @@ public class ViewController extends Scene {
         ToolcardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor,
         gameController.getGame().getRoundID());
     }
-      
+
     public void getNewOffer() {
         this.gameController.getGame().getNewOffer();
     }
