@@ -71,7 +71,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
+        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -434,10 +434,7 @@ public class ViewController extends Scene {
         return gameController.getGame().getClockwise();
     }
 
-    // -- Toolcards logic
     public boolean buyToolCard(final String toolcardName) {
-
-        // -- Get amount availlable favortokens
         int amountFavorTokens = gameController.getCurrentPlayer().getFavorTokensLeft();
         int amountTokensAssigned = toolCardController.getToolCardPrice(toolcardName, gameController.getGameId());
 
@@ -450,10 +447,8 @@ public class ViewController extends Scene {
             toolCardController.buyToolCard(toolcardName, gameController.getGameId(),
                     gameController.getCurrentPlayer().getId(), toolCardPrice, gameController.getGame().getRoundID());
             return true;
-        } else {
-            return false;
         }
-
+        return false;
     }
 
     public String getSelectedToolcardName() {
@@ -477,8 +472,6 @@ public class ViewController extends Scene {
     }
 
     public Boolean glazingHammer() {
-
-        // -- Turn count == roundID??
         return ToolcardController.glazingHammer(1, gameController.getGameId(), gameController.getGame().getRoundID());
     }
 

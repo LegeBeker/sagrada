@@ -33,25 +33,20 @@ public class GameToolCardsView extends FlowPane implements Observer {
 
     @Override
     public void update() {
-        // -- Calculate new stone positions
         for (GameToolCardView toolCard : toolCardViews) {
             toolCard.reCalcStonePositions();
         }
 
-        // -- Maintain / remove outline of card after usage
-        if (view.getSelectedToolcardName() != null) {
-            for (GameToolCardView toolCard : toolCardViews) {
+        for (GameToolCardView toolCard : toolCardViews) {
+            if (view.getSelectedToolcardName() != null) {
                 if (toolCard.getSelectedMethodName(toolCard.getToolCardName()).equals(view.getSelectedToolcardName())) {
                     toolCard.addSelectionOutline();
                 } else {
                     toolCard.removeSelectionOutline();
                 }
-            }
-        } else {
-            for (GameToolCardView toolCard : toolCardViews) {
+            } else {
                 toolCard.removeSelection();
             }
         }
-
     }
 }
