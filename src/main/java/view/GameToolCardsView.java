@@ -30,6 +30,8 @@ public class GameToolCardsView extends FlowPane implements Observer {
         this.setPadding(new Insets(0, 0, PADDING, PADDING));
         this.setHgap(GAP);
     }
+
+    @Override
     public void update() {
 
         // -- Calculate new stone positions
@@ -53,5 +55,4 @@ public class GameToolCardsView extends FlowPane implements Observer {
         }
 
     }
-    @Override
 }
