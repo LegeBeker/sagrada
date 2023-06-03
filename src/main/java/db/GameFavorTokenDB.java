@@ -85,7 +85,8 @@ public final class GameFavorTokenDB {
     public static int getToolCardPrice(final String toolcardName, final int gameId) {
         Database db = Database.getInstance();
 
-        String sql = "SELECT COUNT(*) AS 'amount_placed_die' FROM gamefavortoken WHERE idgame = ? AND gametoolcard = (SELECT idtoolcard FROM toolcard WHERE name = ?);";
+        String sql = "SELECT COUNT(*) AS 'amount_placed_die' FROM gamefavortoken WHERE idgame = ? "
+        + "AND gametoolcard = (SELECT idtoolcard FROM toolcard WHERE name = ?);";
         String[] params = {Integer.toString(gameId), toolcardName};
 
         return Integer.parseInt(db.exec(sql, params).get(0).get("amount_placed_die"));
@@ -96,7 +97,8 @@ public final class GameFavorTokenDB {
             final int amountFavorTokens, final int roundId) {
 
         Database db = Database.getInstance();
-        String sql = "UPDATE gamefavortoken SET roundID = ?, gametoolcard = (SELECT idtoolcard FROM toolcard WHERE name = ?) WHERE idgame = ? AND idplayer = ? AND roundID IS NULL LIMIT "
+        String sql = "UPDATE gamefavortoken SET roundID = ?, gametoolcard = (SELECT idtoolcard FROM toolcard WHERE name = ?) "
+        + "WHERE idgame = ? AND idplayer = ? AND roundID IS NULL LIMIT "
                 + amountFavorTokens + ";";
         String[] params = {Integer.toString(roundId), toolCardname, Integer.toString(gameId),
                 Integer.toString(playerId)};
