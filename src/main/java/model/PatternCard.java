@@ -142,7 +142,7 @@ public class PatternCard {
         if (this.getField(rowIndex, columnIndex).getColor() == null
                 && this.getField(rowIndex, columnIndex).getValue() == null) {
 
-            if (!this.validateNeighbors && this.neighborsEmpty(rowIndex, columnIndex, board)) {
+            if (this.validateNeighbors && this.neighborsEmpty(rowIndex, columnIndex, board)) {
                 return false;
             }
 
@@ -153,16 +153,16 @@ public class PatternCard {
             return true;
         }
 
-        if (!this.validateNeighbors && !board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
+        if (this.validateNeighbors && !board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
             return false;
         }
 
-        if (!this.validateColors && this.getField(rowIndex, columnIndex).getColor() != null
+        if (this.validateColors && this.getField(rowIndex, columnIndex).getColor() != null
                 && !dieColor.equals(this.getField(rowIndex, columnIndex).getColor())) {
             return false;
         }
 
-        if (!this.validateEyes && this.getField(rowIndex, columnIndex).getValue() != null
+        if (this.validateEyes && this.getField(rowIndex, columnIndex).getValue() != null
                 && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
             return false;
         }

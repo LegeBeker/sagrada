@@ -107,6 +107,10 @@ public class ViewController extends Scene {
         return player.getId();
     }
 
+    public int getCurrentRound() {
+        return this.gameController.getRound();
+    }
+
     public void changeView(final Pane pane) {
         if (this.timer != null) {
             this.timer.cancel();
