@@ -142,7 +142,7 @@ public class PatternCard {
         if (this.getField(rowIndex, columnIndex).getColor() == null
                 && this.getField(rowIndex, columnIndex).getValue() == null) {
 
-            if (this.validateNeighbors && this.neighborsEmpty(rowIndex, columnIndex, board)) {
+            if (this.validateNeighbors && !board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
                 return false;
             }
 
