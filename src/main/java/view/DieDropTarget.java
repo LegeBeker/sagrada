@@ -40,11 +40,9 @@ public class DieDropTarget extends StackPane {
 
             DieView dieView = (DieView) event.getGestureSource();
             if (view.getSelectedToolcardName() == null || !view.getSelectedToolcardName().equals("runningPliers")) {
-                System.out.println("Dies " + amountPlacedDie + " ToolcardDies" + amountToolcardDie);
 
                 if ((DieDropTarget.amountPlacedDie == 0 && view.getSelectedToolcardName() == null)
                         || (amountToolcardDie < maxAmountToolcardDie && view.getSelectedToolcardName() != null)) {
-                    System.out.println("Place die triggert");
                     Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
                             dieView.getColor(), dieView.getNumber(),
                             GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
@@ -59,7 +57,6 @@ public class DieDropTarget extends StackPane {
                                 "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
                         return;
                     } else if (amountToolcardDie >= maxAmountToolcardDie) {
-                        System.out.println("Amount toolcard die: " + amountToolcardDie);
                         this.view.displayError(
                                 "Je hebt al " + maxAmountToolcardDie
                                         + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
@@ -77,8 +74,8 @@ public class DieDropTarget extends StackPane {
                                 "Je hebt al " + maxAmountToolcardDie
                                         + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
                         return;
-                    } else {
-                        // -- @TimBogersGitHub, watch out: you also need to skip another round
+                    }
+
                         Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
                                 dieView.getColor(), dieView.getNumber(),
                                 GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
@@ -94,17 +91,12 @@ public class DieDropTarget extends StackPane {
             if (view.getSelectedToolcardName() != null) {
                 if (DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
                     DieDropTarget.amountToolcardDie++;
-                    System.out.println(amountToolcardDie);
                 }
-            } else {
-                System.out.println("Die placed in else: Amount placed die: " + DieDropTarget.amountPlacedDie);
-                DieDropTarget.amountPlacedDie++;
             }
+            DieDropTarget.amountPlacedDie++;
             event.setDropCompleted(true);
             event.consume();
-        });
-
-    }
+        };
 
     public static void resetAmountPlacedDie() {
         DieDropTarget.amountPlacedDie = 0;

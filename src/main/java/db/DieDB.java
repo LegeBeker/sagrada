@@ -77,7 +77,6 @@ public final class DieDB {
         if (db.exec(sql, params).size() > 0) {
             return Integer.valueOf(db.exec(sql, params).get(0).get("eyes"));
         } else {
-            System.out.println("Iets is er fout gegaan bij de query");
             return 0;
         }
 

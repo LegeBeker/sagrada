@@ -42,7 +42,6 @@ public final class ToolCardDB {
         return true;
     }
 
-    // weet niet of de die.getGame().toString() 100% klopt
     public static void addDieToBag(final int idgame, final String dieColor, final int dieNumber, final int roundID) {
         Database db = Database.getInstance();
 
@@ -54,7 +53,7 @@ public final class ToolCardDB {
 
         // -- Generate new die
         String sql2 = "UPDATE gamedie SET roundID = ? WHERE idgame = ? AND roundID IS NULL ORDER BY RAND() LIMIT 1";
-        // -- I have no clue why, but the roundID is 1 greater than the current round...
+        // -- The roundID is 1 greater than the current round...
         String[] params2 = {Integer.toString(roundID - 1), Integer.toString(idgame)};
         db.exec(sql2, params2);
     }

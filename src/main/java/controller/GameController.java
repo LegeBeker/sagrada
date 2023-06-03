@@ -18,12 +18,11 @@ public final class GameController implements Observer {
     private final ViewController view;
 
     private Game game;
-    private String selectedToolcardName;
+    private String selectedToolcardName = null;
     private Map<String, String> selectedDieMap;
 
     public GameController(final ViewController view) {
         this.view = view;
-        this.selectedToolcardName = null;
         this.selectedDieMap = null;
     }
 

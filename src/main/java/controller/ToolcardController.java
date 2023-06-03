@@ -79,9 +79,8 @@ public class ToolcardController {
             }
 
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     // public void lensCutter(final int gameId, final int roundId) {
@@ -128,7 +127,5 @@ public class ToolcardController {
         PatternCard patternCard = view.getCurrentPlayer().getPatternCard();
         patternCard.setValidateEyes(false);
     }
-
-
 
 }

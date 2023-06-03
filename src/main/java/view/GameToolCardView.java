@@ -128,18 +128,14 @@ public class GameToolCardView extends StackPane {
                                     this.isSelected = false;
                                     break;
                                 case "runningPliers":
-                                    System.out.println("Switch case for runningPliers triggert");
                                     break;
                                 case "eglomiseBrush":
-                                    System.out.println("Switch case for eglomiseBrush triggert");
                                     view.eglomiseBrush();
                                     break;
                                 case "copperFoilBurnisher":
-                                    System.out.println("Switch case for copperFoilBurnisher triggert");
                                     view.copperFoilBurnisher();
                                     break;
                                 case "lathekin":
-                                    System.out.println("Switch case for lathekin triggert");
                                     break;
                                 default:
                                     break;
@@ -163,14 +159,12 @@ public class GameToolCardView extends StackPane {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
         isSelected = true;
         view.setToolCardSelection(this.getSelectedMethodName(this.toolCardName));
-        // gameCenterView.updateSelection(isSelected);
     }
 
     private void removeSelection() {
         this.setStyle("-fx-border-color: transparent; -fx-border-width: 3px;");
         isSelected = false;
         view.setToolCardSelection(null);
-        // gameCenterView.updateSelection(isSelected);
     }
 
     public String getToolCardName() {

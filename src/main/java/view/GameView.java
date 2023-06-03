@@ -5,8 +5,6 @@ import main.java.controller.ViewController;
 
 public class GameView extends BorderPane {
 
-
-
     public GameView(final ViewController view) {
         BorderPane left = new BorderPane();
         left.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2);");
@@ -20,5 +18,4 @@ public class GameView extends BorderPane {
 
         this.setBackground(view.getBackground());
     }
-
 }

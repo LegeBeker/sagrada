@@ -72,7 +72,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -195,7 +195,7 @@ public class ViewController extends Scene {
     }
 
     public Boolean doMove(final int patternCardId, final int eyes, final Color dieColor, final int dieNumber,
-            final int columnIndex, final int rowIndex) {                
+            final int columnIndex, final int rowIndex) {
         return this.patternCardController.doMove(patternCardId, eyes, dieColor, dieNumber, columnIndex, rowIndex);
     }
 
@@ -458,18 +458,12 @@ public class ViewController extends Scene {
     }
 
     public Boolean glazingHammer() {
-
-        //-- Turn count == roundID??
         return ToolcardController.glazingHammer(1, gameController.getGameId(), gameController.getGame().getRoundID());
-    }
-
-    public void lensCutter() {
-        // ToolcardController.lensCutter();
     }
 
     public void fluxRemover(final int dieNumber, final String dieColor) {
         ToolcardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor,
-        gameController.getGame().getRoundID());
+                gameController.getGame().getRoundID());
     }
 
     public void eglomiseBrush() {

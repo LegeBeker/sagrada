@@ -162,13 +162,8 @@ public class DieView extends Group {
     }
 
     private void checkSelectionModeToolCard() {
-        // -- @TimBogersGitHub, Check if it his can result in any issues since this will
-        // be used in roudtrack and/or in the board itself. Check source of dieView??
-
-        System.out.println("Parent class: " + this.getParent().getTypeSelector());
         String methodName = view.getSelectedToolcardName();
         if (methodName != null) {
-            System.out.println("Kaart " + view.getSelectedToolcardName() + " is geselecteerd");
 
             if (!this.getParent().getClass().getSimpleName().equals("GameOfferView")) {
                 view.displayError("Kies een dobbelsteen uit het aanbod.");
@@ -188,10 +183,8 @@ public class DieView extends Group {
                         }
                         break;
                     case "lathekin":
-                        System.out.println("Switch case for lathekin triggert");
                         break;
                     case "lensCutter":
-                        System.out.println("Switch case for lensCutter triggert");
                         // view.lensCutter(1, 2); // -- This is going to be a tricky one since we swap
                         // values from offer
                         // and roundtrack
@@ -201,28 +194,22 @@ public class DieView extends Group {
                                 selectedDieMap.get("dieColor"));
                         break;
                     case "cork-backedStraightedge":
-                        System.out.println("Switch case for backedStraightedge triggert");
                         break;
                     case "grindingStone":
-                        System.out.println("Switch case for grindingStone triggert");
                         view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")),
                                 selectedDieMap.get("dieColor"));
                         break;
                     case "fluxRemover":
-                        System.out.println("Switch case for fluxRemover triggert");
                         view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")),
                                 selectedDieMap.get("dieColor"));
                         break;
                     case "tapWheel":
-                        System.out.println("Switch case for tapWheel triggert");
                         break;
                     default:
                         break;
                 }
                 view.setToolCardSelection(null);
             }
-        } else {
-            System.out.println("Kaart niet geselecteerd");
         }
     }
 
