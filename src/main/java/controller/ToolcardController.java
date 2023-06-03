@@ -118,4 +118,17 @@ public class ToolcardController {
         PatternCard patternCard = view.getCurrentPlayer().getPatternCard();
         patternCard.setValidateNeighbors(false);
     }
+
+    public void eglomiseBrush() {
+        PatternCard patternCard = view.getCurrentPlayer().getPatternCard();
+        patternCard.setValidateColors(false);
+    }
+
+    public void copperFoilBurnisher() {
+        PatternCard patternCard = view.getCurrentPlayer().getPatternCard();
+        patternCard.setValidateEyes(false);
+    }
+
+
+
 }

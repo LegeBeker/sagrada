@@ -28,6 +28,18 @@ public class GameScoreView extends VBox implements Observer {
     @Override
     public void update() {
         this.getChildren().clear();
+        StackPane currentRound = new StackPane();
+        currentRound
+                .setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        currentRound.setPadding(new Insets(PADDING));
+        currentRound.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+
+        Text roundText = new Text("Ronde: " + view.getCurrentRound());
+        roundText.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        currentRound.getChildren().add(roundText);
+
+        this.getChildren().add(currentRound);
+
         view.getScores().forEach(score -> {
             StackPane playerScore = new StackPane();
 

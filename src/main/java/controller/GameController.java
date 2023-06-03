@@ -36,6 +36,10 @@ public final class GameController implements Observer {
         return this.game;
     }
 
+    public int getRound() {
+        return game.getCurrentRound();
+    }
+
     public ArrayList<Map<String, String>> getPlayers(final String username) {
 
         ArrayList<Map<String, String>> playersMap = new ArrayList<Map<String, String>>();

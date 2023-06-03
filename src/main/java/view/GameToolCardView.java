@@ -127,20 +127,20 @@ public class GameToolCardView extends StackPane {
                                     this.removeSelection();
                                     this.isSelected = false;
                                     break;
-
                                 case "runningPliers":
                                     System.out.println("Switch case for runningPliers triggert");
                                     break;
                                 case "eglomiseBrush":
                                     System.out.println("Switch case for eglomiseBrush triggert");
+                                    view.eglomiseBrush();
                                     break;
                                 case "copperFoilBurnisher":
                                     System.out.println("Switch case for copperFoilBurnisher triggert");
+                                    view.copperFoilBurnisher();
                                     break;
                                 case "lathekin":
                                     System.out.println("Switch case for lathekin triggert");
                                     break;
-
                                 default:
                                     break;
                             }
@@ -210,6 +210,5 @@ public class GameToolCardView extends StackPane {
 
     public void dieSelectedForToolcard(final Map<String, String> selectedDieMap) {
         String methodName = getSelectedMethodName(toolCardName);
-
     }
 }

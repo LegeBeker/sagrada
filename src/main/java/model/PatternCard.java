@@ -142,11 +142,7 @@ public class PatternCard {
         if (this.getField(rowIndex, columnIndex).getColor() == null
                 && this.getField(rowIndex, columnIndex).getValue() == null) {
 
-            if (!board.isEmpty()) {
-                return false;
-            }
-
-            if (!this.validateNeighbors && this.neighborsEmpty(rowIndex, columnIndex, board)) {
+            if (this.validateNeighbors && this.neighborsEmpty(rowIndex, columnIndex, board)) {
                 return false;
             }
 
@@ -157,69 +153,18 @@ public class PatternCard {
             return true;
         }
 
-        if (!this.validateNeighbors && !board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
+        if (this.validateNeighbors && !board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
             return false;
         }
 
-        if (this.getField(rowIndex, columnIndex).getColor() != null
+        if (this.validateColors && this.getField(rowIndex, columnIndex).getColor() != null
                 && !dieColor.equals(this.getField(rowIndex, columnIndex).getColor())) {
             return false;
         }
 
-        if (this.getField(rowIndex, columnIndex).getValue() != null
+        if (this.validateEyes && this.getField(rowIndex, columnIndex).getValue() != null
                 && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
             return false;
-        }
-
-        if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue,
-                dieColor, board)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean validateMove(final Board board, final int dieValue, final Color dieColor, final int columnIndex,
-            final int rowIndex, final String toolCardName) {
-
-        if (board.getField(rowIndex, columnIndex) != null) {
-            return false;
-        }
-
-        if (board.isEmpty() && !isOnSideOrCorner(rowIndex, columnIndex)) {
-            return false;
-        }
-
-        if (this.getField(rowIndex, columnIndex).getColor() == null
-                && this.getField(rowIndex, columnIndex).getValue() == null) {
-
-            if (neighborsEmpty(rowIndex, columnIndex, board)) {
-                return false;
-            }
-
-            if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue, dieColor, board)) {
-                return false;
-            }
-
-            return true;
-        }
-
-        if (!board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
-            return false;
-        }
-
-        if (!toolCardName.equals("eglomiseBrush")) {
-            if (this.getField(rowIndex, columnIndex).getColor() != null
-                    && !dieColor.equals(this.getField(rowIndex, columnIndex).getColor())) {
-                return false;
-            }
-        }
-
-        if (!toolCardName.equals("copperFoilBurnisher")) {
-            if (this.getField(rowIndex, columnIndex).getValue() != null
-                    && dieValue != this.getField(rowIndex, columnIndex).getValue()) {
-                return false;
-            }
         }
 
         if (!validateAgainstAdjacentFields(rowIndex, columnIndex, dieValue,
@@ -268,7 +213,7 @@ public class PatternCard {
         return true;
     }
 
-    public ArrayList<int[]> getNeighbors(final int row, final int col, final boolean includeDiagonals) {
+    public static ArrayList<int[]> getNeighbors(final int row, final int col, final boolean includeDiagonals) {
         ArrayList<int[]> neighbors = new ArrayList<>();
         int[][] offsets;
 
@@ -293,5 +238,11 @@ public class PatternCard {
 
     public static void clearCache() {
         cachedCards.clear();
+    }
+
+    public void resetValidation() {
+        this.validateColors = true;
+        this.validateEyes = true;
+        this.validateNeighbors = true;
     }
 }
