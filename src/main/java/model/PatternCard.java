@@ -20,6 +20,8 @@ public class PatternCard {
 
     private static Map<Integer, PatternCard> cachedCards = new HashMap<Integer, PatternCard>();
 
+    private boolean validateNeighbors = true;
+
     private PatternCardField[][] fields = new PatternCardField[ROWS][COLUMNS];
 
     public static PatternCard get(final int idPatternCard) {
@@ -58,6 +60,10 @@ public class PatternCard {
         }
 
         return patternCard;
+    }
+
+    public void setValidateNeighbors(final boolean validateNeighbors) {
+        this.validateNeighbors = validateNeighbors;
     }
 
     public static PatternCard mapCustomPatternCard(final int id, final int difficulty,
@@ -126,7 +132,11 @@ public class PatternCard {
         if (this.getField(rowIndex, columnIndex).getColor() == null
                 && this.getField(rowIndex, columnIndex).getValue() == null) {
 
-            if (neighborsEmpty(rowIndex, columnIndex, board)) {
+            if (!board.isEmpty()) {
+                return false;
+            }
+
+            if (!this.validateNeighbors && this.neighborsEmpty(rowIndex, columnIndex, board)) {
                 return false;
             }
 
@@ -137,7 +147,7 @@ public class PatternCard {
             return true;
         }
 
-        if (!board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
+        if (!this.validateNeighbors && !board.isEmpty() && this.neighborsEmpty(rowIndex, columnIndex, board)) {
             return false;
         }
 
@@ -220,7 +230,7 @@ public class PatternCard {
             final int dieValue,
             final Color dieColor,
             final Board board) {
-        ArrayList<int[]> neighbors = getNeighbors(rowIndex, columnIndex, false);
+        ArrayList<int[]> neighbors = validateNeighbors(rowIndex, columnIndex, false);
         for (int[] neighbor : neighbors) {
             Die neighborDie = board.getField(neighbor[0], neighbor[1]);
 
@@ -237,7 +247,7 @@ public class PatternCard {
     }
 
     private boolean neighborsEmpty(final int row, final int col, final Board board) {
-        ArrayList<int[]> neighbors = getNeighbors(row, col, true);
+        ArrayList<int[]> neighbors = validateNeighbors(row, col, true);
 
         for (int[] neighbor : neighbors) {
             if (board.getField(neighbor[0], neighbor[1]) != null) {
@@ -248,7 +258,7 @@ public class PatternCard {
         return true;
     }
 
-    public static ArrayList<int[]> getNeighbors(final int row, final int col, final boolean includeDiagonals) {
+    public ArrayList<int[]> getNeighbors(final int row, final int col, final boolean includeDiagonals) {
         ArrayList<int[]> neighbors = new ArrayList<>();
         int[][] offsets;
 

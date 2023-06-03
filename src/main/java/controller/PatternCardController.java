@@ -40,6 +40,8 @@ public class PatternCardController {
 
         if (valid) {
             System.out.println("Actually place die");
+            player.getPatternCard().setValidateNeighbors(true);
+
             return player.getBoard().placeDie(dieColor, dieNumber, rowIndex, columnIndex);
         }
 
