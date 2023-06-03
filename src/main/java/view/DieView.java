@@ -170,67 +170,65 @@ public class DieView extends Group {
                 if (!this.getParent().getClass().getSimpleName().equals("GridPane")) {
                     // -- Note: GridPane is used for the roundtrack
                     view.displayError("Kies een dobbelsteen uit het rondespoor!");
-                } else {
-                    Map<String, String> selectedDieMap = new HashMap<>();
-                    selectedDieMap.put("eyes", Integer.toString(this.eyes));
-                    selectedDieMap.put("dieNumber", Integer.toString(this.number));
-                    selectedDieMap.put("dieColor", this.color.toString());
-                    view.lensCutter(Integer.parseInt(firstSelectedDieMapLensCutter.get("dieNumber")),
-                            firstSelectedDieMapLensCutter.get("dieColor"),
-                            Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
-
-                    // -- Reset values
-                    DieView.firstSelectedDieMapLensCutter = null;
-                    view.setToolCardSelection(null);
+                    return;
                 }
-            } else {
-                if (!this.getParent().getClass().getSimpleName().equals("GameOfferView")) {
-                    view.displayError("Kies een dobbelsteen uit het aanbod.");
-                } else {
-                    Map<String, String> selectedDieMap = new HashMap<>();
-                    selectedDieMap.put("eyes", Integer.toString(this.eyes));
-                    selectedDieMap.put("dieNumber", Integer.toString(this.number));
-                    selectedDieMap.put("dieColor", this.color.toString());
+                Map<String, String> selectedDieMap = new HashMap<>();
+                selectedDieMap.put("eyes", Integer.toString(this.eyes));
+                selectedDieMap.put("dieNumber", Integer.toString(this.number));
+                selectedDieMap.put("dieColor", this.color.toString());
+                view.lensCutter(Integer.parseInt(firstSelectedDieMapLensCutter.get("dieNumber")),
+                        firstSelectedDieMapLensCutter.get("dieColor"),
+                        Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
 
-                    // -- trigger toolcard logic
-                    switch (methodName) {
-                        case "grozingPliers":
-                            String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
-                            if (!actionChoice.equals("?")) {
-                                view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")),
-                                        selectedDieMap.get("dieColor"), actionChoice);
-                            }
-                            break;
-                        case "lathekin":
-                            break;
-                        case "lensCutter":
-                            view.displayMessage("Selecteer nu een dobbelsteen uit het rondespoor");
-                            DieView.firstSelectedDieMapLensCutter = selectedDieMap;
-                            break;
-                        case "fluxBrush":
-                            view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")),
-                                    selectedDieMap.get("dieColor"));
-                            break;
-                        case "cork-backedStraightedge":
-                            break;
-                        case "grindingStone":
-                            view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")),
-                                    selectedDieMap.get("dieColor"));
-                            break;
-                        case "fluxRemover":
-                            view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")),
-                                    selectedDieMap.get("dieColor"));
-                            break;
-                        case "tapWheel":
-                            break;
-                        default:
-                            break;
-                    }
+                DieView.firstSelectedDieMapLensCutter = null;
+                view.setToolCardSelection(null);
+                return;
+            }
+            if (!this.getParent().getClass().getSimpleName().equals("GameOfferView")) {
+                view.displayError("Kies een dobbelsteen uit het aanbod.");
+                return;
+            }
 
-                    if (!methodName.equals("lensCutter")) {
-                        view.setToolCardSelection(null);
+            Map<String, String> selectedDieMap = new HashMap<>();
+            selectedDieMap.put("eyes", Integer.toString(this.eyes));
+            selectedDieMap.put("dieNumber", Integer.toString(this.number));
+            selectedDieMap.put("dieColor", this.color.toString());
+
+            // -- trigger toolcard logic
+            switch (methodName) {
+                case "grozingPliers":
+                    String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
+                    if (!actionChoice.equals("?")) {
+                        view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                                selectedDieMap.get("dieColor"), actionChoice);
                     }
-                }
+                    break;
+                case "lathekin":
+                    break;
+                case "lensCutter":
+                    view.displayMessage("Selecteer nu een dobbelsteen uit het rondespoor");
+                    DieView.firstSelectedDieMapLensCutter = selectedDieMap;
+                    break;
+                case "fluxBrush":
+                    view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                            selectedDieMap.get("dieColor"));
+                    break;
+                case "cork-backedStraightedge":
+                    break;
+                case "grindingStone":
+                    view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                            selectedDieMap.get("dieColor"));
+                    break;
+                case "fluxRemover":
+                    view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                            selectedDieMap.get("dieColor"));
+                    break;
+                case "tapWheel":
+                    break;
+            }
+
+            if (!methodName.equals("lensCutter")) {
+                view.setToolCardSelection(null);
             }
         }
     }
@@ -258,9 +256,7 @@ public class DieView extends Group {
             return "increment";
         } else if (result.get() == decrementButton) {
             return "decrement";
-        } else {
-            return "?"; // -- failsafe for if we forget to handle a new button
         }
-
+        return "?";
     }
 }

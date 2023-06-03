@@ -76,10 +76,8 @@ public final class DieDB {
                 ColorEnum.fromString(dieColor).getName()};
         if (db.exec(sql, params).size() > 0) {
             return Integer.valueOf(db.exec(sql, params).get(0).get("eyes"));
-        } else {
-            return 0;
         }
-
+        return 0;
     }
 
     public static int getRoundTrackFromDie(final int gameId, final int dieNumber, final String dieColor) {
@@ -89,9 +87,7 @@ public final class DieDB {
                 ColorEnum.fromString(dieColor).getName()};
         if (db.exec(sql, params).size() > 0) {
             return Integer.valueOf(db.exec(sql, params).get(0).get("roundtrack"));
-        } else {
-            return 0;
         }
+        return 0;
     }
-
 }
