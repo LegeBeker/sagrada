@@ -36,11 +36,12 @@ public class FavorToken {
         return GameFavorTokenDB.getFavorTokensForToolCard(toolCardId, gameId);
     };
 
-    public static int getToolCardPrice(final String toolcardName, final int gameId){
+    public static int getToolCardPrice(final String toolcardName, final int gameId) {
         return GameFavorTokenDB.getToolCardPrice(toolcardName, gameId);
     }
 
-    public static void buyToolCard(final String toolCardName, final int gameId, final int playerId, final int amountFavorTokens, final int roundId){
+    public static void buyToolCard(final String toolCardName, final int gameId, final int playerId,
+            final int amountFavorTokens, final int roundId) {
         GameFavorTokenDB.buyToolCard(toolCardName, gameId, playerId, amountFavorTokens, roundId);
     }
 }

@@ -10,7 +10,7 @@ import main.java.model.Game;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
-public class GameToolCardsView extends FlowPane implements Observer{
+public class GameToolCardsView extends FlowPane implements Observer {
 
     private ArrayList<GameToolCardView> toolCardViews = new ArrayList<GameToolCardView>();
 
@@ -43,26 +43,25 @@ public class GameToolCardsView extends FlowPane implements Observer{
     @Override
     public void update() {
 
-        //-- Calculate new stone positions
+        // -- Calculate new stone positions
         for (GameToolCardView toolCard : toolCardViews) {
-            toolCard.reCalcStonePositions(); 
+            toolCard.reCalcStonePositions();
         }
 
-
-        //-- Maintain / remove outline of card after usage
-        if(view.getSelectedToolcardName() != null){
+        // -- Maintain / remove outline of card after usage
+        if (view.getSelectedToolcardName() != null) {
             for (GameToolCardView toolCard : toolCardViews) {
-                if(toolCard.getSelectedMethodName(toolCard.getToolCardName()).equals(view.getSelectedToolcardName())){
+                if (toolCard.getSelectedMethodName(toolCard.getToolCardName()).equals(view.getSelectedToolcardName())) {
                     toolCard.addSelectionOutline();
                 } else {
                     toolCard.removeSelectionOutline();
-                } 
+                }
             }
         } else {
             for (GameToolCardView toolCard : toolCardViews) {
                 toolCard.removeSelection();
             }
         }
-        
+
     }
 }

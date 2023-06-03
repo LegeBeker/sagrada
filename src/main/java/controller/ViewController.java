@@ -190,7 +190,7 @@ public class ViewController extends Scene {
 
     public Boolean doMove(final int patternCardId, final int eyes, final Color dieColor, final int dieNumber,
             final int columnIndex, final int rowIndex) {
-                System.out.println("Do move triggert");
+        System.out.println("Do move triggert");
         return this.patternCardController.doMove(patternCardId, eyes, dieColor, dieNumber, columnIndex, rowIndex,
                 gameController.getSelectedToolcardName());
 
@@ -430,19 +430,20 @@ public class ViewController extends Scene {
     }
 
     // -- Toolcards logic
-    public boolean buyToolCard(final String toolcardName){
+    public boolean buyToolCard(final String toolcardName) {
 
-        //-- Get amount availlable favortokens
+        // -- Get amount availlable favortokens
         int amountFavorTokens = gameController.getCurrentPlayer().getFavorTokensLeft();
         int amountTokensAssigned = favorTokenController.getToolCardPrice(toolcardName, gameController.getGameId());
 
         int toolCardPrice = 1;
-        if(amountTokensAssigned > 0){
+        if (amountTokensAssigned > 0) {
             toolCardPrice = 2;
         }
 
-        if(amountFavorTokens >= toolCardPrice){
-            favorTokenController.buyToolCard(toolcardName, gameController.getGameId(), gameController.getCurrentPlayer().getId(), toolCardPrice, gameController.getGame().getRoundID());
+        if (amountFavorTokens >= toolCardPrice) {
+            favorTokenController.buyToolCard(toolcardName, gameController.getGameId(),
+                    gameController.getCurrentPlayer().getId(), toolCardPrice, gameController.getGame().getRoundID());
             return true;
         } else {
             return false;
@@ -472,7 +473,7 @@ public class ViewController extends Scene {
 
     public Boolean glazingHammer() {
 
-        //-- Turn count == roundID??
+        // -- Turn count == roundID??
         return ToolcardController.glazingHammer(1, gameController.getGameId(), gameController.getGame().getRoundID());
     }
 
