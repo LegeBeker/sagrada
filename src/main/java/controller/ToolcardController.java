@@ -3,10 +3,11 @@ package main.java.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import main.java.db.DieDB;
+import java.util.Scanner;
+import javafx.scene.paint.Color;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
+import main.java.model.PatternCard;
 import main.java.model.ToolCard;
 
 public class ToolcardController {
@@ -19,7 +20,13 @@ public class ToolcardController {
     private static final int SIX = 6;
     private static final int TURNCOUNT = 2;
     private static final int MAXVALUEDIESUM = 7;
-    private static final Random RANDOM = new Random();
+
+    private ViewController view;
+    private Random random;
+
+    public ToolcardController(final ViewController view) {
+        this.view = view;
+    }
 
     public static Map<String, String> getToolCard(final int gameId, final String toolCardName) {
         return ToolCard.getToolCard(gameId, toolCardName);
@@ -109,5 +116,10 @@ public class ToolcardController {
 
     public static void fluxRemover(final int gameId, final int dieNumber, final String dieColor, final int roundId) {
         ToolCardDB.addDieToBag(gameId, dieColor, dieNumber, roundId);
+    }
+
+    public void corkBackedStraightEdge() {
+        PatternCard patternCard = view.getCurrentPlayer().getPatternCard();
+        patternCard.setValidateNeighbors(false);
     }
 }

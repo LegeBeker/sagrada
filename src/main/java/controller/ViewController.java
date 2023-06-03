@@ -50,6 +50,7 @@ public class ViewController extends Scene {
     private GameController gameController;
     private PatternCardController patternCardController;
     private MessageController messageController;
+    private ScoreController scoreController;
     private ToolcardController toolCardController;
     private FavorTokenController favorTokenController;
 
@@ -90,7 +91,8 @@ public class ViewController extends Scene {
         this.patternCardController = new PatternCardController(this);
         this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
-        this.toolCardController = new ToolcardController();
+        this.scoreController = new ScoreController();
+        this.toolCardController = new ToolcardController(this);
         this.favorTokenController = new FavorTokenController(this);
 
         this.openLoginView();
@@ -221,6 +223,10 @@ public class ViewController extends Scene {
 
     public Player getCurrentPlayer() {
         return this.gameController.getCurrentPlayer();
+    }
+
+    public List<Map<String, String>> getScores() {
+        return this.scoreController.getScores(getCurrentPlayer());
     }
 
     public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
@@ -484,5 +490,9 @@ public class ViewController extends Scene {
     public void fluxRemover(final int dieNumber, final String dieColor) {
         ToolcardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor,
                 gameController.getGame().getRoundID());
+    }
+
+    public void getNewOffer() {
+        this.gameController.getGame().getNewOffer();
     }
 }
