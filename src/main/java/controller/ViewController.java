@@ -191,11 +191,8 @@ public class ViewController extends Scene {
     }
 
     public Boolean doMove(final int patternCardId, final int eyes, final Color dieColor, final int dieNumber,
-            final int columnIndex, final int rowIndex) {
-                System.out.println("Do move triggert");
-        return this.patternCardController.doMove(patternCardId, eyes, dieColor, dieNumber, columnIndex, rowIndex,
-                gameController.getSelectedToolcardName());
-
+            final int columnIndex, final int rowIndex) {                
+        return this.patternCardController.doMove(patternCardId, eyes, dieColor, dieNumber, columnIndex, rowIndex);
     }
 
     public Boolean isTurnPlayer() {
@@ -469,6 +466,14 @@ public class ViewController extends Scene {
     public void fluxRemover(final int dieNumber, final String dieColor) {
         ToolcardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor,
         gameController.getGame().getRoundID());
+    }
+
+    public void eglomiseBrush() {
+        this.toolCardController.eglomiseBrush();
+    }
+
+    public void copperFoilBurnisher() {
+        this.toolCardController.copperFoilBurnisher();
     }
 
     public void getNewOffer() {
