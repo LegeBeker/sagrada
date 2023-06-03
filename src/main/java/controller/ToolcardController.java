@@ -81,8 +81,10 @@ public class ToolcardController {
         return false;
     }
 
-    public void lensCutter(final int gameId, final int currentRoundId, final int dieNumberOffer, final String dieColorOffer, final int dieNumberRoundTrack, final String dieColorRoundTrack) {
-        ToolCardDB.lensCutter(gameId, currentRoundId, dieNumberOffer, dieColorOffer, dieNumberRoundTrack, dieColorRoundTrack);
+    public void lensCutter(final int gameId, final int currentRoundId, final int dieNumberOffer,
+            final String dieColorOffer, final int dieNumberRoundTrack, final String dieColorRoundTrack) {
+        ToolCardDB.lensCutter(gameId, currentRoundId, dieNumberOffer, dieColorOffer, dieNumberRoundTrack,
+                dieColorRoundTrack);
     }
 
     public static void fluxRemover(final int gameId, final int dieNumber, final String dieColor, final int roundId) {

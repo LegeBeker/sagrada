@@ -166,18 +166,20 @@ public class DieView extends Group {
     private void checkSelectionModeToolCard() {
         String methodName = view.getSelectedToolcardName();
         if (methodName != null) {
-            if(methodName.equals("lensCutter") && DieView.firstSelectedDieMapLensCutter != null){
-                if(!this.getParent().getClass().getSimpleName().equals("GridPane")){
-                    //-- Note: GridPane is used for the roundtrack
+            if (methodName.equals("lensCutter") && DieView.firstSelectedDieMapLensCutter != null) {
+                if (!this.getParent().getClass().getSimpleName().equals("GridPane")) {
+                    // -- Note: GridPane is used for the roundtrack
                     view.displayError("Kies een dobbelsteen uit het rondespoor!");
                 } else {
                     Map<String, String> selectedDieMap = new HashMap<>();
                     selectedDieMap.put("eyes", Integer.toString(this.eyes));
                     selectedDieMap.put("dieNumber", Integer.toString(this.number));
                     selectedDieMap.put("dieColor", this.color.toString());
-                    view.lensCutter(Integer.parseInt(firstSelectedDieMapLensCutter.get("dieNumber")), firstSelectedDieMapLensCutter.get("dieColor"), Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+                    view.lensCutter(Integer.parseInt(firstSelectedDieMapLensCutter.get("dieNumber")),
+                            firstSelectedDieMapLensCutter.get("dieColor"),
+                            Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
 
-                    //-- Reset values
+                    // -- Reset values
                     DieView.firstSelectedDieMapLensCutter = null;
                     view.setToolCardSelection(null);
                 }
@@ -189,7 +191,7 @@ public class DieView extends Group {
                     selectedDieMap.put("eyes", Integer.toString(this.eyes));
                     selectedDieMap.put("dieNumber", Integer.toString(this.number));
                     selectedDieMap.put("dieColor", this.color.toString());
-    
+
                     // -- trigger toolcard logic
                     switch (methodName) {
                         case "grozingPliers":
@@ -224,8 +226,8 @@ public class DieView extends Group {
                         default:
                             break;
                     }
-    
-                    if(!methodName.equals("lensCutter")){
+
+                    if (!methodName.equals("lensCutter")) {
                         view.setToolCardSelection(null);
                     }
                 }

@@ -81,7 +81,6 @@ public final class DieDB {
         }
 
     }
-    
 
     public static int getRoundTrackFromDie(final int gameId, final int dieNumber, final String dieColor) {
         Database db = Database.getInstance();
