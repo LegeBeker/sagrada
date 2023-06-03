@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.scene.layout.FlowPane;
 import main.java.controller.ViewController;
+import main.java.enums.ToolcardEnum;
 import main.java.model.Game;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
@@ -22,7 +23,7 @@ public class GameToolCardsView extends FlowPane implements Observer {
         Observable.addObserver(Game.class, this);
 
         for (String toolCardName : this.view.getToolCardsNames()) {
-            GameToolCardView gcv = new GameToolCardView(view, toolCardName);
+            GameToolCardView gcv = new GameToolCardView(view, ToolcardEnum.fromString(toolCardName));
             this.getChildren().add(gcv);
             toolCardViews.add(gcv);
         }
