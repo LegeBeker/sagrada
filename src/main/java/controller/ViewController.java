@@ -92,7 +92,7 @@ public class ViewController extends Scene {
         this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
         this.scoreController = new ScoreController();
-        this.toolCardController = new ToolcardController();
+        this.toolCardController = new ToolcardController(this);
         this.favorTokenController = new FavorTokenController(this);
 
         this.openLoginView();

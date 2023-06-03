@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+
 import javafx.scene.paint.Color;
 import main.java.db.ToolCardDB;
 import main.java.model.Die;
+import main.java.model.PatternCard;
 import main.java.model.ToolCard;
 
 public class ToolcardController {
@@ -18,7 +20,13 @@ public class ToolcardController {
     private static final int FIVE = 5;
     private static final int SIX = 6;
     private static final int TURNCOUNT = 2;
+
+    private ViewController view;
     private Random random;
+
+    public ToolcardController(final ViewController view) {
+        this.view = view;
+    }
 
     public static Map<String, String> getToolCard(final int gameId, final String toolCardName) {
         return ToolCard.getToolCard(gameId, toolCardName);
@@ -62,26 +70,26 @@ public class ToolcardController {
 
             if (input.equalsIgnoreCase("flip")) {
                 switch (Integer.toString(dieValue)) {
-                case "1":
-                    dieValue = SIX;
-                    break;
-                case "2":
-                    dieValue = FIVE;
-                    break;
-                case "3":
-                    dieValue = FOUR;
-                    break;
-                case "4":
-                    dieValue = THREE;
-                    break;
-                case "5":
-                    dieValue = TWO;
-                    break;
-                case "6":
-                    dieValue = ONE;
-                    break;
-                default:
-                    break;
+                    case "1":
+                        dieValue = SIX;
+                        break;
+                    case "2":
+                        dieValue = FIVE;
+                        break;
+                    case "3":
+                        dieValue = FOUR;
+                        break;
+                    case "4":
+                        dieValue = THREE;
+                        break;
+                    case "5":
+                        dieValue = TWO;
+                        break;
+                    case "6":
+                        dieValue = ONE;
+                        break;
+                    default:
+                        break;
                 }
                 ToolCardDB.updateGameDieValue(dieValue, 0);
                 System.out.println("Die flipped. New value: " + dieValue);
@@ -151,5 +159,10 @@ public class ToolcardController {
         gameOffer.remove(selectedDie);
         ToolCardDB.addDieToBag(selectedDie.getGame().getId(), selectedDie.getColor(), selectedDie.getEyes());
         input.close();
+    }
+
+    public void corkBackedStraightEdge() {
+        PatternCard patternCard = view.getCurrentPlayer().getPatternCard();
+        patternCard.setValidateNeighbors(false);
     }
 }
