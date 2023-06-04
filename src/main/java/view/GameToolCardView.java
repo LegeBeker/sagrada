@@ -132,7 +132,7 @@ public class GameToolCardView extends StackPane {
                 }
             }
         });
-    }   
+    }
 
     public void addSelectionOutline() {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
