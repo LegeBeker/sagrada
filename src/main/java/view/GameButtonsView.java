@@ -84,7 +84,7 @@ public class GameButtonsView extends VBox implements Observer {
         if (this.getChildren().contains(buttonGetOffer)) {
             this.getChildren().remove(buttonGetOffer);
         }
-        if (view.getOffer().isEmpty() && view.isTurnPlayer()) {
+        if (view.getOffer().isEmpty() && view.isTurnPlayer() && view.getCurrentRound() != 10) {
             this.getChildren().addAll(buttonGetOffer);
         }
     }
