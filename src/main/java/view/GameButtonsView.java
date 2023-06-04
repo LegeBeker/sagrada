@@ -61,7 +61,12 @@ public class GameButtonsView extends VBox implements Observer {
     private void endTurn() {
         this.buttonEndTurn.setDisable(true);
         view.setToolCardSelection(null);
+        boolean clockwiseBefore = view.getGameClockwise();
         view.endTurn();
+        boolean clockwiseAfter = view.getGameClockwise();
+        if (clockwiseBefore != clockwiseAfter) {
+            view.displayMessage("De richting van het spel is veranderd!");
+        }
     }
 
     @Override
