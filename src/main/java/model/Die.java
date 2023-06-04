@@ -56,7 +56,7 @@ public class Die {
         List<Map<String, String>> offer;
         offer = DieDB.getOffer(idGame, roundID - 1);
         offer.addAll(DieDB.getOffer(idGame, roundID));
-        
+
         ArrayList<Die> dice = new ArrayList<Die>();
 
         for (Map<String, String> dieMap : offer) {
