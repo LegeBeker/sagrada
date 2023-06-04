@@ -7,30 +7,30 @@ import main.java.model.PatternCardField;
 
 /*
  * DataMapper is een class die een lijst van Players of Games omzet naar een lijst van DataMaps.
- * 
+ *
  * Dit is een voorbeeld van hoe je de DataMapper kan gebruiken in dit voorbeeld maken we gebruik van de Message class:
  * In de MessageController doen we het volgende:
  * public ArrayList<DataMap> getChatMessages(final Game game) {
  *    return DataMapper.createMultiple(Message.getAll(game.getId()), "message", "username", "time");
  * }
- * 
+ *
  * De eerste parameter is een ArrayList van Messages, de tweede parameter zijn de velden die je wilt ophalen uit de Message class. 
  * De velden die je wilt ophalen moeten een getter hebben in de Message class. Volgens de JavaBeans conventie (getUsername()).
- * 
+ *
  * In de MessageView doen we het volgende:
- * 
+ *
  * for (DataMap message : view.getChatMessages()) {
  *  addMessage(message.getString("message"), message.getString("username"),       
  *     message.getString("time"));
  * }
- * 
+ *
  * Ook is er ondersteuning voor het ophalen van child fields zoals voor de turnPlayer:
  * public ArrayList<DataMap> getGames() {
  *      return DataMapper.createMultiple(Game.getAll(),"id", "turnPlayer{username,score}", "currentRound", "creationDate");
  * }
- * 
+ *
  * In dit geval wordt er eerst een getter gemaakt voor getTurnPlayer daarna worden de getters voor username en score uitgevoerd in Player class.
- * 
+ *
  */
 
 public final class DataMapper {
