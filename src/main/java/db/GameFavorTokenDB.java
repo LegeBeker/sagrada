@@ -65,10 +65,10 @@ public final class GameFavorTokenDB {
     public static List<Map<String, String>> assignGameFavorTokenToPlayer(final int idGame, final int idPlayer) {
         Database db = Database.getInstance();
 
-        String sql = "UPDATE gamefavortoken SET idplayer = ? WHERE idfavortoken = "
+        String sql = "UPDATE gamefavortoken SET idplayer = ? WHERE idgame = ? AND idfavortoken = "
                 + "(SELECT temp.idfavortoken "
                 + "FROM (SELECT MIN(idfavortoken) AS idfavortoken FROM gamefavortoken WHERE idplayer IS NULL AND idgame = ?) AS temp);";
-        String[] params = {Integer.toString(idPlayer), Integer.toString(idGame)};
+        String[] params = {Integer.toString(idPlayer), Integer.toString(idGame), Integer.toString(idGame)};
 
         return db.exec(sql, params);
     }
