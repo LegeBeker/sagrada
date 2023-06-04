@@ -9,7 +9,7 @@ import main.java.model.Player;
 
 public class ScoreController {
 
-    ArrayList<PlayStatusEnum> playStatusses = new ArrayList<PlayStatusEnum>();
+    private ArrayList<PlayStatusEnum> playStatusses = new ArrayList<PlayStatusEnum>();
 
     public ArrayList<Map<String, String>> getScores(final Player currentPlayer) {
         ArrayList<Map<String, String>> scores = new ArrayList<Map<String, String>>();
