@@ -234,7 +234,7 @@ public class Board {
                         dices++;
                     }
 
-                    if (dices >= 4 && dices % ROWS == 0) {
+                    if (dices >= ROWS && dices % ROWS == 0) {
                         totalScore += points;
                     }
                 }
@@ -272,7 +272,7 @@ public class Board {
                             || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
                         dices++;
                     }
-                    if (dices >= 4 && dices % COLUMNS == 0) {
+                    if (dices >= COLUMNS && dices % COLUMNS == 0) {
                         totalScore += points;
                     }
                 }
