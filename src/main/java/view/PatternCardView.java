@@ -118,26 +118,8 @@ public class PatternCardView extends BorderPane {
     }
 
     public void update() {
-        ArrayList<int[]> locations = new ArrayList<int[]>();
-        grid.getChildren().forEach((e) -> {
-            if (e.getStyle().contains("-fx-border-color: #00FFBF;")) {
-                int[] location = {GridPane.getRowIndex(e), GridPane.getColumnIndex(e)};
-                locations.add(location);
-            }
-        });
-
         grid.getChildren().clear();
-
         drawPatternCard(view, patternCardId, playerId);
-
-        grid.getChildren().forEach((cell) -> {
-            locations.forEach((cellLocation) -> {
-                int[] location = {GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)};
-                if (cellLocation[0] == location[0] && cellLocation[1] == location[1]) {
-                    cell.setStyle("-fx-border-color: #00FFBF;");
-                }
-            });
-        });
     }
 
     private void drawPatternCard(final ViewController view, final int patternCardId, final Integer playerId) {
@@ -196,7 +178,7 @@ public class PatternCardView extends BorderPane {
                     Integer.parseInt(die.get("number")), isDraggable);
             stackPane.getChildren().add(dieView);
         }
-
+        
         grid.add(stackPane, col, row);
     }
 
