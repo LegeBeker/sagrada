@@ -38,7 +38,7 @@ public final class DieDB {
 
         String sql = "UPDATE gamedie SET roundID = ? "
                 + "WHERE idgame = ? AND roundtrack IS NULL AND roundID IS NULL ORDER BY RAND() LIMIT "
-                + Integer.toString(dieAmount);
+                + Integer.toString(dieAmount) + ";";
 
         String[] params = {Integer.toString(roundID), Integer.toString(idGame)};
 
