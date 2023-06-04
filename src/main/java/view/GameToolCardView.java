@@ -94,6 +94,11 @@ public class GameToolCardView extends StackPane {
                             return;
                         }
 
+                        if (methodName.equals("glazingHammer") && view.getGameClockwise()) {
+                            view.displayError("Je kan deze gereedschapskaart alleen activeren in je tweede beurt");
+                            return;
+                        }
+
                         if (askConfirmationUsageCard(toolCard.getDutchName())) {
                             this.addSelection();
                             selectedToolCardView = this;
@@ -177,7 +182,7 @@ public class GameToolCardView extends StackPane {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == acceptButton) {
-            if (!view.buyToolCard(toolCardname)) {
+            if (!view.buyToolCard(this.getToolCardName())) {
                 view.displayError("Je hebt niet genoeg betaalstenen om deze gereedschapskaart te kopen.");
                 return false;
             }
@@ -198,7 +203,6 @@ public class GameToolCardView extends StackPane {
             for (int i = 0; i < diff; i++) {
                 int index = favorTokenList.size() - (i + 1);
                 calculateNewStonePosition(favorTokenList.get(index));
-                amountFavorTokensDisplayed++;
             }
         }
     }
@@ -219,8 +223,10 @@ public class GameToolCardView extends StackPane {
         }
         for (Map<String, String> p : players) {
             if (p.get("idPlayer").equals(ft.get("idplayer"))) {
+
                 Circle c = new Circle(randX, randY, CIRCLERADIUS);
                 Color playerColor = Color.valueOf(p.get("color"));
+
                 if (playerColor != null) {
                     c.setFill(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
                             (int) (playerColor.getGreen() * MAXVALUERGB),

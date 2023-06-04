@@ -236,8 +236,12 @@ public class ViewController extends Scene {
         return this.patternCardController.getPossibleMoves(eyes, color);
     }
 
-    public void setHelpFunction() {
-        this.gameController.setHelpFunction();
+    public ArrayList<int[]> getBestMoves(final ArrayList<int[]> possibleMoves, final int eyes, final Color color) {
+        return this.patternCardController.getBestMoves(possibleMoves, eyes, color);
+    }
+
+    public void toggleHelpFunction() {
+        this.gameController.toggleHelpFunction();
     }
 
     public boolean sendMessage(final String message) {
@@ -327,8 +331,11 @@ public class ViewController extends Scene {
     }
 
     public void endTurn() {
-        this.gameController.endTurn();
+        Boolean gameFinished = this.gameController.endTurn();
         DieDropTarget.resetAmountPlacedDie();
+        if (gameFinished) {
+            this.scoreController.updateScores(getCurrentPlayer());
+        }
     }
 
     public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
@@ -476,7 +483,12 @@ public class ViewController extends Scene {
     }
 
     public Boolean glazingHammer() {
-        return ToolcardController.glazingHammer(1, gameController.getGameId(), gameController.getGame().getRoundID());
+        int turnCount = 1;
+        if (!gameController.getGame().getClockwise()) {
+            turnCount = 2;
+        }
+        return ToolcardController.glazingHammer(turnCount, gameController.getGameId(),
+                gameController.getGame().getRoundID());
     }
 
     public void fluxRemover(final int dieNumber, final String dieColor) {

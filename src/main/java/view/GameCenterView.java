@@ -16,8 +16,8 @@ public class GameCenterView extends BorderPane {
         this.setBottom(new GameToolBarView(view));
     }
 
-    public void showPossibleMoves(final ArrayList<int[]> moves) {
-        this.gameBoardsView.showPossibleMoves(moves);
+    public void showPossibleMoves(final ArrayList<int[]> moves, final ArrayList<int[]> bestMoves) {
+        this.gameBoardsView.showPossibleMoves(moves, bestMoves);
     }
 
     public void cleanTargets() {

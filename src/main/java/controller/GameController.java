@@ -138,9 +138,9 @@ public final class GameController implements Observer {
         return this.game.hasOpenInvites();
     }
 
-    public void setHelpFunction() {
-        this.game.setHelpFunction();
-        if (game.getHelpFunction()) {
+    public void toggleHelpFunction() {
+        this.getCurrentPlayer().toggleHelpFunction();
+        if (this.getCurrentPlayer().getHelpFunction()) {
             Observable.removeObserver(Game.class, new GameBoardsView(view));
         } else {
             Observable.addObserver(Game.class, new GameBoardsView(view));
@@ -148,7 +148,7 @@ public final class GameController implements Observer {
     }
 
     public boolean getHelpFunction() {
-        return this.game.getHelpFunction();
+        return this.getCurrentPlayer().getHelpFunction();
     }
 
     public void choosePatternCard(final PatternCard patternCard, final boolean defaultCards) {
@@ -162,8 +162,8 @@ public final class GameController implements Observer {
         getCurrentPlayer().assignGameFavorTokensToPlayer();
     }
 
-    public void endTurn() {
-        getGame().endTurn();
+    public Boolean endTurn() {
+        return getGame().endTurn();
     }
 
     public void setGame(final Game game) {
