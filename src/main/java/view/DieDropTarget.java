@@ -48,49 +48,26 @@ public class DieDropTarget extends StackPane {
                 view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
             }
 
-                if ((DieDropTarget.amountPlacedDie == 0 && view.getSelectedToolcardName() == null)
-                        || (amountToolcardDie < maxAmountToolcardDie && view.getSelectedToolcardName() != null)) {
-                    Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
-                            dieView.getColor(), dieView.getNumber(),
-                            GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+            if ((DieDropTarget.amountPlacedDie == 0 && view.getSelectedToolcardName() == null)
+                    || (amountToolcardDie < maxAmountToolcardDie && view.getSelectedToolcardName() != null)) {
+                Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
+                        dieView.getColor(), dieView.getNumber(),
+                        GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
 
-                    if (!placeDie) {
-                        this.view.displayError("Deze zet is niet geldig.");
-                        return;
-                    }
-                } else {
-                    if (amountPlacedDie > 0) {
-                        this.view.displayError(
-                                "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
-                        return;
-                    } else if (amountToolcardDie >= maxAmountToolcardDie) {
-                        this.view.displayError(
-                                "Je hebt al " + maxAmountToolcardDie
-                                        + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
-                        return;
-                    }
+                if (!placeDie) {
+                    this.view.displayError("Deze zet is niet geldig.");
+                    return;
                 }
-
             } else {
-                // -- First check if this is the first round, otherwise user can place 3 die
-                if (!view.getGameClockwise()) {
-                    view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
-                } else {
-                    if (amountPlacedDie > 1) {
-                        this.view.displayError(
-                                "Je hebt al " + maxAmountToolcardDie
-                                        + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
-                        return;
-                    }
-
-                    Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
-                            dieView.getColor(), dieView.getNumber(),
-                            GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
-
-                    if (!placeDie) {
-                        this.view.displayError("Deze zet is niet geldig.");
-                        return;
-                    }
+                if (amountPlacedDie > 0) {
+                    this.view.displayError(
+                            "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
+                    return;
+                } else if (amountToolcardDie >= maxAmountToolcardDie) {
+                    this.view.displayError(
+                            "Je hebt al " + maxAmountToolcardDie
+                                    + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
+                    return;
                 }
             }
 
