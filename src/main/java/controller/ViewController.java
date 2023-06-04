@@ -50,8 +50,8 @@ public class ViewController extends Scene {
     private GameController gameController;
     private PatternCardController patternCardController;
     private MessageController messageController;
+    private ScoreController scoreController;
     private ToolcardController toolCardController;
-    private FavorTokenController favorTokenController;
 
     private EffectsController effectsController;
 
@@ -90,8 +90,8 @@ public class ViewController extends Scene {
         this.patternCardController = new PatternCardController(this);
         this.messageController = new MessageController(this);
         this.effectsController = new EffectsController();
-        this.toolCardController = new ToolcardController();
-        this.favorTokenController = new FavorTokenController(this);
+        this.scoreController = new ScoreController();
+        this.toolCardController = new ToolcardController(this);
 
         this.openLoginView();
     }
@@ -103,6 +103,10 @@ public class ViewController extends Scene {
     public int getPlayerId() {
         Player player = this.gameController.getCurrentPlayer();
         return player.getId();
+    }
+
+    public int getCurrentRound() {
+        return this.gameController.getRound();
     }
 
     public void changeView(final Pane pane) {
@@ -197,12 +201,16 @@ public class ViewController extends Scene {
         return this.gameController.isTurnPlayer(getUsername());
     }
 
+    public String getTurnPlayerUsername() {
+        return this.gameController.getTurnPlayerUsername();
+    }
+
     public Boolean isCardOwnerTurnPlayer(final int playerId) {
         return this.gameController.isTurnPlayer(playerId);
     }
 
     public List<Map<String, String>> getFavorTokensForToolCard(final String toolCardName) {
-        return this.favorTokenController.getFavorTokensForToolCard(
+        return this.toolCardController.getFavorTokensForToolCard(
                 Integer.parseInt(
                         ToolcardController.getToolCard(gameController.getGameId(), toolCardName).get("idtoolcard")),
                 gameController.getGameId());
@@ -220,12 +228,20 @@ public class ViewController extends Scene {
         return this.gameController.getCurrentPlayer();
     }
 
+    public List<Map<String, String>> getScores() {
+        return this.scoreController.getScores(getCurrentPlayer());
+    }
+
     public ArrayList<int[]> getPossibleMoves(final int eyes, final Color color) {
         return this.patternCardController.getPossibleMoves(eyes, color);
     }
 
-    public void setHelpFunction() {
-        this.gameController.setHelpFunction();
+    public ArrayList<int[]> getBestMoves(final ArrayList<int[]> possibleMoves, final int eyes, final Color color) {
+        return this.patternCardController.getBestMoves(possibleMoves, eyes, color);
+    }
+
+    public void toggleHelpFunction() {
+        this.gameController.toggleHelpFunction();
     }
 
     public boolean sendMessage(final String message) {
@@ -315,8 +331,11 @@ public class ViewController extends Scene {
     }
 
     public void endTurn() {
-        this.gameController.endTurn();
+        Boolean gameFinished = this.gameController.endTurn();
         DieDropTarget.resetAmountPlacedDie();
+        if (gameFinished) {
+            this.scoreController.updateScores(getCurrentPlayer());
+        }
     }
 
     public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
@@ -420,5 +439,82 @@ public class ViewController extends Scene {
 
     public Map<Integer, Boolean> getGamesWithOpenInvites() {
         return this.gameController.getGamesWithOpenInvites();
+    }
+
+    public Boolean getGameClockwise() {
+        return gameController.getGame().getClockwise();
+    }
+
+    public boolean buyToolCard(final String toolcardName) {
+        int amountFavorTokens = gameController.getCurrentPlayer().getFavorTokensLeft();
+        int amountTokensAssigned = toolCardController.getToolCardPrice(toolcardName, gameController.getGameId());
+
+        int toolCardPrice = 1;
+        if (amountTokensAssigned > 0) {
+            toolCardPrice = 2;
+        }
+
+        if (amountFavorTokens >= toolCardPrice) {
+            toolCardController.buyToolCard(toolcardName, gameController.getGameId(),
+                    gameController.getCurrentPlayer().getId(), toolCardPrice, gameController.getGame().getRoundID());
+            return true;
+        }
+        return false;
+    }
+
+    public String getSelectedToolcardName() {
+        return gameController.getSelectedToolcardName();
+    }
+
+    public void setToolCardSelection(final String selectedToolcardName) {
+        gameController.setSelectedToolcardName(selectedToolcardName);
+    }
+
+    public void grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
+        ToolcardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor, actionChoice);
+    }
+
+    public void grindingStone(final int dieNumber, final String dieColor) {
+        ToolcardController.grindingStone(gameController.getGameId(), dieNumber, dieColor);
+    }
+
+    public void fluxBrush(final int dieNumber, final String dieColor) {
+        ToolcardController.fluxBrush(gameController.getGameId(), dieNumber, dieColor);
+    }
+
+    public Boolean glazingHammer() {
+        int turnCount = 1;
+        if (!gameController.getGame().getClockwise()) {
+            turnCount = 2;
+        }
+        return ToolcardController.glazingHammer(turnCount, gameController.getGameId(),
+                gameController.getGame().getRoundID());
+    }
+
+    public void fluxRemover(final int dieNumber, final String dieColor) {
+        ToolcardController.fluxRemover(gameController.getGameId(), dieNumber, dieColor,
+                gameController.getGame().getRoundID());
+    }
+
+    public void eglomiseBrush() {
+        this.toolCardController.eglomiseBrush();
+    }
+
+    public void copperFoilBurnisher() {
+        this.toolCardController.copperFoilBurnisher();
+    }
+
+    public void getNewOffer() {
+        this.gameController.getGame().getNewOffer();
+    }
+
+    public int getAmountPlacedDieInRound() {
+        return gameController.getAmountPlacedDieInRound();
+    }
+
+    public void lensCutter(final int dieNumberOffer, final String dieColorOffer, final int dieNumberRoundTrack,
+            final String dieColorRoundTrack) {
+        this.toolCardController.lensCutter(gameController.getGameId(), gameController.getGame().getRoundID(),
+                dieNumberOffer, dieColorOffer, dieNumberRoundTrack, dieColorRoundTrack);
     }
 }

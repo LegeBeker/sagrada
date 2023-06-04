@@ -26,6 +26,7 @@ public class GameChatView extends VBox implements Observer {
     private static final int WIDTHMESSAGEBOX = 200;
 
     private final ViewController view;
+    private TextField textInput = new TextField();
 
     public GameChatView(final ViewController view) {
         this.view = view;
@@ -46,32 +47,18 @@ public class GameChatView extends VBox implements Observer {
 
         Observable.addObserver(Game.class, this);
 
-        TextField textInput = new TextField();
         textInput.setPromptText("Typ hier je bericht");
         HBox.setHgrow(textInput, Priority.ALWAYS);
         Button sendButton = new Button("Verstuur");
 
         textInput.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                Boolean send = view.sendMessage(textInput.getText());
-                if (send) {
-                    textInput.setText("");
-                    textInput.setStyle(null);
-                } else {
-                    textInput.setStyle("-fx-border-color: red;");
-                }
+                sendMessage(textInput.getText());
             }
         });
 
         sendButton.setOnAction(e -> {
-            Boolean send = view.sendMessage(textInput.getText());
-            if (send) {
-                textInput.setText("");
-                textInput.setStyle(null);
-            } else {
-                textInput.setStyle("-fx-border-color: red;");
-            }
-            Observable.notifyObservers(Game.class);
+            sendMessage(textInput.getText());
         });
 
         chatInput.getChildren().addAll(textInput, sendButton);
@@ -80,6 +67,22 @@ public class GameChatView extends VBox implements Observer {
         this.getChildren().addAll(chatMessageScrollPane, chatInput);
 
         update();
+    }
+
+    public void sendMessage(final String message) {
+        if (message.isEmpty() || !message.matches("^[a-zA-Z0-9?!., ]*$")) {
+            textInput.setStyle("-fx-border-color: red;");
+            view.displayError("Je bericht mag alleen letters, cijfers en leestekens bevatten.");
+            return;
+        }
+        Boolean send = view.sendMessage(message);
+        if (send) {
+            textInput.setText("");
+            textInput.setStyle(null);
+        } else {
+            textInput.setStyle("-fx-border-color: red;");
+        }
+        Observable.notifyObservers(Game.class);
     }
 
     public void addMessage(final String message, final String playerUsername, final String time) {

@@ -9,6 +9,8 @@ public class DieDropTarget extends StackPane {
 
     private final ViewController view;
     private static int amountPlacedDie = 0;
+    private static int amountToolcardDie = 0;
+    private int maxAmountToolcardDie = 1;
 
     public DieDropTarget(final ViewController view) {
         this.view = view;
@@ -31,13 +33,25 @@ public class DieDropTarget extends StackPane {
         });
 
         this.setOnDragDropped(event -> {
-            DieView dieView = (DieView) event.getGestureSource();
+            if (view.getSelectedToolcardName() != null && (view.getSelectedToolcardName().equals("lathekin")
+                    || view.getSelectedToolcardName().equals("tapWheel"))) {
+                maxAmountToolcardDie = 2;
+            }
 
-            if (amountPlacedDie > 0) {
-                this.view.displayError(
-                        "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
+            DieView dieView = (DieView) event.getGestureSource();
+            if (view.getAmountPlacedDieInRound() > 1) {
+                view.displayError("Je hebt in je vorige beurt al 2 stenen geplaatst. Eindig de beurt.");
                 return;
-            } else {
+            }
+
+            if (!view.getGameClockwise() && view.getSelectedToolcardName() != null
+                    && view.getSelectedToolcardName().equals("runningPliers")) {
+                view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
+                return;
+            }
+
+            if ((DieDropTarget.amountPlacedDie == 0 && view.getSelectedToolcardName() == null)
+                    || (amountToolcardDie < maxAmountToolcardDie && view.getSelectedToolcardName() != null)) {
                 Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
                         dieView.getColor(), dieView.getNumber(),
                         GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
@@ -46,15 +60,34 @@ public class DieDropTarget extends StackPane {
                     this.view.displayError("Deze zet is niet geldig.");
                     return;
                 }
+                if (view.getSelectedToolcardName() != null
+                        && DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
+                    DieDropTarget.amountToolcardDie++;
+                }
+                if (view.getSelectedToolcardName() == null) {
+                    DieDropTarget.amountPlacedDie++;
+                }
+            } else {
+                if (amountPlacedDie > 0) {
+                    this.view.displayError(
+                            "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
+                    return;
+                } else if (amountToolcardDie >= maxAmountToolcardDie) {
+                    this.view.displayError(
+                            "Je hebt al " + maxAmountToolcardDie
+                                    + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
+                    return;
+                }
             }
 
-            DieDropTarget.amountPlacedDie++;
             event.setDropCompleted(true);
             event.consume();
         });
+
     }
 
     public static void resetAmountPlacedDie() {
         DieDropTarget.amountPlacedDie = 0;
+        DieDropTarget.amountToolcardDie = 0;
     }
 }

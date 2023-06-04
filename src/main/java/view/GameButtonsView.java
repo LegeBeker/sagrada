@@ -14,6 +14,7 @@ public class GameButtonsView extends VBox implements Observer {
     private ViewController view;
 
     private Button buttonBack;
+    private Button buttonGetOffer;
     private Button buttonEndTurn;
     private ToggleButton helpToggle;
 
@@ -26,18 +27,23 @@ public class GameButtonsView extends VBox implements Observer {
 
         this.buttonBack = new Button("Terug");
         this.buttonBack.setPrefWidth(BUTTONWIDTH);
-        this.buttonBack.setOnAction(e -> view.openGamesView());
+        this.buttonBack.setOnAction(e -> backOutOfGame());
+
+        this.buttonGetOffer = new Button("Pak dobbelstenen");
+        this.buttonGetOffer.setPrefWidth(BUTTONWIDTH);
+        this.buttonGetOffer.setOnAction(e -> getNewOffer());
 
         this.helpToggle = new ToggleButton("Help!");
         this.helpToggle.setPrefWidth(BUTTONWIDTH);
         this.helpToggle.setOnAction(e -> {
-            view.setHelpFunction();
+            view.toggleHelpFunction();
             this.view.displayMessage("Help functie is " + (view.getHelpFunction() ? "aan" : "uit"));
         });
 
         this.buttonEndTurn = new Button("Einde beurt");
         this.buttonEndTurn.setPrefWidth(BUTTONWIDTH);
         this.buttonEndTurn.setOnAction(e -> endTurn());
+        this.buttonEndTurn.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
 
         this.getChildren().addAll(this.buttonBack, this.helpToggle);
         Observable.addObserver(Game.class, this);
@@ -48,9 +54,26 @@ public class GameButtonsView extends VBox implements Observer {
         this.setSpacing(PADDING);
     }
 
+    private void getNewOffer() {
+        this.buttonGetOffer.setDisable(true);
+        view.getNewOffer();
+        this.buttonGetOffer.setDisable(false);
+    }
+
     private void endTurn() {
+        if (view.getHelpFunction()) {
+            view.displayError("Je kan geen einde beurt doen als de help functie aan staat!");
+            return;
+        }
         this.buttonEndTurn.setDisable(true);
+        view.setToolCardSelection(null);
+        boolean clockwiseBefore = view.getGameClockwise();
         view.endTurn();
+        boolean clockwiseAfter = view.getGameClockwise();
+        if (clockwiseBefore != clockwiseAfter) {
+            view.displayMessage("De richting van het spel is veranderd!");
+        }
+        this.buttonEndTurn.setDisable(false);
     }
 
     @Override
@@ -58,10 +81,21 @@ public class GameButtonsView extends VBox implements Observer {
         if (this.getChildren().contains(buttonEndTurn)) {
             this.getChildren().remove(buttonEndTurn);
         }
-        if (view.isTurnPlayer()) {
+        if (view.isTurnPlayer() && !view.getOffer().isEmpty()) {
             this.getChildren().addAll(buttonEndTurn);
-            this.buttonEndTurn.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
         }
+
+        if (this.getChildren().contains(buttonGetOffer)) {
+            this.getChildren().remove(buttonGetOffer);
+        }
+        if (view.getOffer().isEmpty() && view.isTurnPlayer() && view.getCurrentRound() != 10) {
+            this.getChildren().addAll(buttonGetOffer);
+        }
+    }
+
+    private void backOutOfGame() {
+        view.setToolCardSelection(null);
+        view.openGamesView();
     }
 
 }

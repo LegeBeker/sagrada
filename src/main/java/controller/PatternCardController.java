@@ -33,6 +33,7 @@ public class PatternCardController {
                 rowIndex);
 
         if (valid) {
+            player.getPatternCard().resetValidation();
             return player.getBoard().placeDie(dieColor, dieNumber, rowIndex, columnIndex);
         }
 
@@ -43,6 +44,12 @@ public class PatternCardController {
         Player player = view.getCurrentPlayer();
 
         return player.getPatternCard().getPossibleMoves(player.getBoard(), eyes, color);
+    }
+
+    public ArrayList<int[]> getBestMoves(final ArrayList<int[]> possibleMoves, final int eyes, final Color color) {
+        Player player = view.getCurrentPlayer();
+
+        return player.getPatternCard().getBestMoves(player.getBoard(), possibleMoves, eyes, color);
     }
 
     public PatternCardField getPatternCardField(final int patternCardId, final int col, final int row) {

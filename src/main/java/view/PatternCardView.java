@@ -1,6 +1,5 @@
 package main.java.view;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import javafx.geometry.Insets;
@@ -118,26 +117,8 @@ public class PatternCardView extends BorderPane {
     }
 
     public void update() {
-        ArrayList<int[]> locations = new ArrayList<int[]>();
-        grid.getChildren().forEach((e) -> {
-            if (e.getStyle().contains("-fx-border-color: #00FFBF;")) {
-                int[] location = {GridPane.getRowIndex(e), GridPane.getColumnIndex(e)};
-                locations.add(location);
-            }
-        });
-
         grid.getChildren().clear();
-
         drawPatternCard(view, patternCardId, playerId);
-
-        grid.getChildren().forEach((cell) -> {
-            locations.forEach((cellLocation) -> {
-                int[] location = {GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)};
-                if (cellLocation[0] == location[0] && cellLocation[1] == location[1]) {
-                    cell.setStyle("-fx-border-color: #00FFBF;");
-                }
-            });
-        });
     }
 
     private void drawPatternCard(final ViewController view, final int patternCardId, final Integer playerId) {
@@ -180,8 +161,20 @@ public class PatternCardView extends BorderPane {
 
         if (this.playerId != null && view.getPlayerBoardField(this.playerId, row, col) != null) {
             Map<String, String> die = view.getPlayerBoardField(this.playerId, row, col);
+
+            Boolean isDraggable = false;
+            if (view.getSelectedToolcardName() == null) {
+                isDraggable = false;
+            } else {
+                if (view.getSelectedToolcardName().equals("eglomiseBrush")
+                        || view.getSelectedToolcardName().equals("copperFoilBurnisher")
+                        || view.getSelectedToolcardName().equals("lathekin")) {
+                    isDraggable = true;
+                }
+            }
+
             DieView dieView = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
-                    Integer.parseInt(die.get("number")), false);
+                    Integer.parseInt(die.get("number")), isDraggable);
             stackPane.getChildren().add(dieView);
         }
 
