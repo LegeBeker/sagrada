@@ -14,13 +14,13 @@ import main.java.model.PatternCardField;
  *    return DataMapper.createMultiple(Message.getAll(game.getId()), "message", "username", "time");
  * }
  *
- * De eerste parameter is een ArrayList van Messages, de tweede parameter zijn de velden die je wilt ophalen uit de Message class. 
+ * De eerste parameter is een ArrayList van Messages, de tweede parameter zijn de velden die je wilt ophalen uit de Message class.
  * De velden die je wilt ophalen moeten een getter hebben in de Message class. Volgens de JavaBeans conventie (getUsername()).
  *
  * In de MessageView doen we het volgende:
  *
  * for (DataMap message : view.getChatMessages()) {
- *  addMessage(message.getString("message"), message.getString("username"),       
+ *  addMessage(message.getString("message"), message.getString("username"),     
  *     message.getString("time"));
  * }
  *
@@ -95,7 +95,7 @@ public final class DataMapper {
             parts[1] = parts[1].substring(0, parts[1].length() - 1);
             return parts;
         } else {
-            return new String[] { field };
+            return new String[] {field};
         }
     }
 }

@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 import javafx.scene.paint.Color;
 
-/*  
+/*
  * Dit is de DataMap class het is een HashMap met extra functionaliteit.
  * Zo kan je bijvoorbeeld een String, Integer, Color of Boolean ophalen uit de DataMap.
  * Deze class was bedoeld om te zorgen dat er geen we op een makkelijk manier konder voorkomen dat we models naar de view stuurden.
- * In 1 datamap kan je 1 instantie van model zetten. Bijv een Player of een Game. 
+ * In 1 datamap kan je 1 instantie van model zetten. Bijv een Player of een Game.
  */
 public class DataMap extends HashMap<String, Object> {
     public String getString(final String key) {
