@@ -23,6 +23,7 @@ public class Player {
     private String privateObjCardColor;
     private PatternCard patternCard;
     private int unassignedFavortokensLeft;
+    private Boolean helpFunctionActive;
 
     private Board board;
 
@@ -227,5 +228,13 @@ public class Player {
             patternCardOptions.add(Integer.parseInt(patternCardMap.get("idpatterncard")));
         }
         return patternCardOptions;
+    }
+
+    public boolean getHelpFunction() {
+        return helpFunctionActive;
+    }
+
+    public void toggleHelpFunction() {
+        this.helpFunctionActive = !this.helpFunctionActive;
     }
 }
