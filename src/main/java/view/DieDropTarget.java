@@ -9,6 +9,8 @@ public class DieDropTarget extends StackPane {
 
     private final ViewController view;
     private static int amountPlacedDie = 0;
+    private static int amountToolcardDie = 0;
+    private int maxAmountToolcardDie = 1;
 
     public DieDropTarget(final ViewController view) {
         this.view = view;
@@ -31,30 +33,79 @@ public class DieDropTarget extends StackPane {
         });
 
         this.setOnDragDropped(event -> {
+            if (view.getSelectedToolcardName() != null && (view.getSelectedToolcardName().equals("lathekin")
+                    || view.getSelectedToolcardName().equals("tapWheel"))) {
+                maxAmountToolcardDie = 2;
+            }
+
             DieView dieView = (DieView) event.getGestureSource();
-
-            if (amountPlacedDie > 0) {
-                this.view.displayError(
-                        "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
+            if (view.getAmountPlacedDieInRound() > 1) {
+                view.displayError("Je hebt in je vorige beurt al 2 stenen geplaatst. Eindig de beurt.");
                 return;
-            } else {
-                Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
-                        dieView.getColor(), dieView.getNumber(),
-                        GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+            }
 
-                if (!placeDie) {
-                    this.view.displayError("Deze zet is niet geldig.");
-                    return;
+            if (view.getSelectedToolcardName() == null || !view.getSelectedToolcardName().equals("runningPliers")) {
+
+                if ((DieDropTarget.amountPlacedDie == 0 && view.getSelectedToolcardName() == null)
+                        || (amountToolcardDie < maxAmountToolcardDie && view.getSelectedToolcardName() != null)) {
+                    Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
+                            dieView.getColor(), dieView.getNumber(),
+                            GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+
+                    if (!placeDie) {
+                        this.view.displayError("Deze zet is niet geldig.");
+                        return;
+                    }
+                } else {
+                    if (amountPlacedDie > 0) {
+                        this.view.displayError(
+                                "Je hebt al een dobbelsteen geplaatst deze ronde, eindig de ronde om nog eens te plaatsen.");
+                        return;
+                    } else if (amountToolcardDie >= maxAmountToolcardDie) {
+                        this.view.displayError(
+                                "Je hebt al " + maxAmountToolcardDie
+                                        + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
+                        return;
+                    }
+                }
+
+            } else {
+                // -- First check if this is the first round, otherwise user can place 3 die
+                if (!view.getGameClockwise()) {
+                    view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
+                } else {
+                    if (amountPlacedDie > 1) {
+                        this.view.displayError(
+                                "Je hebt al " + maxAmountToolcardDie
+                                        + " dobbelstenen geplaatst d.m.v. de gereedschapskaart. Eindig de beurt.");
+                        return;
+                    }
+
+                    Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
+                            dieView.getColor(), dieView.getNumber(),
+                            GridPane.getColumnIndex(this), GridPane.getRowIndex(this));
+
+                    if (!placeDie) {
+                        this.view.displayError("Deze zet is niet geldig.");
+                        return;
+                    }
                 }
             }
 
-            DieDropTarget.amountPlacedDie++;
+            if (view.getSelectedToolcardName() != null && DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
+                DieDropTarget.amountToolcardDie++;
+            }
+            if (view.getSelectedToolcardName() == null) {
+                DieDropTarget.amountPlacedDie++;
+            }
             event.setDropCompleted(true);
             event.consume();
         });
+
     }
 
     public static void resetAmountPlacedDie() {
         DieDropTarget.amountPlacedDie = 0;
+        DieDropTarget.amountToolcardDie = 0;
     }
 }

@@ -152,6 +152,10 @@ public class Player {
         this.score = score;
     }
 
+    public boolean updateScore(final String score) {
+        return PlayerDB.updateScore(getId(), score);
+    }
+
     public static ArrayList<Player> getInvites(final String username) {
         ArrayList<Player> players = new ArrayList<Player>();
 
@@ -215,8 +219,7 @@ public class Player {
             player.patternCard = PatternCard.get(Integer.parseInt(playerMap.get("idpatterncard")));
         }
 
-        player.board = Board.update(player.board);
-
+        player.board = Board.get(player);
         return player;
     }
 

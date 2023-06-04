@@ -14,9 +14,10 @@ public class GameOfferView extends FlowPane implements Observer {
 
     private ViewController view;
 
+    private ArrayList<DieView> dieViews = new ArrayList<DieView>();
+
     public GameOfferView(final ViewController view) {
         this.view = view;
-
         Observable.addObserver(Game.class, this);
 
         this.update();
@@ -26,11 +27,22 @@ public class GameOfferView extends FlowPane implements Observer {
     public void update() {
         this.getChildren().clear();
         Boolean isDraggable = view.isTurnPlayer();
+
+        if (view.getSelectedToolcardName() != null) {
+            if (view.getSelectedToolcardName().equals("eglomiseBrush")
+                    || view.getSelectedToolcardName().equals("copperFoilBurnisher")
+                    || view.getSelectedToolcardName().equals("lathekin")) {
+                isDraggable = false;
+            }
+        }
+
         for (Map<String, String> die : view.getOffer()) {
             DieView dieView = new DieView(this.view, Integer.parseInt(die.get("eyes")), Color.web(die.get("color")),
                     Integer.parseInt(die.get("number")), isDraggable);
             this.getChildren().add(dieView);
         }
+
+        this.getChildren().addAll(dieViews);
     }
 
     public void showPossibleMoves(final int eyes, final Color color) {

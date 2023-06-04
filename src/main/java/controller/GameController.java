@@ -18,6 +18,7 @@ public final class GameController implements Observer {
     private final ViewController view;
 
     private Game game;
+    private String selectedToolcardName = null;
 
     public GameController(final ViewController view) {
         this.view = view;
@@ -32,10 +33,13 @@ public final class GameController implements Observer {
         return this.game;
     }
 
+    public int getRound() {
+        return game.getCurrentRound();
+    }
+
     public ArrayList<Map<String, String>> getPlayers(final String username) {
 
         ArrayList<Map<String, String>> playersMap = new ArrayList<Map<String, String>>();
-        ArrayList<Player> players = game.getPlayers(username);
         for (Player p : game.getPlayers(username)) {
             Map<String, String> playerMap = new HashMap<String, String>();
             playerMap.put("idPlayer", Integer.toString(p.getId()));
@@ -119,6 +123,10 @@ public final class GameController implements Observer {
         return this.game.getTurnPlayerId() == playerId;
     }
 
+    public String getTurnPlayerUsername() {
+        return this.game.getTurnPlayerUsername();
+    }
+
     public Boolean isPlayerInGame(final String username) {
         return this.game.isPlayerInGame(username);
     }
@@ -194,5 +202,17 @@ public final class GameController implements Observer {
 
     public void update() {
         this.game.update();
+    }
+
+    public void setSelectedToolcardName(final String selectedToolcardName) {
+        this.selectedToolcardName = selectedToolcardName;
+    }
+
+    public String getSelectedToolcardName() {
+        return this.selectedToolcardName;
+    }
+
+    public int getAmountPlacedDieInRound() {
+        return Game.getAmountPlacedDieInRound(getGameId(), getCurrentPlayer().getId(), getGame().getCurrentRound());
     }
 }

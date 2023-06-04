@@ -6,8 +6,11 @@ import main.java.controller.ViewController;
 
 public class GameToolBarView extends HBox {
 
+    private GameToolCardsView gameToolCardsView;
+
     public GameToolBarView(final ViewController view) {
-        this.getChildren().addAll(new GameToolCardsView(view), new GamePublicObjectiveCardsView(view),
+        this.gameToolCardsView = new GameToolCardsView(view);
+        this.getChildren().addAll(gameToolCardsView, new GamePublicObjectiveCardsView(view),
                 new GamePrivateObjectiveCardView(view));
 
         this.getChildren().forEach(child -> {
