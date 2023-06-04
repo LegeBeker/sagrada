@@ -23,7 +23,7 @@ public class Player {
     private String privateObjCardColor;
     private PatternCard patternCard;
     private int unassignedFavortokensLeft;
-    private Boolean helpFunctionActive;
+    private Boolean helpFunctionActive = false;
 
     private Board board;
 
