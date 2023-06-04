@@ -201,6 +201,10 @@ public class ViewController extends Scene {
         return this.gameController.isTurnPlayer(getUsername());
     }
 
+    public String getTurnPlayerUsername() {
+        return this.gameController.getTurnPlayerUsername();
+    }
+
     public Boolean isCardOwnerTurnPlayer(final int playerId) {
         return this.gameController.isTurnPlayer(playerId);
     }

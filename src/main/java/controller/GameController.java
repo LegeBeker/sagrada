@@ -123,6 +123,10 @@ public final class GameController implements Observer {
         return this.game.getTurnPlayerId() == playerId;
     }
 
+    public String getTurnPlayerUsername() {
+        return this.game.getTurnPlayerUsername();
+    }
+
     public Boolean isPlayerInGame(final String username) {
         return this.game.isPlayerInGame(username);
     }
