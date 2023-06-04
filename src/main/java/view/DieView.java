@@ -1,9 +1,15 @@
 package main.java.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -26,19 +32,23 @@ public class DieView extends Group {
     private static final double SCALE = 0.8;
 
     private GameOfferView gameOfferView;
+    private ViewController view;
 
     private int eyes;
     private Color color;
     private int number;
+
+    private static Map<String, String> firstSelectedDieMapLensCutter = null;
 
     public DieView(final ViewController view, final int eyes, final Color color, final int number,
             final Boolean isDraggable) {
         this.eyes = eyes;
         this.color = color;
         this.number = number;
+        this.view = view;
         Rectangle rectangle = new Rectangle(RECTANGLE, RECTANGLE);
         rectangle.setFill(Color.rgb(0, 0, 0, 0));
-
+        this.setOnMouseClicked(e -> checkSelectionModeToolCard());
         Rectangle die = new Rectangle(RECTANGLE, RECTANGLE);
         die.setFill(color);
         die.setStroke(Color.BLACK);
@@ -54,10 +64,13 @@ public class DieView extends Group {
             this.setOnDragDetected(event -> {
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
-                this.gameOfferView = (GameOfferView) this.getParent();
-                if (view.getHelpFunction()) {
-                    gameOfferView.showPossibleMoves(this.eyes, this.color);
+                if (this.getParent().getClass().getSimpleName().equals("GameOfferView")) {
+                    this.gameOfferView = (GameOfferView) this.getParent();
+                    if (view.getHelpFunction()) {
+                        gameOfferView.showPossibleMoves(this.eyes, this.color);
+                    }
                 }
+
                 SnapshotParameters sp = new SnapshotParameters();
                 sp.setFill(Color.TRANSPARENT);
                 Image image = this.snapshot(sp, null);
@@ -67,7 +80,7 @@ public class DieView extends Group {
             });
 
             this.setOnDragDone(event -> {
-                if (view.getHelpFunction()) {
+                if (view.getHelpFunction() && gameOfferView != null) {
                     gameOfferView.cleanTargets();
                 }
             });
@@ -148,5 +161,103 @@ public class DieView extends Group {
 
     public int getNumber() {
         return this.number;
+    }
+
+    private void checkSelectionModeToolCard() {
+        String methodName = view.getSelectedToolcardName();
+        if (methodName != null) {
+            if (methodName.equals("lensCutter") && DieView.firstSelectedDieMapLensCutter != null) {
+                if (!this.getParent().getClass().getSimpleName().equals("GridPane")) {
+                    // -- Note: GridPane is used for the roundtrack
+                    view.displayError("Kies een dobbelsteen uit het rondespoor!");
+                    return;
+                }
+                Map<String, String> selectedDieMap = new HashMap<>();
+                selectedDieMap.put("eyes", Integer.toString(this.eyes));
+                selectedDieMap.put("dieNumber", Integer.toString(this.number));
+                selectedDieMap.put("dieColor", this.color.toString());
+                view.lensCutter(Integer.parseInt(firstSelectedDieMapLensCutter.get("dieNumber")),
+                        firstSelectedDieMapLensCutter.get("dieColor"),
+                        Integer.parseInt(selectedDieMap.get("dieNumber")), selectedDieMap.get("dieColor"));
+
+                DieView.firstSelectedDieMapLensCutter = null;
+                view.setToolCardSelection(null);
+                return;
+            }
+            if (!this.getParent().getClass().getSimpleName().equals("GameOfferView")) {
+                view.displayError("Kies een dobbelsteen uit het aanbod.");
+                return;
+            }
+
+            Map<String, String> selectedDieMap = new HashMap<>();
+            selectedDieMap.put("eyes", Integer.toString(this.eyes));
+            selectedDieMap.put("dieNumber", Integer.toString(this.number));
+            selectedDieMap.put("dieColor", this.color.toString());
+
+            // -- trigger toolcard logic
+            switch (methodName) {
+                case "grozingPliers":
+                    String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
+                    if (!actionChoice.equals("?")) {
+                        view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                                selectedDieMap.get("dieColor"), actionChoice);
+                    }
+                    break;
+                case "lathekin":
+                    break;
+                case "lensCutter":
+                    view.displayMessage("Selecteer nu een dobbelsteen uit het rondespoor");
+                    DieView.firstSelectedDieMapLensCutter = selectedDieMap;
+                    break;
+                case "fluxBrush":
+                    view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                            selectedDieMap.get("dieColor"));
+                    break;
+                case "corkBackedStraightedge":
+                    break;
+                case "grindingStone":
+                    view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                            selectedDieMap.get("dieColor"));
+                    break;
+                case "fluxRemover":
+                    view.fluxRemover(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                            selectedDieMap.get("dieColor"));
+                    break;
+                case "tapWheel":
+                    break;
+                default:
+            }
+
+            if (!methodName.equals("lensCutter")) {
+                view.setToolCardSelection(null);
+            }
+        }
+    }
+
+    private String askGrozingPliersAction(final int currentDieValue) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Gebruik gereedschapskaart");
+        alert.setHeaderText("Vermeld je keuze m.b.t. de actie die deze doelkaart moet uitvoeren.");
+        alert.setContentText(
+                "Let op: Als de dobbelsteen de waarde 6 heeft, en je verhoogt de steen, wordt het geen 1. "
+                        + "De huidge waarde van de geselecteerde dobbelsteen is " + currentDieValue + ". ");
+
+        ButtonType incrementButton = new ButtonType("Toevoegen");
+        ButtonType decrementButton = new ButtonType("Aftrekken");
+        ButtonType closeButton = new ButtonType("Sluiten", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(incrementButton, decrementButton, closeButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (!result.isPresent()) {
+            return "?";
+        }
+
+        if (result.get() == incrementButton) {
+            return "increment";
+        } else if (result.get() == decrementButton) {
+            return "decrement";
+        }
+        return "?";
     }
 }

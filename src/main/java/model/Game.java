@@ -35,6 +35,7 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
     private static final int TOKENSPERGAME = 24;
+    private static final int MAXROUNDNR = 10;
 
     public static Game createGame(final ArrayList<String> accounts, final String username,
             final boolean useDefaultCards) {
@@ -256,9 +257,11 @@ public class Game extends Observable {
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == 1) {
                 player.setSeqnr(getPlayers().size());
-                setTurnPlayer(player);
             } else {
                 player.setSeqnr(player.getSeqnr() - 1);
+                if (player.getSeqnr() == 1) {
+                    setTurnPlayer(player);
+                }
             }
         }
 
@@ -268,15 +271,20 @@ public class Game extends Observable {
                     dieMap.get("diecolor"));
         }
 
-        setCurrentRoundID(getRoundID() + 1);
-
-        Die.getNewOffer(getId(), getRoundID(), players.size());
-        notifyObservers(Game.class);
+        if (getRoundID() == MAXROUNDNR) {
+            endGame();
+        } else {
+            setCurrentRoundID(getRoundID() + 1);
+        }
     }
 
     private void setCurrentRoundID(final int roundID) {
         GameDB.setRound(getId(), roundID);
         notifyObservers(Game.class);
+    }
+
+    private void endGame() {
+        GameDB.finishGame(getId());
     }
 
     public static Game get(final int idGame) {
@@ -372,5 +380,14 @@ public class Game extends Observable {
 
     public static Map<Integer, Boolean> getGamesWithOpenInvites(final String username) {
         return GameDB.getGamesWithOpenInvites(username);
+    }
+
+    public void getNewOffer() {
+        Die.getNewOffer(getId(), getRoundID(), players.size());
+        notifyObservers(Game.class);
+    }
+
+    public static int getAmountPlacedDieInRound(final int idGame, final int idPlayer, final int roundNr) {
+        return DieDB.getAmountPlacedDieInRound(idGame, idPlayer, roundNr);
     }
 }
