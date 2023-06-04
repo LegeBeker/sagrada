@@ -476,7 +476,11 @@ public class ViewController extends Scene {
     }
 
     public Boolean glazingHammer() {
-        return ToolcardController.glazingHammer(1, gameController.getGameId(), gameController.getGame().getRoundID());
+        int turnCount = 1;
+        if (!gameController.getGame().getClockwise()) {
+            turnCount = 2;
+        }
+        return ToolcardController.glazingHammer(turnCount, gameController.getGameId(), gameController.getGame().getRoundID());
     }
 
     public void fluxRemover(final int dieNumber, final String dieColor) {
