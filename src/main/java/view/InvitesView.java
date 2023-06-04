@@ -17,7 +17,7 @@ public class InvitesView extends HBox {
 
     private TableView<String> selectionTable;
     private ArrayList<String> selectedAccountsUsernames = new ArrayList<String>();
-    private static final double SELECTIONTABLEHEIGHT = 120;
+    private static final double SELECTIONTABLEHEIGHT = 100;
     private static final int MAXSIZESELECTION = 3;
 
     public InvitesView(final ViewController view) {
