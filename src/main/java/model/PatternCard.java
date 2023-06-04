@@ -135,14 +135,14 @@ public class PatternCard {
         for (int row = 1; row <= ROWS; row++) {
             for (int col = 1; col <= COLUMNS; col++) {
                 for (int[] move : possibleMoves) { // row on 0 and column on 1
-                    if (board.getField(move[0], move[1]).getColor().equals(dieColor)) {
+                    if (board.getField(move[0], move[1]) != null && board.getField(move[0], move[1]).getColor().equals(dieColor)) {
                         bestMoves.add(move);
                         thereAreNoColorMoves = false;
                     }
                 }
                 if (thereAreNoColorMoves) {
                     for (int[] move : possibleMoves) { // row on 0 and column on 1
-                        if (board.getField(move[0], move[1]).getNumber() == dieValue) {
+                        if (board.getField(move[0], move[1]) != null && board.getField(move[0], move[1]).getNumber() == dieValue) {
                             bestMoves.add(move);
                         }
                     }
