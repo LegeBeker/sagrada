@@ -40,7 +40,7 @@ public class GameToolCardsView extends FlowPane implements Observer {
 
         for (GameToolCardView toolCard : toolCardViews) {
             if (view.getSelectedToolcardName() != null) {
-                if (toolCard.getSelectedMethodName(toolCard.getToolCardName()).equals(view.getSelectedToolcardName())) {
+                if (toolCard.getToolCardMethodName().equals(view.getSelectedToolcardName())) {
                     toolCard.addSelectionOutline();
                 } else {
                     toolCard.removeSelectionOutline();

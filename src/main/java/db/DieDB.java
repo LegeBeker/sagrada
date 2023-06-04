@@ -80,6 +80,20 @@ public final class DieDB {
         return 0;
     }
 
+    public static int getAmountPlacedDieInRound(final int idGame, final int playerId, final int roundNr) {
+        Database db = Database.getInstance();
+        String sql = "SELECT COUNT(*) AS 'amount_placed_die' "
+        + "FROM gamedie AS gd "
+        + "JOIN playerframefield AS pff "
+        + "ON gd.diecolor = pff.diecolor AND gd.dienumber = pff.dienumber "
+        + "WHERE gd.idgame = ? AND idplayer = ? AND gd.roundID = ?;";
+
+        String[] params = {Integer.toString(idGame), Integer.toString(playerId),
+            Integer.toString(roundNr)};
+
+        return Integer.parseInt(db.exec(sql, params).get(0).get("amount_placed_die"));
+    }
+
     public static int getRoundTrackFromDie(final int gameId, final int dieNumber, final String dieColor) {
         Database db = Database.getInstance();
         String sql = "SELECT * FROM gamedie WHERE idgame = ? AND dienumber = ? AND diecolor = ?;";

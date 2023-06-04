@@ -496,6 +496,10 @@ public class ViewController extends Scene {
         this.gameController.getGame().getNewOffer();
     }
 
+    public int getAmountPlacedDieInRound() {
+        return gameController.getAmountPlacedDieInRound();
+    }
+
     public void lensCutter(final int dieNumberOffer, final String dieColorOffer, final int dieNumberRoundTrack,
             final String dieColorRoundTrack) {
         this.toolCardController.lensCutter(gameController.getGameId(), gameController.getGame().getRoundID(),

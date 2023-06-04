@@ -213,7 +213,7 @@ public class DieView extends Group {
                     view.fluxBrush(Integer.parseInt(selectedDieMap.get("dieNumber")),
                             selectedDieMap.get("dieColor"));
                     break;
-                case "cork-backedStraightedge":
+                case "corkBackedStraightedge":
                     break;
                 case "grindingStone":
                     view.grindingStone(Integer.parseInt(selectedDieMap.get("dieNumber")),
