@@ -60,6 +60,13 @@ public class DieDropTarget extends StackPane {
                     this.view.displayError("Deze zet is niet geldig.");
                     return;
                 }
+                if (view.getSelectedToolcardName() != null
+                        && DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
+                    DieDropTarget.amountToolcardDie++;
+                }
+                if (view.getSelectedToolcardName() == null) {
+                    DieDropTarget.amountPlacedDie++;
+                }
             } else {
                 if (amountPlacedDie > 0) {
                     this.view.displayError(
@@ -73,12 +80,6 @@ public class DieDropTarget extends StackPane {
                 }
             }
 
-            if (view.getSelectedToolcardName() != null && DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
-                DieDropTarget.amountToolcardDie++;
-            }
-            if (view.getSelectedToolcardName() == null) {
-                DieDropTarget.amountPlacedDie++;
-            }
             event.setDropCompleted(true);
             event.consume();
         });

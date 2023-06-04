@@ -236,8 +236,12 @@ public class ViewController extends Scene {
         return this.patternCardController.getPossibleMoves(eyes, color);
     }
 
-    public void setHelpFunction() {
-        this.gameController.setHelpFunction();
+    public ArrayList<int[]> getBestMoves(final ArrayList<int[]> possibleMoves, final int eyes, final Color color) {
+        return this.patternCardController.getBestMoves(possibleMoves, eyes, color);
+    }
+
+    public void toggleHelpFunction() {
+        this.gameController.toggleHelpFunction();
     }
 
     public boolean sendMessage(final String message) {

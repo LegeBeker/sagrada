@@ -37,8 +37,6 @@ public class Game extends Observable {
     private static final int TOKENSPERGAME = 24;
     private static final int MAXROUNDID = 20;
 
-    private boolean helpFunction = false;
-
     public static Game createGame(final ArrayList<String> accounts, final String username,
             final boolean useDefaultCards) {
         Game newGame = new Game();
@@ -182,14 +180,6 @@ public class Game extends Observable {
         return players;
     }
 
-    public void setHelpFunction() {
-        this.helpFunction = !this.helpFunction;
-    }
-
-    public boolean getHelpFunction() {
-        return this.helpFunction;
-    }
-
     public Player getCurrentPlayer(final int id, final String username) {
         for (Player player : this.players) {
             if (player.getId() == id || player.getUsername().equals(username)) {
@@ -318,7 +308,6 @@ public class Game extends Observable {
             game.offer = Die.getOffer(game.getId(), game.getRoundID());
         }
         game.creationDate = gameMap.get("creationdate");
-        game.helpFunction = false;
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
             game.players.add(Player.mapToPlayer(game, map));
