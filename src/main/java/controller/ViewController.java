@@ -327,8 +327,11 @@ public class ViewController extends Scene {
     }
 
     public void endTurn() {
-        this.gameController.endTurn();
+        Boolean gameFinished = this.gameController.endTurn();
         DieDropTarget.resetAmountPlacedDie();
+        if (gameFinished) {
+            this.scoreController.updateScores(getCurrentPlayer());
+        }
     }
 
     public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
@@ -480,7 +483,8 @@ public class ViewController extends Scene {
         if (!gameController.getGame().getClockwise()) {
             turnCount = 2;
         }
-        return ToolcardController.glazingHammer(turnCount, gameController.getGameId(), gameController.getGame().getRoundID());
+        return ToolcardController.glazingHammer(turnCount, gameController.getGameId(),
+                gameController.getGame().getRoundID());
     }
 
     public void fluxRemover(final int dieNumber, final String dieColor) {

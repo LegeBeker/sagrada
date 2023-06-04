@@ -154,8 +154,8 @@ public final class GameController implements Observer {
         getCurrentPlayer().assignGameFavorTokensToPlayer();
     }
 
-    public void endTurn() {
-        getGame().endTurn();
+    public Boolean endTurn() {
+        return getGame().endTurn();
     }
 
     public void setGame(final Game game) {
