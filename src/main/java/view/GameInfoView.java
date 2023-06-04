@@ -12,12 +12,12 @@ import main.java.model.Game;
 import main.java.pattern.Observable;
 import main.java.pattern.Observer;
 
-public class GameScoreView extends VBox implements Observer {
+public class GameInfoView extends VBox implements Observer {
     private static final int PADDING = 10;
 
     private ViewController view;
 
-    public GameScoreView(final ViewController view) {
+    public GameInfoView(final ViewController view) {
         this.view = view;
         this.update();
         Observable.addObserver(Game.class, this);
@@ -28,17 +28,21 @@ public class GameScoreView extends VBox implements Observer {
     @Override
     public void update() {
         this.getChildren().clear();
-        StackPane currentRound = new StackPane();
-        currentRound
+        StackPane gameInfo = new StackPane();
+        gameInfo
                 .setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        currentRound.setPadding(new Insets(PADDING));
-        currentRound.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        gameInfo.setPadding(new Insets(PADDING));
+        gameInfo.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+
+        VBox gameInfoVBox = new VBox();
 
         Text roundText = new Text("Ronde: " + view.getCurrentRound());
         roundText.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-        currentRound.getChildren().add(roundText);
-
-        this.getChildren().add(currentRound);
+        Text turnPlayerText = new Text("Beurt: " + view.getTurnPlayerUsername());
+        turnPlayerText.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+        gameInfoVBox.getChildren().addAll(roundText, turnPlayerText);
+        gameInfo.getChildren().add(gameInfoVBox);
+        this.getChildren().add(gameInfo);
 
         view.getScores().forEach(score -> {
             StackPane playerScore = new StackPane();
