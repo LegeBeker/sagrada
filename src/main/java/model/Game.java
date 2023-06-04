@@ -231,8 +231,9 @@ public class Game extends Observable {
                 .getColor();
     }
 
-    public void endTurn() {
+    public boolean endTurn() {
         int nextSeqnr;
+        boolean gameFinished = false;
         if (getClockwise()) {
             nextSeqnr = getTurnPlayer().getSeqnr() + 1;
         } else {
@@ -241,7 +242,7 @@ public class Game extends Observable {
         if (nextSeqnr > getPlayers().size()) {
             setCurrentRoundID(getRoundID() + 1);
         } else if (nextSeqnr == 0) {
-            endRound();
+            gameFinished = endRound();
         } else {
             for (Player player : getPlayers()) {
                 if (player.getSeqnr() == nextSeqnr) {
@@ -251,9 +252,11 @@ public class Game extends Observable {
             }
         }
         notifyObservers(Game.class);
+        return gameFinished;
     }
 
-    private void endRound() {
+    private Boolean endRound() {
+        Boolean gameFinished = false;
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == 1) {
                 player.setSeqnr(getPlayers().size());
@@ -273,9 +276,12 @@ public class Game extends Observable {
 
         if (getRoundID() == MAXROUNDID) {
             endGame();
+            gameFinished = true;
         } else {
             setCurrentRoundID(getRoundID() + 1);
         }
+
+        return gameFinished;
     }
 
     private void setCurrentRoundID(final int roundID) {
