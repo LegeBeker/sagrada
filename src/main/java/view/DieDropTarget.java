@@ -44,7 +44,9 @@ public class DieDropTarget extends StackPane {
                 return;
             }
 
-            if (view.getSelectedToolcardName() == null || !view.getSelectedToolcardName().equals("runningPliers")) {
+            if (!view.getGameClockwise() && view.getSelectedToolcardName().equals("runningPliers")) {
+                view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
+            }
 
                 if ((DieDropTarget.amountPlacedDie == 0 && view.getSelectedToolcardName() == null)
                         || (amountToolcardDie < maxAmountToolcardDie && view.getSelectedToolcardName() != null)) {
