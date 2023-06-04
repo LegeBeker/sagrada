@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import main.java.model.PatternCardField;
 
-
 /*
  * DataMapper is een class die een lijst van Players of Games omzet naar een lijst van DataMaps.
  * 
@@ -96,7 +95,7 @@ public final class DataMapper {
             parts[1] = parts[1].substring(0, parts[1].length() - 1);
             return parts;
         } else {
-            return new String[] {field};
+            return new String[] { field };
         }
     }
 }
