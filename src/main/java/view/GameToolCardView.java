@@ -113,12 +113,11 @@ public class GameToolCardView extends StackPane {
 
                         }
                     }
-
                 } else {
-                    removeSelection();
-                    selectedToolCardView = null;
-                    String deselectedMethodName = getDeselectedMethodName(toolCard.getName());
-                    System.out.println(deselectedMethodName + "() has been deselected.");
+                    if (aksConfirmationUnselectToolcard(toolCard.getDutchName())) {
+                        removeSelection();
+                        selectedToolCardView = null;
+                    }
                 }
             }
 
@@ -152,11 +151,6 @@ public class GameToolCardView extends StackPane {
     public String getSelectedMethodName(final String toolCardName) {
         String methodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
         return Character.toLowerCase(methodName.charAt(0)) + methodName.substring(1);
-    }
-
-    private String getDeselectedMethodName(final String toolCardName) {
-        String deselectedMethodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
-        return Character.toLowerCase(deselectedMethodName.charAt(0)) + deselectedMethodName.substring(1);
     }
 
     private Boolean askConfirmationUsageCard(final String toolCardname) {
@@ -236,5 +230,21 @@ public class GameToolCardView extends StackPane {
             }
         }
 
+    }
+
+    private boolean aksConfirmationUnselectToolcard(final String toolcardName) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Gebruik gereedschapskaart");
+        alert.setHeaderText("Bevestiging deselectie van " + toolcardName);
+        alert.setContentText(
+                "Je staat op het punt om de gereedschapskaart " + toolcardName
+                        + " te deselecteren, je krijgt je betaalstenen niet terug. Weet je het zeker?");
+
+        ButtonType acceptButton = new ButtonType("Accepteren");
+        ButtonType closeButton = new ButtonType("Sluiten", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(acceptButton, closeButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.get() == acceptButton;
     }
 }
