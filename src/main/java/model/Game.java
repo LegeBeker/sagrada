@@ -35,7 +35,7 @@ public class Game extends Observable {
     private ArrayList<Player> players = new ArrayList<>();
     private static final int CARDSPERPLAYER = 4;
     private static final int TOKENSPERGAME = 24;
-    private static final int MAXROUNDNR = 10;
+    private static final int MAXROUNDID = 20;
 
     private boolean helpFunction = false;
 
@@ -276,12 +276,12 @@ public class Game extends Observable {
         }
 
         final int previousRoundID = getRoundID() - 1;
-        for (Map<String, String> dieMap : DieDB.getOffer(getId(), previousRoundID)) {
-            DieDB.putRoundTrack(getId(), previousRoundID, Integer.parseInt(dieMap.get("dienumber")),
-                    dieMap.get("diecolor"));
+        for (Die die : Die.getOffer(getId(), previousRoundID)) {
+            DieDB.putRoundTrack(getId(), previousRoundID, die.getNumber(),
+                    die.getColor().toString());
         }
 
-        if (getRoundID() == MAXROUNDNR) {
+        if (getRoundID() == MAXROUNDID) {
             endGame();
         } else {
             setCurrentRoundID(getRoundID() + 1);
