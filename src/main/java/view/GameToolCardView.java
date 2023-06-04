@@ -83,11 +83,8 @@ public class GameToolCardView extends StackPane {
                         selectedToolCardView.removeSelection();
                     }
 
-                    String methodName = getSelectedMethodName(toolCard.getName());
+                    String methodName = toolCard.getMethodName();
                     if (!methodName.equals("")) {
-
-                        System.out.println("Huidige toolkaart: " + methodName);
-
                         if (methodName.equals("runningPliers") && !view.getGameClockwise()) {
                             view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
                             return;
@@ -120,18 +117,13 @@ public class GameToolCardView extends StackPane {
                                 default:
                                     break;
                             }
-
                         }
                     }
-
-                } else {
-                    removeSelection();
-                    selectedToolCardView = null;
-                    String deselectedMethodName = getDeselectedMethodName(toolCard.getName());
-                    System.out.println(deselectedMethodName + "() has been deselected.");
+                    return;
                 }
+                removeSelection();
+                selectedToolCardView = null;
             }
-
         });
     }
 
@@ -146,7 +138,7 @@ public class GameToolCardView extends StackPane {
     public void addSelection() {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
         isSelected = true;
-        view.setToolCardSelection(this.getSelectedMethodName(toolCard.getName()));
+        view.setToolCardSelection(toolCard.getMethodName());
     }
 
     public void removeSelection() {
@@ -159,14 +151,8 @@ public class GameToolCardView extends StackPane {
         return toolCard.getName();
     }
 
-    public String getSelectedMethodName(final String toolCardName) {
-        String methodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
-        return Character.toLowerCase(methodName.charAt(0)) + methodName.substring(1);
-    }
-
-    private String getDeselectedMethodName(final String toolCardName) {
-        String deselectedMethodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
-        return Character.toLowerCase(deselectedMethodName.charAt(0)) + deselectedMethodName.substring(1);
+    public String getToolCardMethodName() {
+        return toolCard.getMethodName();
     }
 
     private Boolean askConfirmationUsageCard(final String toolCardname) {
