@@ -276,9 +276,9 @@ public class Game extends Observable {
         }
 
         final int previousRoundID = getRoundID() - 1;
-        for (Die die : Die.getOffer(getId(), previousRoundID)) {
-            DieDB.putRoundTrack(getId(), previousRoundID, die.getNumber(),
-                    die.getColor().toString());
+        for (Map<String, String> dieMap : DieDB.getOffer(getId(), previousRoundID)) {
+            DieDB.putRoundTrack(getId(), previousRoundID, Integer.parseInt(dieMap.get("dienumber")),
+                    dieMap.get("diecolor"));
         }
 
         if (getRoundID() == MAXROUNDID) {
