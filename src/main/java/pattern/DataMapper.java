@@ -20,7 +20,7 @@ import main.java.model.PatternCardField;
  * In de MessageView doen we het volgende:
  *
  * for (DataMap message : view.getChatMessages()) {
- *  addMessage(message.getString("message"), message.getString("username"),    
+ *  addMessage(message.getString("message"), message.getString("username"),
  *     message.getString("time"));
  * }
  *
