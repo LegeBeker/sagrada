@@ -83,8 +83,13 @@ public class GameToolCardView extends StackPane {
                         selectedToolCardView.removeSelection();
                     }
 
-                    String methodName = getSelectedMethodName(toolCard.getName());
+                    String methodName = toolCard.getMethodName();
                     if (!methodName.equals("")) {
+                        if (methodName.equals("runningPliers") && !view.getGameClockwise()) {
+                            view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
+                            return;
+                        }
+
                         if (askConfirmationUsageCard(toolCard.getDutchName())) {
                             this.addSelection();
                             selectedToolCardView = this;
@@ -109,18 +114,18 @@ public class GameToolCardView extends StackPane {
                                     break;
                                 case "lathekin":
                                     break;
+                                default:
+                                    break;
                             }
-
                         }
                     }
-                } else {
-                    if (aksConfirmationUnselectToolcard(toolCard.getDutchName())) {
-                        removeSelection();
-                        selectedToolCardView = null;
-                    }
+                    return;
+                }
+                if (aksConfirmationUnselectToolcard(toolCard.getDutchName())) {
+                    removeSelection();
+                    selectedToolCardView = null;
                 }
             }
-
         });
     }
 
@@ -135,7 +140,7 @@ public class GameToolCardView extends StackPane {
     public void addSelection() {
         this.setStyle("-fx-border-color: #00FFBF; -fx-border-width: 3px; -fx-border-radius: 10px;");
         isSelected = true;
-        view.setToolCardSelection(this.getSelectedMethodName(toolCard.getName()));
+        view.setToolCardSelection(toolCard.getMethodName());
     }
 
     public void removeSelection() {
@@ -148,9 +153,8 @@ public class GameToolCardView extends StackPane {
         return toolCard.getName();
     }
 
-    public String getSelectedMethodName(final String toolCardName) {
-        String methodName = toolCardName.replaceAll("[^a-zA-Z0-9]", "");
-        return Character.toLowerCase(methodName.charAt(0)) + methodName.substring(1);
+    public String getToolCardMethodName() {
+        return toolCard.getMethodName();
     }
 
     private Boolean askConfirmationUsageCard(final String toolCardname) {
