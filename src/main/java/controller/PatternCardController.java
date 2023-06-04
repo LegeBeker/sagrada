@@ -46,6 +46,12 @@ public class PatternCardController {
         return player.getPatternCard().getPossibleMoves(player.getBoard(), eyes, color);
     }
 
+    public ArrayList<int[]> getBestMoves(final ArrayList<int[]> possibleMoves, final int eyes, final Color color) {
+        Player player = view.getCurrentPlayer();
+
+        return player.getPatternCard().getBestMoves(player.getBoard(), possibleMoves, eyes, color);
+    }
+
     public PatternCardField getPatternCardField(final int patternCardId, final int col, final int row) {
         return PatternCard.get(patternCardId).getField(col, row);
     }

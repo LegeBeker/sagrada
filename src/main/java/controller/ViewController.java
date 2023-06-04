@@ -236,6 +236,10 @@ public class ViewController extends Scene {
         return this.patternCardController.getPossibleMoves(eyes, color);
     }
 
+    public ArrayList<int[]> getBestMoves(final ArrayList<int[]> possibleMoves, final int eyes, final Color color) {
+        return this.patternCardController.getBestMoves(possibleMoves, eyes, color);
+    }
+
     public void toggleHelpFunction() {
         this.gameController.toggleHelpFunction();
     }
@@ -480,7 +484,8 @@ public class ViewController extends Scene {
         if (!gameController.getGame().getClockwise()) {
             turnCount = 2;
         }
-        return ToolcardController.glazingHammer(turnCount, gameController.getGameId(), gameController.getGame().getRoundID());
+        return ToolcardController.glazingHammer(turnCount, gameController.getGameId(),
+                gameController.getGame().getRoundID());
     }
 
     public void fluxRemover(final int dieNumber, final String dieColor) {

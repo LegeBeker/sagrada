@@ -38,12 +38,12 @@ public class GameBoardsView extends HBox implements Observer {
 
     private void showPlayerGameboards() {
         int cardCount = 0;
-        //-- Add the player to the first index so it always shows on the left side of the screen.
+        // -- Add the player to the first index so it always shows on the left side of
+        // the screen.
         ArrayList<Integer> playersList = view.getPlayerIds();
         int index = playersList.indexOf(view.getPlayerId());
         playersList.remove(index);
         playersList.add(0, view.getPlayerId());
-
 
         for (Integer playerId : playersList) {
             if (view.getPlayerPatternCardId(playerId) == null) {
@@ -62,13 +62,19 @@ public class GameBoardsView extends HBox implements Observer {
         }
     }
 
-    public void showPossibleMoves(final ArrayList<int[]> moves) {
+    public void showPossibleMoves(final ArrayList<int[]> moves, final ArrayList<int[]> bestMoves) {
         PatternCardView patternCardView = (PatternCardView) grid.getChildren().get(0);
         patternCardView.getGrid().getChildren().forEach((cell) -> {
             moves.forEach((move) -> {
                 int[] location = {GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)};
                 if (move[0] == location[0] && move[1] == location[1]) {
                     cell.setStyle("-fx-border-color: #00FFBF;");
+                }
+            });
+            bestMoves.forEach((move) -> {
+                int[] location = {GridPane.getRowIndex(cell), GridPane.getColumnIndex(cell)};
+                if (move[0] == location[0] && move[1] == location[1]) {
+                    cell.setStyle("-fx-border-color: #FF1500;");
                 }
             });
         });

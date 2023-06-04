@@ -128,8 +128,8 @@ public class PatternCard {
         return possibleMoves;
     }
 
-    public ArrayList<int[]> getBestMoves(final Board board, final int dieValue, final Color dieColor) {
-        ArrayList<int[]> possibleMoves = getPossibleMoves(board, dieValue, dieColor);
+    public ArrayList<int[]> getBestMoves(final Board board, final ArrayList<int[]> possibleMoves, final int dieValue,
+            final Color dieColor) {
         ArrayList<int[]> bestMoves = new ArrayList<int[]>();
         boolean thereAreNoColorMoves = true;
         for (int row = 1; row <= ROWS; row++) {
@@ -149,11 +149,7 @@ public class PatternCard {
                 }
             }
         }
-        if (bestMoves.isEmpty()) {
-            return possibleMoves;
-        } else {
-            return bestMoves;
-        }
+        return bestMoves;
     }
 
     public boolean validateMove(final Board board, final int dieValue, final Color dieColor, final int columnIndex,
