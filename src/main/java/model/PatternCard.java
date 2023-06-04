@@ -128,6 +128,34 @@ public class PatternCard {
         return possibleMoves;
     }
 
+    public ArrayList<int[]> getBestMoves(final Board board, final int dieValue, final Color dieColor) {
+        ArrayList<int[]> possibleMoves = getPossibleMoves(board, dieValue, dieColor);
+        ArrayList<int[]> bestMoves = new ArrayList<int[]>();
+        boolean thereAreNoColorMoves = true;
+        for (int row = 1; row <= ROWS; row++) {
+            for (int col = 1; col <= COLUMNS; col++) {
+                for (int[] move : possibleMoves) { // row on 0 and column on 1
+                    if (board.getField(move[0], move[1]).getColor().equals(dieColor)) {
+                        bestMoves.add(move);
+                        thereAreNoColorMoves = false;
+                    }
+                }
+                if (thereAreNoColorMoves) {
+                    for (int[] move : possibleMoves) { // row on 0 and column on 1
+                        if (board.getField(move[0], move[1]).getNumber() == dieValue) {
+                            bestMoves.add(move);
+                        }
+                    }
+                }
+            }
+        }
+        if (bestMoves.isEmpty()) {
+            return possibleMoves;
+        } else {
+            return bestMoves;
+        }
+    }
+
     public boolean validateMove(final Board board, final int dieValue, final Color dieColor, final int columnIndex,
             final int rowIndex) {
 
