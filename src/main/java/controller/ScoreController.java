@@ -9,9 +9,10 @@ import main.java.model.Player;
 
 public class ScoreController {
 
+    ArrayList<PlayStatusEnum> playStatusses = new ArrayList<PlayStatusEnum>();
+
     public ArrayList<Map<String, String>> getScores(final Player currentPlayer) {
         ArrayList<Map<String, String>> scores = new ArrayList<Map<String, String>>();
-        ArrayList<PlayStatusEnum> playStatusses = new ArrayList<PlayStatusEnum>();
         for (Player player : currentPlayer.getGame().getPlayers(currentPlayer.getUsername())) {
             Map<String, String> score = new HashMap<String, String>();
             score.put("username", player.getUsername());
@@ -43,6 +44,12 @@ public class ScoreController {
         defaultScore += favorTokens;
 
         return Integer.toString(defaultScore);
+    }
+
+    public void updateScores(final Player currentPlayer) {
+        for (Player player : currentPlayer.getGame().getPlayers(currentPlayer.getUsername())) {
+            player.updateScore(calculateScore(player, currentPlayer, playStatusses));
+        }
     }
 
     private int getEmptyPlaces(final Player player) {
