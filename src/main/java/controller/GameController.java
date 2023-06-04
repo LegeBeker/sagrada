@@ -128,11 +128,11 @@ public final class GameController implements Observer {
     }
 
     public void toggleHelpFunction() {
-        this.game.toggleHelpFunction();
+        this.getCurrentPlayer().toggleHelpFunction();
     }
 
     public boolean getHelpFunction() {
-        return this.game.getHelpFunction();
+        return this.getCurrentPlayer().getHelpFunction();
     }
 
     public void choosePatternCard(final PatternCard patternCard, final boolean defaultCards) {

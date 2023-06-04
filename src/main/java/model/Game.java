@@ -36,8 +36,6 @@ public class Game extends Observable {
     private static final int CARDSPERPLAYER = 4;
     private static final int TOKENSPERGAME = 24;
 
-    private boolean helpFunction = false;
-
     public static Game createGame(final ArrayList<String> accounts, final String username,
             final boolean useDefaultCards) {
         Game newGame = new Game();
@@ -181,27 +179,6 @@ public class Game extends Observable {
         return players;
     }
 
-    public void toggleHelpFunction(final Player currentPlayer) {
-        this.helpFunction = !this.helpFunction;
-        if (helpFunction) {
-            helpCurrentPlayer(currentPlayer);
-        }
-    }
-
-    private void helpCurrentPlayer(final Player currentPlayer) {
-        String currentPlayersColor = currentPlayer.getPrivateObjCardColor();
-        ArrayList<String> dieKeys = new ArrayList<>();
-            getOffer().forEach(die -> {
-                if (die.getColor().toString().equals(currentPlayersColor)) {
-                    dieKeys.add(die.getNumber() + " " + die.getColor().toString());
-                }
-            });
-        }
-
-    public boolean getHelpFunction() {
-        return this.helpFunction;
-    }
-
     public Player getCurrentPlayer(final int id, final String username) {
         for (Player player : this.players) {
             if (player.getId() == id || player.getUsername().equals(username)) {
@@ -317,7 +294,6 @@ public class Game extends Observable {
             game.offer = Die.getOffer(game.getId(), game.getRoundID());
         }
         game.creationDate = gameMap.get("creationdate");
-        game.helpFunction = false;
 
         for (Map<String, String> map : GameDB.getPlayers(game.idGame)) {
             game.players.add(Player.mapToPlayer(game, map));
