@@ -79,6 +79,10 @@ public class GameToolCardView extends StackPane {
         this.setOnMouseClicked(event -> {
             if (view.isTurnPlayer()) {
                 if (!isSelected) {
+                    if (view.getHelpFunction()) {
+                        view.displayError("Je moet eerst de hulpfunctie uitzetten om een gereedschapskaart te gebruiken.");
+                        return;
+                    }
                     if (selectedToolCardView != null) {
                         selectedToolCardView.removeSelection();
                     }

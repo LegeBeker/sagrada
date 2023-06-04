@@ -11,7 +11,9 @@ import main.java.model.Game;
 import main.java.model.ObjectiveCard;
 import main.java.model.PatternCard;
 import main.java.model.Player;
+import main.java.pattern.Observable;
 import main.java.pattern.Observer;
+import main.java.view.GameBoardsView;
 
 public final class GameController implements Observer {
 
@@ -137,6 +139,11 @@ public final class GameController implements Observer {
 
     public void toggleHelpFunction() {
         this.getCurrentPlayer().toggleHelpFunction();
+        if (this.getCurrentPlayer().getHelpFunction()) {
+            Observable.removeObserver(Game.class, new GameBoardsView(view));
+        } else {
+            Observable.addObserver(Game.class, new GameBoardsView(view));
+        }
     }
 
     public boolean getHelpFunction() {

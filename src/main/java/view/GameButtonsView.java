@@ -61,6 +61,10 @@ public class GameButtonsView extends VBox implements Observer {
     }
 
     private void endTurn() {
+        if (view.getHelpFunction()) {
+            view.displayError("Je kan geen einde beurt doen als de help functie aan staat!");
+            return;
+        }
         this.buttonEndTurn.setDisable(true);
         view.setToolCardSelection(null);
         boolean clockwiseBefore = view.getGameClockwise();
