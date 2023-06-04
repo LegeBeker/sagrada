@@ -38,16 +38,26 @@ public class DieDropTarget extends StackPane {
                 maxAmountToolcardDie = 2;
             }
 
+            System.out.println("before dieview?");
             DieView dieView = (DieView) event.getGestureSource();
             if (view.getAmountPlacedDieInRound() > 1) {
                 view.displayError("Je hebt in je vorige beurt al 2 stenen geplaatst. Eindig de beurt.");
                 return;
             }
-
-            if (!view.getGameClockwise() && view.getSelectedToolcardName().equals("runningPliers")) {
+            System.out.println("after dieview?");
+            System.out.println(view.getGameClockwise());
+            System.out.println(view.getSelectedToolcardName());
+            if (!view.getGameClockwise() && view.getSelectedToolcardName() != null
+                    && view.getSelectedToolcardName().equals("runningPliers")) {
+                System.out.println("in if statement?");
                 view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
+                return;
             }
 
+            System.out.println(DieDropTarget.amountPlacedDie == 0);
+            System.out.println(view.getSelectedToolcardName() == null);
+            System.out.println(amountToolcardDie < maxAmountToolcardDie);
+            System.out.println(view.getSelectedToolcardName() != null);
             if ((DieDropTarget.amountPlacedDie == 0 && view.getSelectedToolcardName() == null)
                     || (amountToolcardDie < maxAmountToolcardDie && view.getSelectedToolcardName() != null)) {
                 Boolean placeDie = this.view.doMove(view.getPatternCardId(), dieView.getEyes(),
