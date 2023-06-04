@@ -201,6 +201,10 @@ public class ViewController extends Scene {
         return this.gameController.isTurnPlayer(getUsername());
     }
 
+    public String getTurnPlayerUsername() {
+        return this.gameController.getTurnPlayerUsername();
+    }
+
     public Boolean isCardOwnerTurnPlayer(final int playerId) {
         return this.gameController.isTurnPlayer(playerId);
     }
@@ -490,5 +494,11 @@ public class ViewController extends Scene {
 
     public void getNewOffer() {
         this.gameController.getGame().getNewOffer();
+    }
+
+    public void lensCutter(final int dieNumberOffer, final String dieColorOffer, final int dieNumberRoundTrack,
+            final String dieColorRoundTrack) {
+        this.toolCardController.lensCutter(gameController.getGameId(), gameController.getGame().getRoundID(),
+                dieNumberOffer, dieColorOffer, dieNumberRoundTrack, dieColorRoundTrack);
     }
 }

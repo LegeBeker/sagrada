@@ -76,10 +76,18 @@ public final class DieDB {
                 ColorEnum.fromString(dieColor).getName()};
         if (db.exec(sql, params).size() > 0) {
             return Integer.valueOf(db.exec(sql, params).get(0).get("eyes"));
-        } else {
-            return 0;
         }
-
+        return 0;
     }
 
+    public static int getRoundTrackFromDie(final int gameId, final int dieNumber, final String dieColor) {
+        Database db = Database.getInstance();
+        String sql = "SELECT * FROM gamedie WHERE idgame = ? AND dienumber = ? AND diecolor = ?;";
+        String[] params = {Integer.toString(gameId), Integer.toString(dieNumber),
+                ColorEnum.fromString(dieColor).getName()};
+        if (db.exec(sql, params).size() > 0) {
+            return Integer.valueOf(db.exec(sql, params).get(0).get("roundtrack"));
+        }
+        return 0;
+    }
 }
