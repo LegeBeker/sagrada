@@ -178,7 +178,7 @@ public class PatternCardView extends BorderPane {
                     Integer.parseInt(die.get("number")), isDraggable);
             stackPane.getChildren().add(dieView);
         }
-        
+
         grid.add(stackPane, col, row);
     }
 
