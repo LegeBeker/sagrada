@@ -209,6 +209,6 @@ public final class GameController implements Observer {
     }
 
     public int getAmountPlacedDieInRound() {
-        return Game.getAmountPlacedDieInRound(getGameId(),getCurrentPlayer().getId(), getGame().getCurrentRound());
+        return Game.getAmountPlacedDieInRound(getGameId(), getCurrentPlayer().getId(), getGame().getCurrentRound());
     }
 }

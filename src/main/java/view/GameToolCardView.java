@@ -117,6 +117,8 @@ public class GameToolCardView extends StackPane {
                                     break;
                                 case "lathekin":
                                     break;
+                                default:
+                                    break;
                             }
 
                         }

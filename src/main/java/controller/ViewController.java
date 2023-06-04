@@ -492,7 +492,7 @@ public class ViewController extends Scene {
         this.gameController.getGame().getNewOffer();
     }
 
-    public int getAmountPlacedDieInRound(){
+    public int getAmountPlacedDieInRound() {
         return gameController.getAmountPlacedDieInRound();
     }
 }
