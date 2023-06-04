@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
+import main.java.db.GameDB;
 import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
 import main.java.model.PatternCard;
 import main.java.model.Player;
+import main.java.pattern.Observable;
 import main.java.pattern.Observer;
+import main.java.view.GameBoardsView;
 
 public final class GameController implements Observer {
 
@@ -137,6 +140,11 @@ public final class GameController implements Observer {
 
     public void setHelpFunction() {
         this.game.setHelpFunction();
+        if (game.getHelpFunction()) {
+            Observable.removeObserver(Game.class, new GameBoardsView(view));
+        } else {
+            Observable.addObserver(Game.class, new GameBoardsView(view));
+        }
     }
 
     public boolean getHelpFunction() {
