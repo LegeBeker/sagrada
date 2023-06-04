@@ -491,4 +491,8 @@ public class ViewController extends Scene {
     public void getNewOffer() {
         this.gameController.getGame().getNewOffer();
     }
+
+    public int getAmountPlacedDieInRound(){
+        return gameController.getAmountPlacedDieInRound();
+    }
 }

@@ -397,4 +397,8 @@ public class Game extends Observable {
         Die.getNewOffer(getId(), getRoundID(), players.size());
         notifyObservers(Game.class);
     }
+
+    public static int getAmountPlacedDieInRound(final int idGame, final int idPlayer, final int roundNr) {
+        return DieDB.getAmountPlacedDieInRound(idGame, idPlayer, roundNr);
+    }
 }

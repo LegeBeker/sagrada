@@ -39,6 +39,11 @@ public class DieDropTarget extends StackPane {
             }
 
             DieView dieView = (DieView) event.getGestureSource();
+            if(view.getAmountPlacedDieInRound() > 1){
+                view.displayError("Je hebt in je vorige beurt al 2 stenen geplaatst. Eindig de beurt.");
+                return;
+            }
+
             if (view.getSelectedToolcardName() == null || !view.getSelectedToolcardName().equals("runningPliers")) {
 
                 if ((DieDropTarget.amountPlacedDie == 0 && view.getSelectedToolcardName() == null)

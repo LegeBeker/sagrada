@@ -85,6 +85,14 @@ public class GameToolCardView extends StackPane {
 
                     String methodName = getSelectedMethodName(toolCard.getName());
                     if (!methodName.equals("")) {
+
+                        System.out.println("Huidige toolkaart: " + methodName);
+
+                        if (methodName.equals("runningPliers") && !view.getGameClockwise()) {
+                            view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
+                            return;
+                        }
+
                         if (askConfirmationUsageCard(toolCard.getDutchName())) {
                             this.addSelection();
                             selectedToolCardView = this;
