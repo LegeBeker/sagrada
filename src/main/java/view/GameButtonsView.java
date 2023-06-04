@@ -43,6 +43,7 @@ public class GameButtonsView extends VBox implements Observer {
         this.buttonEndTurn = new Button("Einde beurt");
         this.buttonEndTurn.setPrefWidth(BUTTONWIDTH);
         this.buttonEndTurn.setOnAction(e -> endTurn());
+        this.buttonEndTurn.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
 
         this.getChildren().addAll(this.buttonBack, this.helpToggle);
         Observable.addObserver(Game.class, this);
@@ -56,6 +57,7 @@ public class GameButtonsView extends VBox implements Observer {
     private void getNewOffer() {
         this.buttonGetOffer.setDisable(true);
         view.getNewOffer();
+        this.buttonGetOffer.setDisable(false);
     }
 
     private void endTurn() {
@@ -67,6 +69,7 @@ public class GameButtonsView extends VBox implements Observer {
         if (clockwiseBefore != clockwiseAfter) {
             view.displayMessage("De richting van het spel is veranderd!");
         }
+        this.buttonEndTurn.setDisable(false);
     }
 
     @Override
@@ -76,15 +79,13 @@ public class GameButtonsView extends VBox implements Observer {
         }
         if (view.isTurnPlayer() && !view.getOffer().isEmpty()) {
             this.getChildren().addAll(buttonEndTurn);
-            this.buttonEndTurn.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
         }
 
         if (this.getChildren().contains(buttonGetOffer)) {
             this.getChildren().remove(buttonGetOffer);
         }
-        if (view.getOffer().isEmpty() && view.isTurnPlayer()) {
+        if (view.getOffer().isEmpty() && view.isTurnPlayer() && view.getCurrentRound() != 10) {
             this.getChildren().addAll(buttonGetOffer);
-            this.buttonGetOffer.setOnMouseReleased(e -> this.buttonEndTurn.setDisable(false));
         }
     }
 
