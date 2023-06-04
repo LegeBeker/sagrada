@@ -90,8 +90,9 @@ public class DieDropTarget extends StackPane {
             if (view.getSelectedToolcardName() != null && DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
                 DieDropTarget.amountToolcardDie++;
             }
-
-            DieDropTarget.amountPlacedDie++;
+            if (view.getSelectedToolcardName() == null) {
+                DieDropTarget.amountPlacedDie++;
+            }
             event.setDropCompleted(true);
             event.consume();
         });
