@@ -210,6 +210,7 @@ public class Board {
         int totalScore = 0;
         int dices = 0;
         for (int row = 1; row <= ROWS; row++) {
+            dices = 0;
             Die firstDie = getField(row, 1);
             if (firstDie == null) {
                 continue;
@@ -232,7 +233,8 @@ public class Board {
                             || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
                         dices++;
                     }
-                    if (dices % ROWS == 0) {
+
+                    if (dices >= 4 && dices % ROWS == 0) {
                         totalScore += points;
                     }
                 }
@@ -247,6 +249,7 @@ public class Board {
         int totalScore = 0;
         int dices = 0;
         for (int col = 1; col <= COLUMNS; col++) {
+            dices = 0;
             Die firstDie = getField(1, col);
 
             if (firstDie == null) {
@@ -269,7 +272,7 @@ public class Board {
                             || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
                         dices++;
                     }
-                    if (dices % COLUMNS == 0) {
+                    if (dices >= 4 && dices % COLUMNS == 0) {
                         totalScore += points;
                     }
                 }
