@@ -1,6 +1,5 @@
 package main.java.view;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import javafx.geometry.Insets;

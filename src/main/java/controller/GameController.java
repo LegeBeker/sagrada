@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
-import main.java.db.GameDB;
 import main.java.model.Die;
 import main.java.model.Game;
 import main.java.model.ObjectiveCard;
