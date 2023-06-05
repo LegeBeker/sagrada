@@ -73,4 +73,14 @@ public final class ToolCardDB {
         db.exec(sql, params);
 
     }
+
+    public static boolean boughtRunningPliers(final int gameId, final int playerId, final int previousRoundId) {
+        Database db = Database.getInstance();
+        String sql = "SELECT COUNT(*) AS 'boughtRunningPliers' FROM gamefavortoken "
+        + "WHERE idgame = ? AND idplayer = ? AND roundID = ? AND gametoolcard = 8;";
+        String[] params = {Integer.toString(gameId), Integer.toString(playerId), Integer.toString(previousRoundId)};
+        int amountBought = Integer.parseInt(db.exec(sql, params).get(0).get("boughtRunningPliers"));
+
+        return amountBought > 0;
+    }
 }

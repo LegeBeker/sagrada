@@ -118,4 +118,8 @@ public class ToolcardController {
             final int amountFavorTokens, final int roundId) {
         FavorToken.buyToolCard(toolcardName, gameId, playerId, amountFavorTokens, roundId);
     }
+
+    public boolean boughtRunningPliers(final int idGame, final int idPlayer, final int previousRoundId) {
+        return ToolCard.boughtRunningPliers(idGame, idPlayer, previousRoundId);
+    }
 }

@@ -331,11 +331,15 @@ public class ViewController extends Scene {
     }
 
     public void endTurn() {
-        Boolean gameFinished = this.gameController.endTurn();
+        this.gameController.endTurn();
         DieDropTarget.resetAmountPlacedDie();
-        if (gameFinished) {
+        if (isGameFinished()) {
             this.scoreController.updateScores(getCurrentPlayer());
         }
+    }
+
+    public boolean isGameFinished() {
+        return this.gameController.getGame().isFinished();
     }
 
     public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
@@ -496,6 +500,10 @@ public class ViewController extends Scene {
                 gameController.getGame().getRoundID());
     }
 
+    public void corkBackedStraightEdge() {
+        this.toolCardController.corkBackedStraightEdge();
+    }
+
     public void eglomiseBrush() {
         this.toolCardController.eglomiseBrush();
     }
@@ -508,13 +516,18 @@ public class ViewController extends Scene {
         this.gameController.getGame().getNewOffer();
     }
 
-    public int getAmountPlacedDieInRound() {
-        return gameController.getAmountPlacedDieInRound();
+    public int getAmountPlacedDieInPrevRound() {
+        return gameController.getAmountPlacedDieInPrevRound();
     }
 
     public void lensCutter(final int dieNumberOffer, final String dieColorOffer, final int dieNumberRoundTrack,
             final String dieColorRoundTrack) {
         this.toolCardController.lensCutter(gameController.getGameId(), gameController.getGame().getRoundID(),
                 dieNumberOffer, dieColorOffer, dieNumberRoundTrack, dieColorRoundTrack);
+    }
+
+    public boolean boughtRunningPliers() {
+        return toolCardController.boughtRunningPliers(gameController.getGameId(),
+                gameController.getCurrentPlayer().getId(), gameController.getGame().getRoundID() - 1);
     }
 }

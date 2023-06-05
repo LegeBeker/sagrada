@@ -34,12 +34,13 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragDropped(event -> {
             if (view.getSelectedToolcardName() != null && (view.getSelectedToolcardName().equals("lathekin")
-                    || view.getSelectedToolcardName().equals("tapWheel"))) {
+                    || view.getSelectedToolcardName().equals("tapWheel")
+                    || view.getSelectedToolcardName().equals("runningPliers"))) {
                 maxAmountToolcardDie = 2;
             }
 
             DieView dieView = (DieView) event.getGestureSource();
-            if (view.getAmountPlacedDieInRound() > 1) {
+            if (!view.getGameClockwise() && view.getAmountPlacedDieInPrevRound() > 1 && view.boughtRunningPliers()) {
                 view.displayError("Je hebt in je vorige beurt al 2 stenen geplaatst. Eindig de beurt.");
                 return;
             }

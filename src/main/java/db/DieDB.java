@@ -80,7 +80,7 @@ public final class DieDB {
         return 0;
     }
 
-    public static int getAmountPlacedDieInRound(final int idGame, final int playerId, final int roundNr) {
+    public static int getAmountPlacedDieInPrevRound(final int idGame, final int playerId, final int roundNr) {
         Database db = Database.getInstance();
         String sql = "SELECT COUNT(*) AS 'amount_placed_die' "
         + "FROM gamedie AS gd "
