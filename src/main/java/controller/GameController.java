@@ -219,7 +219,12 @@ public final class GameController implements Observer {
         return this.selectedToolcardName;
     }
 
-    public int getAmountPlacedDieInRound() {
-        return Game.getAmountPlacedDieInRound(getGameId(), getCurrentPlayer().getId(), getGame().getCurrentRound());
+    public int getAmountPlacedDieInPrevRound() {
+        int previousRound = getGame().getRoundID() - 1;
+        if (previousRound > 0) {
+            return Game.getAmountPlacedDieInPrevRound(getGameId(), getCurrentPlayer().getId(),
+                    previousRound);
+        }
+        return 0;
     }
 }

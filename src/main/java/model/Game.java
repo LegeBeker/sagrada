@@ -274,10 +274,9 @@ public class Game extends Observable {
 
         if (getRoundID() == MAXROUNDID) {
             endGame();
-            gameFinished = true;
-        } else {
-            setCurrentRoundID(getRoundID() + 1);
+            return;
         }
+        setCurrentRoundID(getRoundID() + 1);
     }
 
     private void setCurrentRoundID(final int roundID) {
@@ -395,8 +394,8 @@ public class Game extends Observable {
         notifyObservers(Game.class);
     }
 
-    public static int getAmountPlacedDieInRound(final int idGame, final int idPlayer, final int roundNr) {
-        return DieDB.getAmountPlacedDieInRound(idGame, idPlayer, roundNr);
+    public static int getAmountPlacedDieInPrevRound(final int idGame, final int idPlayer, final int roundNr) {
+        return DieDB.getAmountPlacedDieInPrevRound(idGame, idPlayer, roundNr);
     }
 
     public boolean isFinished() {
