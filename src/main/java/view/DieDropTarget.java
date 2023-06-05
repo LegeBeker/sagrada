@@ -34,16 +34,17 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragDropped(event -> {
             if (view.getSelectedToolcardName() != null && (view.getSelectedToolcardName().equals("lathekin")
-                    || view.getSelectedToolcardName().equals("tapWheel"))) {
+                    || view.getSelectedToolcardName().equals("tapWheel") || view.getSelectedToolcardName().equals("runningPliers"))) {
                 maxAmountToolcardDie = 2;
             }
 
             DieView dieView = (DieView) event.getGestureSource();
-            if (view.getAmountPlacedDieInRound() > 1) {
+            System.out.println("Amount placed die in roud: " + view.getAmountPlacedDieInRound());
+            if (!view.getGameClockwise() && view.getAmountPlacedDieInRound() > 1) {
                 view.displayError("Je hebt in je vorige beurt al 2 stenen geplaatst. Eindig de beurt.");
                 return;
             }
-
+            
             if (!view.getGameClockwise() && view.getSelectedToolcardName() != null
                     && view.getSelectedToolcardName().equals("runningPliers")) {
                 view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
