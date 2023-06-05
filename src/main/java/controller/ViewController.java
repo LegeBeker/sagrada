@@ -500,8 +500,7 @@ public class ViewController extends Scene {
                 gameController.getGame().getRoundID());
     }
 
-
-    public void corkBackedStraightEdge(){
+    public void corkBackedStraightEdge() {
         this.toolCardController.corkBackedStraightEdge();
     }
 
