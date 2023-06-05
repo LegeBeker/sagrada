@@ -1,5 +1,6 @@
 package main.java.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class GameToolCardView extends StackPane {
     private static final double SCALEINCREASE = 1.75;
     private static final int OFFSET = 100;
 
-    private int amountFavorTokensDisplayed = 0;
+    private List<Map<String, String>> favorTokensDisplayed = new ArrayList<Map<String, String>>();
     private List<Map<String, String>> players;
     private Pane stoneDisplayPane;
 
@@ -80,7 +81,8 @@ public class GameToolCardView extends StackPane {
             if (view.isTurnPlayer()) {
                 if (!isSelected) {
                     if (view.getHelpFunction()) {
-                        view.displayError("Je moet eerst de hulpfunctie uitzetten om een gereedschapskaart te gebruiken.");
+                        view.displayError(
+                                "Je moet eerst de hulpfunctie uitzetten om een gereedschapskaart te gebruiken.");
                         return;
                     }
                     if (selectedToolCardView != null) {
@@ -198,11 +200,18 @@ public class GameToolCardView extends StackPane {
     public void reCalcStonePositions() {
 
         List<Map<String, String>> favorTokenList = view.getFavorTokensForToolCard(getToolCardName());
-        if (amountFavorTokensDisplayed != favorTokenList.size()) {
-            int diff = favorTokenList.size() - amountFavorTokensDisplayed;
-            for (int i = 0; i < diff; i++) {
-                int index = favorTokenList.size() - (i + 1);
-                calculateNewStonePosition(favorTokenList.get(index));
+        if (favorTokensDisplayed.size() != favorTokenList.size()) {
+            for (Map<String, String> favorToken : favorTokenList) {
+                int matchCount = 0;
+                for (Map<String, String> displayedToken : favorTokensDisplayed) {
+                    if (favorToken.get("idfavortoken").equals(displayedToken.get("idfavortoken"))) {
+                        matchCount++;
+                    }
+                }
+
+                if (matchCount == 0) {
+                    calculateNewStonePosition(favorToken);
+                }
             }
         }
     }
@@ -223,10 +232,8 @@ public class GameToolCardView extends StackPane {
         }
         for (Map<String, String> p : players) {
             if (p.get("idPlayer").equals(ft.get("idplayer"))) {
-
                 Circle c = new Circle(randX, randY, CIRCLERADIUS);
                 Color playerColor = Color.valueOf(p.get("color"));
-
                 if (playerColor != null) {
                     c.setFill(Color.rgb((int) (playerColor.getRed() * MAXVALUERGB),
                             (int) (playerColor.getGreen() * MAXVALUERGB),
@@ -239,7 +246,7 @@ public class GameToolCardView extends StackPane {
                     Circle innerCircle = new Circle(randX - INNERCIRCLEX, randY - INNERCIRCLEY, INNERCIRCLERADIUS);
                     innerCircle.setFill(Color.rgb(MAXVALUERGB, MAXVALUERGB, MAXVALUERGB, OPACITY));
                     stoneDisplayPane.getChildren().addAll(c, innerCircle);
-                    this.amountFavorTokensDisplayed++;
+                    this.favorTokensDisplayed.add(ft);
                 }
             }
         }
