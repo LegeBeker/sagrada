@@ -26,6 +26,7 @@ public class Game extends Observable {
     private int roundID;
     private int currentRound;
     private boolean clockwise;
+    private boolean gameFinished = false;
 
     private String creationDate;
 
@@ -231,9 +232,8 @@ public class Game extends Observable {
                 .getColor();
     }
 
-    public boolean endTurn() {
+    public void endTurn() {
         int nextSeqnr;
-        boolean gameFinished = false;
         if (getClockwise()) {
             nextSeqnr = getTurnPlayer().getSeqnr() + 1;
         } else {
@@ -242,7 +242,7 @@ public class Game extends Observable {
         if (nextSeqnr > getPlayers().size()) {
             setCurrentRoundID(getRoundID() + 1);
         } else if (nextSeqnr == 0) {
-            gameFinished = endRound();
+            endRound();
         } else {
             for (Player player : getPlayers()) {
                 if (player.getSeqnr() == nextSeqnr) {
@@ -252,11 +252,9 @@ public class Game extends Observable {
             }
         }
         notifyObservers(Game.class);
-        return gameFinished;
     }
 
-    private Boolean endRound() {
-        Boolean gameFinished = false;
+    private void endRound() {
         for (Player player : getPlayers()) {
             if (player.getSeqnr() == 1) {
                 player.setSeqnr(getPlayers().size());
@@ -280,8 +278,6 @@ public class Game extends Observable {
         } else {
             setCurrentRoundID(getRoundID() + 1);
         }
-
-        return gameFinished;
     }
 
     private void setCurrentRoundID(final int roundID) {
@@ -336,12 +332,18 @@ public class Game extends Observable {
         }
 
         ArrayList<Player> tempPlayers = new ArrayList<>();
-
+        int finishedPlayers = 0;
         for (Map<String, String> map : GameDB.getPlayers(this.idGame)) {
             tempPlayers.add(Player.mapToPlayer(map, this.getPlayer(map.get("username"))));
+            if (map.get("playstatus").equals(PlayStatusEnum.FINISHED.toString())) {
+                finishedPlayers++;
+            }
         }
-
         this.players = tempPlayers;
+
+        if (finishedPlayers == players.size()) {
+            gameFinished = true;
+        }
 
         if (gameMap.get("turn_idplayer") != null
                 && Integer.parseInt(gameMap.get("turn_idplayer")) != turnPlayer.getId()) {
@@ -395,5 +397,9 @@ public class Game extends Observable {
 
     public static int getAmountPlacedDieInRound(final int idGame, final int idPlayer, final int roundNr) {
         return DieDB.getAmountPlacedDieInRound(idGame, idPlayer, roundNr);
+    }
+
+    public boolean isFinished() {
+        return gameFinished;
     }
 }

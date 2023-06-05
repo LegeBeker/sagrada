@@ -331,11 +331,15 @@ public class ViewController extends Scene {
     }
 
     public void endTurn() {
-        Boolean gameFinished = this.gameController.endTurn();
+        this.gameController.endTurn();
         DieDropTarget.resetAmountPlacedDie();
-        if (gameFinished) {
+        if (isGameFinished()) {
             this.scoreController.updateScores(getCurrentPlayer());
         }
+    }
+
+    public boolean isGameFinished() {
+        return this.gameController.getGame().isFinished();
     }
 
     public void createGame(final ArrayList<String> accounts, final Boolean useDefaultCards) {
