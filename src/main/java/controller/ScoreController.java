@@ -44,7 +44,6 @@ public class ScoreController {
         defaultScore += favorTokens;
 
         return Integer.toString(defaultScore);
-
     }
 
     public void updateScores(final Player currentPlayer) {

@@ -31,7 +31,6 @@ public final class GameDB {
                 + "LEFT JOIN player ON game.turn_idplayer = player.idplayer "
                 + "LEFT JOIN player pl2 ON game.idgame = pl2.idgame AND pl2.username = ? "
                 + "LEFT JOIN round ON round.roundID = game.current_roundID "
-                + "WHERE game.idgame = 983 "
                 + "GROUP BY game.idgame;";
 
         String[] params = {username};
@@ -52,7 +51,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO game (creationDate, current_roundID) VALUE(?, 1);";
-        String[] params = {time};
+        String[] params = { time };
 
         db.exec(sql, params);
 
@@ -149,7 +148,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "UPDATE player SET playstatus = '" + PlayStatusEnum.FINISHED.toString()
-            + "' WHERE idgame = ?;";
+                + "' WHERE idgame = ?;";
 
         String[] params = {Integer.toString(idgame)};
         db.exec(sql, params);

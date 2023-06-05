@@ -53,7 +53,6 @@ public class Board {
 
     public boolean placeDie(final Color color, final int number, final int row, final int column) {
 
-
         boolean result = BoardDB.setField(
                 this.player.getGame().getId(), this.player.getGame().getRoundID(), this.player.getId(), row,
                 column, ColorEnum.fromString(color.toString()).getName(), number);
@@ -157,7 +156,7 @@ public class Board {
             boards.put(player, new ArrayList<>());
             for (int row = 1; row <= ROWS; row++) {
                 for (int col = 1; col <= COLUMNS; col++) {
-                    boards.get(player).add(new int[] {col, row });
+                    boards.get(player).add(new int[] { col, row });
                 }
             }
         });
@@ -183,11 +182,10 @@ public class Board {
         return completeSets * points;
     }
 
-
     public static int countSets(List<Object> diceArray, final Object... values) {
         int amountOfSets = 0;
         ArrayList<Integer> frequencyList = new ArrayList<>();
-        for(int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.length; i++) {
             frequencyList.add(Collections.frequency(diceArray, values[i]));
         }
 
@@ -255,8 +253,10 @@ public class Board {
 
             if (firstDie == null) {
                 continue;
-            } 
+            }
+
             dices++;
+
             String compareWith = null;
             if (type.equals("shades")) {
                 int eyes = firstDie.getEyes();
@@ -269,8 +269,9 @@ public class Board {
             if (compareWith != null) {
                 for (int row = 1; row <= ROWS; row++) {
                     Die die = getField(row, col);
-                    
-                    if (die != null && (!ColorEnum.fromString(die.getColor().toString()).toString().equals(compareWith) || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
+
+                    if (die != null && (!ColorEnum.fromString(die.getColor().toString()).toString().equals(compareWith)
+                            || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
                         dices++;
                     }
 
@@ -280,8 +281,6 @@ public class Board {
                 }
             }
         }
-
-
 
         return totalScore;
     }
@@ -314,14 +313,14 @@ public class Board {
     private ArrayList<int[]> getDiagonalNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
 
-        int[][] offsets = new int[][] {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+        int[][] offsets = new int[][] { { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
             int neighborCol = col + offset[1];
 
             if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] {neighborRow, neighborCol});
+                neighbors.add(new int[] { neighborRow, neighborCol });
             }
         }
 
