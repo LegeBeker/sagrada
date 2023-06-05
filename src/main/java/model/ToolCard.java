@@ -41,4 +41,8 @@ public class ToolCard {
     public static Map<String, String> getToolCard(final int idGame, final String toolCardname) {
         return ToolCardDB.getToolCard(idGame, toolCardname);
     }
+    
+    public static boolean boughtRunningPliers(final int idGame, final int idPlayer, final int previousRoundId) {
+        return ToolCardDB.boughtRunningPliers(idGame, idPlayer, previousRoundId);
+    } 
 }
