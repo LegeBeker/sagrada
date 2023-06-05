@@ -34,7 +34,8 @@ public class DieDropTarget extends StackPane {
 
         this.setOnDragDropped(event -> {
             if (view.getSelectedToolcardName() != null && (view.getSelectedToolcardName().equals("lathekin")
-                    || view.getSelectedToolcardName().equals("tapWheel") || view.getSelectedToolcardName().equals("runningPliers"))) {
+                    || view.getSelectedToolcardName().equals("tapWheel")
+                    || view.getSelectedToolcardName().equals("runningPliers"))) {
                 maxAmountToolcardDie = 2;
             }
 
@@ -44,7 +45,7 @@ public class DieDropTarget extends StackPane {
                 view.displayError("Je hebt in je vorige beurt al 2 stenen geplaatst. Eindig de beurt.");
                 return;
             }
-            
+
             if (!view.getGameClockwise() && view.getSelectedToolcardName() != null
                     && view.getSelectedToolcardName().equals("runningPliers")) {
                 view.displayError("Je kan deze gereedschapskaart alleen activeren in je eerste beurt");
