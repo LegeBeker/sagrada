@@ -40,7 +40,6 @@ public class DieDropTarget extends StackPane {
             }
 
             DieView dieView = (DieView) event.getGestureSource();
-            System.out.println("Amount placed die in roud: " + view.getAmountPlacedDieInRound());
             if (!view.getGameClockwise() && view.getAmountPlacedDieInRound() > 1) {
                 view.displayError("Je hebt in je vorige beurt al 2 stenen geplaatst. Eindig de beurt.");
                 return;
