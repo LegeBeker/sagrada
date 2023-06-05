@@ -26,6 +26,7 @@ public class Game extends Observable {
     private int roundID;
     private int currentRound;
     private boolean clockwise;
+    private boolean gameFinished = false;
 
     private String creationDate;
 
@@ -336,12 +337,18 @@ public class Game extends Observable {
         }
 
         ArrayList<Player> tempPlayers = new ArrayList<>();
-
+        int finishedPlayers = 0;
         for (Map<String, String> map : GameDB.getPlayers(this.idGame)) {
             tempPlayers.add(Player.mapToPlayer(map, this.getPlayer(map.get("username"))));
+            if (map.get("playstatus").equals(PlayStatusEnum.FINISHED.toString())) {
+                finishedPlayers++;
+            }
         }
-
         this.players = tempPlayers;
+
+        if (finishedPlayers == players.size()) {
+            gameFinished = true;
+        }
 
         if (gameMap.get("turn_idplayer") != null
                 && Integer.parseInt(gameMap.get("turn_idplayer")) != turnPlayer.getId()) {
@@ -395,5 +402,9 @@ public class Game extends Observable {
 
     public static int getAmountPlacedDieInRound(final int idGame, final int idPlayer, final int roundNr) {
         return DieDB.getAmountPlacedDieInRound(idGame, idPlayer, roundNr);
+    }
+
+    public boolean isFinished() {
+        return gameFinished;
     }
 }
