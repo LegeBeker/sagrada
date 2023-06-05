@@ -274,10 +274,9 @@ public class Game extends Observable {
 
         if (getRoundID() == MAXROUNDID) {
             endGame();
-            gameFinished = true;
-        } else {
-            setCurrentRoundID(getRoundID() + 1);
+            return;
         }
+        setCurrentRoundID(getRoundID() + 1);
     }
 
     private void setCurrentRoundID(final int roundID) {
