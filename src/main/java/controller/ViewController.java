@@ -331,9 +331,9 @@ public class ViewController extends Scene {
     }
 
     public void endTurn() {
-        Boolean gameFinished = this.gameController.endTurn();
+        this.gameController.endTurn();
         DieDropTarget.resetAmountPlacedDie();
-        if (gameFinished) {
+        if (isGameFinished()) {
             this.scoreController.updateScores(getCurrentPlayer());
         }
     }
