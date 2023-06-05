@@ -115,15 +115,14 @@ public class GameToolCardView extends StackPane {
                                     this.removeSelection();
                                     this.isSelected = false;
                                     break;
-                                case "runningPliers":
-                                    break;
                                 case "eglomiseBrush":
                                     view.eglomiseBrush();
                                     break;
                                 case "copperFoilBurnisher":
                                     view.copperFoilBurnisher();
                                     break;
-                                case "lathekin":
+                                case "cork-backed straightedge":
+                                    view.corkBackedStraightEdge();
                                     break;
                                 default:
                                     break;
