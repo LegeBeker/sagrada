@@ -2,6 +2,7 @@ package main.java.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -165,36 +166,36 @@ public class Board {
     }
 
     private int sets(final int points, final Object... values) {
-        Set<Object> hashSet = new HashSet<>();
-        Set<Object> targetSet = new HashSet<>(Arrays.asList(values));
+        ArrayList<Object> dices = new ArrayList<>();
+
         for (int i = 0; i < values.length; i++) {
             for (int row = 1; row <= ROWS; row++) {
                 for (int col = 1; col <= COLUMNS; col++) {
                     Die die = getField(row, col);
                     if (die != null && valueMatches(die, values[i])) {
-                        hashSet.add(values[i]);
+                        dices.add(values[i]);
                     }
                 }
             }
         }
 
-        int completeSets = countSubsetOccurrences(hashSet, targetSet);
+        int completeSets = countSets(dices, values);
         return completeSets * points;
     }
 
-    private static int countSubsetOccurrences(final Set<Object> set, final Set<Object> targetSet) {
-        int count = 0;
-        for (Object element : set) {
-            if (targetSet.contains(element)) {
-                targetSet.remove(element);
-                if (targetSet.isEmpty()) {
-                    count++;
-                    targetSet.addAll(new HashSet<>(targetSet));
-                }
-            }
+
+    public static int countSets(List<Object> diceArray, final Object... values) {
+        int amountOfSets = 0;
+        ArrayList<Integer> frequencyList = new ArrayList<>();
+        for(int i = 0; i < values.length; i++) {
+            frequencyList.add(Collections.frequency(diceArray, values[i]));
         }
 
-        return count;
+        int minCount = Collections.min(frequencyList);
+
+        amountOfSets += minCount;
+
+        return amountOfSets;
     }
 
     private boolean valueMatches(final Die die, final Object value) {
@@ -215,7 +216,7 @@ public class Board {
             if (firstDie == null) {
                 continue;
             }
-
+            dices++;
             String compareWith = null;
 
             if (type.equals("shades")) {
@@ -234,7 +235,7 @@ public class Board {
                         dices++;
                     }
 
-                    if (dices >= ROWS && dices % ROWS == 0) {
+                    if (dices >= COLUMNS && dices % COLUMNS == 0) {
                         totalScore += points;
                     }
                 }
@@ -248,14 +249,14 @@ public class Board {
     private int columns(final int points, final String type) {
         int totalScore = 0;
         int dices = 0;
-        for (int col = 1; col <= COLUMNS; col++) {
+        for (int col = 5; col <= COLUMNS; col++) {
             dices = 0;
             Die firstDie = getField(1, col);
 
             if (firstDie == null) {
                 continue;
-            }
-
+            } 
+            dices++;
             String compareWith = null;
             if (type.equals("shades")) {
                 int eyes = firstDie.getEyes();
@@ -268,16 +269,19 @@ public class Board {
             if (compareWith != null) {
                 for (int row = 1; row <= ROWS; row++) {
                     Die die = getField(row, col);
-                    if (die != null && (ColorEnum.fromString(die.getColor().toString()).toString().equals(compareWith)
-                            || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
+                    
+                    if (die != null && (!ColorEnum.fromString(die.getColor().toString()).toString().equals(compareWith) || (type.equals("shades") && die.getEyes() != Integer.parseInt(compareWith)))) {
                         dices++;
                     }
-                    if (dices >= COLUMNS && dices % COLUMNS == 0) {
+
+                    if (dices >= ROWS && dices % ROWS == 0) {
                         totalScore += points;
                     }
                 }
             }
         }
+
+
 
         return totalScore;
     }

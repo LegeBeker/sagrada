@@ -31,6 +31,7 @@ public final class GameDB {
                 + "LEFT JOIN player ON game.turn_idplayer = player.idplayer "
                 + "LEFT JOIN player pl2 ON game.idgame = pl2.idgame AND pl2.username = ? "
                 + "LEFT JOIN round ON round.roundID = game.current_roundID "
+                + "WHERE game.idgame = 983 "
                 + "GROUP BY game.idgame;";
 
         String[] params = {username};
