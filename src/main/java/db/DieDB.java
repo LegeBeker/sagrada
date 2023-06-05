@@ -86,7 +86,7 @@ public final class DieDB {
         + "FROM gamedie AS gd "
         + "JOIN playerframefield AS pff "
         + "ON gd.diecolor = pff.diecolor AND gd.dienumber = pff.dienumber "
-        + "WHERE gd.idgame = ? AND idplayer = ? AND gd.roundID = ?;";
+        + "WHERE gd.idgame = ? AND idplayer = ? AND gd.roundID IN (SELECT roundID FROM round WHERE roundnr = ?);";
 
         String[] params = {Integer.toString(idGame), Integer.toString(playerId),
             Integer.toString(roundNr)};
