@@ -182,7 +182,7 @@ public class Board {
         return completeSets * points;
     }
 
-    public static int countSets(List<Object> diceArray, final Object... values) {
+    public static int countSets(final List<Object> diceArray, final Object... values) {
         int amountOfSets = 0;
         ArrayList<Integer> frequencyList = new ArrayList<>();
         for (int i = 0; i < values.length; i++) {
@@ -247,7 +247,7 @@ public class Board {
     private int columns(final int points, final String type) {
         int totalScore = 0;
         int dices = 0;
-        for (int col = 5; col <= COLUMNS; col++) {
+        for (int col = 1; col <= COLUMNS; col++) {
             dices = 0;
             Die firstDie = getField(1, col);
 
@@ -313,14 +313,14 @@ public class Board {
     private ArrayList<int[]> getDiagonalNeighbors(final int row, final int col) {
         ArrayList<int[]> neighbors = new ArrayList<>();
 
-        int[][] offsets = new int[][] { { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
+        int[][] offsets = new int[][] {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
 
         for (int[] offset : offsets) {
             int neighborRow = row + offset[0];
             int neighborCol = col + offset[1];
 
             if (neighborRow >= 1 && neighborRow <= ROWS && neighborCol >= 1 && neighborCol <= COLUMNS) {
-                neighbors.add(new int[] { neighborRow, neighborCol });
+                neighbors.add(new int[] {neighborRow, neighborCol});
             }
         }
 
