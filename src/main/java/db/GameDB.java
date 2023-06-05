@@ -51,7 +51,7 @@ public final class GameDB {
         Database db = Database.getInstance();
 
         String sql = "INSERT INTO game (creationDate, current_roundID) VALUE(?, 1);";
-        String[] params = { time };
+        String[] params = {time};
 
         db.exec(sql, params);
 
