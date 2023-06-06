@@ -40,6 +40,12 @@ public class DieDropTarget extends StackPane {
             }
 
             DieView dieView = (DieView) event.getGestureSource();
+            if (DieDropTarget.amountPlacedDie > 0 && (view.getSelectedToolcardName() != null
+                    && (view.getSelectedToolcardName().equals("runningPliers")
+                            || view.getSelectedToolcardName().equals("corkBackedStraightedge")))) {
+                view.displayError("Je hebt al een dobbelsteen geplaatst deze ronde. Eindig de beurt");
+                return;
+            }
             if (!view.getGameClockwise() && view.getAmountPlacedDieInPrevRound() > 1 && view.boughtRunningPliers()) {
                 view.displayError("Je hebt in je vorige beurt al 2 stenen geplaatst. Eindig de beurt.");
                 return;
@@ -61,13 +67,17 @@ public class DieDropTarget extends StackPane {
                     this.view.displayError("Deze zet is niet geldig.");
                     return;
                 }
-                if (view.getSelectedToolcardName() != null
-                        && DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
-                    DieDropTarget.amountToolcardDie++;
-                }
-                if (view.getSelectedToolcardName() == null) {
+
+                if (view.getSelectedToolcardName() == null
+                        || view.getSelectedToolcardName().equals("corkBackedStraightedge")
+                        || view.getSelectedToolcardName().equals("runningPliers")) {
                     DieDropTarget.amountPlacedDie++;
                 }
+
+                if (view.getSelectedToolcardName() != null && DieDropTarget.amountToolcardDie < maxAmountToolcardDie) {
+                    DieDropTarget.amountToolcardDie++;
+                }
+
             } else {
                 if (amountPlacedDie > 0) {
                     this.view.displayError(
