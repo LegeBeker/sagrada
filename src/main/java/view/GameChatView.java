@@ -24,7 +24,8 @@ public class GameChatView extends VBox implements Observer {
 
     private static final int WIDTHCHATVIEW = 300;
     private static final int WIDTHMESSAGEBOX = 200;
-
+    private static final int HEIGHTMESSAGEBOX = 1000;
+    
     private final ViewController view;
     private TextField textInput = new TextField();
 
@@ -38,10 +39,12 @@ public class GameChatView extends VBox implements Observer {
         chatMessageBox.setStyle("-fx-background-color: transparent;");
 
         ScrollPane chatMessageScrollPane = new ScrollPane(chatMessageBox);
+        chatMessageScrollPane.setPrefHeight(HEIGHTMESSAGEBOX);
         chatMessageScrollPane.setMaxWidth(view.getWidth());
         chatMessageScrollPane.setStyle("-fx-background: transparent;");
 
         chatMessageScrollPane.setFitToWidth(true);
+        chatMessageScrollPane.setFitToHeight(true);
         chatMessageScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         chatMessageScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
