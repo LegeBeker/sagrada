@@ -121,7 +121,7 @@ public class GameToolCardView extends StackPane {
                                 case "copperFoilBurnisher":
                                     view.copperFoilBurnisher();
                                     break;
-                                case "cork-backed straightedge":
+                                case "corkBackedStraightedge":
                                     view.corkBackedStraightEdge();
                                     break;
                                 default:
