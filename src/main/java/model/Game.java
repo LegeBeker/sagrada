@@ -16,6 +16,7 @@ import main.java.db.GameDB;
 import main.java.db.GameFavorTokenDB;
 import main.java.db.PatternCardDB;
 import main.java.enums.PlayStatusEnum;
+import main.java.factories.PatternCardFieldsFactory;
 import main.java.pattern.Observable;
 
 public class Game extends Observable {
@@ -69,6 +70,8 @@ public class Game extends Observable {
 
         if (useDefaultCards) {
             newGame.addPatternCards();
+        } else {
+            newGame.generatePatternCards();
         }
 
         for (int i = 0; i < TOKENSPERGAME; i++) {
@@ -95,6 +98,17 @@ public class Game extends Observable {
         for (Player pl : players) {
             for (int i = 0; i < CARDSPERPLAYER; i++) {
                 PatternCardDB.setPatternCardOptions(cards.remove(0).getIdPatternCard(), pl.getId());
+            }
+        }
+    }
+
+    private void generatePatternCards() {
+        for (Player pl : players) {
+            for (int i = 1; i <= CARDSPERPLAYER; i++) {
+                PatternCard patternCard = PatternCardFieldsFactory.generatePatternCard(i);
+                int patternCardId = PatternCard.createPatternCard(patternCard);
+                PatternCardDB.setPatternCardOptions(patternCardId, pl.getId());
+                PatternCard.createPatternCard(patternCard);
             }
         }
     }
