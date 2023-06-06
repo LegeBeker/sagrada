@@ -38,7 +38,7 @@ public class PatternCardSelectionView extends BorderPane {
         flowPane.getChildren().add(new GamePrivateObjectiveCardView(view));
         view.getPatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
             flowPane.getChildren().add(patternCardSelect(patternCard));
-        });        
+        });
 
         this.flowPane.setHgap(10);
         this.flowPane.setVgap(10);
