@@ -50,7 +50,7 @@ public final class PatternCardDB {
 
     public static List<Map<String, String>> setPatternCardOptions(final int idPatternCard, final int idPlayer) {
         Database db = Database.getInstance();
-
+        System.out.println("idPatternCard: " + idPatternCard + " idPlayer: " + idPlayer);
         String sql = "INSERT INTO patterncardoption VALUE (?, ?);";
         String[] params = {Integer.toString(idPatternCard), Integer.toString(idPlayer)};
 

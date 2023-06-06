@@ -50,9 +50,8 @@ public final class ToolCardDB {
                 ColorEnum.fromString(dieColor).getName()};
         db.exec(sql, params);
 
-        // -- Generate new die
         String sql2 = "UPDATE gamedie SET roundID = ? WHERE idgame = ? AND roundID IS NULL ORDER BY RAND() LIMIT 1";
-        // -- The roundID is 1 greater than the current round...
+
         String[] params2 = {Integer.toString(roundID - 1), Integer.toString(idgame)};
         db.exec(sql2, params2);
     }
