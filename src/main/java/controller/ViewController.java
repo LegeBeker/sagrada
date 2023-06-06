@@ -474,8 +474,14 @@ public class ViewController extends Scene {
         gameController.setSelectedToolcardName(selectedToolcardName);
     }
 
-    public void grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
-        ToolcardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor, actionChoice);
+    public String grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
+        String returnMessage = ToolcardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor,
+                actionChoice);
+        if (returnMessage != null) {
+            displayError(returnMessage);
+        }
+
+        return returnMessage;
     }
 
     public void grindingStone(final int dieNumber, final String dieColor) {
