@@ -40,8 +40,6 @@ public class PatternCardSelectionView extends BorderPane {
             flowPane.getChildren().add(patternCardSelect(patternCard));
         });
 
-        
-
         this.flowPane.setHgap(10);
         this.flowPane.setVgap(10);
         this.flowPane.setAlignment(Pos.CENTER);
