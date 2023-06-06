@@ -40,7 +40,6 @@ public class DieDropTarget extends StackPane {
             }
 
             DieView dieView = (DieView) event.getGestureSource();
-            System.out.println(DieDropTarget.amountPlacedDie > 0);
             if (DieDropTarget.amountPlacedDie > 0 && (view.getSelectedToolcardName() != null
                     && (view.getSelectedToolcardName().equals("runningPliers")
                             || view.getSelectedToolcardName().equals("corkBackedStraightedge")))) {
