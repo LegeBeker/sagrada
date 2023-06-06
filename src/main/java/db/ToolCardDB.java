@@ -52,8 +52,7 @@ public final class ToolCardDB {
 
         // -- Generate new die
         String sql2 = "UPDATE gamedie SET roundID = ? WHERE idgame = ? AND roundID IS NULL ORDER BY RAND() LIMIT 1";
-        // -- The roundID is 1 greater than the current round...
-        String[] params2 = {Integer.toString(roundID - 1), Integer.toString(idgame)};
+        String[] params2 = {Integer.toString(roundID), Integer.toString(idgame)};
         db.exec(sql2, params2);
     }
 
@@ -75,6 +74,7 @@ public final class ToolCardDB {
     }
 
     public static boolean boughtRunningPliers(final int gameId, final int playerId, final int previousRoundId) {
+
         Database db = Database.getInstance();
         String sql = "SELECT COUNT(*) AS 'boughtRunningPliers' FROM gamefavortoken "
         + "WHERE idgame = ? AND idplayer = ? AND roundID = ? AND gametoolcard = 8;";
