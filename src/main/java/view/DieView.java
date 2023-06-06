@@ -199,8 +199,8 @@ public class DieView extends Group {
                 case "grozingPliers":
                     String actionChoice = askGrozingPliersAction(Integer.parseInt(selectedDieMap.get("eyes")));
                     if (!actionChoice.equals("?")) {
-                        if(view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")),
-                                selectedDieMap.get("dieColor"), actionChoice) == null){
+                        if (view.grozingPliers(Integer.parseInt(selectedDieMap.get("dieNumber")),
+                                selectedDieMap.get("dieColor"), actionChoice) == null) {
                             view.setToolCardSelection(null);
                             break;
                         }
@@ -230,7 +230,7 @@ public class DieView extends Group {
                 default:
             }
 
-            if (!methodName.equals("lensCutter" ) && !methodName.equals("grozingPliers")) {
+            if (!methodName.equals("lensCutter") && !methodName.equals("grozingPliers")) {
                 view.setToolCardSelection(null);
             }
         }

@@ -71,7 +71,7 @@ public class ViewController extends Scene {
         Color startColor = Color.web("#5897d6");
         Color endColor = Color.web("#0d4e8f");
 
-        Stop[] stops = new Stop[] {new Stop(0, startColor), new Stop(1, endColor)};
+        Stop[] stops = new Stop[] { new Stop(0, startColor), new Stop(1, endColor) };
         LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
 
         this.background = new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY));
@@ -475,8 +475,9 @@ public class ViewController extends Scene {
     }
 
     public String grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
-        String returnMessage = ToolcardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor, actionChoice);
-        if(returnMessage != null) {
+        String returnMessage = ToolcardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor,
+                actionChoice);
+        if (returnMessage != null) {
             displayError(returnMessage);
         }
 
