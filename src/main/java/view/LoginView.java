@@ -43,7 +43,7 @@ public class LoginView extends VBox {
         this.buttonSubmit.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonSubmit.setOnAction(e -> this.submit());
 
-        this.buttonRegisterPage = new Button("Registreer pagina");
+        this.buttonRegisterPage = new Button("Registratie pagina");
         this.buttonRegisterPage.setPrefSize(BUTTONWIDTH, BUTTONHEIGHT);
         this.buttonRegisterPage.setOnAction(e -> this.openRegisterView());
 
