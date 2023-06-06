@@ -82,9 +82,6 @@ public final class DieDB {
 
     public static int getAmountPlacedDieInPrevRound(final int idGame, final int playerId, final int roundNr) {
         Database db = Database.getInstance();
-
-        System.out.println("Checking amount placed die for round: " + roundNr);
-
         String sql = "SELECT COUNT(*) AS 'amount_placed_die' "
         + "FROM gamedie AS gd "
         + "JOIN playerframefield AS pff "
