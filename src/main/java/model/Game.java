@@ -71,7 +71,6 @@ public class Game extends Observable {
         if (useDefaultCards) {
             newGame.addPatternCards();
         } else {
-            System.out.println("TODO: add custom cards");
             newGame.generatePatternCards();
         }
 
