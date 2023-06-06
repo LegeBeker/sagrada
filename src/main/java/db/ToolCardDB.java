@@ -68,7 +68,7 @@ public final class ToolCardDB {
         sql = "UPDATE gamedie SET roundID = ?, roundtrack = NULL WHERE idgame = ? AND dienumber = ? AND diecolor = ?";
         params = new String[] {Integer.toString(currentRoundId), Integer.toString(gameId),
                 Integer.toString(dieNumberRoundTrack), ColorEnum.fromString(dieColorRoundTrack).getName()};
-                
+
         db.exec(sql, params);
 
     }
