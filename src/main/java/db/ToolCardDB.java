@@ -74,6 +74,7 @@ public final class ToolCardDB {
     }
 
     public static boolean boughtRunningPliers(final int gameId, final int playerId, final int previousRoundId) {
+
         Database db = Database.getInstance();
         String sql = "SELECT COUNT(*) AS 'boughtRunningPliers' FROM gamefavortoken "
         + "WHERE idgame = ? AND idplayer = ? AND roundID = ? AND gametoolcard = 8;";
