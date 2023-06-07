@@ -25,7 +25,7 @@ public class GameChatView extends VBox implements Observer {
     private static final int WIDTHCHATVIEW = 300;
     private static final int WIDTHMESSAGEBOX = 200;
     private static final int HEIGHTMESSAGEBOX = 1000;
-    
+
     private final ViewController view;
     private TextField textInput = new TextField();
 
