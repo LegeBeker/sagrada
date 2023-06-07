@@ -35,15 +35,10 @@ public class PatternCardSelectionView extends BorderPane {
         textTitle.setPadding(new Insets(PADDING, 0, 0, 0));
         this.setTop(textTitle);
 
-        if (!view.getPatternCardOptions().get(view.getPlayerId()).isEmpty()) {
-            view.getPatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
-                flowPane.getChildren().add(patternCardSelect(patternCard, true));
-            });
-        } else {
-            view.generatePatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
-                flowPane.getChildren().add(patternCardSelect(patternCard, false));
-            });
-        }
+        flowPane.getChildren().add(new GamePrivateObjectiveCardView(view));
+        view.getPatternCardOptions().get(view.getPlayerId()).forEach(patternCard -> {
+            flowPane.getChildren().add(patternCardSelect(patternCard));
+        });
 
         this.flowPane.setHgap(10);
         this.flowPane.setVgap(10);
@@ -60,13 +55,13 @@ public class PatternCardSelectionView extends BorderPane {
         this.setBackground(view.getBackground());
     }
 
-    private VBox patternCardSelect(final int idPatternCard, final boolean defaultCards) {
+    private VBox patternCardSelect(final int idPatternCard) {
         this.vbox = new VBox();
         this.vbox.getChildren().add(new PatternCardView(this.view, idPatternCard, null));
         Button button = new Button("Kiezen");
 
         button.setOnAction(event -> {
-            this.view.choosePatternCard(idPatternCard, defaultCards);
+            this.view.choosePatternCard(idPatternCard);
         });
 
         this.vbox.getChildren().add(button);

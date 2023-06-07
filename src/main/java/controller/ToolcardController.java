@@ -34,13 +34,13 @@ public class ToolcardController {
         int currentAmountOfEyes = DieDB.getGameDieEyes(gameId, dieNumber, dieColor);
         if (choiceAction.equals("increment")) {
             if (currentAmountOfEyes == MAXDIEVALUE) {
-                returnValue = "De waarde is 6, en kan niet 7 worden.";
+                returnValue = "De waarde is 6, en kan niet 1 worden.";
             } else {
                 ToolCardDB.updateGameDieValue(gameId, dieNumber, dieColor, currentAmountOfEyes + 1);
             }
         } else if (choiceAction.equals("decrement")) {
             if (currentAmountOfEyes == 1) {
-                returnValue = "De waarde is 1, en kan niet 0 worden.";
+                returnValue = "De waarde is 1, en kan niet 6 worden.";
 
             } else {
                 ToolCardDB.updateGameDieValue(gameId, dieNumber, dieColor, currentAmountOfEyes - 1);

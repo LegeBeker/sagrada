@@ -1,12 +1,8 @@
 package main.java.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javafx.scene.paint.Color;
-import main.java.factories.PatternCardFieldsFactory;
 import main.java.model.PatternCard;
 import main.java.model.PatternCardField;
 import main.java.model.Player;
@@ -14,7 +10,6 @@ import main.java.model.Player;
 public class PatternCardController {
 
     private ViewController view;
-    private static final int PATTERN_CARD_GENERATE_AMOUNT = 4;
 
     public PatternCardController(final ViewController view) {
         this.view = view;
@@ -54,20 +49,5 @@ public class PatternCardController {
 
     public PatternCardField getPatternCardField(final int patternCardId, final int col, final int row) {
         return PatternCard.get(patternCardId).getField(col, row);
-    }
-
-    public Map<Integer, List<Integer>> generatePatternCardOptions() {
-        PatternCard.clearCache();
-
-        Map<Integer, List<Integer>> patternCardOptions = new HashMap<>();
-        List<Integer> patternCardNumbers = new ArrayList<>();
-
-        for (int i = 1; i <= PATTERN_CARD_GENERATE_AMOUNT; i++) {
-            PatternCard patternCard = PatternCardFieldsFactory.generatePatternCard(i);
-            patternCardNumbers.add(patternCard.getIdPatternCard());
-        }
-
-        patternCardOptions.put(view.getPlayerId(), patternCardNumbers);
-        return patternCardOptions;
     }
 }

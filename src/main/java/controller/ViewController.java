@@ -346,8 +346,8 @@ public class ViewController extends Scene {
         openPatternCardSelectionView(this.gameController.createGame(accounts, getUsername(), useDefaultCards));
     }
 
-    public void choosePatternCard(final int idPatternCard, final boolean defaultCards) {
-        this.gameController.choosePatternCard(this.patternCardController.getPatternCard(idPatternCard), defaultCards);
+    public void choosePatternCard(final int idPatternCard) {
+        this.gameController.choosePatternCard(this.patternCardController.getPatternCard(idPatternCard));
 
         if (this.gameController.gameHasOpenInvites()) {
             openGamesView();
@@ -397,9 +397,6 @@ public class ViewController extends Scene {
         return this.gameController.getPatternCardOptions();
     }
 
-    public Map<Integer, List<Integer>> generatePatternCardOptions() {
-        return this.patternCardController.generatePatternCardOptions();
-    }
 
     public Boolean createAccount(final String username, final String password) {
         return this.accountController.createAccount(username, password);
@@ -474,8 +471,14 @@ public class ViewController extends Scene {
         gameController.setSelectedToolcardName(selectedToolcardName);
     }
 
-    public void grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
-        ToolcardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor, actionChoice);
+    public String grozingPliers(final int dieNumber, final String dieColor, final String actionChoice) {
+        String returnMessage = ToolcardController.grozingPliers(gameController.getGameId(), dieNumber, dieColor,
+                actionChoice);
+        if (returnMessage != null) {
+            displayError(returnMessage);
+        }
+
+        return returnMessage;
     }
 
     public void grindingStone(final int dieNumber, final String dieColor) {
